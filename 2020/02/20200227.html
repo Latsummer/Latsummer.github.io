@@ -22,17 +22,19 @@
     var CONFIG = {"hostname":"zhaozhuolin.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="八说了，我在学了！">
-<meta property="og:type" content="website">
-<meta property="og:title" content="小赵的学习笔记">
-<meta property="og:url" content="http://zhaozhuolin.com/archives/2020/03/index.html">
+  <meta name="description" content="大小端字节序小端:数字的低位存到内存的低地址上。大端:数字的低位存到内存的高地址上。大端字节序符合平时直觉，一台机器大端还是小端，取决于CPU">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于原码、反码及补码的一些总结">
+<meta property="og:url" content="http://zhaozhuolin.com/2020/02/20200227.html">
 <meta property="og:site_name" content="小赵的学习笔记">
-<meta property="og:description" content="八说了，我在学了！">
+<meta property="og:description" content="大小端字节序小端:数字的低位存到内存的低地址上。大端:数字的低位存到内存的高地址上。大端字节序符合平时直觉，一台机器大端还是小端，取决于CPU">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-02-27T04:11:09.000Z">
+<meta property="article:modified_time" content="2020-06-02T05:10:44.846Z">
 <meta property="article:author" content="Morgan">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://zhaozhuolin.com/archives/2020/03/">
+<link rel="canonical" href="http://zhaozhuolin.com/2020/02/20200227.html">
 
 
 <script id="page-configurations">
@@ -40,12 +42,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>归档 | 小赵的学习笔记</title>
+  <title>关于原码、反码及补码的一些总结 | 小赵的学习笔记</title>
   
 
 
@@ -188,170 +190,184 @@
         <div class="content-wrap">
           
 
-          <div class="content archive">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <span class="collection-header">嗯..! 目前共计 23 篇日志。 继续努力。</span>
-      </div>
+<article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+<link itemprop="mainEntityOfPage" href="http://zhaozhuolin.com/2020/02/20200227.html">
+
+<span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <meta itemprop="image" content="/images/IMG_6272.JPG">
+  <meta itemprop="name" content="Morgan">
+  <meta itemprop="description" content="八说了，我在学了！">
+</span>
+
+<span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+  <meta itemprop="name" content="小赵的学习笔记">
+</span>
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">
+      关于原码、反码及补码的一些总结
+    </h1>
+
+    <div class="post-meta">
+        <span class="post-meta-item">
+          <span class="post-meta-item-icon">
+            <i class="far fa-calendar"></i>
+          </span>
+          <span class="post-meta-item-text">发表于</span>
+
+          <time title="创建时间：2020-02-27 12:11:09" itemprop="dateCreated datePublished" datetime="2020-02-27T12:11:09+08:00">2020-02-27</time>
+        </span>
+          <span class="post-meta-item">
+            <span class="post-meta-item-icon">
+              <i class="far fa-calendar-check"></i>
+            </span>
+            <span class="post-meta-item-text">更新于</span>
+            <time title="修改时间：2020-06-02 13:10:44" itemprop="dateModified" datetime="2020-06-02T13:10:44+08:00">2020-06-02</time>
+          </span>
+        <span class="post-meta-item">
+          <span class="post-meta-item-icon">
+            <i class="far fa-folder"></i>
+          </span>
+          <span class="post-meta-item-text">分类于</span>
+            <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C</span></a>
+            </span>
+        </span>
 
       
-    <div class="collection-year">
-      <span class="collection-header">2020</span>
-    </div>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-03-28T14:35:34+08:00"
-              content="2020-03-28">
-          03-28
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/03/20200328.html" itemprop="url">
-            <span itemprop="name">C语言实现一个简单的通讯录程序</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-03-22T14:18:26+08:00"
-              content="2020-03-22">
-          03-22
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/03/20200322.html" itemprop="url">
-            <span itemprop="name">C语言中的文件操作</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-03-20T15:48:14+08:00"
-              content="2020-03-20">
-          03-20
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/03/20200320.html" itemprop="url">
-            <span itemprop="name">（C语言）内存的动态管理</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-03-13T16:45:41+08:00"
-              content="2020-03-13">
-          03-13
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/03/20200313.html" itemprop="url">
-            <span itemprop="name">C语言中的自定义类型（结构体、枚举及联合）</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-03-10T17:53:14+08:00"
-              content="2020-03-10">
-          03-10
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/03/20200310.html" itemprop="url">
-            <span itemprop="name">一些库函数的模拟实现合辑（字符串+内存函数）</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-03-06T18:23:26+08:00"
-              content="2020-03-06">
-          03-06
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/03/20200306.html" itemprop="url">
-            <span itemprop="name">C语言关于指针的几道面试题（烧脑预警）</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-03-03T15:44:30+08:00"
-              content="2020-03-03">
-          03-03
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/03/20200303.html" itemprop="url">
-            <span itemprop="name">C语言中对于数组strlen和sizeof的各种情况及分析</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
+        <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+          <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+          </span>
+          <span class="post-meta-item-text">阅读次数：</span>
+          <span id="busuanzi_value_page_pv"></span>
+        </span><br>
+        <span class="post-meta-item" title="本文字数">
+          <span class="post-meta-item-icon">
+            <i class="far fa-file-word"></i>
+          </span>
+            <span class="post-meta-item-text">本文字数：</span>
+          <span>1.4k</span>
+        </span>
+        <span class="post-meta-item" title="阅读时长">
+          <span class="post-meta-item-icon">
+            <i class="far fa-clock"></i>
+          </span>
+            <span class="post-meta-item-text">阅读时长 &asymp;</span>
+          <span>1 分钟</span>
+        </span>
 
     </div>
-  </div>
-  
-  
-  
+  </header>
 
+
+
+
+<div class="post-body" itemprop="articleBody">
+
+  
+    <h4 id="大小端字节序"><a href="#大小端字节序" class="headerlink" title="大小端字节序"></a>大小端字节序</h4><p><strong>小端:数字的低位存到内存的低地址上。</strong><br><strong>大端:数字的低位存到内存的高地址上。</strong><br><em>大端字节序符合平时直觉，一台机器大端还是小端，取决于CPU</em>  </p>
+<a id="more"></a>
+
+<p>int a = 0x11223344</p>
+<table>
+<thead>
+<tr>
+<th>低地址</th>
+<th>0x100</th>
+<th>0x101</th>
+<th>0x102</th>
+<th>0x103</th>
+<th>高地址</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>低地址</td>
+<td>44</td>
+<td>33</td>
+<td>22</td>
+<td>11</td>
+<td>小端</td>
+</tr>
+<tr>
+<td>低地址</td>
+<td>11</td>
+<td>22</td>
+<td>33</td>
+<td>44</td>
+<td>大端</td>
+</tr>
+</tbody></table>
+<h4 id="原码反码与补码"><a href="#原码反码与补码" class="headerlink" title="原码反码与补码"></a>原码反码与补码</h4><p>例如-10：<br>1000 0000 0000 0000 0000 0000 0000 1010 原码<br>1111 1111 1111 1111 1111 1111 1111 0101反码<br>1111 1111 1111 1111 1111 1111 1111 0110补码(原码取反再加一，得到补码)</p>
+<p>计算机采用补码来存储，肯定要比直接用原码麻烦，付出这样的代价是为了让计算机的硬件 设备实现起来更简单，通过补码的方式，能够把二进制的加减法统一成加法运算<br>例如：<br>计算 0 - 1 =&gt; 0 + (-1)<br>1000 0000 0000 0000 0000 0000 0000 0001 -1的原码<br>1111 1111 1111 1111 1111 1111 1111 1110 ,-1的反码<br>1111 1111 1111 1111 1111 1111 1111 1111 , -1的补码<br>计算 2-1 2+（-1）<br>1111 1111 1111 1111 1111 1111 1111 1111 ,-1的补码<br>1000 0000 0000 0000 0000 0000 0000 0010 ,2的补码（正数的原码反码补码都一样）<br><strong>「对于负数来说，需要把原码转成补码在储存，也需要用到补码转原码」<br>「原码转补码是 取反+1」<br>「补码转原码还是 取反+1」</strong></p>
+<h4 id="关于char类型的一些问题"><a href="#关于char类型的一些问题" class="headerlink" title="关于char类型的一些问题"></a>关于char类型的一些问题</h4><p>char 一个字节的变量，当按照%d打印的时候，就会把char隐式转换成int类型的变量,再打印</p>
+<p>1000 0001 -1的原码<br>1111 1110 -1的反码<br>1111 1111 -1的补码<br>%d打印的时候就先将a先隐式转换成int<br>这个转换过程中，高位的三个字节也要填充，按照符号为来填充（如果a的符号位是0，高位就补0；反之补1）<br>此时<br>char =&gt; int<br>1111 1111 =&gt; 1111 1111 1111 1111 1111 1111 1111 1111 =&gt; -1的补码<br>高位补1也就是为了防止出现这样转换过程中出现数据错误的情况</p>
+<p>1111 1111 -1在内存中的存储 unsigned char 存的还是八个1，此时最高位的1 不再是符号位了，八个1理解成正数（不考虑符号位）的结果就是255，%d打印时，1111 1111 =&gt; 高位补0（unsigned char没有符号位）<br>0000 0000 0000 0000 0000 0000 1111 1111</p>
+<p>char的范围：-128 =&gt; +127<br>128 转化成二进制</p>
+<p>1000 0000 0000 0000 0000 0000 1000 0000 -128原码<br>1111 1111 1111 1111 1111 1111 0111 1111 -128反码<br>1111 1111 1111 1111 1111 1111 1000 0000 -128补码</p>
+<p>Char a = -128<br>1000 0000<br>👇<br>1111 1111 1111 1111 1111 1111 1000 0000（int）<br>👇<br>1111 1111 1111 1111 1111 1111 1000 0000（unsigned int）<br>此时最高位不再是符号位，不再表示负数，被理解成了一个很大的数字</p>
+<p>128 内存中的二进制表示方式<br>0000 0000 0000 0000 0000 0000 1000 0000 （int）<br>Char a =128；<br>1000 0000<br>发生了截断<br>导致唯一的一个1阴差阳错的成了符号位，此时a的本质上是-128</p>
+
+</div>
+
+
+
+
+    
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Morgan
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://zhaozhuolin.com/2020/02/20200227.html" title="关于原码、反码及补码的一些总结">http://zhaozhuolin.com/2020/02/20200227.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+<div>
+
+<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+
+</div>
+
+  <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/02/20200202.html" rel="prev" title="关于C语言中函数的一些认知">
+      <i class="fa fa-chevron-left"></i> 关于C语言中函数的一些认知
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/03/20200303.html" rel="next" title="C语言中对于数组strlen和sizeof的各种情况及分析">
+      C语言中对于数组strlen和sizeof的各种情况及分析 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
   
 
 
@@ -404,6 +420,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#大小端字节序"><span class="nav-number">1.</span> <span class="nav-text">大小端字节序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#原码反码与补码"><span class="nav-number">2.</span> <span class="nav-text">原码反码与补码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关于char类型的一些问题"><span class="nav-number">3.</span> <span class="nav-text">关于char类型的一些问题</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
