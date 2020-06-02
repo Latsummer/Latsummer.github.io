@@ -1,6 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>关于关键字，函数以及指针的初步了解</title>
+    <url>/2019/12/08/12_8%20%E5%85%B3%E4%BA%8E%E5%85%B3%E9%94%AE%E5%AD%97%EF%BC%8C%E5%87%BD%E6%95%B0%E4%BB%A5%E5%8F%8A%E6%8C%87%E9%92%88%E7%9A%84%E5%88%9D%E6%AD%A5%E4%BA%86%E8%A7%A3/</url>
+    <content><![CDATA[<h2 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h2><p>对于关键字这一方面，有以下几个需要我特别注意的</p>
+<table>
+<thead>
+<tr>
+<th>关键字</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>typedef</td>
+<td>类型定义，可理解为类型重命名</td>
+</tr>
+<tr>
+<td>static</td>
+<td>1.修饰局部变量改变其生命周期（作用域不变）2.修饰全局变量改变作用域，连接属性由外转内 3.修饰函数，同全局变量类似</td>
+</tr>
+<tr>
+<td>#define</td>
+<td>定义常量和宏</td>
+</tr>
+</tbody></table>
+<a id="more"></a>
+
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><p>在学习函数这一方面的时候，碰到了一些小问题，总会在声明函数之后加上一个分号，导致一些语法上的错误<br>比如</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">get_max</span><span class="params">(<span class="keyword">int</span> x , <span class="keyword">int</span> y)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//错误格式！！！</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">get_max</span><span class="params">(<span class="keyword">int</span> x , <span class="keyword">int</span> y)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="comment">//正确格式</span></span></span><br></pre></td></tr></table></figure>
+
+<p>希望以后谨记。。。</p>
+<h2 id="指针的初步理解"><a href="#指针的初步理解" class="headerlink" title="指针的初步理解"></a>指针的初步理解</h2><p>对我来说，指针变量更像是一个电话号码，给它打电话，就能找到要找到的人</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line">  <span class="keyword">int</span>* p = &amp;a;</span><br><span class="line">  <span class="comment">//声明一个整形指针变量 P ，并将 a 的**地址**赋值给 P</span></span><br><span class="line">  *p = <span class="number">20</span>;</span><br><span class="line">  <span class="comment">//此时在用 p 指代 a ，此时的意思即为 a=20 （打电话给 a 说：你现在等于20了，(●'◡'●)）</span></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span> ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>或许是本科学习过的微机原理以及汇编语言的关系，我对内存的理解可并不像是一个初学者，我相信这能对我有所帮助。</p>
+]]></content>
+      <categories>
+        <category>C</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>C++中基本的内存管理</title>
     <url>/2020/05/30/C++%E4%B8%AD%E5%9F%BA%E6%9C%AC%E7%9A%84%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/</url>
     <content><![CDATA[<h1 id="C-C-内存分布"><a href="#C-C-内存分布" class="headerlink" title="C/C++内存分布"></a>C/C++内存分布</h1><ol>
@@ -904,6 +946,23 @@
       </tags>
   </entry>
   <entry>
+    <title>小白的自我修养</title>
+    <url>/2019/12/06/%E5%B0%8F%E7%99%BD%E7%9A%84%E8%87%AA%E6%88%91%E4%BF%AE%E5%85%BB/</url>
+    <content><![CDATA[<a id="more"></a>
+
+
+
+<h3 id="小白的自我修养"><a href="#小白的自我修养" class="headerlink" title="小白的自我修养"></a>小白的自我修养</h3><p>一开始仅是好奇而已，忘记了自己从什么时候对计算机，编程这些东西感兴趣的，但自从一次偶然的读到_Brian W.Kernighan,Dennis M.Ritchie_所著的《C程序设计语言》之后，对于这些东西有了些初步的了解，遂起了学习的念头，但是后来又因为没有系统的计划性的学习而放弃，但是从今天开始，我想重新拾起过去的所学，首先把卸载的VS安装回来（笑），再次从头开始学习，这一次我想更加深入的学习，或者说我觉得我找到了我喜欢的行业，我更喜欢做一个创造者，按照自己的想法创作出东西来。我想利用我的一切空余时间学习它，从今天起，我要做到一下内容：</p>
+<ol>
+<li>通过知识的学习与实践来学习计算机语言</li>
+<li>每周至少用二十小时来学习与实践</li>
+<li>尝试用博客来记录自己的学习历程，也算是对自己的一种鞭策</li>
+<li>努力奋斗，争取在这个行业拿到一个好的offer（当然BAT最好 heihei~）</li>
+</ol>
+<p><em><strong>小舟从此逝，江海寄余生。——苏轼《临江仙·夜饮东坡醒复醉》</strong></em><br>与君共勉</p>
+]]></content>
+  </entry>
+  <entry>
     <title>关于原码、反码及补码的一些总结</title>
     <url>/2020/02/27/%E5%85%B3%E4%BA%8E%E5%8E%9F%E7%A0%81%E3%80%81%E5%8F%8D%E7%A0%81%E5%8F%8A%E8%A1%A5%E7%A0%81%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<h4 id="大小端字节序"><a href="#大小端字节序" class="headerlink" title="大小端字节序"></a>大小端字节序</h4><p><strong>小端:数字的低位存到内存的低地址上。</strong><br><strong>大端:数字的低位存到内存的高地址上。</strong><br><em>大端字节序符合平时直觉，一台机器大端还是小端，取决于CPU</em>  </p>
@@ -951,23 +1010,6 @@
       <categories>
         <category>C</category>
       </categories>
-  </entry>
-  <entry>
-    <title>小白的自我修养</title>
-    <url>/2019/12/06/%E5%B0%8F%E7%99%BD%E7%9A%84%E8%87%AA%E6%88%91%E4%BF%AE%E5%85%BB/</url>
-    <content><![CDATA[<a id="more"></a>
-
-
-
-<h3 id="小白的自我修养"><a href="#小白的自我修养" class="headerlink" title="小白的自我修养"></a>小白的自我修养</h3><p>一开始仅是好奇而已，忘记了自己从什么时候对计算机，编程这些东西感兴趣的，但自从一次偶然的读到_Brian W.Kernighan,Dennis M.Ritchie_所著的《C程序设计语言》之后，对于这些东西有了些初步的了解，遂起了学习的念头，但是后来又因为没有系统的计划性的学习而放弃，但是从今天开始，我想重新拾起过去的所学，首先把卸载的VS安装回来（笑），再次从头开始学习，这一次我想更加深入的学习，或者说我觉得我找到了我喜欢的行业，我更喜欢做一个创造者，按照自己的想法创作出东西来。我想利用我的一切空余时间学习它，从今天起，我要做到一下内容：</p>
-<ol>
-<li>通过知识的学习与实践来学习计算机语言</li>
-<li>每周至少用二十小时来学习与实践</li>
-<li>尝试用博客来记录自己的学习历程，也算是对自己的一种鞭策</li>
-<li>努力奋斗，争取在这个行业拿到一个好的offer（当然BAT最好 heihei~）</li>
-</ol>
-<p><em><strong>小舟从此逝，江海寄余生。——苏轼《临江仙·夜饮东坡醒复醉》</strong></em><br>与君共勉</p>
-]]></content>
   </entry>
   <entry>
     <title>数据结构-顺序表和链表</title>
@@ -1623,50 +1665,8 @@
         <category>C</category>
       </categories>
       <tags>
+        <tag>C</tag>
         <tag>内存管理</tag>
-        <tag>C</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>关于关键字，函数以及指针的初步了解</title>
-    <url>/2019/12/08/12_8%20%E5%85%B3%E4%BA%8E%E5%85%B3%E9%94%AE%E5%AD%97%EF%BC%8C%E5%87%BD%E6%95%B0%E4%BB%A5%E5%8F%8A%E6%8C%87%E9%92%88%E7%9A%84%E5%88%9D%E6%AD%A5%E4%BA%86%E8%A7%A3/</url>
-    <content><![CDATA[<h2 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h2><p>对于关键字这一方面，有以下几个需要我特别注意的</p>
-<table>
-<thead>
-<tr>
-<th>关键字</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>typedef</td>
-<td>类型定义，可理解为类型重命名</td>
-</tr>
-<tr>
-<td>static</td>
-<td>1.修饰局部变量改变其生命周期（作用域不变）2.修饰全局变量改变作用域，连接属性由外转内 3.修饰函数，同全局变量类似</td>
-</tr>
-<tr>
-<td>#define</td>
-<td>定义常量和宏</td>
-</tr>
-</tbody></table>
-<a id="more"></a>
-
-<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><p>在学习函数这一方面的时候，碰到了一些小问题，总会在声明函数之后加上一个分号，导致一些语法上的错误<br>比如</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">get_max</span><span class="params">(<span class="keyword">int</span> x , <span class="keyword">int</span> y)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//错误格式！！！</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">get_max</span><span class="params">(<span class="keyword">int</span> x , <span class="keyword">int</span> y)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="comment">//正确格式</span></span></span><br></pre></td></tr></table></figure>
-
-<p>希望以后谨记。。。</p>
-<h2 id="指针的初步理解"><a href="#指针的初步理解" class="headerlink" title="指针的初步理解"></a>指针的初步理解</h2><p>对我来说，指针变量更像是一个电话号码，给它打电话，就能找到要找到的人</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line">  <span class="keyword">int</span>* p = &amp;a;</span><br><span class="line">  <span class="comment">//声明一个整形指针变量 P ，并将 a 的**地址**赋值给 P</span></span><br><span class="line">  *p = <span class="number">20</span>;</span><br><span class="line">  <span class="comment">//此时在用 p 指代 a ，此时的意思即为 a=20 （打电话给 a 说：你现在等于20了，(●'◡'●)）</span></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span> ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>或许是本科学习过的微机原理以及汇编语言的关系，我对内存的理解可并不像是一个初学者，我相信这能对我有所帮助。</p>
-]]></content>
-      <categories>
-        <category>C</category>
-      </categories>
-      <tags>
-        <tag>C</tag>
       </tags>
   </entry>
 </search>
