@@ -121,9 +121,9 @@
       <category term="C++" scheme="http://zhaozhuolin.com/categories/C/"/>
     
     
-      <category term="类与对象" scheme="http://zhaozhuolin.com/tags/%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1/"/>
-    
       <category term="C++" scheme="http://zhaozhuolin.com/tags/C/"/>
+    
+      <category term="类与对象" scheme="http://zhaozhuolin.com/tags/%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1/"/>
     
   </entry>
   
@@ -157,9 +157,9 @@
       <category term="C++" scheme="http://zhaozhuolin.com/categories/C/"/>
     
     
-      <category term="类与对象" scheme="http://zhaozhuolin.com/tags/%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1/"/>
-    
       <category term="C++" scheme="http://zhaozhuolin.com/tags/C/"/>
+    
+      <category term="类与对象" scheme="http://zhaozhuolin.com/tags/%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1/"/>
     
   </entry>
   
@@ -392,9 +392,9 @@
       <category term="C" scheme="http://zhaozhuolin.com/categories/C/"/>
     
     
-      <category term="C" scheme="http://zhaozhuolin.com/tags/C/"/>
-    
       <category term="内存管理" scheme="http://zhaozhuolin.com/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/"/>
+    
+      <category term="C" scheme="http://zhaozhuolin.com/tags/C/"/>
     
   </entry>
   
