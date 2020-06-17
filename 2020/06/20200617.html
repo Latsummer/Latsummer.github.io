@@ -22,21 +22,20 @@
     var CONFIG = {"hostname":"zhaozhuolin.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#A9A9A9","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="泛型编程编写与类型无关的代码 1template &lt;typename &#x2F; class 泛型参数1, typename &#x2F; class 泛型参数2 ...... &gt;  告诉编译器一个模板，让编译器根据不同的类型利用该模板生成代码">
+  <meta name="description" content="stack的基本使用1234567891011#include&lt;stack&gt;stack&lt;int&gt; st;st.push(1);st.push(2);st.push(3);while(!st.empty())&amp;#123;  cout &lt;&lt; st.top() &lt;&lt; &quot; &quot;;  st.pop();&amp;#125;cout &lt;&lt; endl;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="初识模板">
-<meta property="og:url" content="http://zhaozhuolin.com/2020/05/20200531.html">
+<meta property="og:title" content="stack、queue及priority_queue">
+<meta property="og:url" content="http://zhaozhuolin.com/2020/06/20200617.html">
 <meta property="og:site_name" content="小赵的学习笔记">
-<meta property="og:description" content="泛型编程编写与类型无关的代码 1template &lt;typename &#x2F; class 泛型参数1, typename &#x2F; class 泛型参数2 ...... &gt;  告诉编译器一个模板，让编译器根据不同的类型利用该模板生成代码">
+<meta property="og:description" content="stack的基本使用1234567891011#include&lt;stack&gt;stack&lt;int&gt; st;st.push(1);st.push(2);st.push(3);while(!st.empty())&amp;#123;  cout &lt;&lt; st.top() &lt;&lt; &quot; &quot;;  st.pop();&amp;#125;cout &lt;&lt; endl;">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-05-31T06:59:34.000Z">
-<meta property="article:modified_time" content="2020-06-02T05:10:44.852Z">
+<meta property="article:published_time" content="2020-06-17T05:59:46.000Z">
+<meta property="article:modified_time" content="2020-06-17T06:01:10.155Z">
 <meta property="article:author" content="Morgan">
-<meta property="article:tag" content="C++">
-<meta property="article:tag" content="模版">
+<meta property="article:tag" content="-stakc -queue">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://zhaozhuolin.com/2020/05/20200531.html">
+<link rel="canonical" href="http://zhaozhuolin.com/2020/06/20200617.html">
 
 
 <script id="page-configurations">
@@ -49,7 +48,7 @@
   };
 </script>
 
-  <title>初识模板 | 小赵的学习笔记</title>
+  <title>stack、queue及priority_queue | 小赵的学习笔记</title>
   
 
 
@@ -202,7 +201,7 @@
   
   
 <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-<link itemprop="mainEntityOfPage" href="http://zhaozhuolin.com/2020/05/20200531.html">
+<link itemprop="mainEntityOfPage" href="http://zhaozhuolin.com/2020/06/20200617.html">
 
 <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
   <meta itemprop="image" content="/images/IMG_6272.JPG">
@@ -215,7 +214,7 @@
 </span>
   <header class="post-header">
     <h1 class="post-title" itemprop="name headline">
-      初识模板
+      stack、queue及priority_queue
     </h1>
 
     <div class="post-meta">
@@ -224,16 +223,10 @@
             <i class="far fa-calendar"></i>
           </span>
           <span class="post-meta-item-text">发表于</span>
+          
 
-          <time title="创建时间：2020-05-31 14:59:34" itemprop="dateCreated datePublished" datetime="2020-05-31T14:59:34+08:00">2020-05-31</time>
+          <time title="创建时间：2020-06-17 13:59:46 / 修改时间：14:01:10" itemprop="dateCreated datePublished" datetime="2020-06-17T13:59:46+08:00">2020-06-17</time>
         </span>
-          <span class="post-meta-item">
-            <span class="post-meta-item-icon">
-              <i class="far fa-calendar-check"></i>
-            </span>
-            <span class="post-meta-item-text">更新于</span>
-            <time title="修改时间：2020-06-02 13:10:44" itemprop="dateModified" datetime="2020-06-02T13:10:44+08:00">2020-06-02</time>
-          </span>
         <span class="post-meta-item">
           <span class="post-meta-item-icon">
             <i class="far fa-folder"></i>
@@ -257,14 +250,14 @@
             <i class="far fa-file-word"></i>
           </span>
             <span class="post-meta-item-text">本文字数：</span>
-          <span>1.3k</span>
+          <span>2.3k</span>
         </span>
         <span class="post-meta-item" title="阅读时长">
           <span class="post-meta-item-icon">
             <i class="far fa-clock"></i>
           </span>
             <span class="post-meta-item-text">阅读时长 &asymp;</span>
-          <span>1 分钟</span>
+          <span>2 分钟</span>
         </span>
 
     </div>
@@ -276,37 +269,107 @@
 <div class="post-body" itemprop="articleBody">
 
   
-    <h1 id="泛型编程"><a href="#泛型编程" class="headerlink" title="泛型编程"></a>泛型编程</h1><p>编写与类型无关的代码</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> / <span class="class"><span class="keyword">class</span> 泛型参数1, <span class="title">typename</span> / <span class="title">class</span> 泛型参数2 ...... &gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>告诉编译器一个模板，让编译器根据不同的类型利用该模板生成代码</p>
+    <h1 id="stack的基本使用"><a href="#stack的基本使用" class="headerlink" title="stack的基本使用"></a>stack的基本使用</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stack&gt;</span></span></span><br><span class="line"><span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; st;</span><br><span class="line">st.push(<span class="number">1</span>);</span><br><span class="line">st.push(<span class="number">2</span>);</span><br><span class="line">st.push(<span class="number">3</span>);</span><br><span class="line"><span class="keyword">while</span>(!st.empty())</span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; st.top() &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">  st.pop();</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
+<h1 id="queue的基本使用"><a href="#queue的基本使用" class="headerlink" title="queue的基本使用"></a>queue的基本使用</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="built_in">queue</span>&lt;<span class="keyword">int</span>&gt; q;</span><br><span class="line">q.push();</span><br><span class="line"><span class="keyword">while</span>(!q.empty())</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; q.front() &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">	q.pop();</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
 
-<h1 id="函数模版"><a href="#函数模版" class="headerlink" title="函数模版"></a>函数模版</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">void</span> <span class="title">Swap</span>(<span class="title">T</span>&amp; <span class="title">left</span>, <span class="title">T</span>&amp; <span class="title">right</span>)</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  T tmp = left;</span><br><span class="line">  left = right;</span><br><span class="line">  right = tmp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">T</span> <span class="title">add</span>(<span class="title">T</span> <span class="title">a</span>, <span class="title">T</span> <span class="title">b</span>)</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> a = <span class="number">1</span>, b = <span class="number">10</span>;</span><br><span class="line">  <span class="keyword">char</span> c = <span class="string">'a'</span>, d = <span class="string">'b'</span>;</span><br><span class="line">  <span class="function">Date <span class="title">d1</span><span class="params">(<span class="number">2020</span>)</span></span>;</span><br><span class="line">  <span class="function">Date <span class="title">d2</span><span class="params">(<span class="number">1010</span>)</span></span>;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//隐式实例化：编译器根据参数进行自动推导，产生直接可执行的代码</span></span><br><span class="line">  Swap(a, b);</span><br><span class="line">  Swap(c, d);</span><br><span class="line">  Swap (d1, d2);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//显示实例化：函数名 + &lt;类型&gt; + （参数列表）</span></span><br><span class="line">  Swap&lt;<span class="keyword">int</span>&gt;(a, b);</span><br><span class="line">  add&lt;<span class="keyword">int</span>&gt;(a, c);</span><br><span class="line">  add&lt;<span class="keyword">char</span>&gt;(a, c);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="priority-queue"><a href="#priority-queue" class="headerlink" title="priority_queue"></a>priority_queue</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">priority_queue&lt;<span class="keyword">int</span>&gt; pq;</span><br><span class="line">pq.push(<span class="number">10</span>);</span><br><span class="line">pq.push(<span class="number">1</span>);</span><br><span class="line">pq.push(<span class="number">15</span>);</span><br><span class="line">pq.push(<span class="number">20</span>);</span><br><span class="line">pq.push(<span class="number">2</span>);</span><br><span class="line">pq.push(<span class="number">4</span>);</span><br><span class="line">pq.push(<span class="number">19</span>);</span><br><span class="line"><span class="keyword">while</span>(!pq.empty())</span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; pq.top() &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">  pq.pop();</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
 
-<p>函数模版实例化：用实际参数类型，生成可执行的函数</p>
-<blockquote>
-<p>实际上并没有减少实际的代码量，只是把重复的代码交给机器自动生成</p>
-<p>减少开发人员重复的工作量，提高工作效率</p>
-</blockquote>
-<h2 id="模版参数的匹配规则"><a href="#模版参数的匹配规则" class="headerlink" title="模版参数的匹配规则"></a>模版参数的匹配规则</h2><ul>
-<li><p>普通函数与模版函数可以共存；共存时，如果普通函数的参数类型可以完全匹配，则执行普通函数，不进行模版函数的实例化</p>
-</li>
-<li><p>普通函数与模版函数共存时，普通函数的参数类型不能完全匹配，但是实例化的函数可以完全匹配，则进行实例化</p>
-</li>
-<li><p>普通函数与模版函数共存时，指定了需要实例化（<code>Add&lt;int&gt;(a, b);</code>）,则进行实例化</p>
-</li>
-</ul>
-<h1 id="类模版"><a href="#类模版" class="headerlink" title="类模版"></a>类模版</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T1</span>, <span class="title">class</span> <span class="title">T2</span>, <span class="title">class</span> <span class="title">T3</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">Date</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  Date(T1 year, T2 month, T3 day)</span><br><span class="line">    : _year(year)</span><br><span class="line">    , _month(month)</span><br><span class="line">    , _day(day)</span><br><span class="line">    &#123;&#125;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">Display</span><span class="params">()</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  T1 _year;</span><br><span class="line">  T2 _month;</span><br><span class="line">  T3 _day;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T1</span>, <span class="title">class</span> <span class="title">T2</span>, <span class="title">class</span> <span class="title">T3</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">void</span> <span class="title">Date</span>&lt;T1, T2, T3&gt;:</span>:Display()</span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; _year &lt;&lt; <span class="string">"-"</span> &lt;&lt; _month &lt;&lt; <span class="string">"-"</span> &lt;&lt; _day &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  Date&lt;int, int, int&gt; d(2000, 1, 1);</span><br><span class="line">  d.Display();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>类模版只能显示实例化，不能进行隐式实例化</p>
+<p>优先级队列存放自定义类型，自定义类型需要支持大小比较运算</p>
 <ul>
-<li>类型和类名不同；类型：类名&lt;模版实际参数类型&gt;</li>
+<li><p>建大堆需要提供小于比较的仿函数类</p>
+</li>
+<li><p>建小堆需要提供大于比较的仿函数类</p>
+</li>
 </ul>
-<blockquote>
-<p>如果在类外定义类模版的成员函数，需要加上泛型的声明</p>
-<p>作用域为 “类名&lt;泛型参数&gt;”</p>
-</blockquote>
+<h1 id="仿函数"><a href="#仿函数" class="headerlink" title="仿函数"></a>仿函数</h1><p>STL组件：使用方式类似于函数的类 —&gt; 重载圆括号 “( )” 的运算符重载函数</p>
+<p>仿函数对象：由仿函数类创建的对象</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//仿函数类模版</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> <span class="title">Less</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="keyword">const</span> T&amp; c1, <span class="keyword">const</span> T&amp; c2)</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> c1 &lt; c2;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  Less&lt;C&gt; lc;</span><br><span class="line">  <span class="function">C <span class="title">c1</span><span class="params">(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span></span>;</span><br><span class="line">  <span class="function">C <span class="title">c2</span><span class="params">(<span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>)</span></span>;</span><br><span class="line">  <span class="keyword">bool</span> ret = lc.<span class="keyword">operator</span>()(c1, c2);</span><br><span class="line">  ret = lc(c1, c2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="容器适配器"><a href="#容器适配器" class="headerlink" title="容器适配器"></a>容器适配器</h1><p>STL组件，stack，queue，priority_queue</p>
+<p>通过适配器的设计模式定义的新的数据结构</p>
+<p>适配器：把一种接口转化为另一种接口的方法</p>
+<ol>
+<li><p>stack：<code>template&lt; class T, class Container = deque&lt;T&gt; &gt; class stack</code></p>
+<p> 实现：vector，list，deque  ==默认实现：deque==</p>
+<p> stack实现规范：只要包含以下接口，都可以作为stack低层容器</p>
+</li>
+</ol>
+<ul>
+<li><p>Push_back —&gt; push</p>
+</li>
+<li><p>Pop_back —&gt;pop</p>
+</li>
+<li><p>front —&gt; top</p>
+</li>
+<li><p>size —&gt; size</p>
+</li>
+<li><p>Empty —&gt; empty</p>
+</li>
+</ul>
+<ol start="2">
+<li><p>Queue实现：list， deque   ==默认实现：deque==</p>
+<p> queue实现规范：只要包含以下接口，都可以作为queue低层容器</p>
+</li>
+</ol>
+<ul>
+<li>Push_back —&gt; push</li>
+<li>Pop_back —&gt; pop</li>
+<li>front —&gt; front</li>
+<li>back —&gt; back</li>
+<li>size —&gt; size</li>
+<li>empty —&gt; empty</li>
+</ul>
+<p>vector不能实现queue，因为它不提供pop_front接口</p>
+<ol start="3">
+<li><p>Priority_queue实现：vector  deque，==默认实现：vector==</p>
+<p> 实现规范：只要包含以下接口，其容器本身支持随机访问，都可以作为priority_queue的低层容器</p>
+</li>
+</ol>
+<ul>
+<li>Push_back —&gt; push</li>
+<li>Pop_back —&gt; pop</li>
+<li>Front —&gt; top</li>
+<li>Size —&gt; size</li>
+<li>Empty —&gt; empty</li>
+</ul>
+<p>list不能实现priority_queue，因为其不支持随机访问</p>
+<h1 id="duque-双端队列"><a href="#duque-双端队列" class="headerlink" title="duque 双端队列"></a>duque 双端队列</h1><p>逻辑连续，物理上不完全连续的线性表</p>
+<p>实现：指针数组 + buffer —&gt; 动态二维数组</p>
+<ol>
+<li>头插、头删、尾插、尾删时间复杂度都为O(1)，不需要移动元素</li>
+<li>支持随机访问，但是随机访问的效率低于vector，需要进行位置换算</li>
+<li>增容代价小，不需要拷贝所有元素内容。增容过程：开一个更大的指针数组，拷贝原始指针数组中的内容（指针），开新的buffer，buffer首地址存入新的指针数组，新的buffer存放新元素。原始存放元素的空间不需要更改</li>
+<li>在中间位置插入数组，时间复杂度O(n)。</li>
+</ol>
+<p>stack：默认实现deque，deque实现stack的优势</p>
+<ol>
+<li>stack不需要随机访问。</li>
+<li>vector增容代价比较大</li>
+<li>list容易造成内存碎片，空间利用率低</li>
+</ol>
+<p>queue：默认实现deque，deque实现queue优势</p>
+<ol>
+<li>list容易造成内存碎片，空间利用率低</li>
+</ol>
+<p>priority_queue：默认实现vector，vector实现priority_queue的优势</p>
+<ol>
+<li>deque随机访问效率比较低，因为list不支持随机访问，所以不能用其实现</li>
+</ol>
+<ul>
+<li><p>关于模拟实现<code>template&lt;T, Container, Compare&gt;</code></p>
+<ul>
+<li><p>模版参数：Compare：</p>
+<ol>
+<li>执行大小比较的逻辑 —&gt; 通过仿函数实现</li>
+<li>提供的仿函数不同，可以产生不同的堆结构。不需要修改源代码，极大的增加了代码的灵活性及通用性</li>
+<li>如果是自定义类型数据，需要重载<code>&gt;</code> <code>&lt;</code>运算符</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="模拟实现"><a href="#模拟实现" class="headerlink" title="模拟实现"></a>模拟实现</h1><p><a href="https://github.com/Latsummer/FinishedProducts/tree/master/stack.queue.pqm模拟实现" target="_blank" rel="noopener">stack、queue及priority_queue的模拟实现–GitHub</a></p>
 
 </div>
 
@@ -322,7 +385,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://zhaozhuolin.com/2020/05/20200531.html" title="初识模板">http://zhaozhuolin.com/2020/05/20200531.html</a>
+    <a href="http://zhaozhuolin.com/2020/06/20200617.html" title="stack、queue及priority_queue">http://zhaozhuolin.com/2020/06/20200617.html</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -344,8 +407,7 @@
 
   <footer class="post-footer">
       <div class="post-tags">
-          <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i>C++</a>
-          <a href="/tags/%E6%A8%A1%E7%89%88/" rel="tag"><i class="fa fa-tag"></i>模版</a>
+          <a href="/tags/stakc-queue/" rel="tag"><i class="fa fa-tag"></i>-stakc -queue</a>
           </div>
 
         
@@ -354,13 +416,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/05/20200530.html" rel="prev" title="C++中基本的内存管理">
-      <i class="fa fa-chevron-left"></i> C++中基本的内存管理
+    <a href="/2020/06/20200615.html" rel="prev" title="list的基本使用以及模拟实现">
+      <i class="fa fa-chevron-left"></i> list的基本使用以及模拟实现
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/06/20200607.html" rel="next" title="string类的基本使用及常用接口">
-      string类的基本使用及常用接口 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -419,7 +478,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#泛型编程"><span class="nav-number">1.</span> <span class="nav-text">泛型编程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#函数模版"><span class="nav-number">2.</span> <span class="nav-text">函数模版</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#模版参数的匹配规则"><span class="nav-number">2.1.</span> <span class="nav-text">模版参数的匹配规则</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#类模版"><span class="nav-number">3.</span> <span class="nav-text">类模版</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#stack的基本使用"><span class="nav-number">1.</span> <span class="nav-text">stack的基本使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#queue的基本使用"><span class="nav-number">2.</span> <span class="nav-text">queue的基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#priority-queue"><span class="nav-number">2.1.</span> <span class="nav-text">priority_queue</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#仿函数"><span class="nav-number">3.</span> <span class="nav-text">仿函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#容器适配器"><span class="nav-number">4.</span> <span class="nav-text">容器适配器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#duque-双端队列"><span class="nav-number">5.</span> <span class="nav-text">duque 双端队列</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#模拟实现"><span class="nav-number">6.</span> <span class="nav-text">模拟实现</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

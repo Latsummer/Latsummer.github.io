@@ -215,6 +215,103 @@
       </tags>
   </entry>
   <entry>
+    <title>C++基础语法</title>
+    <url>/2020/05/20200521.html</url>
+    <content><![CDATA[<h1 id="命名空间"><a href="#命名空间" class="headerlink" title="命名空间"></a>命名空间</h1><p>对标识符的名称进行本地化，以避免命名冲突或名字污染，namespace关键字的出现就是针对这种问题的</p>
+<a id="more"></a>
+
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">namespacs dog<span class="comment">//命名空间为dog</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">int</span> a)</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">" %d \n"</span>, a);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">int</span> a;</span><br><span class="line">  <span class="keyword">int</span> b;<span class="comment">//可定义变量，也可定义函数</span></span><br><span class="line">  </span><br><span class="line">  <span class="keyword">namespace</span> big_dog<span class="comment">//可以嵌套</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">fun1</span><span class="params">(<span class="keyword">int</span> a)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, a);</span><br><span class="line">      <span class="keyword">int</span> a;</span><br><span class="line">      <span class="keyword">int</span> b;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> dog<span class="comment">//可以分段写，最后会整合在一起</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">int</span> c;</span><br><span class="line">  <span class="keyword">int</span> d;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">fun2</span><span class="params">()</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"hehe\n"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun3</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  a = <span class="number">10</span>;<span class="comment">//局部域</span></span><br><span class="line">  dog::a = <span class="number">20</span>;<span class="comment">//命名空间域</span></span><br><span class="line">  dog::big_dog::a = <span class="number">30</span>;<span class="comment">//命名空间域</span></span><br><span class="line">  ::a = <span class="number">40</span>;<span class="comment">//全局作用域</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  fun3();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用方式：</p>
+<ol>
+<li>命名空间+：：+成员</li>
+<li>引入成员using + 命名空间 + ：：+成员，后边使用时不用加作用域，成员暴露在全局域中，如果全局域中有同名成员，会导致命名冲突</li>
+<li>展开命名空间 using 命名空间，命名空间所有成员暴漏在全局域中</li>
+</ol>
+<h1 id="输入输出方式"><a href="#输入输出方式" class="headerlink" title="输入输出方式"></a>输入输出方式</h1><p>头文件 + std命名空间</p>
+<p>输出 cout &lt;&lt; a &lt;&lt; “\n”; 输出a\n</p>
+<p>输入 cin &gt;&gt; b; 输入b</p>
+<p>支持连续的输入输出</p>
+<p>字符串指针输出内容</p>
+<p>非字符串指针输出地址</p>
+<h1 id="缺省参数"><a href="#缺省参数" class="headerlink" title="缺省参数"></a>缺省参数</h1><p>给参数定义一个默认值，实际使用时，如果没有传参，对应的行参使用默认值，参数传递一个用一个（<strong>必须从第一个参数开始传递，参数要连续的传递</strong>）</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun1</span><span class="params">(<span class="keyword">int</span> a = <span class="number">1</span>, <span class="keyword">int</span> b = <span class="number">2</span>, <span class="keyword">int</span> c = <span class="number">3</span>)</span><span class="comment">//全缺省</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; a &lt;&lt; b &lt;&lt; c &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun2</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b = <span class="number">2</span>, <span class="keyword">int</span> c = <span class="number">3</span>)</span><span class="comment">//半缺省，必须从右到左连续无间断</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; a &lt;&lt; b &lt;&lt; c &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun3</span><span class="params">(<span class="keyword">int</span> a = <span class="number">1</span>, <span class="keyword">int</span> b = <span class="number">2</span>, <span class="keyword">int</span> c)</span><span class="comment">//非法</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun4</span><span class="params">(<span class="keyword">int</span> a = <span class="number">1</span>, <span class="keyword">int</span> b, <span class="keyword">int</span> c = <span class="number">3</span>)</span><span class="comment">//非法</span></span></span><br><span class="line"><span class="function">  </span></span><br><span class="line"><span class="function"><span class="comment">//错误写法，缺省值只能出现在声明或定义的地方，不能同时出现</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun5</span><span class="params">(<span class="keyword">int</span> a = <span class="number">1</span>, <span class="keyword">int</span> b = <span class="number">2</span>, <span class="keyword">int</span> c = <span class="number">3</span>)</span></span>;<span class="comment">//声明</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun5</span><span class="params">(<span class="keyword">int</span> a = <span class="number">100</span>, <span class="keyword">int</span> b = <span class="number">200</span>, <span class="keyword">int</span> c = <span class="number">300</span>)</span><span class="comment">//定义</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; a &lt;&lt; b &lt;&lt; c &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="函数重载"><a href="#函数重载" class="headerlink" title="函数重载"></a>函数重载</h1><p>同一个作用域内声明几个功能类似的同名函数，这些同名函数的行参列表（<strong>参数个数或类型 或顺序</strong>）必须不同， 常用于处理实现功能类似数据类型不同的问题。</p>
+<p><strong>仅仅返回值不同，不能构成重载。</strong></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Add</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">float</span> <span class="title">Add</span><span class="params">(<span class="keyword">float</span> a, <span class="keyword">float</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Add</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b, <span class="keyword">int</span> c)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> a + b + c;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Add</span><span class="params">(<span class="keyword">char</span> a, <span class="keyword">int</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Add</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">char</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; Add((<span class="keyword">float</span>)<span class="number">1.5</span>, (<span class="keyword">float</span>)<span class="number">1.6</span>) &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="函数重载如何实现的"><a href="#函数重载如何实现的" class="headerlink" title="函数重载如何实现的"></a>函数重载如何实现的</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Add</span><span class="params">(<span class="keyword">int</span> a = <span class="number">1</span>, <span class="keyword">int</span> b = <span class="number">2</span>)</span></span></span><br></pre></td></tr></table></figure>
+
+<p>编译器编译之后的底层函数名称：</p>
+<ul>
+<li>VS：C编译器 ：无法解析的外部符号 _Add</li>
+<li>VS：C++编译器：无法解析的外部符号 ？Add@@YAHH@Z</li>
+<li>g++编译器：_Z3Addii</li>
+<li>_Z：规定的前缀，3：函数名字的字数，Add：函数名，ii：有两个int类型参数</li>
+</ul>
+<p>函数名修饰规则：</p>
+<ul>
+<li>C编译器：函数名中不包含参数信息</li>
+<li>C++编译器：函数名中包含参数信息</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Add</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span></span><br><span class="line"><span class="function"><span class="comment">//C编译器均为：_Add</span></span></span><br><span class="line"><span class="function"><span class="comment">//g++编译器：_Z3Addii</span></span></span><br><span class="line"><span class="function"><span class="keyword">float</span> <span class="title">Add</span><span class="params">(<span class="keyword">float</span> a, <span class="keyword">float</span> b)</span></span></span><br><span class="line"><span class="function"><span class="comment">//_Z3Addff</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Add</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b, <span class="keyword">int</span> c)</span></span></span><br><span class="line"><span class="function"><span class="comment">//_Z3Addiii</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Add</span><span class="params">(<span class="keyword">char</span> a, <span class="keyword">int</span> b)</span></span></span><br><span class="line"><span class="function"><span class="comment">//_Z3Addci</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Add</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">char</span> b)</span></span></span><br><span class="line"><span class="function"><span class="comment">//_Z3Addic</span></span></span><br></pre></td></tr></table></figure>
+
+<h1 id="extern-“C”"><a href="#extern-“C”" class="headerlink" title="extern “C”"></a>extern “C”</h1><p>按照C语言规则编译</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="string">"C"</span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">sub</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">mul</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h1><p>不是新定义一个变量，而是给已存在的变量去了一个别名，编译器不会为引用变量开辟内从空间，它和它的引用的变量公用同一块内存空间。</p>
+<ul>
+<li>类型 + &amp; + 引用名称</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span>&amp; ra = a;</span><br><span class="line"><span class="keyword">int</span>&amp; ra2 = a;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> b = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span>&amp; rb = a;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span>&amp; r = <span class="number">10</span>;</span><br><span class="line"><span class="comment">//引用类型和引用实体必须是相同类型</span></span><br><span class="line"><span class="keyword">double</span> d = <span class="number">2.0</span>;</span><br><span class="line"><span class="keyword">double</span>&amp; rd = d;</span><br><span class="line"><span class="keyword">int</span> c = d;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span>&amp; rd2 = d;</span><br><span class="line"><span class="comment">//d隐式类型转换，生成一个临时int变量，rd2此时指向为此临时变量，而临时变量具有常性</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span>&amp; ra, <span class="keyword">int</span>&amp; rb)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> tmp = ra;</span><br><span class="line">	ra = rb;</span><br><span class="line">	rb = tmp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span>&amp; <span class="title">Add2</span><span class="params">(<span class="keyword">int</span>&amp; ra)</span><span class="comment">//int&amp; Add3(int a),引用做返回值，注意返回值的周期一定要大于函数生命周期</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> ++ra;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test4</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line">	<span class="keyword">int</span> b = <span class="number">20</span>;</span><br><span class="line">	swap(a, b);</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; a &lt;&lt; b &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">int</span>&amp; c = Add2(a);</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; a &lt;&lt; b &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>底层实现：引用通过指针实现，定义一个引用类型的变量相当于定义一个指针类型的变量。</strong></p>
+<p><strong>语法：引用是别名，不是指针，没有发生拷贝。</strong></p>
+<blockquote>
+<p>目前可以认为引用是指针的一层封装，更加简单化的指针</p>
+</blockquote>
+<h1 id="内联函数"><a href="#内联函数" class="headerlink" title="内联函数"></a>内联函数</h1><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">Add</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>关键字 ：“inline”</p>
+</blockquote>
+<p>内联函数：编译器编译时，会进行函数指令展开，没有栈帧的开销，提高代码效率</p>
+<blockquote>
+<p>替代宏函数的使用</p>
+</blockquote>
+<p>inline只是一个建议，编译器会根据实际情况进行判断，如果代码简单，直接展开，代码复杂，不会展开</p>
+<p><strong>inline不支持分离定义</strong></p>
+<h1 id="auto"><a href="#auto" class="headerlink" title="auto"></a>auto</h1><p>自动类型推导，不代表具体类型，编译时根据初始化表达式自动推导</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">auto</span> a = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">auto</span> b = <span class="number">2.0</span>;</span><br><span class="line"><span class="keyword">auto</span> c = <span class="string">'a'</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="keyword">typeid</span>(a).name() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="keyword">typeid</span>(b).name() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="keyword">typeid</span>(c).name() &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>auto定义的变量必须初始化</p>
+<p>auto可以定义多个变量，每一个表达式的类型要一致</p>
+<p>auto定义指针时，加不加 * 没有区别，定义引用类型时，<strong>必须加 &amp;</strong></p>
+</blockquote>
+<p><strong>函数参数类型不能使用auto， 定义数组不能使用auto</strong></p>
+<h1 id="基于范围的for循环"><a href="#基于范围的for循环" class="headerlink" title="基于范围的for循环"></a>基于范围的for循环</h1><blockquote>
+<p>范围内用于迭代的变量 ： 被迭代的范围</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> <span class="built_in">array</span>[] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>&#125;;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i - <span class="number">0</span>; i &lt; <span class="keyword">sizeof</span>(<span class="built_in">array</span>) / <span class="keyword">sizeof</span>(<span class="built_in">array</span>[<span class="number">0</span>]); i++)</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> e : <span class="built_in">array</span>)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>使用场景：数据范围确定</p>
+</blockquote>
+<h1 id="指针空值nullptr"><a href="#指针空值nullptr" class="headerlink" title="指针空值nullptr"></a>指针空值nullptr</h1><ol>
+<li>其作为关键字，不需要包含头文件</li>
+<li>sizeof（nullptr） == sizeof ((void*) 0 )</li>
+<li>为了提高代码健壮性，尽量使用nullptr表示指针空值</li>
+</ol>
+]]></content>
+      <categories>
+        <category>C++</category>
+      </categories>
+  </entry>
+  <entry>
     <title>C语言中对于数组strlen和sizeof的各种情况及分析</title>
     <url>/2020/03/20200303.html</url>
     <content><![CDATA[<h3 id="strlen和sizeof本身的区别"><a href="#strlen和sizeof本身的区别" class="headerlink" title="strlen和sizeof本身的区别"></a>strlen和sizeof本身的区别</h3><p>szieof是一个运算操作符，在使用时无需声明头文件，它的参数可以是数据类型，数组，指针及函数等等<br>strlen是一个库函数，在使用前需要声明string.h头文件，它的参数必须是字符型指针（char* ）</p>
@@ -886,101 +983,116 @@
       </tags>
   </entry>
   <entry>
-    <title>C++基础语法</title>
-    <url>/2020/05/20200521.html</url>
-    <content><![CDATA[<h1 id="命名空间"><a href="#命名空间" class="headerlink" title="命名空间"></a>命名空间</h1><p>对标识符的名称进行本地化，以避免命名冲突或名字污染，namespace关键字的出现就是针对这种问题的</p>
+    <title>stack、queue及priority_queue</title>
+    <url>/2020/06/20200617.html</url>
+    <content><![CDATA[<h1 id="stack的基本使用"><a href="#stack的基本使用" class="headerlink" title="stack的基本使用"></a>stack的基本使用</h1><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stack&gt;</span></span></span><br><span class="line"><span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; st;</span><br><span class="line">st.push(<span class="number">1</span>);</span><br><span class="line">st.push(<span class="number">2</span>);</span><br><span class="line">st.push(<span class="number">3</span>);</span><br><span class="line"><span class="keyword">while</span>(!st.empty())</span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; st.top() &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">  st.pop();</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
+<h1 id="queue的基本使用"><a href="#queue的基本使用" class="headerlink" title="queue的基本使用"></a>queue的基本使用</h1><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="built_in">queue</span>&lt;<span class="keyword">int</span>&gt; q;</span><br><span class="line">q.push();</span><br><span class="line"><span class="keyword">while</span>(!q.empty())</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; q.front() &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">	q.pop();</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">namespacs dog<span class="comment">//命名空间为dog</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">int</span> a)</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">" %d \n"</span>, a);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">int</span> a;</span><br><span class="line">  <span class="keyword">int</span> b;<span class="comment">//可定义变量，也可定义函数</span></span><br><span class="line">  </span><br><span class="line">  <span class="keyword">namespace</span> big_dog<span class="comment">//可以嵌套</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">fun1</span><span class="params">(<span class="keyword">int</span> a)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, a);</span><br><span class="line">      <span class="keyword">int</span> a;</span><br><span class="line">      <span class="keyword">int</span> b;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> dog<span class="comment">//可以分段写，最后会整合在一起</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">int</span> c;</span><br><span class="line">  <span class="keyword">int</span> d;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">fun2</span><span class="params">()</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"hehe\n"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun3</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  a = <span class="number">10</span>;<span class="comment">//局部域</span></span><br><span class="line">  dog::a = <span class="number">20</span>;<span class="comment">//命名空间域</span></span><br><span class="line">  dog::big_dog::a = <span class="number">30</span>;<span class="comment">//命名空间域</span></span><br><span class="line">  ::a = <span class="number">40</span>;<span class="comment">//全局作用域</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  fun3();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="priority-queue"><a href="#priority-queue" class="headerlink" title="priority_queue"></a>priority_queue</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">priority_queue&lt;<span class="keyword">int</span>&gt; pq;</span><br><span class="line">pq.push(<span class="number">10</span>);</span><br><span class="line">pq.push(<span class="number">1</span>);</span><br><span class="line">pq.push(<span class="number">15</span>);</span><br><span class="line">pq.push(<span class="number">20</span>);</span><br><span class="line">pq.push(<span class="number">2</span>);</span><br><span class="line">pq.push(<span class="number">4</span>);</span><br><span class="line">pq.push(<span class="number">19</span>);</span><br><span class="line"><span class="keyword">while</span>(!pq.empty())</span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; pq.top() &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">  pq.pop();</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
 
-<p>使用方式：</p>
+<p>优先级队列存放自定义类型，自定义类型需要支持大小比较运算</p>
+<ul>
+<li><p>建大堆需要提供小于比较的仿函数类</p>
+</li>
+<li><p>建小堆需要提供大于比较的仿函数类</p>
+</li>
+</ul>
+<h1 id="仿函数"><a href="#仿函数" class="headerlink" title="仿函数"></a>仿函数</h1><p>STL组件：使用方式类似于函数的类 —&gt; 重载圆括号 “( )” 的运算符重载函数</p>
+<p>仿函数对象：由仿函数类创建的对象</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//仿函数类模版</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> <span class="title">Less</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="keyword">const</span> T&amp; c1, <span class="keyword">const</span> T&amp; c2)</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> c1 &lt; c2;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  Less&lt;C&gt; lc;</span><br><span class="line">  <span class="function">C <span class="title">c1</span><span class="params">(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span></span>;</span><br><span class="line">  <span class="function">C <span class="title">c2</span><span class="params">(<span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>)</span></span>;</span><br><span class="line">  <span class="keyword">bool</span> ret = lc.<span class="keyword">operator</span>()(c1, c2);</span><br><span class="line">  ret = lc(c1, c2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="容器适配器"><a href="#容器适配器" class="headerlink" title="容器适配器"></a>容器适配器</h1><p>STL组件，stack，queue，priority_queue</p>
+<p>通过适配器的设计模式定义的新的数据结构</p>
+<p>适配器：把一种接口转化为另一种接口的方法</p>
 <ol>
-<li>命名空间+：：+成员</li>
-<li>引入成员using + 命名空间 + ：：+成员，后边使用时不用加作用域，成员暴露在全局域中，如果全局域中有同名成员，会导致命名冲突</li>
-<li>展开命名空间 using 命名空间，命名空间所有成员暴漏在全局域中</li>
+<li><p>stack：<code>template&lt; class T, class Container = deque&lt;T&gt; &gt; class stack</code></p>
+<p> 实现：vector，list，deque  ==默认实现：deque==</p>
+<p> stack实现规范：只要包含以下接口，都可以作为stack低层容器</p>
+</li>
 </ol>
-<h1 id="输入输出方式"><a href="#输入输出方式" class="headerlink" title="输入输出方式"></a>输入输出方式</h1><p>头文件 + std命名空间</p>
-<p>输出 cout &lt;&lt; a &lt;&lt; “\n”; 输出a\n</p>
-<p>输入 cin &gt;&gt; b; 输入b</p>
-<p>支持连续的输入输出</p>
-<p>字符串指针输出内容</p>
-<p>非字符串指针输出地址</p>
-<h1 id="缺省参数"><a href="#缺省参数" class="headerlink" title="缺省参数"></a>缺省参数</h1><p>给参数定义一个默认值，实际使用时，如果没有传参，对应的行参使用默认值，参数传递一个用一个（<strong>必须从第一个参数开始传递，参数要连续的传递</strong>）</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun1</span><span class="params">(<span class="keyword">int</span> a = <span class="number">1</span>, <span class="keyword">int</span> b = <span class="number">2</span>, <span class="keyword">int</span> c = <span class="number">3</span>)</span><span class="comment">//全缺省</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; a &lt;&lt; b &lt;&lt; c &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun2</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b = <span class="number">2</span>, <span class="keyword">int</span> c = <span class="number">3</span>)</span><span class="comment">//半缺省，必须从右到左连续无间断</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; a &lt;&lt; b &lt;&lt; c &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun3</span><span class="params">(<span class="keyword">int</span> a = <span class="number">1</span>, <span class="keyword">int</span> b = <span class="number">2</span>, <span class="keyword">int</span> c)</span><span class="comment">//非法</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun4</span><span class="params">(<span class="keyword">int</span> a = <span class="number">1</span>, <span class="keyword">int</span> b, <span class="keyword">int</span> c = <span class="number">3</span>)</span><span class="comment">//非法</span></span></span><br><span class="line"><span class="function">  </span></span><br><span class="line"><span class="function"><span class="comment">//错误写法，缺省值只能出现在声明或定义的地方，不能同时出现</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun5</span><span class="params">(<span class="keyword">int</span> a = <span class="number">1</span>, <span class="keyword">int</span> b = <span class="number">2</span>, <span class="keyword">int</span> c = <span class="number">3</span>)</span></span>;<span class="comment">//声明</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun5</span><span class="params">(<span class="keyword">int</span> a = <span class="number">100</span>, <span class="keyword">int</span> b = <span class="number">200</span>, <span class="keyword">int</span> c = <span class="number">300</span>)</span><span class="comment">//定义</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; a &lt;&lt; b &lt;&lt; c &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="函数重载"><a href="#函数重载" class="headerlink" title="函数重载"></a>函数重载</h1><p>同一个作用域内声明几个功能类似的同名函数，这些同名函数的行参列表（<strong>参数个数或类型 或顺序</strong>）必须不同， 常用于处理实现功能类似数据类型不同的问题。</p>
-<p><strong>仅仅返回值不同，不能构成重载。</strong></p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Add</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">float</span> <span class="title">Add</span><span class="params">(<span class="keyword">float</span> a, <span class="keyword">float</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Add</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b, <span class="keyword">int</span> c)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> a + b + c;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Add</span><span class="params">(<span class="keyword">char</span> a, <span class="keyword">int</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Add</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">char</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; Add((<span class="keyword">float</span>)<span class="number">1.5</span>, (<span class="keyword">float</span>)<span class="number">1.6</span>) &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="函数重载如何实现的"><a href="#函数重载如何实现的" class="headerlink" title="函数重载如何实现的"></a>函数重载如何实现的</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Add</span><span class="params">(<span class="keyword">int</span> a = <span class="number">1</span>, <span class="keyword">int</span> b = <span class="number">2</span>)</span></span></span><br></pre></td></tr></table></figure>
-
-<p>编译器编译之后的底层函数名称：</p>
 <ul>
-<li>VS：C编译器 ：无法解析的外部符号 _Add</li>
-<li>VS：C++编译器：无法解析的外部符号 ？Add@@YAHH@Z</li>
-<li>g++编译器：_Z3Addii</li>
-<li>_Z：规定的前缀，3：函数名字的字数，Add：函数名，ii：有两个int类型参数</li>
+<li><p>Push_back —&gt; push</p>
+</li>
+<li><p>Pop_back —&gt;pop</p>
+</li>
+<li><p>front —&gt; top</p>
+</li>
+<li><p>size —&gt; size</p>
+</li>
+<li><p>Empty —&gt; empty</p>
+</li>
 </ul>
-<p>函数名修饰规则：</p>
-<ul>
-<li>C编译器：函数名中不包含参数信息</li>
-<li>C++编译器：函数名中包含参数信息</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Add</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span></span><br><span class="line"><span class="function"><span class="comment">//C编译器均为：_Add</span></span></span><br><span class="line"><span class="function"><span class="comment">//g++编译器：_Z3Addii</span></span></span><br><span class="line"><span class="function"><span class="keyword">float</span> <span class="title">Add</span><span class="params">(<span class="keyword">float</span> a, <span class="keyword">float</span> b)</span></span></span><br><span class="line"><span class="function"><span class="comment">//_Z3Addff</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Add</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b, <span class="keyword">int</span> c)</span></span></span><br><span class="line"><span class="function"><span class="comment">//_Z3Addiii</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Add</span><span class="params">(<span class="keyword">char</span> a, <span class="keyword">int</span> b)</span></span></span><br><span class="line"><span class="function"><span class="comment">//_Z3Addci</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Add</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">char</span> b)</span></span></span><br><span class="line"><span class="function"><span class="comment">//_Z3Addic</span></span></span><br></pre></td></tr></table></figure>
-
-<h1 id="extern-“C”"><a href="#extern-“C”" class="headerlink" title="extern “C”"></a>extern “C”</h1><p>按照C语言规则编译</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="string">"C"</span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">sub</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">mul</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h1><p>不是新定义一个变量，而是给已存在的变量去了一个别名，编译器不会为引用变量开辟内从空间，它和它的引用的变量公用同一块内存空间。</p>
-<ul>
-<li>类型 + &amp; + 引用名称</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span>&amp; ra = a;</span><br><span class="line"><span class="keyword">int</span>&amp; ra2 = a;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> b = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span>&amp; rb = a;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span>&amp; r = <span class="number">10</span>;</span><br><span class="line"><span class="comment">//引用类型和引用实体必须是相同类型</span></span><br><span class="line"><span class="keyword">double</span> d = <span class="number">2.0</span>;</span><br><span class="line"><span class="keyword">double</span>&amp; rd = d;</span><br><span class="line"><span class="keyword">int</span> c = d;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span>&amp; rd2 = d;</span><br><span class="line"><span class="comment">//d隐式类型转换，生成一个临时int变量，rd2此时指向为此临时变量，而临时变量具有常性</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span>&amp; ra, <span class="keyword">int</span>&amp; rb)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> tmp = ra;</span><br><span class="line">	ra = rb;</span><br><span class="line">	rb = tmp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span>&amp; <span class="title">Add2</span><span class="params">(<span class="keyword">int</span>&amp; ra)</span><span class="comment">//int&amp; Add3(int a),引用做返回值，注意返回值的周期一定要大于函数生命周期</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> ++ra;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test4</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line">	<span class="keyword">int</span> b = <span class="number">20</span>;</span><br><span class="line">	swap(a, b);</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; a &lt;&lt; b &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">int</span>&amp; c = Add2(a);</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; a &lt;&lt; b &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>底层实现：引用通过指针实现，定义一个引用类型的变量相当于定义一个指针类型的变量。</strong></p>
-<p><strong>语法：引用是别名，不是指针，没有发生拷贝。</strong></p>
-<blockquote>
-<p>目前可以认为引用是指针的一层封装，更加简单化的指针</p>
-</blockquote>
-<h1 id="内联函数"><a href="#内联函数" class="headerlink" title="内联函数"></a>内联函数</h1><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">Add</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>关键字 ：“inline”</p>
-</blockquote>
-<p>内联函数：编译器编译时，会进行函数指令展开，没有栈帧的开销，提高代码效率</p>
-<blockquote>
-<p>替代宏函数的使用</p>
-</blockquote>
-<p>inline只是一个建议，编译器会根据实际情况进行判断，如果代码简单，直接展开，代码复杂，不会展开</p>
-<p><strong>inline不支持分离定义</strong></p>
-<h1 id="auto"><a href="#auto" class="headerlink" title="auto"></a>auto</h1><p>自动类型推导，不代表具体类型，编译时根据初始化表达式自动推导</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">auto</span> a = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">auto</span> b = <span class="number">2.0</span>;</span><br><span class="line"><span class="keyword">auto</span> c = <span class="string">'a'</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="keyword">typeid</span>(a).name() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="keyword">typeid</span>(b).name() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="keyword">typeid</span>(c).name() &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>auto定义的变量必须初始化</p>
-<p>auto可以定义多个变量，每一个表达式的类型要一致</p>
-<p>auto定义指针时，加不加 * 没有区别，定义引用类型时，<strong>必须加 &amp;</strong></p>
-</blockquote>
-<p><strong>函数参数类型不能使用auto， 定义数组不能使用auto</strong></p>
-<h1 id="基于范围的for循环"><a href="#基于范围的for循环" class="headerlink" title="基于范围的for循环"></a>基于范围的for循环</h1><blockquote>
-<p>范围内用于迭代的变量 ： 被迭代的范围</p>
-</blockquote>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> <span class="built_in">array</span>[] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>&#125;;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i - <span class="number">0</span>; i &lt; <span class="keyword">sizeof</span>(<span class="built_in">array</span>) / <span class="keyword">sizeof</span>(<span class="built_in">array</span>[<span class="number">0</span>]); i++)</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> e : <span class="built_in">array</span>)</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>使用场景：数据范围确定</p>
-</blockquote>
-<h1 id="指针空值nullptr"><a href="#指针空值nullptr" class="headerlink" title="指针空值nullptr"></a>指针空值nullptr</h1><ol>
-<li>其作为关键字，不需要包含头文件</li>
-<li>sizeof（nullptr） == sizeof ((void*) 0 )</li>
-<li>为了提高代码健壮性，尽量使用nullptr表示指针空值</li>
+<ol start="2">
+<li><p>Queue实现：list， deque   ==默认实现：deque==</p>
+<p> queue实现规范：只要包含以下接口，都可以作为queue低层容器</p>
+</li>
 </ol>
+<ul>
+<li>Push_back —&gt; push</li>
+<li>Pop_back —&gt; pop</li>
+<li>front —&gt; front</li>
+<li>back —&gt; back</li>
+<li>size —&gt; size</li>
+<li>empty —&gt; empty</li>
+</ul>
+<p>vector不能实现queue，因为它不提供pop_front接口</p>
+<ol start="3">
+<li><p>Priority_queue实现：vector  deque，==默认实现：vector==</p>
+<p> 实现规范：只要包含以下接口，其容器本身支持随机访问，都可以作为priority_queue的低层容器</p>
+</li>
+</ol>
+<ul>
+<li>Push_back —&gt; push</li>
+<li>Pop_back —&gt; pop</li>
+<li>Front —&gt; top</li>
+<li>Size —&gt; size</li>
+<li>Empty —&gt; empty</li>
+</ul>
+<p>list不能实现priority_queue，因为其不支持随机访问</p>
+<h1 id="duque-双端队列"><a href="#duque-双端队列" class="headerlink" title="duque 双端队列"></a>duque 双端队列</h1><p>逻辑连续，物理上不完全连续的线性表</p>
+<p>实现：指针数组 + buffer —&gt; 动态二维数组</p>
+<ol>
+<li>头插、头删、尾插、尾删时间复杂度都为O(1)，不需要移动元素</li>
+<li>支持随机访问，但是随机访问的效率低于vector，需要进行位置换算</li>
+<li>增容代价小，不需要拷贝所有元素内容。增容过程：开一个更大的指针数组，拷贝原始指针数组中的内容（指针），开新的buffer，buffer首地址存入新的指针数组，新的buffer存放新元素。原始存放元素的空间不需要更改</li>
+<li>在中间位置插入数组，时间复杂度O(n)。</li>
+</ol>
+<p>stack：默认实现deque，deque实现stack的优势</p>
+<ol>
+<li>stack不需要随机访问。</li>
+<li>vector增容代价比较大</li>
+<li>list容易造成内存碎片，空间利用率低</li>
+</ol>
+<p>queue：默认实现deque，deque实现queue优势</p>
+<ol>
+<li>list容易造成内存碎片，空间利用率低</li>
+</ol>
+<p>priority_queue：默认实现vector，vector实现priority_queue的优势</p>
+<ol>
+<li>deque随机访问效率比较低，因为list不支持随机访问，所以不能用其实现</li>
+</ol>
+<ul>
+<li><p>关于模拟实现<code>template&lt;T, Container, Compare&gt;</code></p>
+<ul>
+<li><p>模版参数：Compare：</p>
+<ol>
+<li>执行大小比较的逻辑 —&gt; 通过仿函数实现</li>
+<li>提供的仿函数不同，可以产生不同的堆结构。不需要修改源代码，极大的增加了代码的灵活性及通用性</li>
+<li>如果是自定义类型数据，需要重载<code>&gt;</code> <code>&lt;</code>运算符</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="模拟实现"><a href="#模拟实现" class="headerlink" title="模拟实现"></a>模拟实现</h1><p><a href="https://github.com/Latsummer/FinishedProducts/tree/master/stack.queue.pqm模拟实现" target="_blank" rel="noopener">stack、queue及priority_queue的模拟实现–GitHub</a></p>
 ]]></content>
       <categories>
         <category>C++</category>
       </categories>
+      <tags>
+        <tag>-stakc -queue</tag>
+      </tags>
   </entry>
   <entry>
     <title>一个简单的扫雷游戏（是真的简单）</title>
