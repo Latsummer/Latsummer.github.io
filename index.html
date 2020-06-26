@@ -222,7 +222,7 @@
           <span class="post-meta-item-text">发表于</span>
           
 
-          <time title="创建时间：2020-06-26 15:50:27 / 修改时间：15:50:50" itemprop="dateCreated datePublished" datetime="2020-06-26T15:50:27+08:00">2020-06-26</time>
+          <time title="创建时间：2020-06-26 15:50:27 / 修改时间：15:54:47" itemprop="dateCreated datePublished" datetime="2020-06-26T15:50:27+08:00">2020-06-26</time>
         </span>
         <span class="post-meta-item">
           <span class="post-meta-item-icon">
@@ -275,136 +275,14 @@
 </ul>
 </li>
 </ol>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span>/<span class="title">struct</span> 类名 :</span> 需要继承的类</span><br><span class="line">  				子类/派生类  父类/基类</span><br><span class="line">  </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">Print</span><span class="params">()</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"nema:"</span> &lt;&lt; _name &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"age:"</span> &lt;&lt; _age &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="keyword">protected</span>:<span class="comment">//类外不可见，内部和子类可见</span></span><br><span class="line">  <span class="built_in">string</span> _name = <span class="string">"abc"</span>;</span><br><span class="line">  <span class="keyword">int</span> _age = <span class="number">10</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> :</span> <span class="keyword">public</span> Person</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">protected</span>:</span><br><span class="line">  	<span class="keyword">int</span> _num = <span class="number">2020</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>子类继承方式为protected/private，从父类继承下来的所用成员的最低访问权限为protected/private，所以在子类外不可见</p>
-<table>
-<thead>
-<tr>
-<th>类成员/继承方式</th>
-<th>public继承</th>
-<th>protected继承</th>
-<th>private继承</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>基类的public成员</td>
-<td>派生类的public成员</td>
-<td>派生类的protected成员</td>
-<td>派生类的private成员</td>
-</tr>
-<tr>
-<td>基类的protected成员</td>
-<td>派生类的protected成员</td>
-<td>派生类的protected成员</td>
-<td>派生类的private成员</td>
-</tr>
-<tr>
-<td>基类的private成员</td>
-<td>派生类不可见</td>
-<td>在派生类不可见</td>
-<td>派生类不可见</td>
-</tr>
-</tbody></table>
-<h1 id="切片"><a href="#切片" class="headerlink" title="切片"></a>切片</h1><p>子类对象，指针，引用可以直接赋值给父类对象，指针，引用，<strong>此处不是隐式类型转换</strong></p>
-<p>父类对象不能赋值给子类对象</p>
-<p>父类指针、引用不能直接赋值给子类指针、引用。可以通过强制类型转换进行赋值，但是强制转换类型不安全，可能会导致越界，一般不使用强制类型转换，而是动态类型转换</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Person p;</span><br><span class="line">Student st;</span><br><span class="line"></span><br><span class="line"><span class="comment">//切片</span></span><br><span class="line">p = st;</span><br><span class="line">Person&amp; rs = st;</span><br><span class="line">Person* ptrrs = &amp;st;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//不可行</span></span><br><span class="line">st = p;</span><br><span class="line">Student&amp; rp = p;</span><br><span class="line">Student* ptrp = &amp;p;</span><br><span class="line"></span><br><span class="line"><span class="comment">//不安全，可能会访问越界</span></span><br><span class="line">Student&amp; rp = (Student&amp;)p;</span><br><span class="line">Student* ptrp = (Student*)&amp;p;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p> 子类对应类型赋值给父类对应类型 —&gt; 切片：<strong>安全</strong>，不是隐式类型转换</p>
-</blockquote>
-<blockquote>
-<p> 父类（指针/引用）赋值给子类（指针/引用） —&gt; 强制类型转换：<strong>不安全</strong>，存在访问越界的风险</p>
-</blockquote>
-<h1 id="同名隐藏"><a href="#同名隐藏" class="headerlink" title="同名隐藏"></a>同名隐藏</h1><p>父类和子类中有同名的成员，子类只能直接看到自己的成员，如果需要访问父类同名的成员，需要加父类作用域，不同的作用域下，含有同名成员，当前作用域下的成员就会隐藏其他作用域下的成员，<em>不是继承体系独有的</em>。</p>
-<ul>
-<li>成员变量隐藏：成员变量的名称相同</li>
-<li>函数隐藏：函数名字相同，就会构成函数隐藏，与参数无关 —&gt; 这种情况是发生在父类和子类汇总，不在同一个作用域；函数重载：在同一个作用域，函数名相同，参数不同</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> :</span> <span class="keyword">public</span> Person</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">setNum</span><span class="params">(<span class="keyword">int</span> _num)</span></span></span><br><span class="line"><span class="function">  </span>&#123; _num = _num; &#125;<span class="comment">//就近原则，此时为局部域，局部变量</span></span><br><span class="line">  <span class="keyword">protected</span>:</span><br><span class="line">  	<span class="keyword">int</span> _num = <span class="number">2020</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Student st;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; st._num &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">st.setNum(<span class="number">1999</span>);</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; st._num &lt;&lt; <span class="built_in">endl</span>;<span class="comment">//2020</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>同名隐藏：父类中的同名成员被子类中的同名成员隐藏</p>
-</blockquote>
-<p>父类、子类的作用域都是独立的，不同的作用域中可以有同名的成员，只要函数名相同，就会构成同名隐藏，不是函数重载</p>
-<h1 id="派生类的默认成员函数"><a href="#派生类的默认成员函数" class="headerlink" title="派生类的默认成员函数"></a>派生类的默认成员函数</h1><blockquote>
-<p> 编译器自动生成的默认构造自动调用父类的默认构造</p>
-<p>显示定义的构造函数也自动调用父类的默认构造，在初始化列表中调用父类构造</p>
-<p>父类成员必须要由父类的构造函数完成初始化</p>
-</blockquote>
-<p><strong>子类构造函数：</strong></p>
-<ol>
-<li>一定会调用父类的构造函数<ol>
-<li>如果不显示调用，自动调用父类的默认构造</li>
-<li>如果显示调用，则调用显示指定的父类构造</li>
-</ol>
-</li>
-<li>继承自父类的成员变量，一定要通过父类的构造函数完成初始化，在子类的初始化列表中只能显示的初始化子类新增的成员变量</li>
-<li>初始化顺序：一定是首先初始化父类成员，再去初始化子类成员</li>
-<li>创建子类对象时，首先调用子类的构造函数，在子类构造函数的初始化列表中调用父类的构造函数，先执行父类的构造逻辑，然后再执行子类本身的构造逻辑</li>
-</ol>
-<blockquote>
-<p>编译器自动生成的拷贝构造自动调用父类的拷贝构造</p>
-<p>显示定义的拷贝构造，自动调用父类的默认构造，不是父类的拷贝构造</p>
-<p>调用父类拷贝构造会有有切片操作</p>
-</blockquote>
-<p><strong>子类的拷贝构造：</strong></p>
-<ol>
-<li>默认行为（没有显示定义子类的拷贝构造）：父类的拷贝构造</li>
-<li>显示定义子类拷贝构造默认行为（没有显示调用父类的拷贝构造）：父类的默认构造</li>
-<li>在子类的拷贝构造中可以指定调用哪一个父类的构造函数，不一定是拷贝构造</li>
-</ol>
-<blockquote>
-<p>编译器自动生成的赋值运算符重载函数自动调用父类的赋值运算符重载函数</p>
-<p>子类赋值运算符和父类赋值运算符构成同名隐藏</p>
-</blockquote>
-<p><strong>子类的赋值运算符：</strong></p>
-<ol>
-<li>默认行为：调用父类的赋值运算符</li>
-<li>显示定义：和父类的赋值运算符构成同名隐藏，如果需要调用父类的赋值运算符，需要指定父类的作用域</li>
-<li>建议调用父类的赋值运算符：达到代码复用的目的</li>
-</ol>
-<blockquote>
-<p>父类析构不需要显示调用，可能会导致资源二次释放的问题</p>
-</blockquote>
-<p><strong>子类析构函数：</strong></p>
-<ol>
-<li>编译器自动生成的析构函数自动调用父类的析构函数</li>
-<li>显示定义的子类析构函数也会自动调用父类的析构函数</li>
-<li>无论子类析构是否显示调用父类析构，编译器都会自动调用一次父类析构</li>
-<li>子类析构和父类析构底层函数名相同，构成函数隐藏</li>
-</ol>
-<h1 id="继承与友元、静态成员"><a href="#继承与友元、静态成员" class="headerlink" title="继承与友元、静态成员"></a>继承与友元、静态成员</h1><p>友元关系不能继承，基类的友元不能访问子类的私有和保护成员</p>
-<p>基类定义了static静态成员，则继承体系中只有一个这样的成员，无论派生出多少个子类，都只有一个static成员实例</p>
-<h1 id="复杂继承"><a href="#复杂继承" class="headerlink" title="复杂继承"></a>复杂继承</h1><p><strong>单继承：</strong>一个子类只有一个直接父类</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span>&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> :</span> <span class="keyword">public</span> A</span><br><span class="line">&#123;&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span> :</span> <span class="keyword">public</span> B</span><br><span class="line">&#123;&#125;;</span><br></pre></td></tr></table></figure>
-
-<p><strong>多继承：</strong>一个子类有两个或以上直接父类</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span>&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span></span></span><br><span class="line"><span class="class">&#123;</span>&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">c</span> :</span> <span class="keyword">public</span> A, <span class="keyword">public</span> B</span><br><span class="line">&#123;&#125;;</span><br></pre></td></tr></table></figure>
-
-<p><strong>菱形继承：</strong>多继承的一种特殊情况</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span>&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> :</span> <span class="keyword">public</span> A</span><br><span class="line">&#123;&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span> :</span> <span class="keyword">public</span> A</span><br><span class="line">&#123;&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span> :</span> <span class="keyword">public</span> B, <span class="keyword">public</span> C</span><br><span class="line">&#123;&#125;;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>菱形继承存在数据冗余和二义性的问题</p>
-</blockquote>
-<h2 id="菱形虚拟继承"><a href="#菱形虚拟继承" class="headerlink" title="菱形虚拟继承"></a>菱形虚拟继承</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span>&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> :</span> <span class="keyword">virtual</span> <span class="keyword">public</span> A</span><br><span class="line">&#123;&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span> :</span> <span class="keyword">virtual</span> <span class="keyword">public</span> A</span><br><span class="line">&#123;&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span> :</span> <span class="keyword">public</span> B, <span class="keyword">public</span> C</span><br><span class="line">&#123;&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>通过虚基表指针和虚基表，虚基表存放公共部分的偏移量，虚基表指针指向虚基表</p>
-<p>虚基表</p>
-<ol>
-<li>相对于当前位置的偏移量</li>
-<li>相对于公共部分偏移量</li>
-</ol>
-<p>菱形虚拟继承可以解决数据冗余和二义性</p>
-<ol>
-<li>通过虚基表指针和虚基表实现</li>
-<li>如果需要访问公共成员：首先通过虚基表指针找到虚基表，读取偏移量，当前位置偏移指定的偏移量，找到公共部分成员，<strong>切片操作的过程</strong></li>
-<li>通过指针大小，换取重复成员的大小</li>
-<li>时间换空间的语法</li>
-</ol>
-
+      <!--noindex-->
+        <div class="post-button">
+          <a class="btn" href="/2020/06/20200626.html#more" rel="contents">
+            阅读全文 &raquo;
+          </a>
+        </div>
+      <!--/noindex-->
+    
   
 </div>
 
