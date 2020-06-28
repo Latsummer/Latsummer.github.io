@@ -22,20 +22,21 @@
     var CONFIG = {"hostname":"zhaozhuolin.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#A9A9A9","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="stack的基本使用1234567891011#include&lt;stack&gt;stack&lt;int&gt; st;st.push(1);st.push(2);st.push(3);while(!st.empty())&amp;#123;  cout &lt;&lt; st.top() &lt;&lt; &quot; &quot;;  st.pop();&amp;#125;cout &lt;&lt; endl;">
+  <meta name="description" content="多态的概念、定义以及实现多种形态，当不同的对象去执行同一种行为时，产生的不同表现形态 构成条件：在不同的继承关系的类对象，去调用同一函数，产生了不同的行为  继承关系 必须通过基类的指针或者引用调用的虚函数，一般都是用父类指针&#x2F;引用指向父类以及子类实体，即都为切片行为 被调用的函数必须是虚函数，且派生类必须对基类的虚函数进行重写">
 <meta property="og:type" content="article">
-<meta property="og:title" content="stack、queue及priority_queue">
-<meta property="og:url" content="http://zhaozhuolin.com/2020/06/20200617.html">
+<meta property="og:title" content="C++多态的基本原理及使用">
+<meta property="og:url" content="http://zhaozhuolin.com/2020/06/20200628.html">
 <meta property="og:site_name" content="小赵的学习笔记">
-<meta property="og:description" content="stack的基本使用1234567891011#include&lt;stack&gt;stack&lt;int&gt; st;st.push(1);st.push(2);st.push(3);while(!st.empty())&amp;#123;  cout &lt;&lt; st.top() &lt;&lt; &quot; &quot;;  st.pop();&amp;#125;cout &lt;&lt; endl;">
+<meta property="og:description" content="多态的概念、定义以及实现多种形态，当不同的对象去执行同一种行为时，产生的不同表现形态 构成条件：在不同的继承关系的类对象，去调用同一函数，产生了不同的行为  继承关系 必须通过基类的指针或者引用调用的虚函数，一般都是用父类指针&#x2F;引用指向父类以及子类实体，即都为切片行为 被调用的函数必须是虚函数，且派生类必须对基类的虚函数进行重写">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-06-17T05:59:46.000Z">
-<meta property="article:modified_time" content="2020-06-17T06:01:10.155Z">
+<meta property="article:published_time" content="2020-06-28T09:33:20.000Z">
+<meta property="article:modified_time" content="2020-06-28T09:33:58.341Z">
 <meta property="article:author" content="Morgan">
-<meta property="article:tag" content="-stakc -queue">
+<meta property="article:tag" content="类与对象">
+<meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://zhaozhuolin.com/2020/06/20200617.html">
+<link rel="canonical" href="http://zhaozhuolin.com/2020/06/20200628.html">
 
 
 <script id="page-configurations">
@@ -48,7 +49,7 @@
   };
 </script>
 
-  <title>stack、queue及priority_queue | 小赵的学习笔记</title>
+  <title>C++多态的基本原理及使用 | 小赵的学习笔记</title>
   
 
 
@@ -201,7 +202,7 @@
   
   
 <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-<link itemprop="mainEntityOfPage" href="http://zhaozhuolin.com/2020/06/20200617.html">
+<link itemprop="mainEntityOfPage" href="http://zhaozhuolin.com/2020/06/20200628.html">
 
 <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
   <meta itemprop="image" content="/images/IMG_6272.JPG">
@@ -214,7 +215,7 @@
 </span>
   <header class="post-header">
     <h1 class="post-title" itemprop="name headline">
-      stack、queue及priority_queue
+      C++多态的基本原理及使用
     </h1>
 
     <div class="post-meta">
@@ -225,7 +226,7 @@
           <span class="post-meta-item-text">发表于</span>
           
 
-          <time title="创建时间：2020-06-17 13:59:46 / 修改时间：14:01:10" itemprop="dateCreated datePublished" datetime="2020-06-17T13:59:46+08:00">2020-06-17</time>
+          <time title="创建时间：2020-06-28 17:33:20 / 修改时间：17:33:58" itemprop="dateCreated datePublished" datetime="2020-06-28T17:33:20+08:00">2020-06-28</time>
         </span>
         <span class="post-meta-item">
           <span class="post-meta-item-icon">
@@ -250,14 +251,14 @@
             <i class="far fa-file-word"></i>
           </span>
             <span class="post-meta-item-text">本文字数：</span>
-          <span>2.3k</span>
+          <span>1.6k</span>
         </span>
         <span class="post-meta-item" title="阅读时长">
           <span class="post-meta-item-icon">
             <i class="far fa-clock"></i>
           </span>
             <span class="post-meta-item-text">阅读时长 &asymp;</span>
-          <span>2 分钟</span>
+          <span>1 分钟</span>
         </span>
 
     </div>
@@ -269,107 +270,80 @@
 <div class="post-body" itemprop="articleBody">
 
   
-    <h1 id="stack的基本使用"><a href="#stack的基本使用" class="headerlink" title="stack的基本使用"></a>stack的基本使用</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stack&gt;</span></span></span><br><span class="line"><span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; st;</span><br><span class="line">st.push(<span class="number">1</span>);</span><br><span class="line">st.push(<span class="number">2</span>);</span><br><span class="line">st.push(<span class="number">3</span>);</span><br><span class="line"><span class="keyword">while</span>(!st.empty())</span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; st.top() &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">  st.pop();</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+    <h1 id="多态的概念、定义以及实现"><a href="#多态的概念、定义以及实现" class="headerlink" title="多态的概念、定义以及实现"></a>多态的概念、定义以及实现</h1><p>多种形态，当不同的对象去执行同一种行为时，产生的不同表现形态</p>
+<p><strong>构成条件：</strong>在不同的继承关系的类对象，去调用同一函数，产生了不同的行为</p>
+<ol>
+<li>继承关系</li>
+<li>必须通过基类的指针或者引用调用的虚函数，一般都是用父类指针/引用指向父类以及子类实体，即都为切片行为</li>
+<li>被调用的函数必须是虚函数，且派生类必须对基类的虚函数进行重写</li>
+</ol>
 <a id="more"></a>
-<h1 id="queue的基本使用"><a href="#queue的基本使用" class="headerlink" title="queue的基本使用"></a>queue的基本使用</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="built_in">queue</span>&lt;<span class="keyword">int</span>&gt; q;</span><br><span class="line">q.push();</span><br><span class="line"><span class="keyword">while</span>(!q.empty())</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; q.front() &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">	q.pop();</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
 
-<h2 id="priority-queue"><a href="#priority-queue" class="headerlink" title="priority_queue"></a>priority_queue</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">priority_queue&lt;<span class="keyword">int</span>&gt; pq;</span><br><span class="line">pq.push(<span class="number">10</span>);</span><br><span class="line">pq.push(<span class="number">1</span>);</span><br><span class="line">pq.push(<span class="number">15</span>);</span><br><span class="line">pq.push(<span class="number">20</span>);</span><br><span class="line">pq.push(<span class="number">2</span>);</span><br><span class="line">pq.push(<span class="number">4</span>);</span><br><span class="line">pq.push(<span class="number">19</span>);</span><br><span class="line"><span class="keyword">while</span>(!pq.empty())</span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; pq.top() &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">  pq.pop();</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>必须同时满足以上条件，缺一不可</p>
+</blockquote>
+<p><strong>虚函数的重写：</strong>重写函数逻辑</p>
+<p>构成虚函数重写条件：子类含有和父类接口完全相同的函数（返回值，函数名，参数完全相同），例外：协变，析构函数重写，如果不满足所有条件，但是函数名相同，则构成函数隐藏</p>
+<blockquote>
+<p>协变：返回值类型可以不同，但是返回值类型必须是父子关系</p>
+</blockquote>
+<p>注意：如果父类函数加了<code>virtual</code>声明，则子类接口完全一致的函数即使不加<code>virtual</code>也具有虚函数的属性，但是反过来不成立，建议一般对于所有的虚函数都加上<code>virtual</code></p>
+<blockquote>
+<p>非多态：看类型</p>
+<p>多态：看实际指向的实体</p>
+</blockquote>
+<p><strong>析构函数重写：</strong></p>
+<ol>
+<li><p>只要父类的析构函数是虚函数，则子类的析构函数和父类的析构函数构成重写</p>
+<p> 原因：编译器对继承关系下的所有类的析构函数的名字做了统一处理，保证了继承关系下所有的析构函数同名，一般把析构函数的名称统一处理成<code>destructor</code></p>
+</li>
+</ol>
+<p><code>final</code>和<code>override</code>关键字：</p>
+<ol>
+<li><code>final</code>：修饰虚函数，表示该虚函数不能再被继承，其定义的函数不能被重写，体现实现继承</li>
+<li><code>override</code>：检查派生类虚函数是否重写了某个虚函数，如果没有重写则编译报错，强制子类重写父类的某一个虚函数</li>
+</ol>
+<h1 id="抽象类"><a href="#抽象类" class="headerlink" title="抽象类"></a>抽象类</h1><p>抽象类：包含纯函数的类，抽象类不能实例化对象</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="comment">//纯虚函数：没有函数体的虚函数</span></span><br><span class="line">  <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">fun</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> :</span> <span class="keyword">public</span> A</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">fun</span><span class="params">()</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"B::fun()"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">//无法执行以下代码</span></span><br><span class="line">  <span class="comment">//A a;</span></span><br><span class="line">  <span class="comment">//a.fun();</span></span><br><span class="line">  </span><br><span class="line">  B b;</span><br><span class="line">  A* pb = &amp;b;</span><br><span class="line">  b.fun();</span><br><span class="line">  pb-&gt;fun();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>优先级队列存放自定义类型，自定义类型需要支持大小比较运算</p>
-<ul>
-<li><p>建大堆需要提供小于比较的仿函数类</p>
-</li>
-<li><p>建小堆需要提供大于比较的仿函数类</p>
-</li>
-</ul>
-<h1 id="仿函数"><a href="#仿函数" class="headerlink" title="仿函数"></a>仿函数</h1><p>STL组件：使用方式类似于函数的类 —&gt; 重载圆括号 “( )” 的运算符重载函数</p>
-<p>仿函数对象：由仿函数类创建的对象</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//仿函数类模版</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> <span class="title">Less</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="keyword">const</span> T&amp; c1, <span class="keyword">const</span> T&amp; c2)</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> c1 &lt; c2;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  Less&lt;C&gt; lc;</span><br><span class="line">  <span class="function">C <span class="title">c1</span><span class="params">(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span></span>;</span><br><span class="line">  <span class="function">C <span class="title">c2</span><span class="params">(<span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>)</span></span>;</span><br><span class="line">  <span class="keyword">bool</span> ret = lc.<span class="keyword">operator</span>()(c1, c2);</span><br><span class="line">  ret = lc(c1, c2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>抽象类存在意义，实现多态，其体现出接口继承</p>
+<h1 id="多态原理"><a href="#多态原理" class="headerlink" title="多态原理"></a>多态原理</h1><h2 id="虚函数表"><a href="#虚函数表" class="headerlink" title="虚函数表"></a>虚函数表</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span></span></span><br><span class="line"><span class="class">&#123;</span>&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Car</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Drive</span><span class="params">()</span></span></span><br><span class="line"><span class="function">  <span class="comment">//包含隐藏成员变量，虚函数表指针</span></span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-<h1 id="容器适配器"><a href="#容器适配器" class="headerlink" title="容器适配器"></a>容器适配器</h1><p>STL组件，stack，queue，priority_queue</p>
-<p>通过适配器的设计模式定义的新的数据结构</p>
-<p>适配器：把一种接口转化为另一种接口的方法</p>
+<p><strong>包含虚函数的类：</strong>类中包含一个隐含的成员变量，即虚表指针</p>
+<p><strong>虚表指针：</strong>指向虚表的首地址，类型为二级指针，函数指针的指针</p>
+<p><strong>虚表：</strong>存放虚函数指针的数组，类型为指针数组</p>
 <ol>
-<li><p>stack：<code>template&lt; class T, class Container = deque&lt;T&gt; &gt; class stack</code></p>
-<p> 实现：vector，list，deque  ==默认实现：deque==</p>
-<p> stack实现规范：只要包含以下接口，都可以作为stack低层容器</p>
-</li>
+<li>只存放虚函数的指针</li>
+<li>普通函数不会存入虚表</li>
+<li>如果子类重写了父类的虚函数，则子类虚表中对应位置使用子类虚函数指针覆盖</li>
+<li>如果子类没有重写父类的任何虚函数，则子类完全继承父类虚表，不做任何修改</li>
+<li>虚函数指针在虚表中的存放顺序和其声明/定义的顺序一致</li>
+<li>子类新定义的虚函数，其虚函数指针按照声明/定义的顺序依次加入虚表的末尾</li>
+<li>虚表一般以<code>nullptr</code>结束</li>
 </ol>
+<blockquote>
+<p>只要类中包含虚函数，就会有虚表指针和虚表</p>
+</blockquote>
 <ul>
-<li><p>Push_back —&gt; push</p>
-</li>
-<li><p>Pop_back —&gt;pop</p>
-</li>
-<li><p>front —&gt; top</p>
-</li>
-<li><p>size —&gt; size</p>
-</li>
-<li><p>Empty —&gt; empty</p>
-</li>
+<li>虚表指针存在对象当中</li>
+<li>虚表存放在代码段</li>
+<li>虚函数存放在代码段</li>
 </ul>
-<ol start="2">
-<li><p>Queue实现：list， deque   ==默认实现：deque==</p>
-<p> queue实现规范：只要包含以下接口，都可以作为queue低层容器</p>
-</li>
-</ol>
-<ul>
-<li>Push_back —&gt; push</li>
-<li>Pop_back —&gt; pop</li>
-<li>front —&gt; front</li>
-<li>back —&gt; back</li>
-<li>size —&gt; size</li>
-<li>empty —&gt; empty</li>
-</ul>
-<p>vector不能实现queue，因为它不提供pop_front接口</p>
-<ol start="3">
-<li><p>Priority_queue实现：vector  deque，==默认实现：vector==</p>
-<p> 实现规范：只要包含以下接口，其容器本身支持随机访问，都可以作为priority_queue的低层容器</p>
-</li>
-</ol>
-<ul>
-<li>Push_back —&gt; push</li>
-<li>Pop_back —&gt; pop</li>
-<li>Front —&gt; top</li>
-<li>Size —&gt; size</li>
-<li>Empty —&gt; empty</li>
-</ul>
-<p>list不能实现priority_queue，因为其不支持随机访问</p>
-<h1 id="duque-双端队列"><a href="#duque-双端队列" class="headerlink" title="duque 双端队列"></a>duque 双端队列</h1><p>逻辑连续，物理上不完全连续的线性表</p>
-<p>实现：指针数组 + buffer —&gt; 动态二维数组</p>
+<p><strong>多态：看实际指向的实体</strong></p>
+<p>多态原理：如果访问的为虚函数，则通过指针/引用找到实际指向的实体，获取实体中的虚表指针，通过虚表指针访问虚表，在虚表中找到需要执行的虚函数指针，通过虚函数指针执行具体函数行为</p>
+<h2 id="继承下的虚表"><a href="#继承下的虚表" class="headerlink" title="继承下的虚表"></a>继承下的虚表</h2><p><strong>单继承虚表</strong>：</p>
 <ol>
-<li>头插、头删、尾插、尾删时间复杂度都为O(1)，不需要移动元素</li>
-<li>支持随机访问，但是随机访问的效率低于vector，需要进行位置换算</li>
-<li>增容代价小，不需要拷贝所有元素内容。增容过程：开一个更大的指针数组，拷贝原始指针数组中的内容（指针），开新的buffer，buffer首地址存入新的指针数组，新的buffer存放新元素。原始存放元素的空间不需要更改</li>
-<li>在中间位置插入数组，时间复杂度O(n)。</li>
+<li>子类继承父类虚表</li>
+<li>用重写的虚函数指针覆盖子类对应的虚函数指针</li>
+<li>子类新定义的虚函数，其指针按照声明/定义顺序存入虚表的末尾</li>
 </ol>
-<p>stack：默认实现deque，deque实现stack的优势</p>
+<p><strong>多继承虚表：</strong></p>
 <ol>
-<li>stack不需要随机访问。</li>
-<li>vector增容代价比较大</li>
-<li>list容易造成内存碎片，空间利用率低</li>
+<li>虚表个数：等同于直接父类的个数</li>
+<li>子类继承父类所有的虚表</li>
+<li>用重写的虚函数指针覆盖对应父类的虚函数指针</li>
+<li>子类新定义的虚函数，其函数指针按照声明/定义的顺序存入第一个直接父类虚表的末尾</li>
 </ol>
-<p>queue：默认实现deque，deque实现queue优势</p>
-<ol>
-<li>list容易造成内存碎片，空间利用率低</li>
-</ol>
-<p>priority_queue：默认实现vector，vector实现priority_queue的优势</p>
-<ol>
-<li>deque随机访问效率比较低，因为list不支持随机访问，所以不能用其实现</li>
-</ol>
-<ul>
-<li><p>关于模拟实现<code>template&lt;T, Container, Compare&gt;</code></p>
-<ul>
-<li><p>模版参数：Compare：</p>
-<ol>
-<li>执行大小比较的逻辑 —&gt; 通过仿函数实现</li>
-<li>提供的仿函数不同，可以产生不同的堆结构。不需要修改源代码，极大的增加了代码的灵活性及通用性</li>
-<li>如果是自定义类型数据，需要重载<code>&gt;</code> <code>&lt;</code>运算符</li>
-</ol>
-</li>
-</ul>
-</li>
-</ul>
-<h1 id="模拟实现"><a href="#模拟实现" class="headerlink" title="模拟实现"></a>模拟实现</h1><p><a href="https://github.com/Latsummer/FinishedProducts/tree/master/stack.queue.pqm模拟实现" target="_blank" rel="noopener">stack、queue及priority_queue的模拟实现–GitHub</a></p>
 
 </div>
 
@@ -385,7 +359,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://zhaozhuolin.com/2020/06/20200617.html" title="stack、queue及priority_queue">http://zhaozhuolin.com/2020/06/20200617.html</a>
+    <a href="http://zhaozhuolin.com/2020/06/20200628.html" title="C++多态的基本原理及使用">http://zhaozhuolin.com/2020/06/20200628.html</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -407,7 +381,8 @@
 
   <footer class="post-footer">
       <div class="post-tags">
-          <a href="/tags/stakc-queue/" rel="tag"><i class="fa fa-tag"></i>-stakc -queue</a>
+          <a href="/tags/%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1/" rel="tag"><i class="fa fa-tag"></i>类与对象</a>
+          <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i>C++</a>
           </div>
 
         
@@ -416,13 +391,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/06/20200615.html" rel="prev" title="list的基本使用以及模拟实现">
-      <i class="fa fa-chevron-left"></i> list的基本使用以及模拟实现
+    <a href="/2020/06/20200626.html" rel="prev" title="C++中的继承">
+      <i class="fa fa-chevron-left"></i> C++中的继承
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/06/20200626.html" rel="next" title="C++中的继承">
-      C++中的继承 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -481,7 +453,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#stack的基本使用"><span class="nav-number">1.</span> <span class="nav-text">stack的基本使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#queue的基本使用"><span class="nav-number">2.</span> <span class="nav-text">queue的基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#priority-queue"><span class="nav-number">2.1.</span> <span class="nav-text">priority_queue</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#仿函数"><span class="nav-number">3.</span> <span class="nav-text">仿函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#容器适配器"><span class="nav-number">4.</span> <span class="nav-text">容器适配器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#duque-双端队列"><span class="nav-number">5.</span> <span class="nav-text">duque 双端队列</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#模拟实现"><span class="nav-number">6.</span> <span class="nav-text">模拟实现</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#多态的概念、定义以及实现"><span class="nav-number">1.</span> <span class="nav-text">多态的概念、定义以及实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#抽象类"><span class="nav-number">2.</span> <span class="nav-text">抽象类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#多态原理"><span class="nav-number">3.</span> <span class="nav-text">多态原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#虚函数表"><span class="nav-number">3.1.</span> <span class="nav-text">虚函数表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#继承下的虚表"><span class="nav-number">3.2.</span> <span class="nav-text">继承下的虚表</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
