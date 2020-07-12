@@ -136,7 +136,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">30</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">31</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -197,6 +197,108 @@
   
   
 <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+<link itemprop="mainEntityOfPage" href="http://zhaozhuolin.com/2020/07/20200712.html">
+
+<span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <meta itemprop="image" content="/images/IMG_6272.JPG">
+  <meta itemprop="name" content="Morgan">
+  <meta itemprop="description" content="八说了，我在学了！">
+</span>
+
+<span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+  <meta itemprop="name" content="小赵的学习笔记">
+</span>
+  <header class="post-header">
+    <h2 class="post-title" itemprop="name headline">
+      
+        <a href="/2020/07/20200712.html" class="post-title-link" itemprop="url">set与map的基本使用及特性</a>
+    </h2>
+
+    <div class="post-meta">
+        <span class="post-meta-item">
+          <span class="post-meta-item-icon">
+            <i class="far fa-calendar"></i>
+          </span>
+          <span class="post-meta-item-text">发表于</span>
+          
+
+          <time title="创建时间：2020-07-12 17:08:00 / 修改时间：17:08:20" itemprop="dateCreated datePublished" datetime="2020-07-12T17:08:00+08:00">2020-07-12</time>
+        </span>
+        <span class="post-meta-item">
+          <span class="post-meta-item-icon">
+            <i class="far fa-folder"></i>
+          </span>
+          <span class="post-meta-item-text">分类于</span>
+            <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+            </span>
+        </span>
+
+      <br>
+        <span class="post-meta-item" title="本文字数">
+          <span class="post-meta-item-icon">
+            <i class="far fa-file-word"></i>
+          </span>
+            <span class="post-meta-item-text">本文字数：</span>
+          <span>5.7k</span>
+        </span>
+        <span class="post-meta-item" title="阅读时长">
+          <span class="post-meta-item-icon">
+            <i class="far fa-clock"></i>
+          </span>
+            <span class="post-meta-item-text">阅读时长 &asymp;</span>
+          <span>5 分钟</span>
+        </span>
+
+    </div>
+  </header>
+
+
+
+
+<div class="post-body" itemprop="articleBody">
+
+  
+      <h1 id="set"><a href="#set" class="headerlink" title="set"></a>set</h1><ol>
+<li>实现—&gt;目前使用搜索树实现（红黑树）</li>
+<li>底层是一个存放KV结构的搜索树，但是此处K、V相同</li>
+<li>set中只需要存放value</li>
+<li>set中不能存放重复的元素</li>
+<li>set中的元素不能修改，不支持修改的操作</li>
+<li><strong>set默认比较是小于</strong>，可以通过修改仿函数，修改比较逻辑</li>
+<li>迭代器遍历有序：底层顺序是二叉搜索树的中序遍历</li>
+<li>迭代器只能读取内容，不能修改内容</li>
+<li>插入：如果用迭代器指定插入位置，最终实际的插入位置可能不是指定的位置，此处的位置只是一个建议，新的元素的插入位置必须符合搜索树的性质</li>
+<li>删除会导致当前删除位置的迭代器失效，但是不影响其他位置的迭代器</li>
+<li>find：找到返回元素的迭代器，未找到返回end迭代器</li>
+<li>count：获取指定元素在set中的个数，根据性质4，只用两个值，1或0</li>
+</ol>
+      <!--noindex-->
+        <div class="post-button">
+          <a class="btn" href="/2020/07/20200712.html#more" rel="contents">
+            阅读全文 &raquo;
+          </a>
+        </div>
+      <!--/noindex-->
+    
+  
+</div>
+
+
+
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+<article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
 <link itemprop="mainEntityOfPage" href="http://zhaozhuolin.com/2020/07/20200704.html">
 
 <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -222,7 +324,7 @@
           <span class="post-meta-item-text">发表于</span>
           
 
-          <time title="创建时间：2020-07-04 18:37:00 / 修改时间：18:37:51" itemprop="dateCreated datePublished" datetime="2020-07-04T18:37:00+08:00">2020-07-04</time>
+          <time title="创建时间：2020-07-04 18:37:00 / 修改时间：18:38:27" itemprop="dateCreated datePublished" datetime="2020-07-04T18:37:00+08:00">2020-07-04</time>
         </span>
         <span class="post-meta-item">
           <span class="post-meta-item-icon">
@@ -1048,109 +1150,10 @@
   
   
 
-      
-  
-  
-<article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-<link itemprop="mainEntityOfPage" href="http://zhaozhuolin.com/2020/05/20200527.html">
-
-<span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
-  <meta itemprop="description" content="八说了，我在学了！">
-</span>
-
-<span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-  <meta itemprop="name" content="小赵的学习笔记">
-</span>
-  <header class="post-header">
-    <h2 class="post-title" itemprop="name headline">
-      
-        <a href="/2020/05/20200527.html" class="post-title-link" itemprop="url">（C++）static、友元、内部类</a>
-    </h2>
-
-    <div class="post-meta">
-        <span class="post-meta-item">
-          <span class="post-meta-item-icon">
-            <i class="far fa-calendar"></i>
-          </span>
-          <span class="post-meta-item-text">发表于</span>
-
-          <time title="创建时间：2020-05-27 12:26:44" itemprop="dateCreated datePublished" datetime="2020-05-27T12:26:44+08:00">2020-05-27</time>
-        </span>
-          <span class="post-meta-item">
-            <span class="post-meta-item-icon">
-              <i class="far fa-calendar-check"></i>
-            </span>
-            <span class="post-meta-item-text">更新于</span>
-            <time title="修改时间：2020-06-02 13:10:44" itemprop="dateModified" datetime="2020-06-02T13:10:44+08:00">2020-06-02</time>
-          </span>
-        <span class="post-meta-item">
-          <span class="post-meta-item-icon">
-            <i class="far fa-folder"></i>
-          </span>
-          <span class="post-meta-item-text">分类于</span>
-            <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-            </span>
-        </span>
-
-      <br>
-        <span class="post-meta-item" title="本文字数">
-          <span class="post-meta-item-icon">
-            <i class="far fa-file-word"></i>
-          </span>
-            <span class="post-meta-item-text">本文字数：</span>
-          <span>3.6k</span>
-        </span>
-        <span class="post-meta-item" title="阅读时长">
-          <span class="post-meta-item-icon">
-            <i class="far fa-clock"></i>
-          </span>
-            <span class="post-meta-item-text">阅读时长 &asymp;</span>
-          <span>3 分钟</span>
-        </span>
-
-    </div>
-  </header>
-
-
-
-
-<div class="post-body" itemprop="articleBody">
-
-  
-      <h1 id="再谈构造函数"><a href="#再谈构造函数" class="headerlink" title="再谈构造函数"></a>再谈构造函数</h1><p>初始化列表：：成员（初始化/表达式），成员2（）…</p>
-<p>每个成员变量只能在初始化列表中出现一次</p>
-<p>对象成员必须在定义时初始化的地方：初始化列表</p>
-<p>如果有引用成员、const成员、没有默认构造的自定义成员，必须在初始化列表中进行初始化</p>
-<p>其他成员可以不进行显示初始化</p>
-      <!--noindex-->
-        <div class="post-button">
-          <a class="btn" href="/2020/05/20200527.html#more" rel="contents">
-            阅读全文 &raquo;
-          </a>
-        </div>
-      <!--/noindex-->
-    
-  
-</div>
-
-
-
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1218,7 +1221,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1283,13 +1286,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">100k</span>
+    <span title="站点总字数">106k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:31</span>
+    <span title="站点阅读时长">1:37</span>
 </div><script color="241,124,103" opacity="1" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
 
 
