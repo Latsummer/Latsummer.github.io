@@ -1,108 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>关于关键字，函数以及指针的初步了解</title>
-    <url>/2019/12/20191208.html</url>
-    <content><![CDATA[<h2 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h2><p>对于关键字这一方面，有以下几个需要我特别注意的</p>
-<table>
-<thead>
-<tr>
-<th>关键字</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>typedef</td>
-<td>类型定义，可理解为类型重命名</td>
-</tr>
-<tr>
-<td>static</td>
-<td>1.修饰局部变量改变其生命周期（作用域不变）2.修饰全局变量改变作用域，连接属性由外转内 3.修饰函数，同全局变量类似</td>
-</tr>
-<tr>
-<td>#define</td>
-<td>定义常量和宏</td>
-</tr>
-</tbody></table>
-<a id="more"></a>
-
-<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><p>在学习函数这一方面的时候，碰到了一些小问题，总会在声明函数之后加上一个分号，导致一些语法上的错误<br>比如</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">get_max</span><span class="params">(<span class="keyword">int</span> x , <span class="keyword">int</span> y)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//错误格式！！！</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">get_max</span><span class="params">(<span class="keyword">int</span> x , <span class="keyword">int</span> y)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="comment">//正确格式</span></span></span><br></pre></td></tr></table></figure>
-
-<p>希望以后谨记。。。</p>
-<h2 id="指针的初步理解"><a href="#指针的初步理解" class="headerlink" title="指针的初步理解"></a>指针的初步理解</h2><p>对我来说，指针变量更像是一个电话号码，给它打电话，就能找到要找到的人</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line">  <span class="keyword">int</span>* p = &amp;a;</span><br><span class="line">  <span class="comment">//声明一个整形指针变量 P ，并将 a 的**地址**赋值给 P</span></span><br><span class="line">  *p = <span class="number">20</span>;</span><br><span class="line">  <span class="comment">//此时在用 p 指代 a ，此时的意思即为 a=20 （打电话给 a 说：你现在等于20了，(●'◡'●)）</span></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span> ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>或许是本科学习过的微机原理以及汇编语言的关系，我对内存的理解可并不像是一个初学者，我相信这能对我有所帮助。</p>
-]]></content>
-      <categories>
-        <category>C</category>
-      </categories>
-      <tags>
-        <tag>C</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>C++中的类与this指针</title>
-    <url>/2020/05/20200523.html</url>
-    <content><![CDATA[<h1 id="类的定义"><a href="#类的定义" class="headerlink" title="类的定义"></a>类的定义</h1><p>C++ struct：可以定义数据以及函数，一般使用class</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Student</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">display</span><span class="params">()</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">setId</span><span class="params">(<span class="keyword">int</span> id)</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    _id = id</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">char</span> name[<span class="number">10</span>];</span><br><span class="line">  <span class="keyword">int</span> _id;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span></span></span><br><span class="line"><span class="class">&#123;</span><span class="comment">//成员函数</span></span><br><span class="line"><span class="keyword">public</span>:<span class="comment">//共有成员在任何地方可用</span></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">display</span><span class="params">()</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">setId</span><span class="params">(<span class="keyword">int</span> id)</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    _id = id</span><br><span class="line">  &#125;</span><br><span class="line"> <span class="keyword">private</span>:<span class="comment">//私有的成员在类外不可见</span></span><br><span class="line">  <span class="comment">//成员变量，属性</span></span><br><span class="line">  <span class="keyword">char</span> name[<span class="number">10</span>];</span><br><span class="line">  <span class="keyword">int</span> _id;</span><br><span class="line"> <span class="keyword">protected</span>:<span class="comment">//保护的成员在类外不可见</span></span><br><span class="line">  <span class="keyword">char</span> major[<span class="number">10</span>];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<a id="more"></a>
-
-<h1 id="类的限定符以及封装"><a href="#类的限定符以及封装" class="headerlink" title="类的限定符以及封装"></a>类的限定符以及封装</h1><blockquote>
-<p>访问限定符：public，protected， private</p>
-</blockquote>
-<p><strong>限定符表示范围，从当前限定符开始，到下一个限定符结束</strong>，只限制成员在类外的访问，类内访问不受限制</p>
-<blockquote>
-<p>class 定义成员默认访问权限为私有<br>struct 定义的成员默认访问权限是共有</p>
-</blockquote>
-<p><strong>建议显式的写出来，以增加可读性</strong><br><strong>类的封装</strong>：将数据和操作数据的方法有机结合，隐藏属性和实现的细节，仅对外公开接口来和对象进行交互</p>
-<h1 id="类的作用域："><a href="#类的作用域：" class="headerlink" title="类的作用域："></a>类的作用域：</h1><p> 类定义了一个新的作用域，所有类的成员都在类的作用域中。在类体外定义成员，需要使用：：作为域解析符，指明成员属于哪个类域</p>
-<h1 id="类的实例化："><a href="#类的实例化：" class="headerlink" title="类的实例化："></a>类的实例化：</h1><p> 变量：对象 -—&gt;自定义类型的变量一般习惯称为对象</p>
-<p>类只是一个模型一样的东西，限定了类有哪些成员，定义一个<strong>没有分配实际的内存空间</strong>来存储它</p>
-<p>一个类可以实例化多个对象，实例化出的对象，占用实际的物理空间，存储类成员变量</p>
-<h1 id="类对象模型（大小）"><a href="#类对象模型（大小）" class="headerlink" title="类对象模型（大小）"></a>类对象模型（大小）</h1><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>  //4字节</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="keyword">int</span> _a;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span>  //4字节</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="keyword">int</span> _b;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">fun1</span><span class="params">()</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">float</span> b = <span class="number">2.0</span>;</span><br><span class="line">    <span class="keyword">char</span> c = <span class="string">'a'</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span>  //1字节</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"> <span class="function"><span class="keyword">void</span> <span class="title">fun1</span><span class="params">()</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">float</span> b = <span class="number">2.0</span>;</span><br><span class="line">    <span class="keyword">char</span> c = <span class="string">'a'</span>;</span><br><span class="line">  &#125; </span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span>  //1字节</span></span><br><span class="line"><span class="class">&#123;</span>&#125;;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>对象模型中只存放普通的成员变量，不存放成员函数，成员函数存放在公共代码段</p>
-</blockquote>
-<blockquote>
-<p>空类占一个字节（起到标记作用）</p>
-</blockquote>
-<p>类的大小遵循<strong>内存对齐</strong>规则</p>
-<ol>
-<li><strong>第一个成员在与结构体偏移量为0的地址处。</strong></li>
-<li><strong>其他成员变量要对齐到某个数字（对齐数）的整数倍地址处。</strong> <em>（对齐数 = 编译器默认对齐数与该成员大小的较小值，VS默认为 8 ，Linux和当前字段sizeof值一样）</em></li>
-<li><strong>结构体总大小为：最大对齐数（所有变量类型的最大者与默认对齐数取最小）的整数倍。</strong></li>
-<li><strong>如果存在嵌套，嵌套的结构体对齐到自己的最大对齐数的整数倍处，结构体的整体大小就是所有最大对齐数（含嵌套结构体的对齐数）的整数倍处。</strong></li>
-</ol>
-<p><strong>！！！！如果嵌套的结构体只有定义，那么算大小的时候不算它！！！！！</strong></p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>  //48 字节</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">char</span> _a;</span><br><span class="line">	<span class="keyword">double</span> _b;</span><br><span class="line">	<span class="keyword">int</span> _c;</span><br><span class="line">	<span class="keyword">char</span> _d;</span><br><span class="line">	<span class="class"><span class="keyword">class</span> <span class="title">B</span></span></span><br><span class="line"><span class="class">	&#123;</span></span><br><span class="line">		<span class="keyword">double</span> _a;</span><br><span class="line">		<span class="keyword">char</span> _b;</span><br><span class="line">		<span class="keyword">int</span> _c;</span><br><span class="line">		<span class="keyword">char</span> _d;</span><br><span class="line">	&#125;;</span><br><span class="line">	B b;<span class="comment">//关键点</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>  //24字节</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">char</span> _a;</span><br><span class="line">	<span class="keyword">double</span> _b;</span><br><span class="line">	<span class="keyword">int</span> _c;</span><br><span class="line">	<span class="keyword">char</span> _d;</span><br><span class="line">	<span class="class"><span class="keyword">class</span> <span class="title">B</span></span></span><br><span class="line"><span class="class">	&#123;</span></span><br><span class="line">		<span class="keyword">double</span> _a;</span><br><span class="line">		<span class="keyword">char</span> _b;</span><br><span class="line">		<span class="keyword">int</span> _c;</span><br><span class="line">		<span class="keyword">char</span> _d;</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>为什么要内存对齐？</p>
-<p>答：提高访问效率，CPU读取内存是按块读取的，内存对齐可以提高访问效率，方便一些硬件（如嵌入式）读取数据</p>
-</blockquote>
-<blockquote>
-<p>如何修改内存对齐数：#pargma pack()</p>
-</blockquote>
-<h1 id="this-指针"><a href="#this-指针" class="headerlink" title="this 指针"></a>this 指针</h1><p>C++编译器给每个“非静态的成员函数“增加了一个隐藏的指针参数，让该指针指向当前对象(函数运行时调用该函数的对象)，在函数体中所有成员变量的操作，都是通过该 指针去访问。只不过所有的操作对用户是透明的，即用户不需要来传递，编译器自动完成。<br>this 指针类型：类类型* const</p>
-<p>this指针只存在于成员函数中</p>
-<p>this指针始终作为成员函数的第一个行参</p>
-<blockquote>
-<p>this不是类的成员，只是一个函数行参，一般存在于栈上，一般会做优化，存在寄存器中</p>
-</blockquote>
-<p><strong>有解引用的情况下this指针不能为空！</strong></p>
-]]></content>
-      <categories>
-        <category>C++</category>
-      </categories>
-      <tags>
-        <tag>类与对象</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>C++中基本的内存管理</title>
     <url>/2020/05/20200530.html</url>
     <content><![CDATA[<h1 id="C-C-内存分布"><a href="#C-C-内存分布" class="headerlink" title="C/C++内存分布"></a>C/C++内存分布</h1><ol>
@@ -212,6 +110,194 @@
       </categories>
       <tags>
         <tag>内存管理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>关于关键字，函数以及指针的初步了解</title>
+    <url>/2019/12/20191208.html</url>
+    <content><![CDATA[<h2 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h2><p>对于关键字这一方面，有以下几个需要我特别注意的</p>
+<table>
+<thead>
+<tr>
+<th>关键字</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>typedef</td>
+<td>类型定义，可理解为类型重命名</td>
+</tr>
+<tr>
+<td>static</td>
+<td>1.修饰局部变量改变其生命周期（作用域不变）2.修饰全局变量改变作用域，连接属性由外转内 3.修饰函数，同全局变量类似</td>
+</tr>
+<tr>
+<td>#define</td>
+<td>定义常量和宏</td>
+</tr>
+</tbody></table>
+<a id="more"></a>
+
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><p>在学习函数这一方面的时候，碰到了一些小问题，总会在声明函数之后加上一个分号，导致一些语法上的错误<br>比如</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">get_max</span><span class="params">(<span class="keyword">int</span> x , <span class="keyword">int</span> y)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//错误格式！！！</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">get_max</span><span class="params">(<span class="keyword">int</span> x , <span class="keyword">int</span> y)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="comment">//正确格式</span></span></span><br></pre></td></tr></table></figure>
+
+<p>希望以后谨记。。。</p>
+<h2 id="指针的初步理解"><a href="#指针的初步理解" class="headerlink" title="指针的初步理解"></a>指针的初步理解</h2><p>对我来说，指针变量更像是一个电话号码，给它打电话，就能找到要找到的人</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line">  <span class="keyword">int</span>* p = &amp;a;</span><br><span class="line">  <span class="comment">//声明一个整形指针变量 P ，并将 a 的**地址**赋值给 P</span></span><br><span class="line">  *p = <span class="number">20</span>;</span><br><span class="line">  <span class="comment">//此时在用 p 指代 a ，此时的意思即为 a=20 （打电话给 a 说：你现在等于20了，(●'◡'●)）</span></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span> ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>或许是本科学习过的微机原理以及汇编语言的关系，我对内存的理解可并不像是一个初学者，我相信这能对我有所帮助。</p>
+]]></content>
+      <categories>
+        <category>C</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C++中的类与this指针</title>
+    <url>/2020/05/20200523.html</url>
+    <content><![CDATA[<h1 id="类的定义"><a href="#类的定义" class="headerlink" title="类的定义"></a>类的定义</h1><p>C++ struct：可以定义数据以及函数，一般使用class</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Student</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">display</span><span class="params">()</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">setId</span><span class="params">(<span class="keyword">int</span> id)</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    _id = id</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">char</span> name[<span class="number">10</span>];</span><br><span class="line">  <span class="keyword">int</span> _id;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span></span></span><br><span class="line"><span class="class">&#123;</span><span class="comment">//成员函数</span></span><br><span class="line"><span class="keyword">public</span>:<span class="comment">//共有成员在任何地方可用</span></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">display</span><span class="params">()</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">setId</span><span class="params">(<span class="keyword">int</span> id)</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    _id = id</span><br><span class="line">  &#125;</span><br><span class="line"> <span class="keyword">private</span>:<span class="comment">//私有的成员在类外不可见</span></span><br><span class="line">  <span class="comment">//成员变量，属性</span></span><br><span class="line">  <span class="keyword">char</span> name[<span class="number">10</span>];</span><br><span class="line">  <span class="keyword">int</span> _id;</span><br><span class="line"> <span class="keyword">protected</span>:<span class="comment">//保护的成员在类外不可见</span></span><br><span class="line">  <span class="keyword">char</span> major[<span class="number">10</span>];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<h1 id="类的限定符以及封装"><a href="#类的限定符以及封装" class="headerlink" title="类的限定符以及封装"></a>类的限定符以及封装</h1><blockquote>
+<p>访问限定符：public，protected， private</p>
+</blockquote>
+<p><strong>限定符表示范围，从当前限定符开始，到下一个限定符结束</strong>，只限制成员在类外的访问，类内访问不受限制</p>
+<blockquote>
+<p>class 定义成员默认访问权限为私有<br>struct 定义的成员默认访问权限是共有</p>
+</blockquote>
+<p><strong>建议显式的写出来，以增加可读性</strong><br><strong>类的封装</strong>：将数据和操作数据的方法有机结合，隐藏属性和实现的细节，仅对外公开接口来和对象进行交互</p>
+<h1 id="类的作用域："><a href="#类的作用域：" class="headerlink" title="类的作用域："></a>类的作用域：</h1><p> 类定义了一个新的作用域，所有类的成员都在类的作用域中。在类体外定义成员，需要使用：：作为域解析符，指明成员属于哪个类域</p>
+<h1 id="类的实例化："><a href="#类的实例化：" class="headerlink" title="类的实例化："></a>类的实例化：</h1><p> 变量：对象 -—&gt;自定义类型的变量一般习惯称为对象</p>
+<p>类只是一个模型一样的东西，限定了类有哪些成员，定义一个<strong>没有分配实际的内存空间</strong>来存储它</p>
+<p>一个类可以实例化多个对象，实例化出的对象，占用实际的物理空间，存储类成员变量</p>
+<h1 id="类对象模型（大小）"><a href="#类对象模型（大小）" class="headerlink" title="类对象模型（大小）"></a>类对象模型（大小）</h1><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>  //4字节</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="keyword">int</span> _a;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span>  //4字节</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="keyword">int</span> _b;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">fun1</span><span class="params">()</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">float</span> b = <span class="number">2.0</span>;</span><br><span class="line">    <span class="keyword">char</span> c = <span class="string">'a'</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span>  //1字节</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"> <span class="function"><span class="keyword">void</span> <span class="title">fun1</span><span class="params">()</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">float</span> b = <span class="number">2.0</span>;</span><br><span class="line">    <span class="keyword">char</span> c = <span class="string">'a'</span>;</span><br><span class="line">  &#125; </span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span>  //1字节</span></span><br><span class="line"><span class="class">&#123;</span>&#125;;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>对象模型中只存放普通的成员变量，不存放成员函数，成员函数存放在公共代码段</p>
+</blockquote>
+<blockquote>
+<p>空类占一个字节（起到标记作用）</p>
+</blockquote>
+<p>类的大小遵循<strong>内存对齐</strong>规则</p>
+<ol>
+<li><strong>第一个成员在与结构体偏移量为0的地址处。</strong></li>
+<li><strong>其他成员变量要对齐到某个数字（对齐数）的整数倍地址处。</strong> <em>（对齐数 = 编译器默认对齐数与该成员大小的较小值，VS默认为 8 ，Linux和当前字段sizeof值一样）</em></li>
+<li><strong>结构体总大小为：最大对齐数（所有变量类型的最大者与默认对齐数取最小）的整数倍。</strong></li>
+<li><strong>如果存在嵌套，嵌套的结构体对齐到自己的最大对齐数的整数倍处，结构体的整体大小就是所有最大对齐数（含嵌套结构体的对齐数）的整数倍处。</strong></li>
+</ol>
+<p><strong>！！！！如果嵌套的结构体只有定义，那么算大小的时候不算它！！！！！</strong></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>  //48 字节</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">char</span> _a;</span><br><span class="line">	<span class="keyword">double</span> _b;</span><br><span class="line">	<span class="keyword">int</span> _c;</span><br><span class="line">	<span class="keyword">char</span> _d;</span><br><span class="line">	<span class="class"><span class="keyword">class</span> <span class="title">B</span></span></span><br><span class="line"><span class="class">	&#123;</span></span><br><span class="line">		<span class="keyword">double</span> _a;</span><br><span class="line">		<span class="keyword">char</span> _b;</span><br><span class="line">		<span class="keyword">int</span> _c;</span><br><span class="line">		<span class="keyword">char</span> _d;</span><br><span class="line">	&#125;;</span><br><span class="line">	B b;<span class="comment">//关键点</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>  //24字节</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">char</span> _a;</span><br><span class="line">	<span class="keyword">double</span> _b;</span><br><span class="line">	<span class="keyword">int</span> _c;</span><br><span class="line">	<span class="keyword">char</span> _d;</span><br><span class="line">	<span class="class"><span class="keyword">class</span> <span class="title">B</span></span></span><br><span class="line"><span class="class">	&#123;</span></span><br><span class="line">		<span class="keyword">double</span> _a;</span><br><span class="line">		<span class="keyword">char</span> _b;</span><br><span class="line">		<span class="keyword">int</span> _c;</span><br><span class="line">		<span class="keyword">char</span> _d;</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>为什么要内存对齐？</p>
+<p>答：提高访问效率，CPU读取内存是按块读取的，内存对齐可以提高访问效率，方便一些硬件（如嵌入式）读取数据</p>
+</blockquote>
+<blockquote>
+<p>如何修改内存对齐数：#pargma pack()</p>
+</blockquote>
+<h1 id="this-指针"><a href="#this-指针" class="headerlink" title="this 指针"></a>this 指针</h1><p>C++编译器给每个“非静态的成员函数“增加了一个隐藏的指针参数，让该指针指向当前对象(函数运行时调用该函数的对象)，在函数体中所有成员变量的操作，都是通过该 指针去访问。只不过所有的操作对用户是透明的，即用户不需要来传递，编译器自动完成。<br>this 指针类型：类类型* const</p>
+<p>this指针只存在于成员函数中</p>
+<p>this指针始终作为成员函数的第一个行参</p>
+<blockquote>
+<p>this不是类的成员，只是一个函数行参，一般存在于栈上，一般会做优化，存在寄存器中</p>
+</blockquote>
+<p><strong>有解引用的情况下this指针不能为空！</strong></p>
+]]></content>
+      <categories>
+        <category>C++</category>
+      </categories>
+      <tags>
+        <tag>类与对象</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C++多态的基本原理及使用</title>
+    <url>/2020/06/20200628.html</url>
+    <content><![CDATA[<h1 id="多态的概念、定义以及实现"><a href="#多态的概念、定义以及实现" class="headerlink" title="多态的概念、定义以及实现"></a>多态的概念、定义以及实现</h1><p>多种形态，当不同的对象去执行同一种行为时，产生的不同表现形态</p>
+<p><strong>构成条件：</strong>在不同的继承关系的类对象，去调用同一函数，产生了不同的行为</p>
+<ol>
+<li>继承关系</li>
+<li>必须通过基类的指针或者引用调用的虚函数，一般都是用父类指针/引用指向父类以及子类实体，即都为切片行为</li>
+<li>被调用的函数必须是虚函数，且派生类必须对基类的虚函数进行重写</li>
+</ol>
+<a id="more"></a>
+
+<blockquote>
+<p>必须同时满足以上条件，缺一不可</p>
+</blockquote>
+<p><strong>虚函数的重写：</strong>重写函数逻辑</p>
+<p>构成虚函数重写条件：子类含有和父类接口完全相同的函数（返回值，函数名，参数完全相同），例外：协变，析构函数重写，如果不满足所有条件，但是函数名相同，则构成函数隐藏</p>
+<blockquote>
+<p>协变：返回值类型可以不同，但是返回值类型必须是父子关系</p>
+</blockquote>
+<p>注意：如果父类函数加了<code>virtual</code>声明，则子类接口完全一致的函数即使不加<code>virtual</code>也具有虚函数的属性，但是反过来不成立，建议一般对于所有的虚函数都加上<code>virtual</code></p>
+<blockquote>
+<p>非多态：看类型</p>
+<p>多态：看实际指向的实体</p>
+</blockquote>
+<p><strong>析构函数重写：</strong></p>
+<ol>
+<li><p>只要父类的析构函数是虚函数，则子类的析构函数和父类的析构函数构成重写</p>
+<p> 原因：编译器对继承关系下的所有类的析构函数的名字做了统一处理，保证了继承关系下所有的析构函数同名，一般把析构函数的名称统一处理成<code>destructor</code></p>
+</li>
+</ol>
+<p><code>final</code>和<code>override</code>关键字：</p>
+<ol>
+<li><code>final</code>：修饰虚函数，表示该虚函数不能再被继承，其定义的函数不能被重写，体现实现继承</li>
+<li><code>override</code>：检查派生类虚函数是否重写了某个虚函数，如果没有重写则编译报错，强制子类重写父类的某一个虚函数</li>
+</ol>
+<h1 id="抽象类"><a href="#抽象类" class="headerlink" title="抽象类"></a>抽象类</h1><p>抽象类：包含纯函数的类，抽象类不能实例化对象</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="comment">//纯虚函数：没有函数体的虚函数</span></span><br><span class="line">  <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">fun</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> :</span> <span class="keyword">public</span> A</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">fun</span><span class="params">()</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"B::fun()"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">//无法执行以下代码</span></span><br><span class="line">  <span class="comment">//A a;</span></span><br><span class="line">  <span class="comment">//a.fun();</span></span><br><span class="line">  </span><br><span class="line">  B b;</span><br><span class="line">  A* pb = &amp;b;</span><br><span class="line">  b.fun();</span><br><span class="line">  pb-&gt;fun();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>抽象类存在意义，实现多态，其体现出接口继承</p>
+<h1 id="多态原理"><a href="#多态原理" class="headerlink" title="多态原理"></a>多态原理</h1><h2 id="虚函数表"><a href="#虚函数表" class="headerlink" title="虚函数表"></a>虚函数表</h2><figure class="highlight"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span></span></span><br><span class="line"><span class="class">&#123;</span>&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Car</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Drive</span><span class="params">()</span></span></span><br><span class="line"><span class="function">  <span class="comment">//包含隐藏成员变量，虚函数表指针</span></span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>包含虚函数的类：</strong>类中包含一个隐含的成员变量，即虚表指针</p>
+<p><strong>虚表指针：</strong>指向虚表的首地址，类型为二级指针，函数指针的指针</p>
+<p><strong>虚表：</strong>存放虚函数指针的数组，类型为指针数组</p>
+<ol>
+<li>只存放虚函数的指针</li>
+<li>普通函数不会存入虚表</li>
+<li>如果子类重写了父类的虚函数，则子类虚表中对应位置使用子类虚函数指针覆盖</li>
+<li>如果子类没有重写父类的任何虚函数，则子类完全继承父类虚表，不做任何修改</li>
+<li>虚函数指针在虚表中的存放顺序和其声明/定义的顺序一致</li>
+<li>子类新定义的虚函数，其虚函数指针按照声明/定义的顺序依次加入虚表的末尾</li>
+<li>虚表一般以<code>nullptr</code>结束</li>
+</ol>
+<blockquote>
+<p>只要类中包含虚函数，就会有虚表指针和虚表</p>
+</blockquote>
+<ul>
+<li>虚表指针存在对象当中</li>
+<li>虚表存放在代码段</li>
+<li>虚函数存放在代码段</li>
+</ul>
+<p><strong>多态：看实际指向的实体</strong></p>
+<p>多态原理：如果访问的为虚函数，则通过指针/引用找到实际指向的实体，获取实体中的虚表指针，通过虚表指针访问虚表，在虚表中找到需要执行的虚函数指针，通过虚函数指针执行具体函数行为</p>
+<h2 id="继承下的虚表"><a href="#继承下的虚表" class="headerlink" title="继承下的虚表"></a>继承下的虚表</h2><p><strong>单继承虚表</strong>：</p>
+<ol>
+<li>子类继承父类虚表</li>
+<li>用重写的虚函数指针覆盖子类对应的虚函数指针</li>
+<li>子类新定义的虚函数，其指针按照声明/定义顺序存入虚表的末尾</li>
+</ol>
+<p><strong>多继承虚表：</strong></p>
+<ol>
+<li>虚表个数：等同于直接父类的个数</li>
+<li>子类继承父类所有的虚表</li>
+<li>用重写的虚函数指针覆盖对应父类的虚函数指针</li>
+<li>子类新定义的虚函数，其函数指针按照声明/定义的顺序存入第一个直接父类虚表的末尾</li>
+</ol>
+]]></content>
+      <categories>
+        <category>C++</category>
+      </categories>
+      <tags>
+        <tag>类与对象</tag>
+        <tag>C++</tag>
       </tags>
   </entry>
   <entry>
@@ -373,92 +459,6 @@
       </tags>
   </entry>
   <entry>
-    <title>C++多态的基本原理及使用</title>
-    <url>/2020/06/20200628.html</url>
-    <content><![CDATA[<h1 id="多态的概念、定义以及实现"><a href="#多态的概念、定义以及实现" class="headerlink" title="多态的概念、定义以及实现"></a>多态的概念、定义以及实现</h1><p>多种形态，当不同的对象去执行同一种行为时，产生的不同表现形态</p>
-<p><strong>构成条件：</strong>在不同的继承关系的类对象，去调用同一函数，产生了不同的行为</p>
-<ol>
-<li>继承关系</li>
-<li>必须通过基类的指针或者引用调用的虚函数，一般都是用父类指针/引用指向父类以及子类实体，即都为切片行为</li>
-<li>被调用的函数必须是虚函数，且派生类必须对基类的虚函数进行重写</li>
-</ol>
-<a id="more"></a>
-
-<blockquote>
-<p>必须同时满足以上条件，缺一不可</p>
-</blockquote>
-<p><strong>虚函数的重写：</strong>重写函数逻辑</p>
-<p>构成虚函数重写条件：子类含有和父类接口完全相同的函数（返回值，函数名，参数完全相同），例外：协变，析构函数重写，如果不满足所有条件，但是函数名相同，则构成函数隐藏</p>
-<blockquote>
-<p>协变：返回值类型可以不同，但是返回值类型必须是父子关系</p>
-</blockquote>
-<p>注意：如果父类函数加了<code>virtual</code>声明，则子类接口完全一致的函数即使不加<code>virtual</code>也具有虚函数的属性，但是反过来不成立，建议一般对于所有的虚函数都加上<code>virtual</code></p>
-<blockquote>
-<p>非多态：看类型</p>
-<p>多态：看实际指向的实体</p>
-</blockquote>
-<p><strong>析构函数重写：</strong></p>
-<ol>
-<li><p>只要父类的析构函数是虚函数，则子类的析构函数和父类的析构函数构成重写</p>
-<p> 原因：编译器对继承关系下的所有类的析构函数的名字做了统一处理，保证了继承关系下所有的析构函数同名，一般把析构函数的名称统一处理成<code>destructor</code></p>
-</li>
-</ol>
-<p><code>final</code>和<code>override</code>关键字：</p>
-<ol>
-<li><code>final</code>：修饰虚函数，表示该虚函数不能再被继承，其定义的函数不能被重写，体现实现继承</li>
-<li><code>override</code>：检查派生类虚函数是否重写了某个虚函数，如果没有重写则编译报错，强制子类重写父类的某一个虚函数</li>
-</ol>
-<h1 id="抽象类"><a href="#抽象类" class="headerlink" title="抽象类"></a>抽象类</h1><p>抽象类：包含纯函数的类，抽象类不能实例化对象</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="comment">//纯虚函数：没有函数体的虚函数</span></span><br><span class="line">  <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">fun</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> :</span> <span class="keyword">public</span> A</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">fun</span><span class="params">()</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"B::fun()"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">//无法执行以下代码</span></span><br><span class="line">  <span class="comment">//A a;</span></span><br><span class="line">  <span class="comment">//a.fun();</span></span><br><span class="line">  </span><br><span class="line">  B b;</span><br><span class="line">  A* pb = &amp;b;</span><br><span class="line">  b.fun();</span><br><span class="line">  pb-&gt;fun();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>抽象类存在意义，实现多态，其体现出接口继承</p>
-<h1 id="多态原理"><a href="#多态原理" class="headerlink" title="多态原理"></a>多态原理</h1><h2 id="虚函数表"><a href="#虚函数表" class="headerlink" title="虚函数表"></a>虚函数表</h2><figure class="highlight"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span></span></span><br><span class="line"><span class="class">&#123;</span>&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Car</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Drive</span><span class="params">()</span></span></span><br><span class="line"><span class="function">  <span class="comment">//包含隐藏成员变量，虚函数表指针</span></span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p><strong>包含虚函数的类：</strong>类中包含一个隐含的成员变量，即虚表指针</p>
-<p><strong>虚表指针：</strong>指向虚表的首地址，类型为二级指针，函数指针的指针</p>
-<p><strong>虚表：</strong>存放虚函数指针的数组，类型为指针数组</p>
-<ol>
-<li>只存放虚函数的指针</li>
-<li>普通函数不会存入虚表</li>
-<li>如果子类重写了父类的虚函数，则子类虚表中对应位置使用子类虚函数指针覆盖</li>
-<li>如果子类没有重写父类的任何虚函数，则子类完全继承父类虚表，不做任何修改</li>
-<li>虚函数指针在虚表中的存放顺序和其声明/定义的顺序一致</li>
-<li>子类新定义的虚函数，其虚函数指针按照声明/定义的顺序依次加入虚表的末尾</li>
-<li>虚表一般以<code>nullptr</code>结束</li>
-</ol>
-<blockquote>
-<p>只要类中包含虚函数，就会有虚表指针和虚表</p>
-</blockquote>
-<ul>
-<li>虚表指针存在对象当中</li>
-<li>虚表存放在代码段</li>
-<li>虚函数存放在代码段</li>
-</ul>
-<p><strong>多态：看实际指向的实体</strong></p>
-<p>多态原理：如果访问的为虚函数，则通过指针/引用找到实际指向的实体，获取实体中的虚表指针，通过虚表指针访问虚表，在虚表中找到需要执行的虚函数指针，通过虚函数指针执行具体函数行为</p>
-<h2 id="继承下的虚表"><a href="#继承下的虚表" class="headerlink" title="继承下的虚表"></a>继承下的虚表</h2><p><strong>单继承虚表</strong>：</p>
-<ol>
-<li>子类继承父类虚表</li>
-<li>用重写的虚函数指针覆盖子类对应的虚函数指针</li>
-<li>子类新定义的虚函数，其指针按照声明/定义顺序存入虚表的末尾</li>
-</ol>
-<p><strong>多继承虚表：</strong></p>
-<ol>
-<li>虚表个数：等同于直接父类的个数</li>
-<li>子类继承父类所有的虚表</li>
-<li>用重写的虚函数指针覆盖对应父类的虚函数指针</li>
-<li>子类新定义的虚函数，其函数指针按照声明/定义的顺序存入第一个直接父类虚表的末尾</li>
-</ol>
-]]></content>
-      <categories>
-        <category>C++</category>
-      </categories>
-      <tags>
-        <tag>类与对象</tag>
-        <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>C++基础语法</title>
     <url>/2020/05/20200521.html</url>
     <content><![CDATA[<h1 id="命名空间"><a href="#命名空间" class="headerlink" title="命名空间"></a>命名空间</h1><p>对标识符的名称进行本地化，以避免命名冲突或名字污染，namespace关键字的出现就是针对这种问题的</p>
@@ -582,6 +582,105 @@
       <tags>
         <tag>题目总结</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>C语言中的自定义类型（结构体、枚举及联合）</title>
+    <url>/2020/03/20200313.html</url>
+    <content><![CDATA[<h2 id="结构体"><a href="#结构体" class="headerlink" title="结构体"></a>结构体</h2><p>结构体是一些值的集合，这些值被称为成员变量，结构的每个成员可以是不同类型的变量。</p>
+<a id="more"></a>
+
+<h3 id="结构体的声明"><a href="#结构体的声明" class="headerlink" title="结构体的声明"></a>结构体的声明</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">piont</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> x;</span><br><span class="line">	<span class="keyword">int</span> y;</span><br><span class="line">&#125;p1;<span class="comment">//声明结构体类型，同时定义变量p1</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">point</span> <span class="title">p2</span>;</span><span class="comment">//定义结构体变量p2</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">point</span> <span class="title">p3</span> = &#123;</span>x, y&#125;;<span class="comment">//初始化：定义变量同时赋值</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">point</span>* <span class="title">p4</span>;</span><span class="comment">//定义结构体类型指针</span></span><br></pre></td></tr></table></figure>
+
+<p>结构体在声明的时候可以省略结构体标签（tag），称之为匿名结构体，但很少会用到。<br>结构体可以使用 { }初始化，但不能用它赋值。</p>
+<h3 id="结构体的成员访问"><a href="#结构体的成员访问" class="headerlink" title="结构体的成员访问"></a>结构体的成员访问</h3><p>结构体变量访问成员，通过（.）操作符来访问。<br>例如：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">p1.x = <span class="number">20</span>;</span><br><span class="line">p1.y = <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+
+<p>结构体指针访问指向变量的成员,使用( -&gt; )操作符来访问<br>例如：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">"%d,%d\n"</span>, p4-&gt;x, p4-&gt;y);</span><br></pre></td></tr></table></figure>
+
+<p>结构体可以自引用，但是只能通过包含自身类型的指针这种方式来自引用。</p>
+<h2 id="结构体的内存对齐"><a href="#结构体的内存对齐" class="headerlink" title="结构体的内存对齐"></a>结构体的内存对齐</h2><p><strong>结构体的内存对齐规则：</strong></p>
+<ol>
+<li>第一个成员在与结构体变量偏移量为 0 的地址处。</li>
+<li>其他成员变量要对齐到某个数字（称之为对齐数）的整数倍地址处。</li>
+<li>结构体总大小为最大对齐数（每个成员变量都有一个对齐数）的整数倍。</li>
+<li>如果嵌套了结构体的情况，嵌套的结构体对齐到自己的最大对齐数的整数倍处，结构体的整体大小就是所有最大对齐数（含嵌套结构体的对齐数）的整数倍</li>
+</ol>
+<blockquote>
+<p><strong>对齐数：</strong> 编译器默认的一个对齐数，与该成员大小的 <strong>较小值</strong></p>
+<hr>
+<ul>
+<li>VS中默认的对齐数值为8。</li>
+<li>Linux没有默认对齐数，它的默认对齐数等于当前字段的sizeof值。</li>
+<li>可以用 #pragma pack ( )来修改默认对齐数，如果括号内不填写数字，则 还原成默认对齐数。</li>
+</ul>
+</blockquote>
+<p><em><strong>举例一：</strong></em><br>（VS2013下）</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">s</span>&#123;</span></span><br><span class="line">	<span class="keyword">char</span> a;<span class="comment">//1 字节</span></span><br><span class="line">	<span class="keyword">int</span> b;<span class="comment">//4 字节</span></span><br><span class="line">	<span class="keyword">double</span> c;<span class="comment">//8 字节</span></span><br><span class="line">	<span class="keyword">char</span> d;<span class="comment">//1 字节</span></span><br><span class="line">	short e;<span class="comment">//2 字节</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>对于该结构体类型来说，它占据内存空间大小的计算方法是：</p>
+<ol>
+<li>根据第一条规则，对第一个成员变量，它在与结构体变量偏移量为0的地址处，此时算上一个字节。</li>
+<li>根据第二条规则，对第二个成员，它是int类型变量，4个字节，与最大对齐数8相比，4更小，所以该成员的对齐数是4，要放在4的整数倍地址处，此时第一个成员占据的第一个字节之后的三个字节被开辟，在距离结构体变量偏移为4的地址处算四个字节，此时结构体变量有八个字节。<br><img src="https://img-blog.csdnimg.cn/20200313153047129.png" alt="前两个成员"></li>
+</ol>
+<blockquote>
+<p>前两个成员</p>
+</blockquote>
+<ol start="3">
+<li>根据第二条规则，对于第三个成员，double类型，八个字节，与默认对齐数相等，所以对齐数取8，它放在8的整数倍地址上，即放在距离结构体变量偏移为8的地址处，此时结构体变量有16个字节。<br><img src="https://img-blog.csdnimg.cn/20200313153700911.png" alt="前三个成员"></li>
+</ol>
+<blockquote>
+<p>前三个成员</p>
+</blockquote>
+<ol start="4">
+<li>根据第二条规则，第四个成员，char类型，一个字节，同上，它的对齐数是 1，所以直接放置即可，此时结构体变量有17个字节</li>
+<li>根据第二条规则，第五个成员，类型是short，两个字节，同上，它的对齐数是2，放在地址是二的整数倍处,即第18个字节处，此时结构体变量为20个字节<br><img src="https://img-blog.csdnimg.cn/20200313155450248.png" alt="所有成员"></li>
+</ol>
+<blockquote>
+<p>所有的五个成员</p>
+</blockquote>
+<ol start="6">
+<li>根据第三条规则：结构体总大小为最大对齐数（每个成员变量都有一个对齐数）的整数倍，这个结构体的最大对齐数是8，那么它占据的内存应该是八的整数倍，此时20个字节，补齐到24个字节即为八的整数倍<br><img src="https://img-blog.csdnimg.cn/20200313155958775.png" alt="结构体全貌"></li>
+</ol>
+<p>所以，在举例一种，该结构体的大小为24个字节。</p>
+<p><em><strong>举例二：</strong></em><br>求此时struct s2 结构体类型的大小</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">s</span>&#123;</span></span><br><span class="line">	<span class="keyword">char</span> a;</span><br><span class="line">	<span class="keyword">int</span> b;</span><br><span class="line">	<span class="keyword">double</span> c;</span><br><span class="line">	<span class="keyword">char</span> d;</span><br><span class="line">	short e;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">s2</span>&#123;</span></span><br><span class="line">	<span class="keyword">char</span> a;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">s</span> <span class="title">b</span>;</span></span><br><span class="line">	<span class="keyword">char</span> c;</span><br><span class="line">	<span class="keyword">int</span> d;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>根据第一条规则，对第一个成员变量，它在与结构体变量偏移量为0的地址处，此时算上一个字节。</li>
+<li>根据第四条规则，如果嵌套了结构体的情况，嵌套的结构体对齐到自己的最大对齐数的整数倍处，结构体的整体大小就是所有最大对齐数（含嵌套结构体的对齐数）的整数倍，结构体s中的最大对齐数是8，那么就要对齐到八的整数倍地址处，此时第一个字节往后开辟七个字节之后，来存放该结构体类型变量，这个结构体类型变量的大小在举例一中计算过，24个字节，所以此时s2为32个字节。<br><img src="https://img-blog.csdnimg.cn/20200313161457391.png" alt="前两个成员"></li>
+</ol>
+<blockquote>
+<p>前两个成员</p>
+</blockquote>
+<ol start="3">
+<li>根据第二条规则，第三成员是char类型，1个字节，对齐数为1，所以此时结构体s2为33个字节。</li>
+<li>根据第二条规则，第四成员为int类型，四个字节，对齐数为4，对齐到4的整数倍地址处，即第36个字节处，此时结构体大小为40字节。</li>
+<li>根据第三条规则，该结构体各个成员中最大对齐数是八，所以它占据的内存应为八的整数倍，而40正好是八的整数倍，所以不用补齐</li>
+</ol>
+<p>所以举例二中结构体类型的大小应为40字节。</p>
+<h2 id="位段"><a href="#位段" class="headerlink" title="位段"></a>位段</h2><p>位段的声明和结构体类似，但是位段的成员必须是int 、unsigned int或signed int，位段的成员后有一个冒号和一个数字。冒号后的数字是几，就说明前边的成员变量占几个<strong>比特位</strong>。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> a : <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">int</span> b : <span class="number">3</span>;</span><br><span class="line">	<span class="keyword">int</span> c : <span class="number">5</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h2><p>将可能的取值一一列举，即为枚举</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">enum</span> season</span><br><span class="line">&#123;</span><br><span class="line">	spring,</span><br><span class="line">	summer,</span><br><span class="line">	autumn,</span><br><span class="line">	winter</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>枚举常量的值默认由0开始依次递增，除非在声明中赋值</p>
+<h2 id="联合"><a href="#联合" class="headerlink" title="联合"></a>联合</h2><p>该类型定义的变量包含一系列成员，但是这些成员都公用同一块内存空间</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">union</span> Un</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">int</span> a;</span><br><span class="line">	<span class="keyword">char</span> b;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>可以用它的特性来判断大小端字节序，例如：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">union</span> Un</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">int</span> a;</span><br><span class="line">	<span class="keyword">char</span> b;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">union</span> Un s;</span><br><span class="line">	s.a = <span class="number">0x11223344</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%x\n"</span>, s.b);</span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;<span class="comment">//输出为44，当前机器为小端字节序。</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>联合的大小：</strong></p>
+<ul>
+<li>联合的大小至少是最大成员的大小</li>
+<li>当最大成员的大小不是最大对齐数的整数倍时，要对齐到最大对齐数的整数倍上。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>C</category>
+      </categories>
   </entry>
   <entry>
     <title>C语言中的文件操作</title>
@@ -758,133 +857,6 @@
       </tags>
   </entry>
   <entry>
-    <title>C语言中的自定义类型（结构体、枚举及联合）</title>
-    <url>/2020/03/20200313.html</url>
-    <content><![CDATA[<h2 id="结构体"><a href="#结构体" class="headerlink" title="结构体"></a>结构体</h2><p>结构体是一些值的集合，这些值被称为成员变量，结构的每个成员可以是不同类型的变量。</p>
-<a id="more"></a>
-
-<h3 id="结构体的声明"><a href="#结构体的声明" class="headerlink" title="结构体的声明"></a>结构体的声明</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">piont</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> x;</span><br><span class="line">	<span class="keyword">int</span> y;</span><br><span class="line">&#125;p1;<span class="comment">//声明结构体类型，同时定义变量p1</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">point</span> <span class="title">p2</span>;</span><span class="comment">//定义结构体变量p2</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">point</span> <span class="title">p3</span> = &#123;</span>x, y&#125;;<span class="comment">//初始化：定义变量同时赋值</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">point</span>* <span class="title">p4</span>;</span><span class="comment">//定义结构体类型指针</span></span><br></pre></td></tr></table></figure>
-
-<p>结构体在声明的时候可以省略结构体标签（tag），称之为匿名结构体，但很少会用到。<br>结构体可以使用 { }初始化，但不能用它赋值。</p>
-<h3 id="结构体的成员访问"><a href="#结构体的成员访问" class="headerlink" title="结构体的成员访问"></a>结构体的成员访问</h3><p>结构体变量访问成员，通过（.）操作符来访问。<br>例如：</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">p1.x = <span class="number">20</span>;</span><br><span class="line">p1.y = <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
-
-<p>结构体指针访问指向变量的成员,使用( -&gt; )操作符来访问<br>例如：</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">"%d,%d\n"</span>, p4-&gt;x, p4-&gt;y);</span><br></pre></td></tr></table></figure>
-
-<p>结构体可以自引用，但是只能通过包含自身类型的指针这种方式来自引用。</p>
-<h2 id="结构体的内存对齐"><a href="#结构体的内存对齐" class="headerlink" title="结构体的内存对齐"></a>结构体的内存对齐</h2><p><strong>结构体的内存对齐规则：</strong></p>
-<ol>
-<li>第一个成员在与结构体变量偏移量为 0 的地址处。</li>
-<li>其他成员变量要对齐到某个数字（称之为对齐数）的整数倍地址处。</li>
-<li>结构体总大小为最大对齐数（每个成员变量都有一个对齐数）的整数倍。</li>
-<li>如果嵌套了结构体的情况，嵌套的结构体对齐到自己的最大对齐数的整数倍处，结构体的整体大小就是所有最大对齐数（含嵌套结构体的对齐数）的整数倍</li>
-</ol>
-<blockquote>
-<p><strong>对齐数：</strong> 编译器默认的一个对齐数，与该成员大小的 <strong>较小值</strong></p>
-<hr>
-<ul>
-<li>VS中默认的对齐数值为8。</li>
-<li>Linux没有默认对齐数，它的默认对齐数等于当前字段的sizeof值。</li>
-<li>可以用 #pragma pack ( )来修改默认对齐数，如果括号内不填写数字，则 还原成默认对齐数。</li>
-</ul>
-</blockquote>
-<p><em><strong>举例一：</strong></em><br>（VS2013下）</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">s</span>&#123;</span></span><br><span class="line">	<span class="keyword">char</span> a;<span class="comment">//1 字节</span></span><br><span class="line">	<span class="keyword">int</span> b;<span class="comment">//4 字节</span></span><br><span class="line">	<span class="keyword">double</span> c;<span class="comment">//8 字节</span></span><br><span class="line">	<span class="keyword">char</span> d;<span class="comment">//1 字节</span></span><br><span class="line">	short e;<span class="comment">//2 字节</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>对于该结构体类型来说，它占据内存空间大小的计算方法是：</p>
-<ol>
-<li>根据第一条规则，对第一个成员变量，它在与结构体变量偏移量为0的地址处，此时算上一个字节。</li>
-<li>根据第二条规则，对第二个成员，它是int类型变量，4个字节，与最大对齐数8相比，4更小，所以该成员的对齐数是4，要放在4的整数倍地址处，此时第一个成员占据的第一个字节之后的三个字节被开辟，在距离结构体变量偏移为4的地址处算四个字节，此时结构体变量有八个字节。<br><img src="https://img-blog.csdnimg.cn/20200313153047129.png" alt="前两个成员"></li>
-</ol>
-<blockquote>
-<p>前两个成员</p>
-</blockquote>
-<ol start="3">
-<li>根据第二条规则，对于第三个成员，double类型，八个字节，与默认对齐数相等，所以对齐数取8，它放在8的整数倍地址上，即放在距离结构体变量偏移为8的地址处，此时结构体变量有16个字节。<br><img src="https://img-blog.csdnimg.cn/20200313153700911.png" alt="前三个成员"></li>
-</ol>
-<blockquote>
-<p>前三个成员</p>
-</blockquote>
-<ol start="4">
-<li>根据第二条规则，第四个成员，char类型，一个字节，同上，它的对齐数是 1，所以直接放置即可，此时结构体变量有17个字节</li>
-<li>根据第二条规则，第五个成员，类型是short，两个字节，同上，它的对齐数是2，放在地址是二的整数倍处,即第18个字节处，此时结构体变量为20个字节<br><img src="https://img-blog.csdnimg.cn/20200313155450248.png" alt="所有成员"></li>
-</ol>
-<blockquote>
-<p>所有的五个成员</p>
-</blockquote>
-<ol start="6">
-<li>根据第三条规则：结构体总大小为最大对齐数（每个成员变量都有一个对齐数）的整数倍，这个结构体的最大对齐数是8，那么它占据的内存应该是八的整数倍，此时20个字节，补齐到24个字节即为八的整数倍<br><img src="https://img-blog.csdnimg.cn/20200313155958775.png" alt="结构体全貌"></li>
-</ol>
-<p>所以，在举例一种，该结构体的大小为24个字节。</p>
-<p><em><strong>举例二：</strong></em><br>求此时struct s2 结构体类型的大小</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">s</span>&#123;</span></span><br><span class="line">	<span class="keyword">char</span> a;</span><br><span class="line">	<span class="keyword">int</span> b;</span><br><span class="line">	<span class="keyword">double</span> c;</span><br><span class="line">	<span class="keyword">char</span> d;</span><br><span class="line">	short e;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">s2</span>&#123;</span></span><br><span class="line">	<span class="keyword">char</span> a;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">s</span> <span class="title">b</span>;</span></span><br><span class="line">	<span class="keyword">char</span> c;</span><br><span class="line">	<span class="keyword">int</span> d;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>根据第一条规则，对第一个成员变量，它在与结构体变量偏移量为0的地址处，此时算上一个字节。</li>
-<li>根据第四条规则，如果嵌套了结构体的情况，嵌套的结构体对齐到自己的最大对齐数的整数倍处，结构体的整体大小就是所有最大对齐数（含嵌套结构体的对齐数）的整数倍，结构体s中的最大对齐数是8，那么就要对齐到八的整数倍地址处，此时第一个字节往后开辟七个字节之后，来存放该结构体类型变量，这个结构体类型变量的大小在举例一中计算过，24个字节，所以此时s2为32个字节。<br><img src="https://img-blog.csdnimg.cn/20200313161457391.png" alt="前两个成员"></li>
-</ol>
-<blockquote>
-<p>前两个成员</p>
-</blockquote>
-<ol start="3">
-<li>根据第二条规则，第三成员是char类型，1个字节，对齐数为1，所以此时结构体s2为33个字节。</li>
-<li>根据第二条规则，第四成员为int类型，四个字节，对齐数为4，对齐到4的整数倍地址处，即第36个字节处，此时结构体大小为40字节。</li>
-<li>根据第三条规则，该结构体各个成员中最大对齐数是八，所以它占据的内存应为八的整数倍，而40正好是八的整数倍，所以不用补齐</li>
-</ol>
-<p>所以举例二中结构体类型的大小应为40字节。</p>
-<h2 id="位段"><a href="#位段" class="headerlink" title="位段"></a>位段</h2><p>位段的声明和结构体类似，但是位段的成员必须是int 、unsigned int或signed int，位段的成员后有一个冒号和一个数字。冒号后的数字是几，就说明前边的成员变量占几个<strong>比特位</strong>。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> a : <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">int</span> b : <span class="number">3</span>;</span><br><span class="line">	<span class="keyword">int</span> c : <span class="number">5</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h2 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h2><p>将可能的取值一一列举，即为枚举</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">enum</span> season</span><br><span class="line">&#123;</span><br><span class="line">	spring,</span><br><span class="line">	summer,</span><br><span class="line">	autumn,</span><br><span class="line">	winter</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>枚举常量的值默认由0开始依次递增，除非在声明中赋值</p>
-<h2 id="联合"><a href="#联合" class="headerlink" title="联合"></a>联合</h2><p>该类型定义的变量包含一系列成员，但是这些成员都公用同一块内存空间</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">union</span> Un</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">int</span> a;</span><br><span class="line">	<span class="keyword">char</span> b;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>可以用它的特性来判断大小端字节序，例如：</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">union</span> Un</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">int</span> a;</span><br><span class="line">	<span class="keyword">char</span> b;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">union</span> Un s;</span><br><span class="line">	s.a = <span class="number">0x11223344</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%x\n"</span>, s.b);</span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;<span class="comment">//输出为44，当前机器为小端字节序。</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>联合的大小：</strong></p>
-<ul>
-<li>联合的大小至少是最大成员的大小</li>
-<li>当最大成员的大小不是最大对齐数的整数倍时，要对齐到最大对齐数的整数倍上。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>C</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>C语言实现一个简单的通讯录程序</title>
-    <url>/2020/03/20200328.html</url>
-    <content><![CDATA[<p>一个合格的通讯录，应该支持增、删、查、改这四个基本操作，同时，我在这个通讯录中也运用了内存的动态管理与文件操作的知识，同时这个通讯录可以支持按照联系人姓名进行排序。</p>
-<a id="more"></a>
-
-<p><a href="https://github.com/Latsummer/FinishedProducts/tree/master/%E9%80%9A%E8%AE%AF%E5%BD%95" target="_blank" rel="noopener">GitHub链接</a></p>
-<h2 id="头文件"><a href="#头文件" class="headerlink" title="头文件"></a>头文件</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">PersonalInfo</span></span></span><br><span class="line"><span class="class">&#123;</span><span class="comment">//单个联系人的信息</span></span><br><span class="line">	<span class="keyword">char</span> name[<span class="number">1024</span>];</span><br><span class="line">	<span class="keyword">char</span> sex[<span class="number">20</span>];</span><br><span class="line">	<span class="keyword">char</span> age[<span class="number">10</span>];</span><br><span class="line">	<span class="keyword">char</span> phone[<span class="number">1024</span>];</span><br><span class="line">	<span class="keyword">char</span> address[<span class="number">1024</span>];</span><br><span class="line">&#125;PersonalInfo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">AddressBook</span></span></span><br><span class="line"><span class="class">&#123;</span><span class="comment">//通讯录</span></span><br><span class="line">	PersonalInfo* persons;</span><br><span class="line">	<span class="keyword">int</span> <span class="built_in">size</span>;<span class="comment">//通讯录当前的大小</span></span><br><span class="line">	<span class="keyword">int</span> nums;<span class="comment">//通讯录的上限</span></span><br><span class="line">&#125;AddressBook;</span><br><span class="line"></span><br><span class="line">AddressBook address_book;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Init</span><span class="params">(AddressBook* addr)</span></span>;<span class="comment">//初始化</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Relloc_Per</span><span class="params">(AddressBook* addr)</span></span>;<span class="comment">//扩容</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">menu</span><span class="params">()</span></span>;<span class="comment">//菜单</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Add_Person_Info</span><span class="params">(AddressBook* addr)</span></span>;<span class="comment">//增加联系人</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Del_Person_Info</span><span class="params">(AddressBook* addr)</span></span>;<span class="comment">//删除联系人</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Find_Person_Info</span><span class="params">(AddressBook* addr)</span></span>;<span class="comment">//查找联系人</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Modify_Person_Info</span><span class="params">(AddressBook* addr)</span></span>;<span class="comment">//修改联系人</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Print_Person_Info</span><span class="params">(AddressBook* addr)</span></span>;<span class="comment">//打印通讯录</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Clear_Person_Info</span><span class="params">(AddressBook* addr)</span></span>;<span class="comment">//清空通讯录</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="通讯录main函数部分"><a href="#通讯录main函数部分" class="headerlink" title="通讯录main函数部分"></a>通讯录main函数部分</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">"AddressBook.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Open</span><span class="params">(AddressBook* addr)</span><span class="comment">//从本地中打开通讯录</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	FILE* addbook = fopen(<span class="string">"C:book.txt"</span>, <span class="string">"r"</span>);</span><br><span class="line">	<span class="keyword">if</span> (addbook == <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		perror(<span class="string">"文件打开失败！"</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	PersonalInfo buf = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">	<span class="keyword">while</span> (fread(&amp;buf, <span class="keyword">sizeof</span>(PersonalInfo), <span class="number">1</span>, addbook))</span><br><span class="line">	&#123;</span><br><span class="line">		addr-&gt;persons[addr-&gt;<span class="built_in">size</span>] = buf;</span><br><span class="line">		addr-&gt;<span class="built_in">size</span>++;</span><br><span class="line">		<span class="keyword">if</span> (addr-&gt;<span class="built_in">size</span> &gt;= addr-&gt;nums)</span><br><span class="line">		&#123;</span><br><span class="line">			Relloc_Per(addr);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	fclose(addbook);</span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Close</span><span class="params">(AddressBook* addr)</span><span class="comment">//关闭程序时保存通讯录</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	FILE* addbook = fopen(<span class="string">"C:book.txt"</span>, <span class="string">"w"</span>);</span><br><span class="line">	<span class="keyword">if</span> (addbook == <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		perror(<span class="string">"文件打开失败！"</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; addr-&gt;<span class="built_in">size</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		fwrite((addr-&gt;persons + i), <span class="keyword">sizeof</span>(PersonalInfo), <span class="number">1</span>, addbook);</span><br><span class="line">	&#125;</span><br><span class="line">	fclose(addbook);</span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Init(&amp;address_book);<span class="comment">//初始化通讯录</span></span><br><span class="line">	Open(&amp;address_book);<span class="comment">//打开本地文件</span></span><br><span class="line">	<span class="function"><span class="keyword">typedef</span> <span class="title">void</span><span class="params">(*Func)</span><span class="params">(AddressBook*)</span></span>;<span class="comment">//函数指针</span></span><br><span class="line">	Func function[] = <span class="comment">//函数指针数组</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="literal">NULL</span>,<span class="comment">//此处为了和menu的返回值匹配，将function[0]的内容写成NULL</span></span><br><span class="line">		Add_Person_Info,</span><br><span class="line">		Del_Person_Info,</span><br><span class="line">		Find_Person_Info,</span><br><span class="line">		Modify_Person_Info,</span><br><span class="line">		Print_Person_Info,</span><br><span class="line">		Clear_Person_Info</span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="keyword">while</span> (<span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> choice = menu();</span><br><span class="line">		<span class="keyword">if</span> (choice == <span class="number">0</span>)</span><br><span class="line">		&#123;<span class="comment">//退出</span></span><br><span class="line">			Close(&amp;address_book);</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"bye!\n\n"</span>);</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (choice &lt; <span class="number">0</span> || choice &gt;= <span class="keyword">sizeof</span>(function) / <span class="keyword">sizeof</span>(function[<span class="number">0</span>]))</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"输入错误！\n\n"</span>);</span><br><span class="line">			<span class="keyword">continue</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		function[choice](&amp;address_book);<span class="comment">//实现具体功能</span></span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="功能函数部分"><a href="#功能函数部分" class="headerlink" title="功能函数部分"></a>功能函数部分</h2><h3 id="初始化以及菜单函数"><a href="#初始化以及菜单函数" class="headerlink" title="初始化以及菜单函数"></a>初始化以及菜单函数</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Init</span><span class="params">(AddressBook* addr)</span><span class="comment">//初始化通讯录</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	addr-&gt;<span class="built_in">size</span> = <span class="number">0</span>;</span><br><span class="line">	addr-&gt;nums = <span class="number">20</span>;</span><br><span class="line">	addr-&gt;persons = (PersonalInfo*)<span class="built_in">malloc</span>((addr-&gt;nums) * <span class="keyword">sizeof</span>(PersonalInfo));</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; addr-&gt;nums; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">strcpy</span>(addr-&gt;persons[i].name , <span class="string">""</span>);</span><br><span class="line">		<span class="built_in">strcpy</span>(addr-&gt;persons[i].phone , <span class="string">""</span>);</span><br><span class="line">		<span class="built_in">strcpy</span>(addr-&gt;persons[i].address  , <span class="string">""</span>);</span><br><span class="line">		<span class="built_in">strcpy</span>(addr-&gt;persons[i].sex , <span class="string">""</span>);</span><br><span class="line">		<span class="built_in">strcpy</span>(addr-&gt;persons[i].age, <span class="string">""</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">menu</span><span class="params">()</span><span class="comment">//主菜单</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"============================\n"</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"  1.新建联系人\n"</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"  2.删除联系人\n"</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"  3.查询联系人\n"</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"  4.修改联系人\n"</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"  5.显示所有联系人\n"</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"  6.清空通讯录\n"</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"  0.退出\n"</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"============================\n\n"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> ret = <span class="number">0</span>;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;ret);</span><br><span class="line">	<span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="排序以及扩容部分"><a href="#排序以及扩容部分" class="headerlink" title="排序以及扩容部分"></a>排序以及扩容部分</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">cmp</span><span class="params">(AddressBook* addr)</span> <span class="comment">//排序</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">	PersonalInfo tmp;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; addr-&gt;<span class="built_in">size</span> - <span class="number">1</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; addr-&gt;<span class="built_in">size</span> - <span class="number">1</span> - i; j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (<span class="built_in">strcmp</span>(addr-&gt;persons[j].name , addr-&gt;persons[j+<span class="number">1</span>].name) &gt; <span class="number">0</span>)</span><br><span class="line">			&#123;<span class="comment">//冒泡排序</span></span><br><span class="line">				tmp = addr-&gt;persons[j];</span><br><span class="line">				addr-&gt;persons[j] = addr-&gt;persons[j + <span class="number">1</span>];</span><br><span class="line">				addr-&gt;persons[j + <span class="number">1</span>] = tmp;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Relloc_Per</span><span class="params">(AddressBook* addr)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	addr-&gt;nums += <span class="number">20</span>;</span><br><span class="line">	addr-&gt;persons = <span class="built_in">realloc</span>(addr-&gt;persons, (addr-&gt;nums) * <span class="keyword">sizeof</span>(PersonalInfo));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="增删查改联系人"><a href="#增删查改联系人" class="headerlink" title="增删查改联系人"></a>增删查改联系人</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Add_Person_Info</span><span class="params">(AddressBook* addr)</span><span class="comment">//新增联系人</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (addr-&gt;<span class="built_in">size</span> &gt;= addr-&gt;nums)</span><br><span class="line">	&#123;</span><br><span class="line">		Relloc_Per(addr);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	PersonalInfo* info = &amp;addr-&gt;persons[addr-&gt;<span class="built_in">size</span>];</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"新增联系人！\n"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入联系人姓名："</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%s"</span>, info-&gt;name);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入联系人电话："</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%s"</span>, info-&gt;phone);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入联系人性别："</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%s"</span>, info-&gt;sex);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入联系人年龄："</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%s"</span>, info-&gt;age);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入联系人住址："</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%s"</span>, info-&gt;address);</span><br><span class="line"></span><br><span class="line">	addr-&gt;<span class="built_in">size</span>++;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"新增联系人成功！\n"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (addr-&gt;<span class="built_in">size</span> &gt;= <span class="number">2</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		cmp(addr);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Del_Person_Info</span><span class="params">(AddressBook* addr)</span><span class="comment">//删除联系人</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (addr-&gt;<span class="built_in">size</span> &lt;= <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"通讯录为空！无法执行删除！\n"</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"删除联系人！\n"</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入要删除的联系人序号："</span>);</span><br><span class="line">	<span class="keyword">int</span> input = <span class="number">0</span>;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;input);</span><br><span class="line">	<span class="keyword">if</span> (input &lt; <span class="number">0</span> || input &gt;= addr-&gt;<span class="built_in">size</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"非法输入！\n"</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	PersonalInfo* last_info = &amp;addr-&gt;persons[addr-&gt;<span class="built_in">size</span> - <span class="number">1</span>];</span><br><span class="line">	PersonalInfo* to_delt = &amp;addr-&gt;persons[input];</span><br><span class="line">	*to_delt = *last_info;</span><br><span class="line">	addr-&gt;<span class="built_in">size</span>--;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"联系人成功删除！\n"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (addr-&gt;<span class="built_in">size</span> &gt;= <span class="number">2</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		cmp(addr);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Find_Person_Info</span><span class="params">(AddressBook* addr)</span><span class="comment">//查找联系人</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> <span class="built_in">find</span>[<span class="number">1024</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"查找联系人！\n"</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入想要查找的姓名或联系方式："</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%s"</span>, &amp;<span class="built_in">find</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; addr-&gt;<span class="built_in">size</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		PersonalInfo* findinfo = &amp;addr-&gt;persons[i];</span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">strcmp</span>(<span class="built_in">find</span>, findinfo-&gt;name) == <span class="number">0</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"找到了！该联系人编号为：%d\n"</span>, i);</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">strcmp</span>(<span class="built_in">find</span>, findinfo-&gt;phone) == <span class="number">0</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"\n找到了！该联系人为：[%d]  姓名：%s   联系方式：%s\n"</span>, i,findinfo-&gt;name,findinfo-&gt;phone);</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"查无此人！\n"</span>);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Modify_Person_Info</span><span class="params">(AddressBook* addr)</span><span class="comment">//修改联系人信息</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (addr-&gt;<span class="built_in">size</span> &lt;= <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"通讯录为空！无法执行！\n"</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">char</span> name[<span class="number">1024</span>];</span><br><span class="line">	<span class="keyword">char</span> sex[<span class="number">20</span>];</span><br><span class="line">	<span class="keyword">char</span> age[<span class="number">10</span>];</span><br><span class="line">	<span class="keyword">char</span> phone[<span class="number">1024</span>];</span><br><span class="line">	<span class="keyword">char</span> address[<span class="number">1024</span>];</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"修改联系人信息！\n"</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入要修改的联系人编号："</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;i);</span><br><span class="line">	<span class="keyword">if</span> (i&lt;<span class="number">0</span> || i&gt;addr-&gt;<span class="built_in">size</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"输入非法！\n"</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	PersonalInfo* info = &amp;addr-&gt;persons[i];</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"[%d]  姓名：%s   联系方式：%s \n     性别： %s  年龄： %s\n     住址：%s\n\n"</span>, i, info-&gt;name, info-&gt;phone, info-&gt;sex, info-&gt;age, info-&gt;address);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入要修改的姓名（输入 * 表示不进行修改）："</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%s"</span>, name);</span><br><span class="line">	<span class="keyword">if</span> (<span class="built_in">strcmp</span>(name , <span class="string">"*"</span>) != <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">strcpy</span>(addr-&gt;persons[i].name, name);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入要修改的性别（输入 * 表示不进行修改）："</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%s"</span>, sex);</span><br><span class="line">	<span class="keyword">if</span> (<span class="built_in">strcmp</span>(sex, <span class="string">"*"</span>) != <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">strcpy</span>(addr-&gt;persons[i].sex, sex);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入要修改的年龄（输入 * 表示不进行修改）："</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%s"</span>, age);</span><br><span class="line">	<span class="keyword">if</span> (<span class="built_in">strcmp</span>(age, <span class="string">"*"</span>) != <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">strcpy</span>(addr-&gt;persons[i].age, age);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入要修改的联系方式（输入 * 表示不进行修改）："</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%s"</span>, phone);</span><br><span class="line">	<span class="keyword">if</span> (<span class="built_in">strcmp</span>(phone, <span class="string">"*"</span>) != <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">strcpy</span>(addr-&gt;persons[i].phone, phone);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入要修改的地址（输入 * 表示不进行修改）："</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%s"</span>, address);</span><br><span class="line">	<span class="keyword">if</span> (<span class="built_in">strcmp</span>(address, <span class="string">"*"</span>) != <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">strcpy</span>(addr-&gt;persons[i].address, address);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"修改成功！\n"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (addr-&gt;<span class="built_in">size</span> &gt;= <span class="number">2</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		cmp(addr);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="打印以及清空"><a href="#打印以及清空" class="headerlink" title="打印以及清空"></a>打印以及清空</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Print_Person_Info</span><span class="params">(AddressBook* addr)</span><span class="comment">//输出联系人（全部）</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"显示所有联系人：\n\n"</span>);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; addr-&gt;<span class="built_in">size</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		PersonalInfo* info = &amp;addr-&gt;persons[i];</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"[%d]  姓名：%s   联系方式：%s \n     性别： %s  年龄： %s\n     住址：%s\n\n"</span>, i,info-&gt;name ,info-&gt;phone,info-&gt;sex,info-&gt;age,info-&gt;address );</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n到底了...\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Clear_Person_Info</span><span class="params">(AddressBook* addr)</span><span class="comment">//一键清空</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> <span class="built_in">clear</span>[<span class="number">20</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n清空通讯录！\n"</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请确认是否清空  (Y/N)\n"</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%s"</span>, <span class="built_in">clear</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (<span class="built_in">strcmp</span>(<span class="built_in">clear</span>, <span class="string">"Y"</span>) == <span class="number">0</span> || <span class="built_in">strcmp</span>(<span class="built_in">clear</span>, <span class="string">"y"</span>) == <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//addr-&gt;size = 0;</span></span><br><span class="line">		Init(addr);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"成功清空通讯录！\n"</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"放弃清空\n"</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>如此，一个简单的通讯录就可以实现啦。</p>
-]]></content>
-      <categories>
-        <category>C</category>
-      </categories>
-      <tags>
-        <tag>小作品</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>C语言实现三子棋游戏(也实现N子棋)</title>
     <url>/2019/12/20191228.html</url>
     <content><![CDATA[<h3 id="这是我作为一个初学者第一次尝试搞出来的东西，它不但可以实现三子棋游戏，通过修改-define的定义，还可以实现N子棋游戏。"><a href="#这是我作为一个初学者第一次尝试搞出来的东西，它不但可以实现三子棋游戏，通过修改-define的定义，还可以实现N子棋游戏。" class="headerlink" title="这是我作为一个初学者第一次尝试搞出来的东西，它不但可以实现三子棋游戏，通过修改#define的定义，还可以实现N子棋游戏。"></a>这是我作为一个初学者第一次尝试搞出来的东西，它不但可以实现三子棋游戏，通过修改#define的定义，还可以实现N子棋游戏。</h3><h4 id="首先，分析该游戏需要的逻辑"><a href="#首先，分析该游戏需要的逻辑" class="headerlink" title="首先，分析该游戏需要的逻辑"></a>首先，分析该游戏需要的逻辑</h4><a id="more"></a>
@@ -925,6 +897,34 @@
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">char</span> <span class="title">IsWin</span><span class="params">(<span class="keyword">char</span> board[ROW][COL], <span class="keyword">int</span> row, <span class="keyword">int</span> col)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> Player = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> Computer = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> win = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span> (i &lt;= row)<span class="comment">//判断行</span></span><br><span class="line">	&#123;</span><br><span class="line">		Player = <span class="number">0</span>;</span><br><span class="line">		Computer = <span class="number">0</span>;</span><br><span class="line">		j = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">while</span> (j &lt; (col - <span class="number">1</span>))</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (board[i][j] == board[i][j + <span class="number">1</span>] &amp;&amp; board[i][j] == <span class="string">'*'</span>)</span><br><span class="line">				Player++;</span><br><span class="line">			<span class="keyword">if</span> (board[i][j] == board[i][j + <span class="number">1</span>] &amp;&amp; board[i][j] == <span class="string">'#'</span>)</span><br><span class="line">				Computer++;</span><br><span class="line">			<span class="keyword">if</span> (Player == (row - <span class="number">1</span>))</span><br><span class="line">				<span class="keyword">return</span> <span class="string">'*'</span>;</span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">if</span> (Computer == (row - <span class="number">1</span>))</span><br><span class="line">				<span class="keyword">return</span> <span class="string">'#'</span>;</span><br><span class="line">			j++;</span><br><span class="line">		&#125;</span><br><span class="line">		i++;</span><br><span class="line">	&#125;</span><br><span class="line">	i = <span class="number">0</span>;</span><br><span class="line">	j = <span class="number">0</span>;</span><br><span class="line">	Player = <span class="number">0</span>;</span><br><span class="line">	Computer = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span> (j &lt;= row)<span class="comment">//判断列</span></span><br><span class="line">	&#123;</span><br><span class="line">		Player = <span class="number">0</span>;</span><br><span class="line">		Computer = <span class="number">0</span>;</span><br><span class="line">		i = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">while</span> (i &lt; (col - <span class="number">1</span>))</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (board[i][j] == board[i + <span class="number">1</span>][j] &amp;&amp; board[i][j] == <span class="string">'*'</span>)</span><br><span class="line">				Player++;</span><br><span class="line">			<span class="keyword">if</span> (board[i][j] == board[i + <span class="number">1</span>][j] &amp;&amp; board[i][j] == <span class="string">'#'</span>)</span><br><span class="line">				Computer++;</span><br><span class="line">			<span class="keyword">if</span> (Player == (row - <span class="number">1</span>))</span><br><span class="line">				<span class="keyword">return</span> <span class="string">'*'</span>;</span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">if</span> (Computer == (row - <span class="number">1</span>))</span><br><span class="line">				<span class="keyword">return</span> <span class="string">'#'</span>;</span><br><span class="line">			i++;</span><br><span class="line">		&#125;</span><br><span class="line">		j++;</span><br><span class="line">	&#125;</span><br><span class="line">	Player = <span class="number">0</span>;</span><br><span class="line">	Computer = <span class="number">0</span>;</span><br><span class="line">	<span class="comment">/*i = 0;</span></span><br><span class="line"><span class="comment">	j = 0;*/</span></span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; row; i++)<span class="comment">//斜左上至右下</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (board[i][i] == board[i + <span class="number">1</span>][i + <span class="number">1</span>] &amp;&amp; board[i][i] == <span class="string">'*'</span>)</span><br><span class="line">			Player++;</span><br><span class="line">		<span class="keyword">if</span> (board[i][i] == board[i + <span class="number">1</span>][i + <span class="number">1</span>] &amp;&amp; board[i][i] == <span class="string">'#'</span>)</span><br><span class="line">			Computer++;</span><br><span class="line">		<span class="keyword">if</span> (Player == (row - <span class="number">1</span>))</span><br><span class="line">			<span class="keyword">return</span> <span class="string">'*'</span>;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (Computer == (row - <span class="number">1</span>))</span><br><span class="line">			<span class="keyword">return</span> <span class="string">'#'</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	Player = <span class="number">0</span>;</span><br><span class="line">	Computer = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>, j = (col - <span class="number">1</span>); i &lt; row, j &gt; <span class="number">0</span> ; i++ , j--)<span class="comment">//斜右上至左下</span></span><br><span class="line">	&#123;</span><br><span class="line">			<span class="keyword">if</span> (board[i][j] == board[i + <span class="number">1</span>][j - <span class="number">1</span>] &amp;&amp; board[i][j] == <span class="string">'*'</span>)</span><br><span class="line">				Player++;</span><br><span class="line">			<span class="keyword">if</span> (board[i][j] == board[i + <span class="number">1</span>][j - <span class="number">1</span>] &amp;&amp; board[i][j] == <span class="string">'#'</span>)</span><br><span class="line">				Computer++;</span><br><span class="line">			<span class="keyword">if</span> (Player == (row - <span class="number">1</span>))</span><br><span class="line">				<span class="keyword">return</span> <span class="string">'*'</span>;</span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">if</span> (Computer == (row - <span class="number">1</span>))</span><br><span class="line">				<span class="keyword">return</span> <span class="string">'#'</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; row; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; col; j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (board[i][j] == <span class="string">' '</span>)</span><br><span class="line">				win++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (win == <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="string">'Q'</span>;</span><br><span class="line">	    <span class="keyword">return</span> <span class="string">'C'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h4 id="至此程序已经基本完成，只需将各个函数有机的组合在一起即可，假如你想实现更多子棋，仅需将-define定义的行数列数修改即可。"><a href="#至此程序已经基本完成，只需将各个函数有机的组合在一起即可，假如你想实现更多子棋，仅需将-define定义的行数列数修改即可。" class="headerlink" title="至此程序已经基本完成，只需将各个函数有机的组合在一起即可，假如你想实现更多子棋，仅需将#define定义的行数列数修改即可。"></a>至此程序已经基本完成，只需将各个函数有机的组合在一起即可，假如你想实现更多子棋，仅需将#define定义的行数列数修改即可。</h4><h4 id="这里贴上工程文件"><a href="#这里贴上工程文件" class="headerlink" title="这里贴上工程文件"></a>这里贴上工程文件</h4><p><a href="https://github.com/Latsummer/FinishedProducts/tree/master/%E4%B8%89%E5%AD%90%E6%A3%8B12_21" target="_blank" rel="noopener">github 链接</a>.</p>
+]]></content>
+      <categories>
+        <category>C</category>
+      </categories>
+      <tags>
+        <tag>小作品</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C语言实现一个简单的通讯录程序</title>
+    <url>/2020/03/20200328.html</url>
+    <content><![CDATA[<p>一个合格的通讯录，应该支持增、删、查、改这四个基本操作，同时，我在这个通讯录中也运用了内存的动态管理与文件操作的知识，同时这个通讯录可以支持按照联系人姓名进行排序。</p>
+<a id="more"></a>
+
+<p><a href="https://github.com/Latsummer/FinishedProducts/tree/master/%E9%80%9A%E8%AE%AF%E5%BD%95" target="_blank" rel="noopener">GitHub链接</a></p>
+<h2 id="头文件"><a href="#头文件" class="headerlink" title="头文件"></a>头文件</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">PersonalInfo</span></span></span><br><span class="line"><span class="class">&#123;</span><span class="comment">//单个联系人的信息</span></span><br><span class="line">	<span class="keyword">char</span> name[<span class="number">1024</span>];</span><br><span class="line">	<span class="keyword">char</span> sex[<span class="number">20</span>];</span><br><span class="line">	<span class="keyword">char</span> age[<span class="number">10</span>];</span><br><span class="line">	<span class="keyword">char</span> phone[<span class="number">1024</span>];</span><br><span class="line">	<span class="keyword">char</span> address[<span class="number">1024</span>];</span><br><span class="line">&#125;PersonalInfo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">AddressBook</span></span></span><br><span class="line"><span class="class">&#123;</span><span class="comment">//通讯录</span></span><br><span class="line">	PersonalInfo* persons;</span><br><span class="line">	<span class="keyword">int</span> <span class="built_in">size</span>;<span class="comment">//通讯录当前的大小</span></span><br><span class="line">	<span class="keyword">int</span> nums;<span class="comment">//通讯录的上限</span></span><br><span class="line">&#125;AddressBook;</span><br><span class="line"></span><br><span class="line">AddressBook address_book;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Init</span><span class="params">(AddressBook* addr)</span></span>;<span class="comment">//初始化</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Relloc_Per</span><span class="params">(AddressBook* addr)</span></span>;<span class="comment">//扩容</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">menu</span><span class="params">()</span></span>;<span class="comment">//菜单</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Add_Person_Info</span><span class="params">(AddressBook* addr)</span></span>;<span class="comment">//增加联系人</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Del_Person_Info</span><span class="params">(AddressBook* addr)</span></span>;<span class="comment">//删除联系人</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Find_Person_Info</span><span class="params">(AddressBook* addr)</span></span>;<span class="comment">//查找联系人</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Modify_Person_Info</span><span class="params">(AddressBook* addr)</span></span>;<span class="comment">//修改联系人</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Print_Person_Info</span><span class="params">(AddressBook* addr)</span></span>;<span class="comment">//打印通讯录</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Clear_Person_Info</span><span class="params">(AddressBook* addr)</span></span>;<span class="comment">//清空通讯录</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="通讯录main函数部分"><a href="#通讯录main函数部分" class="headerlink" title="通讯录main函数部分"></a>通讯录main函数部分</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">"AddressBook.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Open</span><span class="params">(AddressBook* addr)</span><span class="comment">//从本地中打开通讯录</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	FILE* addbook = fopen(<span class="string">"C:book.txt"</span>, <span class="string">"r"</span>);</span><br><span class="line">	<span class="keyword">if</span> (addbook == <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		perror(<span class="string">"文件打开失败！"</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	PersonalInfo buf = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">	<span class="keyword">while</span> (fread(&amp;buf, <span class="keyword">sizeof</span>(PersonalInfo), <span class="number">1</span>, addbook))</span><br><span class="line">	&#123;</span><br><span class="line">		addr-&gt;persons[addr-&gt;<span class="built_in">size</span>] = buf;</span><br><span class="line">		addr-&gt;<span class="built_in">size</span>++;</span><br><span class="line">		<span class="keyword">if</span> (addr-&gt;<span class="built_in">size</span> &gt;= addr-&gt;nums)</span><br><span class="line">		&#123;</span><br><span class="line">			Relloc_Per(addr);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	fclose(addbook);</span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Close</span><span class="params">(AddressBook* addr)</span><span class="comment">//关闭程序时保存通讯录</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	FILE* addbook = fopen(<span class="string">"C:book.txt"</span>, <span class="string">"w"</span>);</span><br><span class="line">	<span class="keyword">if</span> (addbook == <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		perror(<span class="string">"文件打开失败！"</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; addr-&gt;<span class="built_in">size</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		fwrite((addr-&gt;persons + i), <span class="keyword">sizeof</span>(PersonalInfo), <span class="number">1</span>, addbook);</span><br><span class="line">	&#125;</span><br><span class="line">	fclose(addbook);</span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Init(&amp;address_book);<span class="comment">//初始化通讯录</span></span><br><span class="line">	Open(&amp;address_book);<span class="comment">//打开本地文件</span></span><br><span class="line">	<span class="function"><span class="keyword">typedef</span> <span class="title">void</span><span class="params">(*Func)</span><span class="params">(AddressBook*)</span></span>;<span class="comment">//函数指针</span></span><br><span class="line">	Func function[] = <span class="comment">//函数指针数组</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="literal">NULL</span>,<span class="comment">//此处为了和menu的返回值匹配，将function[0]的内容写成NULL</span></span><br><span class="line">		Add_Person_Info,</span><br><span class="line">		Del_Person_Info,</span><br><span class="line">		Find_Person_Info,</span><br><span class="line">		Modify_Person_Info,</span><br><span class="line">		Print_Person_Info,</span><br><span class="line">		Clear_Person_Info</span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="keyword">while</span> (<span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> choice = menu();</span><br><span class="line">		<span class="keyword">if</span> (choice == <span class="number">0</span>)</span><br><span class="line">		&#123;<span class="comment">//退出</span></span><br><span class="line">			Close(&amp;address_book);</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"bye!\n\n"</span>);</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (choice &lt; <span class="number">0</span> || choice &gt;= <span class="keyword">sizeof</span>(function) / <span class="keyword">sizeof</span>(function[<span class="number">0</span>]))</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"输入错误！\n\n"</span>);</span><br><span class="line">			<span class="keyword">continue</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		function[choice](&amp;address_book);<span class="comment">//实现具体功能</span></span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="功能函数部分"><a href="#功能函数部分" class="headerlink" title="功能函数部分"></a>功能函数部分</h2><h3 id="初始化以及菜单函数"><a href="#初始化以及菜单函数" class="headerlink" title="初始化以及菜单函数"></a>初始化以及菜单函数</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Init</span><span class="params">(AddressBook* addr)</span><span class="comment">//初始化通讯录</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	addr-&gt;<span class="built_in">size</span> = <span class="number">0</span>;</span><br><span class="line">	addr-&gt;nums = <span class="number">20</span>;</span><br><span class="line">	addr-&gt;persons = (PersonalInfo*)<span class="built_in">malloc</span>((addr-&gt;nums) * <span class="keyword">sizeof</span>(PersonalInfo));</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; addr-&gt;nums; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">strcpy</span>(addr-&gt;persons[i].name , <span class="string">""</span>);</span><br><span class="line">		<span class="built_in">strcpy</span>(addr-&gt;persons[i].phone , <span class="string">""</span>);</span><br><span class="line">		<span class="built_in">strcpy</span>(addr-&gt;persons[i].address  , <span class="string">""</span>);</span><br><span class="line">		<span class="built_in">strcpy</span>(addr-&gt;persons[i].sex , <span class="string">""</span>);</span><br><span class="line">		<span class="built_in">strcpy</span>(addr-&gt;persons[i].age, <span class="string">""</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">menu</span><span class="params">()</span><span class="comment">//主菜单</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"============================\n"</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"  1.新建联系人\n"</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"  2.删除联系人\n"</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"  3.查询联系人\n"</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"  4.修改联系人\n"</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"  5.显示所有联系人\n"</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"  6.清空通讯录\n"</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"  0.退出\n"</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"============================\n\n"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> ret = <span class="number">0</span>;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;ret);</span><br><span class="line">	<span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="排序以及扩容部分"><a href="#排序以及扩容部分" class="headerlink" title="排序以及扩容部分"></a>排序以及扩容部分</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">cmp</span><span class="params">(AddressBook* addr)</span> <span class="comment">//排序</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">	PersonalInfo tmp;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; addr-&gt;<span class="built_in">size</span> - <span class="number">1</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; addr-&gt;<span class="built_in">size</span> - <span class="number">1</span> - i; j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (<span class="built_in">strcmp</span>(addr-&gt;persons[j].name , addr-&gt;persons[j+<span class="number">1</span>].name) &gt; <span class="number">0</span>)</span><br><span class="line">			&#123;<span class="comment">//冒泡排序</span></span><br><span class="line">				tmp = addr-&gt;persons[j];</span><br><span class="line">				addr-&gt;persons[j] = addr-&gt;persons[j + <span class="number">1</span>];</span><br><span class="line">				addr-&gt;persons[j + <span class="number">1</span>] = tmp;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Relloc_Per</span><span class="params">(AddressBook* addr)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	addr-&gt;nums += <span class="number">20</span>;</span><br><span class="line">	addr-&gt;persons = <span class="built_in">realloc</span>(addr-&gt;persons, (addr-&gt;nums) * <span class="keyword">sizeof</span>(PersonalInfo));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="增删查改联系人"><a href="#增删查改联系人" class="headerlink" title="增删查改联系人"></a>增删查改联系人</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Add_Person_Info</span><span class="params">(AddressBook* addr)</span><span class="comment">//新增联系人</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (addr-&gt;<span class="built_in">size</span> &gt;= addr-&gt;nums)</span><br><span class="line">	&#123;</span><br><span class="line">		Relloc_Per(addr);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	PersonalInfo* info = &amp;addr-&gt;persons[addr-&gt;<span class="built_in">size</span>];</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"新增联系人！\n"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入联系人姓名："</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%s"</span>, info-&gt;name);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入联系人电话："</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%s"</span>, info-&gt;phone);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入联系人性别："</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%s"</span>, info-&gt;sex);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入联系人年龄："</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%s"</span>, info-&gt;age);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入联系人住址："</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%s"</span>, info-&gt;address);</span><br><span class="line"></span><br><span class="line">	addr-&gt;<span class="built_in">size</span>++;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"新增联系人成功！\n"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (addr-&gt;<span class="built_in">size</span> &gt;= <span class="number">2</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		cmp(addr);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Del_Person_Info</span><span class="params">(AddressBook* addr)</span><span class="comment">//删除联系人</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (addr-&gt;<span class="built_in">size</span> &lt;= <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"通讯录为空！无法执行删除！\n"</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"删除联系人！\n"</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入要删除的联系人序号："</span>);</span><br><span class="line">	<span class="keyword">int</span> input = <span class="number">0</span>;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;input);</span><br><span class="line">	<span class="keyword">if</span> (input &lt; <span class="number">0</span> || input &gt;= addr-&gt;<span class="built_in">size</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"非法输入！\n"</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	PersonalInfo* last_info = &amp;addr-&gt;persons[addr-&gt;<span class="built_in">size</span> - <span class="number">1</span>];</span><br><span class="line">	PersonalInfo* to_delt = &amp;addr-&gt;persons[input];</span><br><span class="line">	*to_delt = *last_info;</span><br><span class="line">	addr-&gt;<span class="built_in">size</span>--;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"联系人成功删除！\n"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (addr-&gt;<span class="built_in">size</span> &gt;= <span class="number">2</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		cmp(addr);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Find_Person_Info</span><span class="params">(AddressBook* addr)</span><span class="comment">//查找联系人</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> <span class="built_in">find</span>[<span class="number">1024</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"查找联系人！\n"</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入想要查找的姓名或联系方式："</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%s"</span>, &amp;<span class="built_in">find</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; addr-&gt;<span class="built_in">size</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		PersonalInfo* findinfo = &amp;addr-&gt;persons[i];</span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">strcmp</span>(<span class="built_in">find</span>, findinfo-&gt;name) == <span class="number">0</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"找到了！该联系人编号为：%d\n"</span>, i);</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">strcmp</span>(<span class="built_in">find</span>, findinfo-&gt;phone) == <span class="number">0</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"\n找到了！该联系人为：[%d]  姓名：%s   联系方式：%s\n"</span>, i,findinfo-&gt;name,findinfo-&gt;phone);</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"查无此人！\n"</span>);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Modify_Person_Info</span><span class="params">(AddressBook* addr)</span><span class="comment">//修改联系人信息</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (addr-&gt;<span class="built_in">size</span> &lt;= <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"通讯录为空！无法执行！\n"</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">char</span> name[<span class="number">1024</span>];</span><br><span class="line">	<span class="keyword">char</span> sex[<span class="number">20</span>];</span><br><span class="line">	<span class="keyword">char</span> age[<span class="number">10</span>];</span><br><span class="line">	<span class="keyword">char</span> phone[<span class="number">1024</span>];</span><br><span class="line">	<span class="keyword">char</span> address[<span class="number">1024</span>];</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"修改联系人信息！\n"</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入要修改的联系人编号："</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;i);</span><br><span class="line">	<span class="keyword">if</span> (i&lt;<span class="number">0</span> || i&gt;addr-&gt;<span class="built_in">size</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"输入非法！\n"</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	PersonalInfo* info = &amp;addr-&gt;persons[i];</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"[%d]  姓名：%s   联系方式：%s \n     性别： %s  年龄： %s\n     住址：%s\n\n"</span>, i, info-&gt;name, info-&gt;phone, info-&gt;sex, info-&gt;age, info-&gt;address);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入要修改的姓名（输入 * 表示不进行修改）："</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%s"</span>, name);</span><br><span class="line">	<span class="keyword">if</span> (<span class="built_in">strcmp</span>(name , <span class="string">"*"</span>) != <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">strcpy</span>(addr-&gt;persons[i].name, name);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入要修改的性别（输入 * 表示不进行修改）："</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%s"</span>, sex);</span><br><span class="line">	<span class="keyword">if</span> (<span class="built_in">strcmp</span>(sex, <span class="string">"*"</span>) != <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">strcpy</span>(addr-&gt;persons[i].sex, sex);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入要修改的年龄（输入 * 表示不进行修改）："</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%s"</span>, age);</span><br><span class="line">	<span class="keyword">if</span> (<span class="built_in">strcmp</span>(age, <span class="string">"*"</span>) != <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">strcpy</span>(addr-&gt;persons[i].age, age);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入要修改的联系方式（输入 * 表示不进行修改）："</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%s"</span>, phone);</span><br><span class="line">	<span class="keyword">if</span> (<span class="built_in">strcmp</span>(phone, <span class="string">"*"</span>) != <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">strcpy</span>(addr-&gt;persons[i].phone, phone);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入要修改的地址（输入 * 表示不进行修改）："</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%s"</span>, address);</span><br><span class="line">	<span class="keyword">if</span> (<span class="built_in">strcmp</span>(address, <span class="string">"*"</span>) != <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">strcpy</span>(addr-&gt;persons[i].address, address);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"修改成功！\n"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (addr-&gt;<span class="built_in">size</span> &gt;= <span class="number">2</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		cmp(addr);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="打印以及清空"><a href="#打印以及清空" class="headerlink" title="打印以及清空"></a>打印以及清空</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Print_Person_Info</span><span class="params">(AddressBook* addr)</span><span class="comment">//输出联系人（全部）</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"显示所有联系人：\n\n"</span>);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; addr-&gt;<span class="built_in">size</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		PersonalInfo* info = &amp;addr-&gt;persons[i];</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"[%d]  姓名：%s   联系方式：%s \n     性别： %s  年龄： %s\n     住址：%s\n\n"</span>, i,info-&gt;name ,info-&gt;phone,info-&gt;sex,info-&gt;age,info-&gt;address );</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n到底了...\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Clear_Person_Info</span><span class="params">(AddressBook* addr)</span><span class="comment">//一键清空</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> <span class="built_in">clear</span>[<span class="number">20</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n清空通讯录！\n"</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"请确认是否清空  (Y/N)\n"</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%s"</span>, <span class="built_in">clear</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (<span class="built_in">strcmp</span>(<span class="built_in">clear</span>, <span class="string">"Y"</span>) == <span class="number">0</span> || <span class="built_in">strcmp</span>(<span class="built_in">clear</span>, <span class="string">"y"</span>) == <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//addr-&gt;size = 0;</span></span><br><span class="line">		Init(addr);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"成功清空通讯录！\n"</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"放弃清空\n"</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如此，一个简单的通讯录就可以实现啦。</p>
 ]]></content>
       <categories>
         <category>C</category>
@@ -1749,6 +1749,149 @@ d. 要删除的结点有左、右孩子结点</code></pre><ul>
       </tags>
   </entry>
   <entry>
+    <title>从AVL树到红黑树（的插入）</title>
+    <url>/2020/07/20200712.html</url>
+    <content><![CDATA[<h1 id="AVL树"><a href="#AVL树" class="headerlink" title="AVL树"></a>AVL树</h1><ul>
+<li>左右子树都是AVL树</li>
+<li>左右子树高度差的绝对值不超过1（-1/0/1）（一般：右子树高度 - 左子树高度）</li>
+<li>如果一棵二叉搜索树树高度平衡的，它就是AVL树。如果它有n个节点，其高度可保持在O(log<sub>2</sub>N)，搜索时间复杂度O(log<sub>2</sub>N)</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="节点结构"><a href="#节点结构" class="headerlink" title="节点结构"></a>节点结构</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> <span class="title">AVLNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	T _value;</span><br><span class="line">	<span class="keyword">int</span> _bf;<span class="comment">//平衡因子</span></span><br><span class="line">	AVLNode&lt;T&gt;* _left;</span><br><span class="line">	AVLNode&lt;T&gt;* _right;</span><br><span class="line">	AVLNode&lt;T&gt;* _parent;</span><br><span class="line"></span><br><span class="line">	AVLNode(<span class="keyword">const</span> T&amp; val = T())</span><br><span class="line">		: _value(val)</span><br><span class="line">		, _bf(<span class="number">0</span>)</span><br><span class="line">		, _left(<span class="literal">nullptr</span>)</span><br><span class="line">		, _right(<span class="literal">nullptr</span>)</span><br><span class="line">		, _parent(<span class="literal">nullptr</span>)</span><br><span class="line">	&#123; &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>插入节点后：必须要更新平衡因子</p>
+<p>可能需要更新平衡因子的节点：</p>
+<ol>
+<li>新插入节点中所有足祖先节点</li>
+<li>如果节点的子树高度发生变化，则需要更新</li>
+</ol>
+</blockquote>
+<h2 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h2><ol>
+<li><p>二叉搜索树的插入</p>
+</li>
+<li><p>从新插入的节点对应的父节点位置开始更新平衡因子</p>
+</li>
+<li><p>在第二步的过程中，平衡因子更新之后：</p>
+<ol>
+<li><p>平衡因子：0    —&gt;     停止更新</p>
+</li>
+<li><p>平衡因子：-1/1    —&gt;    继续向上更新</p>
+</li>
+<li><p>平衡因子：-2/2    —&gt;    旋转</p>
+<ol>
+<li><p>单旋：</p>
+<ol>
+<li><p>左单旋：右边的右边高，<code>parent-&gt;_bf == 2 &amp;&amp; cur-&gt;_bf == 1</code></p>
+<p> 修改链接：parent、subRL、subR</p>
+<p> ​                    parent-&gt;_right : subRL、subR-&gt;left : parent</p>
+<p> 更新平衡因子：parent、subR：0</p>
+</li>
+<li><p>右单旋：左边的左边高，<code>parent-&gt;_bf == -2 &amp;&amp; cur-&gt;_bf == -1</code></p>
+<p> 修改链接：subL、subLR、parent</p>
+<p> ​                    parent-&gt;left : subLR、subL-&gt;right : parent</p>
+<p> 更新平衡因子：parent、subL：0</p>
+</li>
+</ol>
+</li>
+<li><p>双旋：</p>
+<ol>
+<li><p>左右双旋：左边的右边高，<code>parent-&gt;_bf == -2 &amp;&amp; cur-&gt;_bf == 1</code></p>
+<p> 修改链接：subL、subLR、parent</p>
+<p> ​        左旋：以subL为轴</p>
+<p> ​        右旋：以parent为轴</p>
+<p> 重新更新平衡因子：</p>
+<p> if(subLR-&gt;bf == -1)</p>
+<p> ​    subL-&gt;bf = 0, parent-&gt;bf = 1;</p>
+<p> else if(subLR-&gt;bf == 1)</p>
+<p> ​    subL-&gt;bf = -1, parent-&gt;bf = 0;</p>
+</li>
+<li><p>右左双旋右边的左边高，<code>parent-&gt;_bf == 2 &amp;&amp; cur-&gt;_bf == -1</code></p>
+<p> 修改链接：parent、subRL、subR</p>
+<p> ​        右旋：以subR为轴</p>
+<p> ​        左旋：以parent为轴</p>
+<p> ​    重新更新平衡因子：</p>
+<p> ​    if(subRL-&gt;bf == 1)</p>
+<p> ​        parent-&gt;bf = -1, subR-&gt;bf = 0;</p>
+<p> else if(subRL-&gt;bf == -1)</p>
+<p> ​        parent-&gt;bf = 0, subR-&gt;bf = 1;</p>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">insert</span><span class="params">(<span class="keyword">const</span> T&amp; val)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (_root == <span class="literal">nullptr</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			_root = <span class="keyword">new</span> Node(val);</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		Node* cur = _root;</span><br><span class="line">		Node* parent = <span class="literal">nullptr</span>;</span><br><span class="line">		<span class="keyword">while</span> (cur)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="comment">//插入</span></span><br><span class="line">			parent = cur;</span><br><span class="line">			<span class="keyword">if</span> (cur-&gt;_value == val) &#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">if</span> (cur-&gt;_value &lt; val) &#123;</span><br><span class="line">				cur = cur-&gt;_right;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> &#123;</span><br><span class="line">				cur = cur-&gt;_left;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		cur = <span class="keyword">new</span> Node(val);</span><br><span class="line">		<span class="keyword">if</span> (parent-&gt;_value &lt; val) &#123;</span><br><span class="line">			parent-&gt;_right = cur;</span><br><span class="line">		&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">			parent-&gt;_left = cur;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		cur-&gt;_parent = parent;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//更新 + 调整</span></span><br><span class="line">		<span class="keyword">while</span> (parent)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="comment">//1.更新parent平衡因子</span></span><br><span class="line">			<span class="keyword">if</span> (parent-&gt;_left == cur)</span><br><span class="line">				parent-&gt;_bf--;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">				parent-&gt;_bf++;</span><br><span class="line">			<span class="comment">//2.判断是否需要继续更新</span></span><br><span class="line">			<span class="keyword">if</span> (parent-&gt;_bf == <span class="number">0</span>) &#123;<span class="comment">//被补齐了，parent的父节点左右子树高度未发生变化</span></span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			&#125;<span class="keyword">else</span> <span class="keyword">if</span> (parent-&gt;_bf == <span class="number">-1</span> || parent-&gt;_bf == <span class="number">1</span>) &#123;</span><br><span class="line">				cur = parent;</span><br><span class="line">				parent = parent-&gt;_parent;</span><br><span class="line">			&#125;<span class="keyword">else</span> <span class="keyword">if</span> (parent-&gt;_bf == <span class="number">-2</span> || parent-&gt;_bf == <span class="number">2</span>) &#123;</span><br><span class="line">				<span class="comment">//调整</span></span><br><span class="line">				<span class="keyword">if</span> (parent-&gt;_bf == <span class="number">-2</span> &amp;&amp; cur-&gt;_bf == <span class="number">-1</span>) &#123;</span><br><span class="line">					<span class="comment">//左边的左边高，右旋</span></span><br><span class="line">					RotateR(parent);</span><br><span class="line">				&#125; <span class="keyword">else</span> <span class="keyword">if</span> (parent-&gt;_bf == <span class="number">2</span> &amp;&amp; cur-&gt;_bf == <span class="number">1</span>) &#123;</span><br><span class="line">					<span class="comment">//右边的右边高，左旋</span></span><br><span class="line">					RotateL(parent);</span><br><span class="line">				&#125; <span class="keyword">else</span> <span class="keyword">if</span> (parent-&gt;_bf == <span class="number">2</span> &amp;&amp; cur-&gt;_bf == <span class="number">-1</span>) &#123;</span><br><span class="line">					<span class="comment">//右边的左边高，右左双旋</span></span><br><span class="line">          Node* subR = parent-&gt;_right;</span><br><span class="line">          Node* subRl = subR-&gt;_left;</span><br><span class="line">          <span class="keyword">int</span> bf = subRL-&gt;_bf;</span><br><span class="line">          </span><br><span class="line">					RotateR(cur);</span><br><span class="line">					RotateL(parent);</span><br><span class="line">          </span><br><span class="line">          <span class="comment">//调整平衡因子</span></span><br><span class="line">          <span class="keyword">if</span>(bf == <span class="number">1</span>)</span><br><span class="line">          &#123;</span><br><span class="line">            <span class="comment">//subRL右子树高</span></span><br><span class="line">            subR-&gt;_bf = <span class="number">0</span>;</span><br><span class="line">            parent-&gt;_bf = <span class="number">-1</span>;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">else</span> <span class="keyword">if</span>(bf == <span class="number">-1</span>)</span><br><span class="line">          &#123;</span><br><span class="line">            <span class="comment">//subRL左子树高</span></span><br><span class="line">            parent-&gt;_bf = <span class="number">0</span>;</span><br><span class="line">            subR-&gt;_bf = <span class="number">1</span>;</span><br><span class="line">          &#125;</span><br><span class="line">				&#125; <span class="keyword">else</span> <span class="keyword">if</span> (parent-&gt;_bf == <span class="number">-2</span> &amp;&amp; cur-&gt;_bf == <span class="number">1</span>) &#123;</span><br><span class="line">					<span class="comment">//左边的右边高,左右双旋</span></span><br><span class="line">					RotateL(cur);</span><br><span class="line">					RotateR(parent);</span><br><span class="line">				&#125;</span><br><span class="line"></span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="左旋"><a href="#左旋" class="headerlink" title="左旋"></a>左旋</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">RotateL</span><span class="params">(Node* parent)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		Node* subR = parent-&gt;_right;</span><br><span class="line">		Node* subRL = subR-&gt;_left;</span><br><span class="line"></span><br><span class="line">		subR-&gt;_left = parent;</span><br><span class="line">		parent-&gt;_right = subRL;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (subRL)</span><br><span class="line">			subRL-&gt;_parent = parent;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (parent == _root)</span><br><span class="line">		&#123;</span><br><span class="line">			_root = subR;</span><br><span class="line">			subR-&gt;_parent = <span class="literal">nullptr</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			Node* g = parent-&gt;_parent;</span><br><span class="line">			subR-&gt;_parent = g;</span><br><span class="line">			<span class="keyword">if</span> (g-&gt;_left == parent)</span><br><span class="line">				g-&gt;_left = subR;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">				g-&gt;_right = subR;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		parent-&gt;_parent = subR;</span><br><span class="line">		parent-&gt;_bf = subR-&gt;_bf = <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="右旋"><a href="#右旋" class="headerlink" title="右旋"></a>右旋</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">RotateR</span><span class="params">(Node* parent)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		Node* subL = parent-&gt;_left;</span><br><span class="line">		Node* subLR = subL-&gt;_right;</span><br><span class="line"></span><br><span class="line">		subL-&gt;_right = parent;</span><br><span class="line">		parent-&gt;_left = subLR;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (subLR)</span><br><span class="line">			subLR-&gt;_parent = parent;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (parent == _root)</span><br><span class="line">		&#123;</span><br><span class="line">			_root = subL;</span><br><span class="line">			subL-&gt;_parent = <span class="literal">nullptr</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			Node* g = parent-&gt;_parent;</span><br><span class="line">			subL-&gt;_parent = g;</span><br><span class="line">			<span class="keyword">if</span> (g-&gt;_left == parent)</span><br><span class="line">				g-&gt;_left = subL;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">				g-&gt;_right = subL;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		parent-&gt;_parent = subL;</span><br><span class="line">		parent-&gt;_bf = subL-&gt;_bf = <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="红黑树"><a href="#红黑树" class="headerlink" title="红黑树"></a>红黑树</h1><ol>
+<li>每个节点不是红色就是黑色</li>
+<li>根结点是黑色的</li>
+<li>如果一个节点是红色的，则它的两个孩子节点是黑色的</li>
+<li>对于每个节点，从该节点到其所有后代叶子节点的简单路径上，均包含相同数目的黑色节点</li>
+<li>每个叶子节点都是黑色的（空节点也可）</li>
+</ol>
+<blockquote>
+<p>根是黑色的</p>
+<p>红色不能连续，黑色可以连续</p>
+<p>每条路径上，黑色节点个数相同</p>
+<p>最长路径是最短路径的两倍（最短：全黑；最长：红黑相间）</p>
+</blockquote>
+<p><a href="https://github.com/Latsummer/FinishedProducts/tree/master/RBTree" target="_blank" rel="noopener">一个红黑树的简单实现 - GitHub</a></p>
+<h2 id="节点结构-1"><a href="#节点结构-1" class="headerlink" title="节点结构"></a>节点结构</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">enum</span> Color</span><br><span class="line">&#123;</span><br><span class="line">	BLACK,</span><br><span class="line">	RED</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">K</span>, <span class="title">class</span> <span class="title">V</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> <span class="title">RBNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	pair&lt;K, V&gt; _value;</span><br><span class="line">	Color _color;</span><br><span class="line">	RBNode&lt;K, V&gt; _parent;</span><br><span class="line">	RBNode&lt;K, V&gt; _left;</span><br><span class="line">	RBNode&lt;K, V&gt; _right;</span><br><span class="line"></span><br><span class="line">	RBNode(<span class="keyword">const</span> pair&lt;K, V&gt;&amp; value = pair&lt;K, V&gt;())</span><br><span class="line">		: _value(value)</span><br><span class="line">		, _color(RED)</span><br><span class="line">		, _parent(<span class="literal">nullptr</span>)</span><br><span class="line">		, _left(<span class="literal">nullptr</span>)</span><br><span class="line">		, _right(<span class="literal">nullptr</span>)</span><br><span class="line">	&#123; &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="插入-1"><a href="#插入-1" class="headerlink" title="插入"></a>插入</h2><p>不能改变当前结构中的黑色节点的个数，除了祖父节点为根节点的情况</p>
+<ul>
+<li>g：祖父</li>
+<li>p：父亲</li>
+<li>u：叔叔</li>
+<li>cur：插入节点</li>
+</ul>
+<ol>
+<li>搜索树的插入</li>
+<li>判断是否需要调整：红色连续 </li>
+</ol>
+<ul>
+<li>cur在p左边，叔叔存在且为红色，将p、u置为黑色，g为红色</li>
+</ul>
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlly1ggnzzrztvuj31bo0toaak.jpg" alt="IMG_7063"  />
+
+<ul>
+<li>cur在p左边，叔叔不存在，以g为轴心进行右旋，将g变红，将p变黑</li>
+</ul>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1ggo07rykj1j31bo0to3z1.jpg" alt="IMG_7064"></p>
+<ul>
+<li>cur在p左边叔叔为黑色，以g为轴心进行右旋，将g变红，将p变黑</li>
+</ul>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1ggo0c2ek0zj31bo0to0vf.jpg" alt="IMG_7065"></p>
+<ul>
+<li>cur在p右边，先以p为轴心左旋，交换p与cur指针，按照情况三处理</li>
+</ul>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1ggo0qurg82j31bo0tot9k.jpg" alt="IMG_7066"></p>
+<ul>
+<li><strong>p在g右边，则操作完全相反</strong></li>
+</ul>
+<p>代码如下，其中旋转部分代码与AVL树相同：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">insert</span><span class="params">(<span class="keyword">const</span> pair&lt;K, V&gt;&amp; val)</span></span></span><br><span class="line"><span class="function"> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (_header-&gt;_parent == <span class="literal">nullptr</span>)</span><br><span class="line">  &#123;</span><br><span class="line">   <span class="comment">//空树</span></span><br><span class="line">   Node* root = <span class="keyword">new</span> Node(val);</span><br><span class="line">   root-&gt;_color = BLACK;<span class="comment">//根为黑色</span></span><br><span class="line"></span><br><span class="line">   _header-&gt;_parent = root;</span><br><span class="line">   root-&gt;_parent = _header;</span><br><span class="line"></span><br><span class="line">   _header-&gt;_left = root;</span><br><span class="line">   _header-&gt;_right = root;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//非空树</span></span><br><span class="line">  Node* cur = _header-&gt;_parent;</span><br><span class="line">  Node* parent = <span class="literal">nullptr</span>;</span><br><span class="line">  <span class="keyword">while</span> (cur)</span><br><span class="line">  &#123;</span><br><span class="line">   parent = cur;</span><br><span class="line">   <span class="keyword">if</span> (cur-&gt;_value.first == val.first)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">   <span class="keyword">if</span> (cur-&gt;_value.first &lt; val.first)</span><br><span class="line">    cur = cur-&gt;_right;</span><br><span class="line">   <span class="keyword">else</span></span><br><span class="line">    cur = cur-&gt;_left;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  cur = <span class="keyword">new</span> Node(val);</span><br><span class="line">  <span class="keyword">if</span> (parent-&gt;_value.first &lt; val.first)</span><br><span class="line">   parent-&gt;_right = cur;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">   parent-&gt;_left = cur;</span><br><span class="line"></span><br><span class="line">  cur-&gt;_parent = parent;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//调整:修改颜色，旋转</span></span><br><span class="line">  <span class="keyword">while</span> (cur != _header-&gt;_parent &amp;&amp; cur-&gt;_parent-&gt;_color == RED)</span><br><span class="line">  &#123;</span><br><span class="line">   Node* p = cur-&gt;_parent;</span><br><span class="line">   Node* g = p-&gt;_parent;</span><br><span class="line">   <span class="keyword">if</span> (g-&gt;_left == p)</span><br><span class="line">   &#123;</span><br><span class="line">    Node* u = g-&gt;_right;</span><br><span class="line">    <span class="keyword">if</span> (u &amp;&amp; u-&gt;_color == RED)</span><br><span class="line">    &#123;</span><br><span class="line">     u-&gt;_color = p-&gt;_color = BLACK;</span><br><span class="line">     g-&gt;_color = RED;</span><br><span class="line"></span><br><span class="line">     cur = g;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">     <span class="comment">//ub不存在或u存在且为黑色</span></span><br><span class="line">     <span class="keyword">if</span> (cur == p-&gt;_right)</span><br><span class="line">     &#123;</span><br><span class="line">      RotateL(p);</span><br><span class="line">      swap(cur, p);</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="comment">//cur在p左边,右旋+修改颜色</span></span><br><span class="line">     RotateR(g);</span><br><span class="line">     p-&gt;_color = BLACK;</span><br><span class="line">     g-&gt;_color = RED;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">else</span><span class="comment">//p在g右边</span></span><br><span class="line">   &#123;</span><br><span class="line">    Node* u = g-&gt;_left;</span><br><span class="line">    <span class="keyword">if</span> (u &amp;&amp; u-&gt;_color == RED)</span><br><span class="line">    &#123;</span><br><span class="line">     u-&gt;_color = p-&gt;_color = BLACK;</span><br><span class="line">     g-&gt;_color = RED;</span><br><span class="line">     cur = g;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">     <span class="keyword">if</span> (cur == p-&gt;_left)</span><br><span class="line">     &#123;</span><br><span class="line">      RotateR(p);</span><br><span class="line">      swap(cur, p);</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     RotateL(g);</span><br><span class="line">     g-&gt;_color = RED;</span><br><span class="line">     p-&gt;_color = BLACK;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//将根置为黑</span></span><br><span class="line">  _header-&gt;_parent-&gt;_color = BLACK;</span><br><span class="line">  <span class="comment">//更新头的左右指针</span></span><br><span class="line">  _header-&gt;_left = leftMost();</span><br><span class="line">  _header-&gt;_right = rightMost();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>C++</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+        <tag>数据结构</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>关于原码、反码及补码的一些总结</title>
     <url>/2020/02/20200227.html</url>
     <content><![CDATA[<h4 id="大小端字节序"><a href="#大小端字节序" class="headerlink" title="大小端字节序"></a>大小端字节序</h4><p><strong>小端:数字的低位存到内存的低地址上。</strong><br><strong>大端:数字的低位存到内存的高地址上。</strong><br><em>大端字节序符合平时直觉，一台机器大端还是小端，取决于CPU</em>  </p>
@@ -2468,8 +2611,8 @@ d. 要删除的结点有左、右孩子结点</code></pre><ul>
         <category>C</category>
       </categories>
       <tags>
-        <tag>C</tag>
         <tag>内存管理</tag>
+        <tag>C</tag>
       </tags>
   </entry>
 </search>
