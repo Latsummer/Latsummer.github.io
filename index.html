@@ -136,7 +136,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">33</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">34</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -197,6 +197,96 @@
   
   
 <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+<link itemprop="mainEntityOfPage" href="http://zhaozhuolin.com/2020/07/20200719.html">
+
+<span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <meta itemprop="image" content="/images/IMG_6272.JPG">
+  <meta itemprop="name" content="Morgan">
+  <meta itemprop="description" content="八说了，我在学了！">
+</span>
+
+<span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+  <meta itemprop="name" content="小赵的学习笔记">
+</span>
+  <header class="post-header">
+    <h2 class="post-title" itemprop="name headline">
+      
+        <a href="/2020/07/20200719.html" class="post-title-link" itemprop="url">从无序关联容器到哈希（及无序关联容器的模拟实现）</a>
+    </h2>
+
+    <div class="post-meta">
+        <span class="post-meta-item">
+          <span class="post-meta-item-icon">
+            <i class="far fa-calendar"></i>
+          </span>
+          <span class="post-meta-item-text">发表于</span>
+          
+
+          <time title="创建时间：2020-07-19 20:11:00 / 修改时间：20:12:24" itemprop="dateCreated datePublished" datetime="2020-07-19T20:11:00+08:00">2020-07-19</time>
+        </span>
+        <span class="post-meta-item">
+          <span class="post-meta-item-icon">
+            <i class="far fa-folder"></i>
+          </span>
+          <span class="post-meta-item-text">分类于</span>
+            <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+            </span>
+        </span>
+
+      <br>
+        <span class="post-meta-item" title="本文字数">
+          <span class="post-meta-item-icon">
+            <i class="far fa-file-word"></i>
+          </span>
+            <span class="post-meta-item-text">本文字数：</span>
+          <span>8.4k</span>
+        </span>
+        <span class="post-meta-item" title="阅读时长">
+          <span class="post-meta-item-icon">
+            <i class="far fa-clock"></i>
+          </span>
+            <span class="post-meta-item-text">阅读时长 &asymp;</span>
+          <span>8 分钟</span>
+        </span>
+
+    </div>
+  </header>
+
+
+
+
+<div class="post-body" itemprop="articleBody">
+
+  
+      <h1 id="无序关联容器"><a href="#无序关联容器" class="headerlink" title="无序关联容器"></a>无序关联容器</h1><h2 id="unordered-map"><a href="#unordered-map" class="headerlink" title="unordered_map"></a>unordered_map</h2><p>基本使用与map相同，迭代器无反向迭代器，无序map，其体现在遍历时无序</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unordered_map&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">testUMap</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; um;</span><br><span class="line">	<span class="built_in">map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; m;</span><br><span class="line"></span><br><span class="line">	um.insert(make_pair(<span class="number">1</span>, <span class="number">1</span>));</span><br><span class="line">	um.insert(make_pair(<span class="number">10</span>, <span class="number">1</span>));</span><br><span class="line">	um.insert(make_pair(<span class="number">2</span>, <span class="number">1</span>));</span><br><span class="line">	um.insert(make_pair(<span class="number">15</span>, <span class="number">1</span>));</span><br><span class="line">	um.insert(make_pair(<span class="number">8</span>, <span class="number">1</span>));</span><br><span class="line"></span><br><span class="line">	um[<span class="number">100</span>] = <span class="number">100</span>;<span class="comment">//插入</span></span><br><span class="line">	um[<span class="number">15</span>] = <span class="number">15</span>;<span class="comment">//修改</span></span><br><span class="line"></span><br><span class="line">	um.at(<span class="number">2</span>) = <span class="number">2</span>;<span class="comment">//at无法插入，key不存在直接抛异常</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//遍历无序</span></span><br><span class="line">	<span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt;::iterator uit = um.begin();</span><br><span class="line">	<span class="keyword">while</span> (uit != um.end())</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; uit-&gt;first &lt;&lt; <span class="string">"--&gt;"</span> &lt;&lt; uit-&gt;second &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		uit++;</span><br><span class="line">	&#125;</span><br><span class="line">  </span><br><span class="line">  uit = um.find(<span class="number">100</span>);<span class="comment">//find找到返回指定位置迭代器，找不到则返回end迭代器</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; um.count(<span class="number">100</span>) &lt;&lt; <span class="built_in">endl</span>;<span class="comment">//count返回元素个数，1或0</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; uit-&gt;first &lt;&lt; <span class="string">"--&gt;"</span> &lt;&lt; uit-&gt;second &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	uit = um.find(<span class="number">20</span>);</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; um.count(<span class="number">20</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; (uit == um.end()) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      <!--noindex-->
+        <div class="post-button">
+          <a class="btn" href="/2020/07/20200719.html#more" rel="contents">
+            阅读全文 &raquo;
+          </a>
+        </div>
+      <!--/noindex-->
+    
+  
+</div>
+
+
+
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+<article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
 <link itemprop="mainEntityOfPage" href="http://zhaozhuolin.com/2020/07/20200717.html">
 
 <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -228,7 +318,7 @@
               <i class="far fa-calendar-check"></i>
             </span>
             <span class="post-meta-item-text">更新于</span>
-            <time title="修改时间：2020-07-18 08:59:59" itemprop="dateModified" datetime="2020-07-18T08:59:59+08:00">2020-07-18</time>
+            <time title="修改时间：2020-07-19 20:12:33" itemprop="dateModified" datetime="2020-07-19T20:12:33+08:00">2020-07-19</time>
           </span>
         <span class="post-meta-item">
           <span class="post-meta-item-icon">
@@ -1051,95 +1141,6 @@
   
   
 
-      
-  
-  
-<article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-<link itemprop="mainEntityOfPage" href="http://zhaozhuolin.com/2020/06/20200607.html">
-
-<span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
-  <meta itemprop="description" content="八说了，我在学了！">
-</span>
-
-<span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-  <meta itemprop="name" content="小赵的学习笔记">
-</span>
-  <header class="post-header">
-    <h2 class="post-title" itemprop="name headline">
-      
-        <a href="/2020/06/20200607.html" class="post-title-link" itemprop="url">string类的基本使用及常用接口</a>
-    </h2>
-
-    <div class="post-meta">
-        <span class="post-meta-item">
-          <span class="post-meta-item-icon">
-            <i class="far fa-calendar"></i>
-          </span>
-          <span class="post-meta-item-text">发表于</span>
-          
-
-          <time title="创建时间：2020-06-07 20:45:13 / 修改时间：20:51:35" itemprop="dateCreated datePublished" datetime="2020-06-07T20:45:13+08:00">2020-06-07</time>
-        </span>
-        <span class="post-meta-item">
-          <span class="post-meta-item-icon">
-            <i class="far fa-folder"></i>
-          </span>
-          <span class="post-meta-item-text">分类于</span>
-            <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-            </span>
-        </span>
-
-      <br>
-        <span class="post-meta-item" title="本文字数">
-          <span class="post-meta-item-icon">
-            <i class="far fa-file-word"></i>
-          </span>
-            <span class="post-meta-item-text">本文字数：</span>
-          <span>5.3k</span>
-        </span>
-        <span class="post-meta-item" title="阅读时长">
-          <span class="post-meta-item-icon">
-            <i class="far fa-clock"></i>
-          </span>
-            <span class="post-meta-item-text">阅读时长 &asymp;</span>
-          <span>5 分钟</span>
-        </span>
-
-    </div>
-  </header>
-
-
-
-
-<div class="post-body" itemprop="articleBody">
-
-  
-      <h1 id="string类基本使用"><a href="#string类基本使用" class="headerlink" title="string类基本使用"></a>string类基本使用</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="built_in">string</span> str;<span class="comment">//""</span></span><br><span class="line">  <span class="function"><span class="built_in">string</span> <span class="title">str2</span><span class="params">(<span class="string">"123"</span>)</span></span>;<span class="comment">//"123"</span></span><br><span class="line">  <span class="built_in">string</span> str3 = <span class="string">"abc"</span>;<span class="comment">//"abc"</span></span><br><span class="line">  <span class="function"><span class="built_in">string</span> <span class="title">str4</span><span class="params">(<span class="string">"0123456789"</span>, <span class="number">5</span>)</span></span>;<span class="comment">//"01234"</span></span><br><span class="line">  <span class="function"><span class="built_in">string</span> <span class="title">cpy</span><span class="params">(str3)</span></span>;<span class="comment">//"abc"</span></span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="built_in">string</span> <span class="title">str5</span><span class="params">(str4, <span class="number">2</span>, <span class="number">2</span>)</span></span>;<span class="comment">//"23" 从str4的第2个位置拿两个字符创建一个字符串</span></span><br><span class="line">  <span class="function"><span class="built_in">string</span> <span class="title">str6</span><span class="params">(<span class="number">10</span>, a)</span></span>;<span class="comment">//"aaaaaaaaaa"</span></span><br><span class="line">  </span><br><span class="line">  str6 = str5;<span class="comment">//操作符重载</span></span><br><span class="line">  str6 = <span class="string">"321"</span>;</span><br><span class="line">  str6 = <span class="string">"xyz"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      <!--noindex-->
-        <div class="post-button">
-          <a class="btn" href="/2020/06/20200607.html#more" rel="contents">
-            阅读全文 &raquo;
-          </a>
-        </div>
-      <!--/noindex-->
-    
-  
-</div>
-
-
-
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1211,7 +1212,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1276,13 +1277,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">115k</span>
+    <span title="站点总字数">124k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:45</span>
+    <span title="站点阅读时长">1:52</span>
 </div><script color="241,124,103" opacity="1" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
 
 
