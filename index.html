@@ -136,7 +136,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">34</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">35</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -222,7 +222,7 @@
           <span class="post-meta-item-text">发表于</span>
           
 
-          <time title="创建时间：2020-07-19 20:11:00 / 修改时间：20:12:24" itemprop="dateCreated datePublished" datetime="2020-07-19T20:11:00+08:00">2020-07-19</time>
+          <time title="创建时间：2020-07-19 20:11:00 / 修改时间：20:12:46" itemprop="dateCreated datePublished" datetime="2020-07-19T20:11:00+08:00">2020-07-19</time>
         </span>
         <span class="post-meta-item">
           <span class="post-meta-item-icon">
@@ -555,6 +555,123 @@
       <!--noindex-->
         <div class="post-button">
           <a class="btn" href="/2020/07/20200712.html#more" rel="contents">
+            阅读全文 &raquo;
+          </a>
+        </div>
+      <!--/noindex-->
+    
+  
+</div>
+
+
+
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+<article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+<link itemprop="mainEntityOfPage" href="http://zhaozhuolin.com/2020/07/20200710.html">
+
+<span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <meta itemprop="image" content="/images/IMG_6272.JPG">
+  <meta itemprop="name" content="Morgan">
+  <meta itemprop="description" content="八说了，我在学了！">
+</span>
+
+<span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+  <meta itemprop="name" content="小赵的学习笔记">
+</span>
+  <header class="post-header">
+    <h2 class="post-title" itemprop="name headline">
+      
+        <a href="/2020/07/20200710.html" class="post-title-link" itemprop="url">位图、布隆过滤器与大数据处理</a>
+    </h2>
+
+    <div class="post-meta">
+        <span class="post-meta-item">
+          <span class="post-meta-item-icon">
+            <i class="far fa-calendar"></i>
+          </span>
+          <span class="post-meta-item-text">发表于</span>
+
+          <time title="创建时间：2020-07-10 09:39:01" itemprop="dateCreated datePublished" datetime="2020-07-10T09:39:01+08:00">2020-07-10</time>
+        </span>
+          <span class="post-meta-item">
+            <span class="post-meta-item-icon">
+              <i class="far fa-calendar-check"></i>
+            </span>
+            <span class="post-meta-item-text">更新于</span>
+            <time title="修改时间：2020-07-20 09:39:27" itemprop="dateModified" datetime="2020-07-20T09:39:27+08:00">2020-07-20</time>
+          </span>
+        <span class="post-meta-item">
+          <span class="post-meta-item-icon">
+            <i class="far fa-folder"></i>
+          </span>
+          <span class="post-meta-item-text">分类于</span>
+            <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+            </span>
+        </span>
+
+      <br>
+        <span class="post-meta-item" title="本文字数">
+          <span class="post-meta-item-icon">
+            <i class="far fa-file-word"></i>
+          </span>
+            <span class="post-meta-item-text">本文字数：</span>
+          <span>2.9k</span>
+        </span>
+        <span class="post-meta-item" title="阅读时长">
+          <span class="post-meta-item-icon">
+            <i class="far fa-clock"></i>
+          </span>
+            <span class="post-meta-item-text">阅读时长 &asymp;</span>
+          <span>3 分钟</span>
+        </span>
+
+    </div>
+  </header>
+
+
+
+
+<div class="post-body" itemprop="articleBody">
+
+  
+      <h1 id="位图"><a href="#位图" class="headerlink" title="位图"></a>位图</h1><p>每一个比特位来表示当前比特位对应的数据是否存在，存在为1，不存在为0</p>
+<p>整数数组：</p>
+<ol>
+<li>整数位置：n/32</li>
+<li>整数位置中具体的bit位置：n%32</li>
+</ol>
+<ul>
+<li>右移相当于除，右移n位 == 数字➗2^n^</li>
+</ul>
+<p>位图实现：哈希表</p>
+<ol>
+<li>实现：整数数组</li>
+<li>数据单元是bit位</li>
+<li>节省空间，一个字节可以存放8个整数的二值信息（存在与否），不存放数据本身</li>
+<li>操作效率高，通过哈希映射获取位置，通过位运算执行操作， 时间效率O(1)</li>
+<li>位置映射：<ol>
+<li>获取整数位置，n / 32</li>
+<li>获取整数的比特位：n % 32</li>
+</ol>
+</li>
+<li>位图需要的空间大小和数据的范围有关，和数据本身大小没有关系</li>
+<li>适合的场景：数据不重复，信息简单</li>
+</ol>
+      <!--noindex-->
+        <div class="post-button">
+          <a class="btn" href="/2020/07/20200710.html#more" rel="contents">
             阅读全文 &raquo;
           </a>
         </div>
@@ -1052,95 +1169,6 @@
   
   
 
-      
-  
-  
-<article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-<link itemprop="mainEntityOfPage" href="http://zhaozhuolin.com/2020/06/20200611.html">
-
-<span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
-  <meta itemprop="description" content="八说了，我在学了！">
-</span>
-
-<span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-  <meta itemprop="name" content="小赵的学习笔记">
-</span>
-  <header class="post-header">
-    <h2 class="post-title" itemprop="name headline">
-      
-        <a href="/2020/06/20200611.html" class="post-title-link" itemprop="url">vector的基本使用和模拟实现</a>
-    </h2>
-
-    <div class="post-meta">
-        <span class="post-meta-item">
-          <span class="post-meta-item-icon">
-            <i class="far fa-calendar"></i>
-          </span>
-          <span class="post-meta-item-text">发表于</span>
-          
-
-          <time title="创建时间：2020-06-11 11:39:52 / 修改时间：11:41:55" itemprop="dateCreated datePublished" datetime="2020-06-11T11:39:52+08:00">2020-06-11</time>
-        </span>
-        <span class="post-meta-item">
-          <span class="post-meta-item-icon">
-            <i class="far fa-folder"></i>
-          </span>
-          <span class="post-meta-item-text">分类于</span>
-            <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-            </span>
-        </span>
-
-      <br>
-        <span class="post-meta-item" title="本文字数">
-          <span class="post-meta-item-icon">
-            <i class="far fa-file-word"></i>
-          </span>
-            <span class="post-meta-item-text">本文字数：</span>
-          <span>2.3k</span>
-        </span>
-        <span class="post-meta-item" title="阅读时长">
-          <span class="post-meta-item-icon">
-            <i class="far fa-clock"></i>
-          </span>
-            <span class="post-meta-item-text">阅读时长 &asymp;</span>
-          <span>2 分钟</span>
-        </span>
-
-    </div>
-  </header>
-
-
-
-
-<div class="post-body" itemprop="articleBody">
-
-  
-      <h1 id="vector的基本使用"><a href="#vector的基本使用" class="headerlink" title="vector的基本使用"></a>vector的基本使用</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v;</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt; v2;</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; v3;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">v4</span><span class="params">(<span class="number">10</span>, <span class="number">5</span>)</span></span>;<span class="comment">//10个5</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span> s2 = <span class="string">"0123456789"</span>;</span><br><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt; <span class="title">v5</span><span class="params">(s2.begin(), s2.end())</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt; <span class="title">v6</span><span class="params">(v5)</span></span>;</span><br></pre></td></tr></table></figure>
-      <!--noindex-->
-        <div class="post-button">
-          <a class="btn" href="/2020/06/20200611.html#more" rel="contents">
-            阅读全文 &raquo;
-          </a>
-        </div>
-      <!--/noindex-->
-    
-  
-</div>
-
-
-
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1212,7 +1240,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1277,13 +1305,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">124k</span>
+    <span title="站点总字数">126k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:52</span>
+    <span title="站点阅读时长">1:55</span>
 </div><script color="241,124,103" opacity="1" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
 
 
