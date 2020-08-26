@@ -22,30 +22,38 @@
     var CONFIG = {"hostname":"zhaozhuolin.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#A9A9A9","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="八说了，我在学了！">
-<meta property="og:type" content="website">
-<meta property="og:title" content="小赵的学习笔记">
-<meta property="og:url" content="http://zhaozhuolin.com/index.html">
+  <meta name="description" content="前言为了更方便的使用Boost库，于是想到实现一个基于Boost离线文档的搜索引擎，对离线的HTML文件进行分析，、并对查询词进行分词（借用第三方库），然后根据相关性（简陋的相关性公式）进行排序，最终将查询结果用JSON的数据格式进行组织打包，最终通过对外的http服务将查询结果返回 成品效果以及GitHub链接 由于不怎么会前端的一些语法，所以页面比较简陋    详细代码于 - GitHub链接">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Boost文档搜索引擎(简陋的) -- 基于jieba分词和HTTP协议">
+<meta property="og:url" content="http://zhaozhuolin.com/2020/08/20200826.html">
 <meta property="og:site_name" content="小赵的学习笔记">
-<meta property="og:description" content="八说了，我在学了！">
+<meta property="og:description" content="前言为了更方便的使用Boost库，于是想到实现一个基于Boost离线文档的搜索引擎，对离线的HTML文件进行分析，、并对查询词进行分词（借用第三方库），然后根据相关性（简陋的相关性公式）进行排序，最终将查询结果用JSON的数据格式进行组织打包，最终通过对外的http服务将查询结果返回 成品效果以及GitHub链接 由于不怎么会前端的一些语法，所以页面比较简陋    详细代码于 - GitHub链接">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlly1gi49kgwwqmj31hc0u01a0.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlly1gi49kbll6kj30rx06wwg2.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlly1gi49l0rlk0j317m0csgnf.jpg">
+<meta property="article:published_time" content="2020-08-26T07:40:00.000Z">
+<meta property="article:modified_time" content="2020-08-26T07:52:43.292Z">
 <meta property="article:author" content="Morgan">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="后端">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/007S8ZIlly1gi49kgwwqmj31hc0u01a0.jpg">
 
-<link rel="canonical" href="http://zhaozhuolin.com/">
+<link rel="canonical" href="http://zhaozhuolin.com/2020/08/20200826.html">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>小赵的学习笔记</title>
+  <title>Boost文档搜索引擎(简陋的) -- 基于jieba分词和HTTP协议 | 小赵的学习笔记</title>
   
 
 
@@ -191,9 +199,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
 <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -209,10 +218,9 @@
   <meta itemprop="name" content="小赵的学习笔记">
 </span>
   <header class="post-header">
-    <h2 class="post-title" itemprop="name headline">
-      
-        <a href="/2020/08/20200826.html" class="post-title-link" itemprop="url">Boost文档搜索引擎(简陋的) -- 基于jieba分词和HTTP协议</a>
-    </h2>
+    <h1 class="post-title" itemprop="name headline">
+      Boost文档搜索引擎(简陋的) -- 基于jieba分词和HTTP协议
+    </h1>
 
     <div class="post-meta">
         <span class="post-meta-item">
@@ -234,7 +242,14 @@
             </span>
         </span>
 
-      <br>
+      
+        <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+          <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+          </span>
+          <span class="post-meta-item-text">阅读次数：</span>
+          <span id="busuanzi_value_page_pv"></span>
+        </span><br>
         <span class="post-meta-item" title="本文字数">
           <span class="post-meta-item-icon">
             <i class="far fa-file-word"></i>
@@ -259,7 +274,7 @@
 <div class="post-body" itemprop="articleBody">
 
   
-      <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>为了更方便的使用Boost库，于是想到实现一个基于Boost离线文档的搜索引擎，对离线的HTML文件进行分析，、并对查询词进行分词（借用第三方库），然后根据相关性（简陋的相关性公式）进行排序，最终将查询结果用JSON的数据格式进行组织打包，最终通过对外的http服务将查询结果返回</p>
+    <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>为了更方便的使用Boost库，于是想到实现一个基于Boost离线文档的搜索引擎，对离线的HTML文件进行分析，、并对查询词进行分词（借用第三方库），然后根据相关性（简陋的相关性公式）进行排序，最终将查询结果用JSON的数据格式进行组织打包，最终通过对外的http服务将查询结果返回</p>
 <h2 id="成品效果以及GitHub链接"><a href="#成品效果以及GitHub链接" class="headerlink" title="成品效果以及GitHub链接"></a>成品效果以及GitHub链接</h2><blockquote>
 <p>由于不怎么会前端的一些语法，所以页面比较简陋</p>
 </blockquote>
@@ -319,902 +334,63 @@
 
 <p>至此，整个搜索引擎已经搭建完成，只需要运行起来即可</p>
 
-  
 </div>
 
 
 
 
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-<article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-<link itemprop="mainEntityOfPage" href="http://zhaozhuolin.com/2020/08/20200820.html">
-
-<span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
-  <meta itemprop="description" content="八说了，我在学了！">
-</span>
-
-<span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-  <meta itemprop="name" content="小赵的学习笔记">
-</span>
-  <header class="post-header">
-    <h2 class="post-title" itemprop="name headline">
-      
-        <a href="/2020/08/20200820.html" class="post-title-link" itemprop="url">特殊类设计</a>
-    </h2>
-
-    <div class="post-meta">
-        <span class="post-meta-item">
-          <span class="post-meta-item-icon">
-            <i class="far fa-calendar"></i>
-          </span>
-          <span class="post-meta-item-text">发表于</span>
-
-          <time title="创建时间：2020-08-20 14:14:00" itemprop="dateCreated datePublished" datetime="2020-08-20T14:14:00+08:00">2020-08-20</time>
-        </span>
-          <span class="post-meta-item">
-            <span class="post-meta-item-icon">
-              <i class="far fa-calendar-check"></i>
-            </span>
-            <span class="post-meta-item-text">更新于</span>
-            <time title="修改时间：2020-08-23 23:22:20" itemprop="dateModified" datetime="2020-08-23T23:22:20+08:00">2020-08-23</time>
-          </span>
-        <span class="post-meta-item">
-          <span class="post-meta-item-icon">
-            <i class="far fa-folder"></i>
-          </span>
-          <span class="post-meta-item-text">分类于</span>
-            <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-            </span>
-        </span>
-
-      <br>
-        <span class="post-meta-item" title="本文字数">
-          <span class="post-meta-item-icon">
-            <i class="far fa-file-word"></i>
-          </span>
-            <span class="post-meta-item-text">本文字数：</span>
-          <span>2.2k</span>
-        </span>
-        <span class="post-meta-item" title="阅读时长">
-          <span class="post-meta-item-icon">
-            <i class="far fa-clock"></i>
-          </span>
-            <span class="post-meta-item-text">阅读时长 &asymp;</span>
-          <span>2 分钟</span>
-        </span>
-
-    </div>
-  </header>
-
-
-
-
-<div class="post-body" itemprop="articleBody">
-
-  
-      <h1 id="只能在堆上创建对象的类"><a href="#只能在堆上创建对象的类" class="headerlink" title="只能在堆上创建对象的类"></a>只能在堆上创建对象的类</h1><ol>
-<li>构造函数私有</li>
-<li>提供一个静态的堆上创建对象的方法</li>
-<li>防止拷贝（拷贝构造声明为私有且不实现，或者声明为delete）
-      <!--noindex-->
-        <div class="post-button">
-          <a class="btn" href="/2020/08/20200820.html#more" rel="contents">
-            阅读全文 &raquo;
-          </a>
-        </div>
-      <!--/noindex-->
     
-  
-</div>
 
-
-
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-<article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-<link itemprop="mainEntityOfPage" href="http://zhaozhuolin.com/2020/07/20200727.html">
-
-<span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
-  <meta itemprop="description" content="八说了，我在学了！">
-</span>
-
-<span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-  <meta itemprop="name" content="小赵的学习笔记">
-</span>
-  <header class="post-header">
-    <h2 class="post-title" itemprop="name headline">
-      
-        <a href="/2020/07/20200727.html" class="post-title-link" itemprop="url">C++11中的新特性</a>
-    </h2>
-
-    <div class="post-meta">
-        <span class="post-meta-item">
-          <span class="post-meta-item-icon">
-            <i class="far fa-calendar"></i>
-          </span>
-          <span class="post-meta-item-text">发表于</span>
-          
-
-          <time title="创建时间：2020-07-27 16:40:15 / 修改时间：16:41:44" itemprop="dateCreated datePublished" datetime="2020-07-27T16:40:15+08:00">2020-07-27</time>
-        </span>
-        <span class="post-meta-item">
-          <span class="post-meta-item-icon">
-            <i class="far fa-folder"></i>
-          </span>
-          <span class="post-meta-item-text">分类于</span>
-            <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-            </span>
-        </span>
-
-      <br>
-        <span class="post-meta-item" title="本文字数">
-          <span class="post-meta-item-icon">
-            <i class="far fa-file-word"></i>
-          </span>
-            <span class="post-meta-item-text">本文字数：</span>
-          <span>8.3k</span>
-        </span>
-        <span class="post-meta-item" title="阅读时长">
-          <span class="post-meta-item-icon">
-            <i class="far fa-clock"></i>
-          </span>
-            <span class="post-meta-item-text">阅读时长 &asymp;</span>
-          <span>8 分钟</span>
-        </span>
-
-    </div>
-  </header>
-
-
-
-
-<div class="post-body" itemprop="articleBody">
-
-  
-      <h1 id="列表初始化"><a href="#列表初始化" class="headerlink" title="列表初始化"></a>列表初始化</h1><p>C++11：支持内置类型与自定义类型的列表初始化，其中自定义类型不是天然支持列表初始化，需要显示定义参数类型为<code>initiaizer_list</code>的构造函数</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  A (<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span><br><span class="line">    : _a(a)</span><br><span class="line">    , _b(b)</span><br><span class="line">  &#123; &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  <span class="keyword">int</span> _a;</span><br><span class="line">  <span class="keyword">int</span> _b;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> arr[] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> b = &#123; <span class="number">1</span> &#125;;</span><br><span class="line"><span class="keyword">int</span> c&#123; <span class="number">1</span> &#125;;</span><br><span class="line"><span class="keyword">float</span> d = &#123; <span class="number">1.2</span> &#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; arr1&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; arr2 = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;</span><br><span class="line"></span><br><span class="line">pair&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; p = &#123;<span class="number">1</span>, <span class="number">1</span>&#125;;</span><br><span class="line"><span class="built_in">map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; m = &#123; &#123;<span class="number">1</span>, <span class="number">1</span>&#125;, &#123;<span class="number">2</span>, <span class="number">2</span>&#125;, &#123;<span class="number">3</span>, <span class="number">3</span>&#125; &#125;;</span><br><span class="line"></span><br><span class="line">A a = &#123;<span class="number">1</span>, <span class="number">2</span>&#125;;</span><br><span class="line"><span class="function">A <span class="title">a</span><span class="params">(<span class="number">1</span>, <span class="number">2</span>)</span></span>;</span><br></pre></td></tr></table></figure>
-      <!--noindex-->
-        <div class="post-button">
-          <a class="btn" href="/2020/07/20200727.html#more" rel="contents">
-            阅读全文 &raquo;
-          </a>
-        </div>
-      <!--/noindex-->
-    
-  
-</div>
-
-
-
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-<article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-<link itemprop="mainEntityOfPage" href="http://zhaozhuolin.com/2020/07/20200719.html">
-
-<span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
-  <meta itemprop="description" content="八说了，我在学了！">
-</span>
-
-<span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-  <meta itemprop="name" content="小赵的学习笔记">
-</span>
-  <header class="post-header">
-    <h2 class="post-title" itemprop="name headline">
-      
-        <a href="/2020/07/20200719.html" class="post-title-link" itemprop="url">从无序关联容器到哈希（及无序关联容器的模拟实现）</a>
-    </h2>
-
-    <div class="post-meta">
-        <span class="post-meta-item">
-          <span class="post-meta-item-icon">
-            <i class="far fa-calendar"></i>
-          </span>
-          <span class="post-meta-item-text">发表于</span>
-          
-
-          <time title="创建时间：2020-07-19 20:11:00 / 修改时间：20:12:46" itemprop="dateCreated datePublished" datetime="2020-07-19T20:11:00+08:00">2020-07-19</time>
-        </span>
-        <span class="post-meta-item">
-          <span class="post-meta-item-icon">
-            <i class="far fa-folder"></i>
-          </span>
-          <span class="post-meta-item-text">分类于</span>
-            <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-            </span>
-        </span>
-
-      <br>
-        <span class="post-meta-item" title="本文字数">
-          <span class="post-meta-item-icon">
-            <i class="far fa-file-word"></i>
-          </span>
-            <span class="post-meta-item-text">本文字数：</span>
-          <span>8.4k</span>
-        </span>
-        <span class="post-meta-item" title="阅读时长">
-          <span class="post-meta-item-icon">
-            <i class="far fa-clock"></i>
-          </span>
-            <span class="post-meta-item-text">阅读时长 &asymp;</span>
-          <span>8 分钟</span>
-        </span>
-
-    </div>
-  </header>
-
-
-
-
-<div class="post-body" itemprop="articleBody">
-
-  
-      <h1 id="无序关联容器"><a href="#无序关联容器" class="headerlink" title="无序关联容器"></a>无序关联容器</h1><h2 id="unordered-map"><a href="#unordered-map" class="headerlink" title="unordered_map"></a>unordered_map</h2><p>基本使用与map相同，迭代器无反向迭代器，无序map，其体现在遍历时无序</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unordered_map&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">testUMap</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; um;</span><br><span class="line">	<span class="built_in">map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; m;</span><br><span class="line"></span><br><span class="line">	um.insert(make_pair(<span class="number">1</span>, <span class="number">1</span>));</span><br><span class="line">	um.insert(make_pair(<span class="number">10</span>, <span class="number">1</span>));</span><br><span class="line">	um.insert(make_pair(<span class="number">2</span>, <span class="number">1</span>));</span><br><span class="line">	um.insert(make_pair(<span class="number">15</span>, <span class="number">1</span>));</span><br><span class="line">	um.insert(make_pair(<span class="number">8</span>, <span class="number">1</span>));</span><br><span class="line"></span><br><span class="line">	um[<span class="number">100</span>] = <span class="number">100</span>;<span class="comment">//插入</span></span><br><span class="line">	um[<span class="number">15</span>] = <span class="number">15</span>;<span class="comment">//修改</span></span><br><span class="line"></span><br><span class="line">	um.at(<span class="number">2</span>) = <span class="number">2</span>;<span class="comment">//at无法插入，key不存在直接抛异常</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//遍历无序</span></span><br><span class="line">	<span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt;::iterator uit = um.begin();</span><br><span class="line">	<span class="keyword">while</span> (uit != um.end())</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; uit-&gt;first &lt;&lt; <span class="string">"--&gt;"</span> &lt;&lt; uit-&gt;second &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		uit++;</span><br><span class="line">	&#125;</span><br><span class="line">  </span><br><span class="line">  uit = um.find(<span class="number">100</span>);<span class="comment">//find找到返回指定位置迭代器，找不到则返回end迭代器</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; um.count(<span class="number">100</span>) &lt;&lt; <span class="built_in">endl</span>;<span class="comment">//count返回元素个数，1或0</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; uit-&gt;first &lt;&lt; <span class="string">"--&gt;"</span> &lt;&lt; uit-&gt;second &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	uit = um.find(<span class="number">20</span>);</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; um.count(<span class="number">20</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; (uit == um.end()) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      <!--noindex-->
-        <div class="post-button">
-          <a class="btn" href="/2020/07/20200719.html#more" rel="contents">
-            阅读全文 &raquo;
-          </a>
-        </div>
-      <!--/noindex-->
-    
-  
-</div>
-
-
-
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-<article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-<link itemprop="mainEntityOfPage" href="http://zhaozhuolin.com/2020/07/20200717.html">
-
-<span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
-  <meta itemprop="description" content="八说了，我在学了！">
-</span>
-
-<span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-  <meta itemprop="name" content="小赵的学习笔记">
-</span>
-  <header class="post-header">
-    <h2 class="post-title" itemprop="name headline">
-      
-        <a href="/2020/07/20200717.html" class="post-title-link" itemprop="url">map和set的模拟实现</a>
-    </h2>
-
-    <div class="post-meta">
-        <span class="post-meta-item">
-          <span class="post-meta-item-icon">
-            <i class="far fa-calendar"></i>
-          </span>
-          <span class="post-meta-item-text">发表于</span>
-
-          <time title="创建时间：2020-07-17 22:40:10" itemprop="dateCreated datePublished" datetime="2020-07-17T22:40:10+08:00">2020-07-17</time>
-        </span>
-          <span class="post-meta-item">
-            <span class="post-meta-item-icon">
-              <i class="far fa-calendar-check"></i>
-            </span>
-            <span class="post-meta-item-text">更新于</span>
-            <time title="修改时间：2020-07-19 20:12:33" itemprop="dateModified" datetime="2020-07-19T20:12:33+08:00">2020-07-19</time>
-          </span>
-        <span class="post-meta-item">
-          <span class="post-meta-item-icon">
-            <i class="far fa-folder"></i>
-          </span>
-          <span class="post-meta-item-text">分类于</span>
-            <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-            </span>
-        </span>
-
-      <br>
-        <span class="post-meta-item" title="本文字数">
-          <span class="post-meta-item-icon">
-            <i class="far fa-file-word"></i>
-          </span>
-            <span class="post-meta-item-text">本文字数：</span>
-          <span>2.7k</span>
-        </span>
-        <span class="post-meta-item" title="阅读时长">
-          <span class="post-meta-item-icon">
-            <i class="far fa-clock"></i>
-          </span>
-            <span class="post-meta-item-text">阅读时长 &asymp;</span>
-          <span>2 分钟</span>
-        </span>
-
-    </div>
-  </header>
-
-
-
-
-<div class="post-body" itemprop="articleBody">
-
-  
-      <h1 id="改造红黑树"><a href="#改造红黑树" class="headerlink" title="改造红黑树"></a>改造红黑树</h1><p>关联式容器存储的是K， V键值对，故在改造红黑树时，K为key类型，对于V来说，如果是set，则其为K类型，如果是map则为</p>
-<p><code>pair&lt;K, V&gt;</code>，类型，除此之外，还需要一个仿函数类KeyOfValue来兼容map与set的大小比较，其迭代器也需要封装指针为一个类，迭代器的自加自减相当于红黑树的中序遍历</p>
-      <!--noindex-->
-        <div class="post-button">
-          <a class="btn" href="/2020/07/20200717.html#more" rel="contents">
-            阅读全文 &raquo;
-          </a>
-        </div>
-      <!--/noindex-->
-    
-  
-</div>
-
-
-
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-<article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-<link itemprop="mainEntityOfPage" href="http://zhaozhuolin.com/2020/07/20200713.html">
-
-<span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
-  <meta itemprop="description" content="八说了，我在学了！">
-</span>
-
-<span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-  <meta itemprop="name" content="小赵的学习笔记">
-</span>
-  <header class="post-header">
-    <h2 class="post-title" itemprop="name headline">
-      
-        <a href="/2020/07/20200713.html" class="post-title-link" itemprop="url">从AVL树到红黑树(的插入)</a>
-    </h2>
-
-    <div class="post-meta">
-        <span class="post-meta-item">
-          <span class="post-meta-item-icon">
-            <i class="far fa-calendar"></i>
-          </span>
-          <span class="post-meta-item-text">发表于</span>
-          
-
-          <time title="创建时间：2020-07-13 18:01:11 / 修改时间：12:22:30" itemprop="dateCreated datePublished" datetime="2020-07-13T18:01:11+08:00">2020-07-13</time>
-        </span>
-        <span class="post-meta-item">
-          <span class="post-meta-item-icon">
-            <i class="far fa-folder"></i>
-          </span>
-          <span class="post-meta-item-text">分类于</span>
-            <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-            </span>
-        </span>
-
-      <br>
-        <span class="post-meta-item" title="本文字数">
-          <span class="post-meta-item-icon">
-            <i class="far fa-file-word"></i>
-          </span>
-            <span class="post-meta-item-text">本文字数：</span>
-          <span>6.2k</span>
-        </span>
-        <span class="post-meta-item" title="阅读时长">
-          <span class="post-meta-item-icon">
-            <i class="far fa-clock"></i>
-          </span>
-            <span class="post-meta-item-text">阅读时长 &asymp;</span>
-          <span>6 分钟</span>
-        </span>
-
-    </div>
-  </header>
-
-
-
-
-<div class="post-body" itemprop="articleBody">
-
-  
-      <h1 id="AVL树"><a href="#AVL树" class="headerlink" title="AVL树"></a>AVL树</h1><ul>
-<li>左右子树都是AVL树</li>
-<li>左右子树高度差的绝对值不超过1（-1/0/1）（一般：右子树高度 - 左子树高度）</li>
-<li>如果一棵二叉搜索树树高度平衡的，它就是AVL树。如果它有n个节点，其高度可保持在O(log<sub>2</sub>N)，搜索时间复杂度O(log<sub>2</sub>N)</li>
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Morgan
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://zhaozhuolin.com/2020/08/20200826.html" title="Boost文档搜索引擎(简陋的) -- 基于jieba分词和HTTP协议">http://zhaozhuolin.com/2020/08/20200826.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
 </ul>
-      <!--noindex-->
-        <div class="post-button">
-          <a class="btn" href="/2020/07/20200713.html#more" rel="contents">
-            阅读全文 &raquo;
-          </a>
-        </div>
-      <!--/noindex-->
-    
-  
 </div>
 
 
+<div>
+
+<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
 
 
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+</div>
 
-      
-  
-  
-<article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-<link itemprop="mainEntityOfPage" href="http://zhaozhuolin.com/2020/07/20200712.html">
+  <footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i>C++</a>
+          <a href="/tags/%E5%90%8E%E7%AB%AF/" rel="tag"><i class="fa fa-tag"></i>后端</a>
+          </div>
 
-<span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
-  <meta itemprop="description" content="八说了，我在学了！">
-</span>
+        
 
-<span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-  <meta itemprop="name" content="小赵的学习笔记">
-</span>
-  <header class="post-header">
-    <h2 class="post-title" itemprop="name headline">
-      
-        <a href="/2020/07/20200712.html" class="post-title-link" itemprop="url">set与map的基本使用及特性</a>
-    </h2>
 
-    <div class="post-meta">
-        <span class="post-meta-item">
-          <span class="post-meta-item-icon">
-            <i class="far fa-calendar"></i>
-          </span>
-          <span class="post-meta-item-text">发表于</span>
-          
-
-          <time title="创建时间：2020-07-12 17:08:00 / 修改时间：17:08:45" itemprop="dateCreated datePublished" datetime="2020-07-12T17:08:00+08:00">2020-07-12</time>
-        </span>
-        <span class="post-meta-item">
-          <span class="post-meta-item-icon">
-            <i class="far fa-folder"></i>
-          </span>
-          <span class="post-meta-item-text">分类于</span>
-            <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-            </span>
-        </span>
-
-      <br>
-        <span class="post-meta-item" title="本文字数">
-          <span class="post-meta-item-icon">
-            <i class="far fa-file-word"></i>
-          </span>
-            <span class="post-meta-item-text">本文字数：</span>
-          <span>5.7k</span>
-        </span>
-        <span class="post-meta-item" title="阅读时长">
-          <span class="post-meta-item-icon">
-            <i class="far fa-clock"></i>
-          </span>
-            <span class="post-meta-item-text">阅读时长 &asymp;</span>
-          <span>5 分钟</span>
-        </span>
-
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/08/20200820.html" rel="prev" title="特殊类设计">
+      <i class="fa fa-chevron-left"></i> 特殊类设计
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-  </header>
-
-
-
-
-<div class="post-body" itemprop="articleBody">
-
-  
-      <h1 id="set"><a href="#set" class="headerlink" title="set"></a>set</h1><ol>
-<li>实现—&gt;目前使用搜索树实现（红黑树）</li>
-<li>底层是一个存放KV结构的搜索树，但是此处K、V相同</li>
-<li>set中只需要存放value</li>
-<li>set中不能存放重复的元素</li>
-<li>set中的元素不能修改，不支持修改的操作</li>
-<li><strong>set默认比较是小于</strong>，可以通过修改仿函数，修改比较逻辑</li>
-<li>迭代器遍历有序：底层顺序是二叉搜索树的中序遍历</li>
-<li>迭代器只能读取内容，不能修改内容</li>
-<li>插入：如果用迭代器指定插入位置，最终实际的插入位置可能不是指定的位置，此处的位置只是一个建议，新的元素的插入位置必须符合搜索树的性质</li>
-<li>删除会导致当前删除位置的迭代器失效，但是不影响其他位置的迭代器</li>
-<li>find：找到返回元素的迭代器，未找到返回end迭代器</li>
-<li>count：获取指定元素在set中的个数，根据性质4，只用两个值，1或0</li>
-</ol>
-      <!--noindex-->
-        <div class="post-button">
-          <a class="btn" href="/2020/07/20200712.html#more" rel="contents">
-            阅读全文 &raquo;
-          </a>
-        </div>
-      <!--/noindex-->
-    
-  
-</div>
-
-
-
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
   
-
-      
-  
-  
-<article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-<link itemprop="mainEntityOfPage" href="http://zhaozhuolin.com/2020/07/20200710.html">
-
-<span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
-  <meta itemprop="description" content="八说了，我在学了！">
-</span>
-
-<span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-  <meta itemprop="name" content="小赵的学习笔记">
-</span>
-  <header class="post-header">
-    <h2 class="post-title" itemprop="name headline">
-      
-        <a href="/2020/07/20200710.html" class="post-title-link" itemprop="url">位图、布隆过滤器与大数据处理</a>
-    </h2>
-
-    <div class="post-meta">
-        <span class="post-meta-item">
-          <span class="post-meta-item-icon">
-            <i class="far fa-calendar"></i>
-          </span>
-          <span class="post-meta-item-text">发表于</span>
-
-          <time title="创建时间：2020-07-10 09:39:01" itemprop="dateCreated datePublished" datetime="2020-07-10T09:39:01+08:00">2020-07-10</time>
-        </span>
-          <span class="post-meta-item">
-            <span class="post-meta-item-icon">
-              <i class="far fa-calendar-check"></i>
-            </span>
-            <span class="post-meta-item-text">更新于</span>
-            <time title="修改时间：2020-07-20 09:39:37" itemprop="dateModified" datetime="2020-07-20T09:39:37+08:00">2020-07-20</time>
-          </span>
-        <span class="post-meta-item">
-          <span class="post-meta-item-icon">
-            <i class="far fa-folder"></i>
-          </span>
-          <span class="post-meta-item-text">分类于</span>
-            <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-            </span>
-        </span>
-
-      <br>
-        <span class="post-meta-item" title="本文字数">
-          <span class="post-meta-item-icon">
-            <i class="far fa-file-word"></i>
-          </span>
-            <span class="post-meta-item-text">本文字数：</span>
-          <span>2.9k</span>
-        </span>
-        <span class="post-meta-item" title="阅读时长">
-          <span class="post-meta-item-icon">
-            <i class="far fa-clock"></i>
-          </span>
-            <span class="post-meta-item-text">阅读时长 &asymp;</span>
-          <span>3 分钟</span>
-        </span>
-
-    </div>
-  </header>
-
-
-
-
-<div class="post-body" itemprop="articleBody">
-
-  
-      <h1 id="位图"><a href="#位图" class="headerlink" title="位图"></a>位图</h1><p>每一个比特位来表示当前比特位对应的数据是否存在，存在为1，不存在为0</p>
-<p>整数数组：</p>
-<ol>
-<li>整数位置：n/32</li>
-<li>整数位置中具体的bit位置：n%32</li>
-</ol>
-<ul>
-<li>右移相当于除，右移n位 == 数字➗2^n^</li>
-</ul>
-<p>位图实现：哈希表</p>
-<ol>
-<li>实现：整数数组</li>
-<li>数据单元是bit位</li>
-<li>节省空间，一个字节可以存放8个整数的二值信息（存在与否），不存放数据本身</li>
-<li>操作效率高，通过哈希映射获取位置，通过位运算执行操作， 时间效率O(1)</li>
-<li>位置映射：<ol>
-<li>获取整数位置，n / 32</li>
-<li>获取整数的比特位：n % 32</li>
-</ol>
-</li>
-<li>位图需要的空间大小和数据的范围有关，和数据本身大小没有关系</li>
-<li>适合的场景：数据不重复，信息简单</li>
-</ol>
-      <!--noindex-->
-        <div class="post-button">
-          <a class="btn" href="/2020/07/20200710.html#more" rel="contents">
-            阅读全文 &raquo;
-          </a>
-        </div>
-      <!--/noindex-->
-    
-  
-</div>
-
-
-
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-<article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-<link itemprop="mainEntityOfPage" href="http://zhaozhuolin.com/2020/07/20200704.html">
-
-<span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
-  <meta itemprop="description" content="八说了，我在学了！">
-</span>
-
-<span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-  <meta itemprop="name" content="小赵的学习笔记">
-</span>
-  <header class="post-header">
-    <h2 class="post-title" itemprop="name headline">
-      
-        <a href="/2020/07/20200704.html" class="post-title-link" itemprop="url">二叉搜索树的简单实现</a>
-    </h2>
-
-    <div class="post-meta">
-        <span class="post-meta-item">
-          <span class="post-meta-item-icon">
-            <i class="far fa-calendar"></i>
-          </span>
-          <span class="post-meta-item-text">发表于</span>
-          
-
-          <time title="创建时间：2020-07-04 18:37:00 / 修改时间：18:38:27" itemprop="dateCreated datePublished" datetime="2020-07-04T18:37:00+08:00">2020-07-04</time>
-        </span>
-        <span class="post-meta-item">
-          <span class="post-meta-item-icon">
-            <i class="far fa-folder"></i>
-          </span>
-          <span class="post-meta-item-text">分类于</span>
-            <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-            </span>
-        </span>
-
-      <br>
-        <span class="post-meta-item" title="本文字数">
-          <span class="post-meta-item-icon">
-            <i class="far fa-file-word"></i>
-          </span>
-            <span class="post-meta-item-text">本文字数：</span>
-          <span>2.9k</span>
-        </span>
-        <span class="post-meta-item" title="阅读时长">
-          <span class="post-meta-item-icon">
-            <i class="far fa-clock"></i>
-          </span>
-            <span class="post-meta-item-text">阅读时长 &asymp;</span>
-          <span>3 分钟</span>
-        </span>
-
-    </div>
-  </header>
-
-
-
-
-<div class="post-body" itemprop="articleBody">
-
-  
-      <h1 id="二叉搜索树"><a href="#二叉搜索树" class="headerlink" title="二叉搜索树"></a>二叉搜索树</h1><ul>
-<li>若左子树非空，则左子树上所有节点的值都小于根节点的值</li>
-<li>若右子树非空，则右子树上所有节点的值都小根节点的值</li>
-<li>左右子树也是二叉搜索树</li>
-</ul>
-<blockquote>
-<p>上述条件反之亦可</p>
-</blockquote>
-      <!--noindex-->
-        <div class="post-button">
-          <a class="btn" href="/2020/07/20200704.html#more" rel="contents">
-            阅读全文 &raquo;
-          </a>
-        </div>
-      <!--/noindex-->
-    
-  
-</div>
-
-
-
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-<article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-<link itemprop="mainEntityOfPage" href="http://zhaozhuolin.com/2020/06/20200628.html">
-
-<span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
-  <meta itemprop="description" content="八说了，我在学了！">
-</span>
-
-<span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-  <meta itemprop="name" content="小赵的学习笔记">
-</span>
-  <header class="post-header">
-    <h2 class="post-title" itemprop="name headline">
-      
-        <a href="/2020/06/20200628.html" class="post-title-link" itemprop="url">C++多态的基本原理及使用</a>
-    </h2>
-
-    <div class="post-meta">
-        <span class="post-meta-item">
-          <span class="post-meta-item-icon">
-            <i class="far fa-calendar"></i>
-          </span>
-          <span class="post-meta-item-text">发表于</span>
-          
-
-          <time title="创建时间：2020-06-28 17:33:20 / 修改时间：17:34:16" itemprop="dateCreated datePublished" datetime="2020-06-28T17:33:20+08:00">2020-06-28</time>
-        </span>
-        <span class="post-meta-item">
-          <span class="post-meta-item-icon">
-            <i class="far fa-folder"></i>
-          </span>
-          <span class="post-meta-item-text">分类于</span>
-            <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-            </span>
-        </span>
-
-      <br>
-        <span class="post-meta-item" title="本文字数">
-          <span class="post-meta-item-icon">
-            <i class="far fa-file-word"></i>
-          </span>
-            <span class="post-meta-item-text">本文字数：</span>
-          <span>1.6k</span>
-        </span>
-        <span class="post-meta-item" title="阅读时长">
-          <span class="post-meta-item-icon">
-            <i class="far fa-clock"></i>
-          </span>
-            <span class="post-meta-item-text">阅读时长 &asymp;</span>
-          <span>1 分钟</span>
-        </span>
-
-    </div>
-  </header>
-
-
-
-
-<div class="post-body" itemprop="articleBody">
-
-  
-      <h1 id="多态的概念、定义以及实现"><a href="#多态的概念、定义以及实现" class="headerlink" title="多态的概念、定义以及实现"></a>多态的概念、定义以及实现</h1><p>多种形态，当不同的对象去执行同一种行为时，产生的不同表现形态</p>
-<p><strong>构成条件：</strong>在不同的继承关系的类对象，去调用同一函数，产生了不同的行为</p>
-<ol>
-<li>继承关系</li>
-<li>必须通过基类的指针或者引用调用的虚函数，一般都是用父类指针/引用指向父类以及子类实体，即都为切片行为</li>
-<li>被调用的函数必须是虚函数，且派生类必须对基类的虚函数进行重写</li>
-</ol>
-      <!--noindex-->
-        <div class="post-button">
-          <a class="btn" href="/2020/06/20200628.html#more" rel="contents">
-            阅读全文 &raquo;
-          </a>
-        </div>
-      <!--/noindex-->
-    
-  
-</div>
-
-
-
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
-  </nav>
 
 
 
@@ -1266,6 +442,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#成品效果以及GitHub链接"><span class="nav-number">1.1.</span> <span class="nav-text">成品效果以及GitHub链接</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#整体结构"><span class="nav-number">2.</span> <span class="nav-text">整体结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#预处理模块"><span class="nav-number">3.</span> <span class="nav-text">预处理模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#枚举路径"><span class="nav-number">3.1.</span> <span class="nav-text">枚举路径</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解析文件"><span class="nav-number">3.2.</span> <span class="nav-text">解析文件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#索引模块"><span class="nav-number">4.</span> <span class="nav-text">索引模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建正排索引"><span class="nav-number">4.1.</span> <span class="nav-text">创建正排索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建倒排索引"><span class="nav-number">4.2.</span> <span class="nav-text">创建倒排索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查询正排-倒排索引"><span class="nav-number">4.3.</span> <span class="nav-text">查询正排&#x2F;倒排索引</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#搜索模块"><span class="nav-number">5.</span> <span class="nav-text">搜索模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#搜索函数"><span class="nav-number">5.1.</span> <span class="nav-text">搜索函数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#服务器模块"><span class="nav-number">6.</span> <span class="nav-text">服务器模块</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
