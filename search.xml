@@ -1,48 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>关于关键字，函数以及指针的初步了解</title>
-    <url>/2019/12/20191208.html</url>
-    <content><![CDATA[<h2 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h2><p>对于关键字这一方面，有以下几个需要我特别注意的</p>
-<table>
-<thead>
-<tr>
-<th>关键字</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>typedef</td>
-<td>类型定义，可理解为类型重命名</td>
-</tr>
-<tr>
-<td>static</td>
-<td>1.修饰局部变量改变其生命周期（作用域不变）2.修饰全局变量改变作用域，连接属性由外转内 3.修饰函数，同全局变量类似</td>
-</tr>
-<tr>
-<td>#define</td>
-<td>定义常量和宏</td>
-</tr>
-</tbody></table>
-<a id="more"></a>
-
-<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><p>在学习函数这一方面的时候，碰到了一些小问题，总会在声明函数之后加上一个分号，导致一些语法上的错误<br>比如</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">get_max</span><span class="params">(<span class="keyword">int</span> x , <span class="keyword">int</span> y)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//错误格式！！！</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">get_max</span><span class="params">(<span class="keyword">int</span> x , <span class="keyword">int</span> y)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="comment">//正确格式</span></span></span><br></pre></td></tr></table></figure>
-
-<p>希望以后谨记。。。</p>
-<h2 id="指针的初步理解"><a href="#指针的初步理解" class="headerlink" title="指针的初步理解"></a>指针的初步理解</h2><p>对我来说，指针变量更像是一个电话号码，给它打电话，就能找到要找到的人</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line">  <span class="keyword">int</span>* p = &amp;a;</span><br><span class="line">  <span class="comment">//声明一个整形指针变量 P ，并将 a 的**地址**赋值给 P</span></span><br><span class="line">  *p = <span class="number">20</span>;</span><br><span class="line">  <span class="comment">//此时在用 p 指代 a ，此时的意思即为 a=20 （打电话给 a 说：你现在等于20了，(●'◡'●)）</span></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span> ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>或许是本科学习过的微机原理以及汇编语言的关系，我对内存的理解可并不像是一个初学者，我相信这能对我有所帮助。</p>
-]]></content>
-      <categories>
-        <category>C</category>
-      </categories>
-      <tags>
-        <tag>C</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Boost文档搜索引擎(简陋的) -- 基于jieba分词和HTTP协议</title>
     <url>/2020/08/20200826.html</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>为了更方便的使用Boost库，于是想到实现一个基于Boost离线文档的搜索引擎，对离线的HTML文件进行分析，、并对查询词进行分词（借用第三方库），然后根据相关性（简陋的相关性公式）进行排序，最终将查询结果用JSON的数据格式进行组织打包，最终通过对外的http服务将查询结果返回</p>
@@ -113,6 +71,48 @@
       <tags>
         <tag>C++</tag>
         <tag>后端</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>关于关键字，函数以及指针的初步了解</title>
+    <url>/2019/12/20191208.html</url>
+    <content><![CDATA[<h2 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h2><p>对于关键字这一方面，有以下几个需要我特别注意的</p>
+<table>
+<thead>
+<tr>
+<th>关键字</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>typedef</td>
+<td>类型定义，可理解为类型重命名</td>
+</tr>
+<tr>
+<td>static</td>
+<td>1.修饰局部变量改变其生命周期（作用域不变）2.修饰全局变量改变作用域，连接属性由外转内 3.修饰函数，同全局变量类似</td>
+</tr>
+<tr>
+<td>#define</td>
+<td>定义常量和宏</td>
+</tr>
+</tbody></table>
+<a id="more"></a>
+
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><p>在学习函数这一方面的时候，碰到了一些小问题，总会在声明函数之后加上一个分号，导致一些语法上的错误<br>比如</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">get_max</span><span class="params">(<span class="keyword">int</span> x , <span class="keyword">int</span> y)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//错误格式！！！</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">get_max</span><span class="params">(<span class="keyword">int</span> x , <span class="keyword">int</span> y)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="comment">//正确格式</span></span></span><br></pre></td></tr></table></figure>
+
+<p>希望以后谨记。。。</p>
+<h2 id="指针的初步理解"><a href="#指针的初步理解" class="headerlink" title="指针的初步理解"></a>指针的初步理解</h2><p>对我来说，指针变量更像是一个电话号码，给它打电话，就能找到要找到的人</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line">  <span class="keyword">int</span>* p = &amp;a;</span><br><span class="line">  <span class="comment">//声明一个整形指针变量 P ，并将 a 的**地址**赋值给 P</span></span><br><span class="line">  *p = <span class="number">20</span>;</span><br><span class="line">  <span class="comment">//此时在用 p 指代 a ，此时的意思即为 a=20 （打电话给 a 说：你现在等于20了，(●'◡'●)）</span></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span> ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>或许是本科学习过的微机原理以及汇编语言的关系，我对内存的理解可并不像是一个初学者，我相信这能对我有所帮助。</p>
+]]></content>
+      <categories>
+        <category>C</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
       </tags>
   </entry>
   <entry>
@@ -663,6 +663,92 @@
       </tags>
   </entry>
   <entry>
+    <title>C++多态的基本原理及使用</title>
+    <url>/2020/06/20200628.html</url>
+    <content><![CDATA[<h1 id="多态的概念、定义以及实现"><a href="#多态的概念、定义以及实现" class="headerlink" title="多态的概念、定义以及实现"></a>多态的概念、定义以及实现</h1><p>多种形态，当不同的对象去执行同一种行为时，产生的不同表现形态</p>
+<p><strong>构成条件：</strong>在不同的继承关系的类对象，去调用同一函数，产生了不同的行为</p>
+<ol>
+<li>继承关系</li>
+<li>必须通过基类的指针或者引用调用的虚函数，一般都是用父类指针/引用指向父类以及子类实体，即都为切片行为</li>
+<li>被调用的函数必须是虚函数，且派生类必须对基类的虚函数进行重写</li>
+</ol>
+<a id="more"></a>
+
+<blockquote>
+<p>必须同时满足以上条件，缺一不可</p>
+</blockquote>
+<p><strong>虚函数的重写：</strong>重写函数逻辑</p>
+<p>构成虚函数重写条件：子类含有和父类接口完全相同的函数（返回值，函数名，参数完全相同），例外：协变，析构函数重写，如果不满足所有条件，但是函数名相同，则构成函数隐藏</p>
+<blockquote>
+<p>协变：返回值类型可以不同，但是返回值类型必须是父子关系</p>
+</blockquote>
+<p>注意：如果父类函数加了<code>virtual</code>声明，则子类接口完全一致的函数即使不加<code>virtual</code>也具有虚函数的属性，但是反过来不成立，建议一般对于所有的虚函数都加上<code>virtual</code></p>
+<blockquote>
+<p>非多态：看类型</p>
+<p>多态：看实际指向的实体</p>
+</blockquote>
+<p><strong>析构函数重写：</strong></p>
+<ol>
+<li><p>只要父类的析构函数是虚函数，则子类的析构函数和父类的析构函数构成重写</p>
+<p> 原因：编译器对继承关系下的所有类的析构函数的名字做了统一处理，保证了继承关系下所有的析构函数同名，一般把析构函数的名称统一处理成<code>destructor</code></p>
+</li>
+</ol>
+<p><code>final</code>和<code>override</code>关键字：</p>
+<ol>
+<li><code>final</code>：修饰虚函数，表示该虚函数不能再被继承，其定义的函数不能被重写，体现实现继承</li>
+<li><code>override</code>：检查派生类虚函数是否重写了某个虚函数，如果没有重写则编译报错，强制子类重写父类的某一个虚函数</li>
+</ol>
+<h1 id="抽象类"><a href="#抽象类" class="headerlink" title="抽象类"></a>抽象类</h1><p>抽象类：包含纯函数的类，抽象类不能实例化对象</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="comment">//纯虚函数：没有函数体的虚函数</span></span><br><span class="line">  <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">fun</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> :</span> <span class="keyword">public</span> A</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">fun</span><span class="params">()</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"B::fun()"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">//无法执行以下代码</span></span><br><span class="line">  <span class="comment">//A a;</span></span><br><span class="line">  <span class="comment">//a.fun();</span></span><br><span class="line">  </span><br><span class="line">  B b;</span><br><span class="line">  A* pb = &amp;b;</span><br><span class="line">  b.fun();</span><br><span class="line">  pb-&gt;fun();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>抽象类存在意义，实现多态，其体现出接口继承</p>
+<h1 id="多态原理"><a href="#多态原理" class="headerlink" title="多态原理"></a>多态原理</h1><h2 id="虚函数表"><a href="#虚函数表" class="headerlink" title="虚函数表"></a>虚函数表</h2><figure class="highlight"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span></span></span><br><span class="line"><span class="class">&#123;</span>&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Car</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Drive</span><span class="params">()</span></span></span><br><span class="line"><span class="function">  <span class="comment">//包含隐藏成员变量，虚函数表指针</span></span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>包含虚函数的类：</strong>类中包含一个隐含的成员变量，即虚表指针</p>
+<p><strong>虚表指针：</strong>指向虚表的首地址，类型为二级指针，函数指针的指针</p>
+<p><strong>虚表：</strong>存放虚函数指针的数组，类型为指针数组</p>
+<ol>
+<li>只存放虚函数的指针</li>
+<li>普通函数不会存入虚表</li>
+<li>如果子类重写了父类的虚函数，则子类虚表中对应位置使用子类虚函数指针覆盖</li>
+<li>如果子类没有重写父类的任何虚函数，则子类完全继承父类虚表，不做任何修改</li>
+<li>虚函数指针在虚表中的存放顺序和其声明/定义的顺序一致</li>
+<li>子类新定义的虚函数，其虚函数指针按照声明/定义的顺序依次加入虚表的末尾</li>
+<li>虚表一般以<code>nullptr</code>结束</li>
+</ol>
+<blockquote>
+<p>只要类中包含虚函数，就会有虚表指针和虚表</p>
+</blockquote>
+<ul>
+<li>虚表指针存在对象当中</li>
+<li>虚表存放在代码段</li>
+<li>虚函数存放在代码段</li>
+</ul>
+<p><strong>多态：看实际指向的实体</strong></p>
+<p>多态原理：如果访问的为虚函数，则通过指针/引用找到实际指向的实体，获取实体中的虚表指针，通过虚表指针访问虚表，在虚表中找到需要执行的虚函数指针，通过虚函数指针执行具体函数行为</p>
+<h2 id="继承下的虚表"><a href="#继承下的虚表" class="headerlink" title="继承下的虚表"></a>继承下的虚表</h2><p><strong>单继承虚表</strong>：</p>
+<ol>
+<li>子类继承父类虚表</li>
+<li>用重写的虚函数指针覆盖子类对应的虚函数指针</li>
+<li>子类新定义的虚函数，其指针按照声明/定义顺序存入虚表的末尾</li>
+</ol>
+<p><strong>多继承虚表：</strong></p>
+<ol>
+<li>虚表个数：等同于直接父类的个数</li>
+<li>子类继承父类所有的虚表</li>
+<li>用重写的虚函数指针覆盖对应父类的虚函数指针</li>
+<li>子类新定义的虚函数，其函数指针按照声明/定义的顺序存入第一个直接父类虚表的末尾</li>
+</ol>
+]]></content>
+      <categories>
+        <category>C++</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+        <tag>类与对象</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>C++基础语法</title>
     <url>/2020/05/20200521.html</url>
     <content><![CDATA[<h1 id="命名空间"><a href="#命名空间" class="headerlink" title="命名空间"></a>命名空间</h1><p>对标识符的名称进行本地化，以避免命名冲突或名字污染，namespace关键字的出现就是针对这种问题的</p>
@@ -760,92 +846,6 @@
       </categories>
       <tags>
         <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>C++多态的基本原理及使用</title>
-    <url>/2020/06/20200628.html</url>
-    <content><![CDATA[<h1 id="多态的概念、定义以及实现"><a href="#多态的概念、定义以及实现" class="headerlink" title="多态的概念、定义以及实现"></a>多态的概念、定义以及实现</h1><p>多种形态，当不同的对象去执行同一种行为时，产生的不同表现形态</p>
-<p><strong>构成条件：</strong>在不同的继承关系的类对象，去调用同一函数，产生了不同的行为</p>
-<ol>
-<li>继承关系</li>
-<li>必须通过基类的指针或者引用调用的虚函数，一般都是用父类指针/引用指向父类以及子类实体，即都为切片行为</li>
-<li>被调用的函数必须是虚函数，且派生类必须对基类的虚函数进行重写</li>
-</ol>
-<a id="more"></a>
-
-<blockquote>
-<p>必须同时满足以上条件，缺一不可</p>
-</blockquote>
-<p><strong>虚函数的重写：</strong>重写函数逻辑</p>
-<p>构成虚函数重写条件：子类含有和父类接口完全相同的函数（返回值，函数名，参数完全相同），例外：协变，析构函数重写，如果不满足所有条件，但是函数名相同，则构成函数隐藏</p>
-<blockquote>
-<p>协变：返回值类型可以不同，但是返回值类型必须是父子关系</p>
-</blockquote>
-<p>注意：如果父类函数加了<code>virtual</code>声明，则子类接口完全一致的函数即使不加<code>virtual</code>也具有虚函数的属性，但是反过来不成立，建议一般对于所有的虚函数都加上<code>virtual</code></p>
-<blockquote>
-<p>非多态：看类型</p>
-<p>多态：看实际指向的实体</p>
-</blockquote>
-<p><strong>析构函数重写：</strong></p>
-<ol>
-<li><p>只要父类的析构函数是虚函数，则子类的析构函数和父类的析构函数构成重写</p>
-<p> 原因：编译器对继承关系下的所有类的析构函数的名字做了统一处理，保证了继承关系下所有的析构函数同名，一般把析构函数的名称统一处理成<code>destructor</code></p>
-</li>
-</ol>
-<p><code>final</code>和<code>override</code>关键字：</p>
-<ol>
-<li><code>final</code>：修饰虚函数，表示该虚函数不能再被继承，其定义的函数不能被重写，体现实现继承</li>
-<li><code>override</code>：检查派生类虚函数是否重写了某个虚函数，如果没有重写则编译报错，强制子类重写父类的某一个虚函数</li>
-</ol>
-<h1 id="抽象类"><a href="#抽象类" class="headerlink" title="抽象类"></a>抽象类</h1><p>抽象类：包含纯函数的类，抽象类不能实例化对象</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="comment">//纯虚函数：没有函数体的虚函数</span></span><br><span class="line">  <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">fun</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> :</span> <span class="keyword">public</span> A</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">fun</span><span class="params">()</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"B::fun()"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">//无法执行以下代码</span></span><br><span class="line">  <span class="comment">//A a;</span></span><br><span class="line">  <span class="comment">//a.fun();</span></span><br><span class="line">  </span><br><span class="line">  B b;</span><br><span class="line">  A* pb = &amp;b;</span><br><span class="line">  b.fun();</span><br><span class="line">  pb-&gt;fun();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>抽象类存在意义，实现多态，其体现出接口继承</p>
-<h1 id="多态原理"><a href="#多态原理" class="headerlink" title="多态原理"></a>多态原理</h1><h2 id="虚函数表"><a href="#虚函数表" class="headerlink" title="虚函数表"></a>虚函数表</h2><figure class="highlight"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span></span></span><br><span class="line"><span class="class">&#123;</span>&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Car</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Drive</span><span class="params">()</span></span></span><br><span class="line"><span class="function">  <span class="comment">//包含隐藏成员变量，虚函数表指针</span></span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p><strong>包含虚函数的类：</strong>类中包含一个隐含的成员变量，即虚表指针</p>
-<p><strong>虚表指针：</strong>指向虚表的首地址，类型为二级指针，函数指针的指针</p>
-<p><strong>虚表：</strong>存放虚函数指针的数组，类型为指针数组</p>
-<ol>
-<li>只存放虚函数的指针</li>
-<li>普通函数不会存入虚表</li>
-<li>如果子类重写了父类的虚函数，则子类虚表中对应位置使用子类虚函数指针覆盖</li>
-<li>如果子类没有重写父类的任何虚函数，则子类完全继承父类虚表，不做任何修改</li>
-<li>虚函数指针在虚表中的存放顺序和其声明/定义的顺序一致</li>
-<li>子类新定义的虚函数，其虚函数指针按照声明/定义的顺序依次加入虚表的末尾</li>
-<li>虚表一般以<code>nullptr</code>结束</li>
-</ol>
-<blockquote>
-<p>只要类中包含虚函数，就会有虚表指针和虚表</p>
-</blockquote>
-<ul>
-<li>虚表指针存在对象当中</li>
-<li>虚表存放在代码段</li>
-<li>虚函数存放在代码段</li>
-</ul>
-<p><strong>多态：看实际指向的实体</strong></p>
-<p>多态原理：如果访问的为虚函数，则通过指针/引用找到实际指向的实体，获取实体中的虚表指针，通过虚表指针访问虚表，在虚表中找到需要执行的虚函数指针，通过虚函数指针执行具体函数行为</p>
-<h2 id="继承下的虚表"><a href="#继承下的虚表" class="headerlink" title="继承下的虚表"></a>继承下的虚表</h2><p><strong>单继承虚表</strong>：</p>
-<ol>
-<li>子类继承父类虚表</li>
-<li>用重写的虚函数指针覆盖子类对应的虚函数指针</li>
-<li>子类新定义的虚函数，其指针按照声明/定义顺序存入虚表的末尾</li>
-</ol>
-<p><strong>多继承虚表：</strong></p>
-<ol>
-<li>虚表个数：等同于直接父类的个数</li>
-<li>子类继承父类所有的虚表</li>
-<li>用重写的虚函数指针覆盖对应父类的虚函数指针</li>
-<li>子类新定义的虚函数，其函数指针按照声明/定义的顺序存入第一个直接父类虚表的末尾</li>
-</ol>
-]]></content>
-      <categories>
-        <category>C++</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
-        <tag>类与对象</tag>
       </tags>
   </entry>
   <entry>
@@ -1224,30 +1224,6 @@
       </tags>
   </entry>
   <entry>
-    <title>map和set的模拟实现</title>
-    <url>/2020/07/20200717.html</url>
-    <content><![CDATA[<h1 id="改造红黑树"><a href="#改造红黑树" class="headerlink" title="改造红黑树"></a>改造红黑树</h1><p>关联式容器存储的是K， V键值对，故在改造红黑树时，K为key类型，对于V来说，如果是set，则其为K类型，如果是map则为</p>
-<p><code>pair&lt;K, V&gt;</code>，类型，除此之外，还需要一个仿函数类KeyOfValue来兼容map与set的大小比较，其迭代器也需要封装指针为一个类，迭代器的自加自减相当于红黑树的中序遍历</p>
-<a id="more"></a>
-
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">V</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> <span class="title">RBTIterator</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">typedef</span> RBNode&lt;V&gt; Node;</span><br><span class="line">	<span class="keyword">typedef</span> RBTIterator&lt;V&gt; Self;</span><br><span class="line">	RBTIterator(Node* node);</span><br><span class="line">  </span><br><span class="line">	V&amp; <span class="keyword">operator</span>*();</span><br><span class="line"></span><br><span class="line">	V* <span class="keyword">operator</span>-&gt;();</span><br><span class="line"></span><br><span class="line">	<span class="keyword">bool</span> <span class="keyword">operator</span>!=(<span class="keyword">const</span> Self&amp; it);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">bool</span> <span class="keyword">operator</span>==(<span class="keyword">const</span> Self&amp; it);</span><br><span class="line"></span><br><span class="line">	Self&amp; <span class="keyword">operator</span>++();</span><br><span class="line"></span><br><span class="line">	Self <span class="keyword">operator</span>++(<span class="keyword">int</span>);</span><br><span class="line"></span><br><span class="line">	Self&amp; <span class="keyword">operator</span>--();</span><br><span class="line"></span><br><span class="line">	Self <span class="keyword">operator</span>--(<span class="keyword">int</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">()</span></span>;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">sub</span><span class="params">()</span></span>;</span><br><span class="line">  </span><br><span class="line">	Node* _node;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">K</span>, <span class="title">class</span> <span class="title">V</span>, <span class="title">class</span> <span class="title">KeyOfValue</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">RBTree</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">typedef</span> RBNode&lt;V&gt; Node;</span><br><span class="line">	<span class="keyword">typedef</span> RBTIterator&lt;V&gt; iterator;</span><br><span class="line"></span><br><span class="line">	<span class="function">iterator <span class="title">begin</span><span class="params">()</span></span>;</span><br><span class="line">  </span><br><span class="line">	<span class="function">iterator <span class="title">end</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">	RBTree();</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">empty</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">	pair&lt;iterator, bool&gt; insert(const V&amp; val);</span><br><span class="line">  </span><br><span class="line">	<span class="function">iterator <span class="title">Find</span><span class="params">(<span class="keyword">const</span> K&amp; data)</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">size_t</span> <span class="title">size</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="function">Node* <span class="title">leftMost</span><span class="params">()</span></span>;</span><br><span class="line">  </span><br><span class="line">	<span class="function">Node* <span class="title">rightMost</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">RotateL</span><span class="params">(Node* parent)</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">RotateR</span><span class="params">(Node* parent)</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	Node* _header;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="map和set的实现"><a href="#map和set的实现" class="headerlink" title="map和set的实现"></a>map和set的实现</h1><p>通过封装红黑树类，传入仿函数类和具体类型，修改等操作调用红黑树的接口，遍历操作通过迭代器完成</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">K</span>, <span class="title">class</span> <span class="title">V</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">Map</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">MapKeyOfValue</span></span></span><br><span class="line"><span class="class">	&#123;</span></span><br><span class="line">		<span class="function"><span class="keyword">const</span> K&amp; <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="keyword">const</span> pair&lt;K, V&gt;&amp; value)</span></span></span><br><span class="line"><span class="function">		</span>&#123;</span><br><span class="line">			<span class="keyword">return</span> value.first;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">typedef</span> <span class="keyword">typename</span> RBTree&lt;K, pair&lt;K, V&gt;, MapKeyOfValue&gt;::iterator iterator;</span><br><span class="line"></span><br><span class="line">	<span class="function">iterator <span class="title">begin</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> _rbt.begin();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function">iterator <span class="title">end</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> _rbt.end();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">empty</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> _rbt-&gt;empty();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">size_t</span> <span class="title">size</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> _rbt.size();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	pair&lt;iterator, bool&gt; insert(const pair&lt;K, V&gt;&amp; value)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> _rbt.insert(value);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	V&amp; <span class="keyword">operator</span>[](<span class="keyword">const</span> K&amp; key)</span><br><span class="line">	&#123;</span><br><span class="line">		pair&lt;iterator, <span class="keyword">bool</span>&gt; ret = _rbt.insert(make_pair(key, V()));</span><br><span class="line">		<span class="keyword">return</span> ret.first-&gt;second;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function">iterator <span class="title">find</span><span class="params">(<span class="keyword">const</span> K&amp; key)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> _rbt.Find(pair&lt;K, V&gt;(key, V()));</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	RBTree&lt;K, pair&lt;K, V&gt;, MapKeyOfValue&gt; _rbt;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">K</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">Set</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">SetKeyOfValue</span></span></span><br><span class="line"><span class="class">	&#123;</span></span><br><span class="line">		<span class="function"><span class="keyword">const</span> K&amp; <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="keyword">const</span> K&amp; key)</span></span></span><br><span class="line"><span class="function">		</span>&#123;</span><br><span class="line">			<span class="keyword">return</span> key;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">typedef</span> <span class="keyword">typename</span> RBTree&lt;K, K, SetKeyOfValue&gt;::iterator iterator;</span><br><span class="line">	<span class="function">iterator <span class="title">begin</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> _rbt.begin();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function">iterator <span class="title">end</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> _rbt.end();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">empty</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> _rbt.empty();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function">iterator <span class="title">find</span><span class="params">(<span class="keyword">const</span> K&amp; key)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> _rbt.Find(key);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">size_t</span> <span class="title">size</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> _rbt.size();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	pair&lt;iterator, bool&gt; insert(const K&amp; key)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> _rbt.insert(key);</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line"></span><br><span class="line">	RBTree&lt;K, K, SetKeyOfValue&gt; _rbt;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h1 id="GitHub链接"><a href="#GitHub链接" class="headerlink" title="GitHub链接"></a>GitHub链接</h1><p><a href="https://github.com/Latsummer/FinishedProducts/tree/master/map%E5%92%8Cset%E5%AE%9E%E7%8E%B0" target="_blank" rel="noopener">map和set的实现-GitHub</a></p>
-]]></content>
-      <categories>
-        <category>C++</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
-        <tag>数据结构</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>list的基本使用以及模拟实现</title>
     <url>/2020/06/20200615.html</url>
     <content><![CDATA[<h1 id="list的基本使用"><a href="#list的基本使用" class="headerlink" title="list的基本使用"></a>list的基本使用</h1><p>本质为双向带头循环列表</p>
@@ -1300,6 +1276,30 @@
       </categories>
       <tags>
         <tag>list</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>map和set的模拟实现</title>
+    <url>/2020/07/20200717.html</url>
+    <content><![CDATA[<h1 id="改造红黑树"><a href="#改造红黑树" class="headerlink" title="改造红黑树"></a>改造红黑树</h1><p>关联式容器存储的是K， V键值对，故在改造红黑树时，K为key类型，对于V来说，如果是set，则其为K类型，如果是map则为</p>
+<p><code>pair&lt;K, V&gt;</code>，类型，除此之外，还需要一个仿函数类KeyOfValue来兼容map与set的大小比较，其迭代器也需要封装指针为一个类，迭代器的自加自减相当于红黑树的中序遍历</p>
+<a id="more"></a>
+
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">V</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> <span class="title">RBTIterator</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">typedef</span> RBNode&lt;V&gt; Node;</span><br><span class="line">	<span class="keyword">typedef</span> RBTIterator&lt;V&gt; Self;</span><br><span class="line">	RBTIterator(Node* node);</span><br><span class="line">  </span><br><span class="line">	V&amp; <span class="keyword">operator</span>*();</span><br><span class="line"></span><br><span class="line">	V* <span class="keyword">operator</span>-&gt;();</span><br><span class="line"></span><br><span class="line">	<span class="keyword">bool</span> <span class="keyword">operator</span>!=(<span class="keyword">const</span> Self&amp; it);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">bool</span> <span class="keyword">operator</span>==(<span class="keyword">const</span> Self&amp; it);</span><br><span class="line"></span><br><span class="line">	Self&amp; <span class="keyword">operator</span>++();</span><br><span class="line"></span><br><span class="line">	Self <span class="keyword">operator</span>++(<span class="keyword">int</span>);</span><br><span class="line"></span><br><span class="line">	Self&amp; <span class="keyword">operator</span>--();</span><br><span class="line"></span><br><span class="line">	Self <span class="keyword">operator</span>--(<span class="keyword">int</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">()</span></span>;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">sub</span><span class="params">()</span></span>;</span><br><span class="line">  </span><br><span class="line">	Node* _node;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">K</span>, <span class="title">class</span> <span class="title">V</span>, <span class="title">class</span> <span class="title">KeyOfValue</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">RBTree</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">typedef</span> RBNode&lt;V&gt; Node;</span><br><span class="line">	<span class="keyword">typedef</span> RBTIterator&lt;V&gt; iterator;</span><br><span class="line"></span><br><span class="line">	<span class="function">iterator <span class="title">begin</span><span class="params">()</span></span>;</span><br><span class="line">  </span><br><span class="line">	<span class="function">iterator <span class="title">end</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">	RBTree();</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">empty</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">	pair&lt;iterator, bool&gt; insert(const V&amp; val);</span><br><span class="line">  </span><br><span class="line">	<span class="function">iterator <span class="title">Find</span><span class="params">(<span class="keyword">const</span> K&amp; data)</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">size_t</span> <span class="title">size</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="function">Node* <span class="title">leftMost</span><span class="params">()</span></span>;</span><br><span class="line">  </span><br><span class="line">	<span class="function">Node* <span class="title">rightMost</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">RotateL</span><span class="params">(Node* parent)</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">RotateR</span><span class="params">(Node* parent)</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	Node* _header;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="map和set的实现"><a href="#map和set的实现" class="headerlink" title="map和set的实现"></a>map和set的实现</h1><p>通过封装红黑树类，传入仿函数类和具体类型，修改等操作调用红黑树的接口，遍历操作通过迭代器完成</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">K</span>, <span class="title">class</span> <span class="title">V</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">Map</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">MapKeyOfValue</span></span></span><br><span class="line"><span class="class">	&#123;</span></span><br><span class="line">		<span class="function"><span class="keyword">const</span> K&amp; <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="keyword">const</span> pair&lt;K, V&gt;&amp; value)</span></span></span><br><span class="line"><span class="function">		</span>&#123;</span><br><span class="line">			<span class="keyword">return</span> value.first;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">typedef</span> <span class="keyword">typename</span> RBTree&lt;K, pair&lt;K, V&gt;, MapKeyOfValue&gt;::iterator iterator;</span><br><span class="line"></span><br><span class="line">	<span class="function">iterator <span class="title">begin</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> _rbt.begin();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function">iterator <span class="title">end</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> _rbt.end();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">empty</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> _rbt-&gt;empty();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">size_t</span> <span class="title">size</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> _rbt.size();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	pair&lt;iterator, bool&gt; insert(const pair&lt;K, V&gt;&amp; value)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> _rbt.insert(value);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	V&amp; <span class="keyword">operator</span>[](<span class="keyword">const</span> K&amp; key)</span><br><span class="line">	&#123;</span><br><span class="line">		pair&lt;iterator, <span class="keyword">bool</span>&gt; ret = _rbt.insert(make_pair(key, V()));</span><br><span class="line">		<span class="keyword">return</span> ret.first-&gt;second;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function">iterator <span class="title">find</span><span class="params">(<span class="keyword">const</span> K&amp; key)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> _rbt.Find(pair&lt;K, V&gt;(key, V()));</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	RBTree&lt;K, pair&lt;K, V&gt;, MapKeyOfValue&gt; _rbt;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">K</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">Set</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">SetKeyOfValue</span></span></span><br><span class="line"><span class="class">	&#123;</span></span><br><span class="line">		<span class="function"><span class="keyword">const</span> K&amp; <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="keyword">const</span> K&amp; key)</span></span></span><br><span class="line"><span class="function">		</span>&#123;</span><br><span class="line">			<span class="keyword">return</span> key;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">typedef</span> <span class="keyword">typename</span> RBTree&lt;K, K, SetKeyOfValue&gt;::iterator iterator;</span><br><span class="line">	<span class="function">iterator <span class="title">begin</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> _rbt.begin();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function">iterator <span class="title">end</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> _rbt.end();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">empty</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> _rbt.empty();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function">iterator <span class="title">find</span><span class="params">(<span class="keyword">const</span> K&amp; key)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> _rbt.Find(key);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">size_t</span> <span class="title">size</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> _rbt.size();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	pair&lt;iterator, bool&gt; insert(const K&amp; key)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> _rbt.insert(key);</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line"></span><br><span class="line">	RBTree&lt;K, K, SetKeyOfValue&gt; _rbt;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h1 id="GitHub链接"><a href="#GitHub链接" class="headerlink" title="GitHub链接"></a>GitHub链接</h1><p><a href="https://github.com/Latsummer/FinishedProducts/tree/master/map%E5%92%8Cset%E5%AE%9E%E7%8E%B0" target="_blank" rel="noopener">map和set的实现-GitHub</a></p>
+]]></content>
+      <categories>
+        <category>C++</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+        <tag>数据结构</tag>
       </tags>
   </entry>
   <entry>
@@ -2357,7 +2357,7 @@ d. 要删除的结点有左、右孩子结点</code></pre><ul>
 <li>增加和查询元素的时间复杂度为O(K)，k为哈希函数个数，一般比较小，与数据量大小无关</li>
 <li>哈希函数相互之间没有关系，方便硬件并行运算</li>
 <li>不需要存储元素本身，在某些对保密要求比较严格的场合有很大优势</li>
-<li>能够成熟一定范围内的误判，占用空间小</li>
+<li>能够承受一定范围内的误判，占用空间小</li>
 <li>数据量大的时候，布隆过滤器可以表示全集</li>
 <li>使用同一组散列函数的布隆过滤器可以进行交、并、差运算</li>
 </ol>
@@ -2482,6 +2482,156 @@ d. 要删除的结点有左、右孩子结点</code></pre><ul>
       <categories>
         <category>C</category>
       </categories>
+  </entry>
+  <entry>
+    <title>图</title>
+    <url>/2021/03/20210312.html</url>
+    <content><![CDATA[<h1 id="图的构成"><a href="#图的构成" class="headerlink" title="图的构成"></a>图的构成</h1><p><strong>顶点集合</strong>+<strong>边的集合</strong>：<code>G = (V, E)</code>，顶点集合<code>V = {x | x属于某个数据对象及}</code>是有穷非空集合</p>
+<ul>
+<li><p><code>E = {(x, y) | x, y属于V}</code>或者<code>E = {&lt;x, y&gt; | x, y属于V &amp;&amp; Path(x, y)}</code>是顶点间关系的有穷集合，也叫边集合</p>
+</li>
+<li><p><code>(x, y)</code>表示x到y的一条双向通道，即<code>(x, y)</code>是无方向的，<code>Path(x, y)</code>表示从x到y的一条单向通路，即<code>Path(x, y)是有方向的</code></p>
+</li>
+</ul>
+<p>顶点和边：图中节点成为顶点，第i个顶点记作vi， 两个顶点vi和vj相关联称作顶点vi和顶点vj之间有一条边，图中第k条边记作ek，<code>ek = (vi, vj)</code>或<code>ek = &lt;vi, vj&gt;</code></p>
+<ul>
+<li>在有向图中，顶点对<code>&lt;x, y&gt;</code>是有序的，顶点对<code>&lt;x, y&gt;</code>称为顶点x到顶点y的一条边(弧)，<code>&lt;x, y&gt;</code>和<code>&lt;y ,x&gt;</code>是两条不同的边，如G3、G4</li>
+<li>在无向图中，顶点对(x, y)是无序的，顶点对(x,y) 称为顶点x和顶点y相关联的一条边，这条边没有特定方向，(x, y)和(y，x)是同一条边，如G1、G2</li>
+<li>注意：<strong>无向边<code>(x, y)</code>等于有向边<code>&lt;x, y&gt;</code>和<code>&lt;y, x&gt;</code></strong></li>
+</ul>
+<a id="more"></a>
+
+<p><em>可以表示</em>：社交关系</p>
+<ul>
+<li>社交关系中，每个人就是一个顶点，两个人是好友，他们之间就有了边，那么边的权值可以是他们的亲密度</li>
+<li>无向图：QQ、微信类似的社交关系可以被看作是无向图（强社交关系，熟人社交）</li>
+<li>有向图：微博（关注的关系）、抖音 （弱社交关系，陌生人社交、粉丝社交）</li>
+<li>也可以用来表示地图（导航路线选择），网络连接（路由器选择）</li>
+<li>vertex 顶点、edge 边、weight 权值</li>
+</ul>
+<h1 id="相关概念"><a href="#相关概念" class="headerlink" title="相关概念"></a>相关概念</h1><ol>
+<li>完全图（即所有顶点相连接）：在有n个顶点的无向图中，若有<code>n * (n-1)/2</code>条边，即<em>任意两个顶点之间有且仅有一条边<em>，则称此图为*</em>无向完全图*<em>，如G1；在n个顶点的有向图中，若有<code>n * (n-1)</code>条边，即</em>任意两个顶点之间有且仅有方向</em> 相反的边，则称此图为<strong>有向完全图</strong>，如G4。</li>
+<li>邻接顶点：在无向图中G中，若(u, v)是E(G)中的一条边，则称u和v互为邻接顶点，并称边(u,v)依附于顶点u 和v；在有向图G中，若是E(G)中的一条边，则称顶点u邻接到v，顶点v邻接自顶点u，并称边与 顶点u和顶点v相关联。</li>
+<li>顶点的度：<u>顶点v的度是指与它相关联的边的条数</u>，记作<code>deg(v)</code>。在有向图中，顶点的度等于该顶点的入度与 出度之和，其中顶点v的入度是以v为终点的有向边的条数，记作<code>indev(v)</code>;顶点v的出度是以v为起始点的有向 边的条数，记作<code>outdev(v)</code>。因此：<code>dev(v) = indev(v) + outdev(v)</code>。注意：对于无向图，顶点的度等于该顶 点的入度和出度，即<code>dev(v) = indev(v) = outdev(v)</code>。</li>
+<li>路径：在图<code>G = (V， E)</code>中，若从顶点vi出发有一组边使其可到达顶点vj，则称顶点vi到顶点vj的顶点序列为从 顶点vi到顶点vj的路径。</li>
+<li>路径长度：对于不带权的图，一条路径的路径长度是指该路径上的边的条数；对于带权的图，一条路 径的路 径长度是指该路径上各个边权值的总和。</li>
+</ol>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEly1gpljuxnpgij30k00i1aby.jpg" alt="截屏2021-04-16 14.04.25"></p>
+<ol start="6">
+<li>简单路径与回路：若路径上各顶点v1，v2，v3，…，vm均不重复，则称这样的路径为简单路径。若路 径上 第一个顶点v1和最后一个顶点vm重合，则称这样的路径为回路或环。即路径不重复为简单路径，重复则为回路</li>
+<li>子图：某个图的一个部分（一部分边、一部分顶点等）称为其的子图</li>
+<li>连通图：在<strong>无向图</strong>中，若从顶点v1到顶点v2有路径，则称顶点v1与顶点v2是连通的。如果图中任意一 对顶点 都是连通的，则称此图为连通图。（连通图不一定是完全图，但完全图一定是连通图，对连通图来说，仅需有路径即可，而完全图则要求两顶点邻接）</li>
+<li>强连通图：在<strong>有向图</strong>中，若在每一对顶点vi和vj之间都存在一条从vi到vj的路径，也存在一条从vj到 vi的路 径，则称此图是强连通图</li>
+<li>生成树（用最少的边把图连通）：一个连通图的最小连通子图称作该图的生成树。有n个顶点的连通图的生成树有n个顶点和n - 1条边。</li>
+</ol>
+<ul>
+<li>图和树的区别：<ul>
+<li>树可以认为是特殊的图，图不一定是树</li>
+<li>联通图，且不带环（没有回路），就可以认为是树</li>
+</ul>
+</li>
+</ul>
+<h1 id="图的存储结构"><a href="#图的存储结构" class="headerlink" title="图的存储结构"></a>图的存储结构</h1><p>保存节点以及边的关系</p>
+<h2 id="邻接矩阵"><a href="#邻接矩阵" class="headerlink" title="邻接矩阵"></a>邻接矩阵</h2><p>因为节点与节点之间的关系就是连通与否，即为0或者1，因此邻接矩阵(二维数组)即是：先用一个数组将顶点保存，然后采用矩阵来表示节点与节点之间的关系。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEly1gplp3axgjsj306n06wjrm.jpg" alt="截屏2021-04-16 17.05.50"></p>
+<p>用<code>vector&lt;char&gt; vertex</code>保存顶点，用矩阵<code>vector&lt;vector&lt;W&gt; &gt; edge</code>保存边，如下<br>$$<br>edge = \left[ \begin{matrix}  &amp; A &amp; B &amp; C &amp; D \ A &amp; 0 &amp; 1 &amp; 0 &amp; 1 \ B &amp; 1 &amp; 0 &amp; 1 &amp; 0 \ C &amp; 0 &amp; 1 &amp; 0 &amp; 1 \ D &amp; 1 &amp; 0 &amp; 1 &amp; 0 \end{matrix} \right]<br>$$<br><img src="https://tva1.sinaimg.cn/large/008eGmZEly1gpltlbqflfj305i098jrl.jpg" alt="截屏2021-04-16 19.41.36"></p>
+<p>用<code>vector&lt;char&gt; vertex</code>保存顶点，用矩阵<code>vector&lt;vector&lt;W&gt; &gt; edge</code>保存边，如下<br>$$<br>edge = \left[ \begin{matrix}  &amp; A &amp; B &amp; C  \ A &amp; 0 &amp; 1 &amp; 0 \ B &amp; 1 &amp; 0 &amp; 1 \ C &amp; 0 &amp; 0 &amp; 0\end{matrix} \right]<br>$$</p>
+<ul>
+<li>无向图的邻接矩阵是对称的，第i行(列)元素之和，就是顶点i的度。有向图的邻接矩阵则不一定是对称 的，第i行(列)元素之后就是顶点i 的出(入)度</li>
+<li>如果边带有权值，并且两个节点之间是连通的，上图中的边的关系就用权值代替，如果两个顶点不通， 则使用无穷大代替</li>
+<li>用邻接矩阵存储图的有点是能够快速知道两个顶点是否连通，缺陷是如果顶点比较多，边比较少时，矩 阵中存储了大量的0成为系数矩阵，比较浪费空间，并且要求两个节点之间的路径不是很好求。</li>
+</ul>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEly1gpluoyfacuj30m409f406.jpg" alt="截屏2021-04-16 20.18.53"></p>
+<h3 id="邻接矩阵代码实现"><a href="#邻接矩阵代码实现" class="headerlink" title="邻接矩阵代码实现"></a>邻接矩阵代码实现</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//vertex 顶点</span></span><br><span class="line"><span class="comment">//edge 边</span></span><br><span class="line"><span class="comment">//weight 权值</span></span><br><span class="line"><span class="comment">//matrix矩阵</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> matrix</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">V</span>, <span class="title">class</span> <span class="title">W</span>, <span class="title">bool</span> <span class="title">IsDirect</span> = <span class="title">false</span>&gt;</span></span><br><span class="line"><span class="class">    <span class="title">class</span> <span class="title">Graph</span></span></span><br><span class="line"><span class="class">    &#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">        Graph(V* vertexs, <span class="keyword">int</span> n)</span><br><span class="line">        &#123;</span><br><span class="line">            _vertexs.reserve(n);</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">            &#123;</span><br><span class="line">                _vertexs.push_back(vertexs[i]);</span><br><span class="line">                _vertexIndexMap[vertexs[i]] = i;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            _matrex.resize(n);</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">                _matrex[i].resize(n, W());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">int</span> <span class="title">GetVertexIndex</span><span class="params">(<span class="keyword">const</span> V&amp; v)</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="keyword">auto</span> it = _vertexIndexMap.<span class="built_in">find</span>(v);</span><br><span class="line">            <span class="keyword">if</span>(it != _vertexIndexMap.<span class="built_in">end</span>())</span><br><span class="line">                <span class="keyword">return</span> it.second;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                <span class="comment">//return -1;</span></span><br><span class="line">                <span class="keyword">throw</span> invalid_argument(<span class="string">"非法顶点"</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//添加边</span></span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">AddEdge</span><span class="params">(<span class="keyword">const</span> V&amp; src, <span class="keyword">const</span> V&amp; dst, <span class="keyword">const</span> W&amp; w)</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="keyword">int</span> srcIndex = GetVertexIndex(src);</span><br><span class="line">            <span class="keyword">int</span> dstIndex = GetVertexIndex(dst);</span><br><span class="line"></span><br><span class="line">            _matrex[srcIndex][dstIndex] = w;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(IsDirect == <span class="literal">false</span>)</span><br><span class="line">                _matrex[dstIndex][srcIndex] = w;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">        <span class="built_in">vector</span>&lt;V&gt; _vertexs;             <span class="comment">//顶点集合</span></span><br><span class="line">        <span class="built_in">map</span>&lt;V, <span class="keyword">int</span>&gt; _vertexIndexMap;    <span class="comment">//表示顶点的下表映射关系</span></span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;W&gt; &gt; _matrex;     <span class="comment">//表示邻接矩阵的边</span></span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="邻接表"><a href="#邻接表" class="headerlink" title="邻接表"></a>邻接表</h2><p>使用数组表示顶点的集合，使用链表表示边的关系。</p>
+<ul>
+<li>图为无向图的邻接表存储</li>
+</ul>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEly1gpn1zc5fnyj30ir08adgk.jpg" alt="截屏2021-04-17 21.17.19"></p>
+<ul>
+<li>注意：无向图中同一条边在邻接表中出现了两次。如果想知道顶点vi的度，只需要知道顶点vi边链表集合中结点的数目即可</li>
+<li>有向图则添加一个边的集合或者反向添加一次</li>
+</ul>
+<h2 id="邻接表的代码实现"><a href="#邻接表的代码实现" class="headerlink" title="邻接表的代码实现"></a>邻接表的代码实现</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">namespace</span> table</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">W</span>&gt;</span></span><br><span class="line"><span class="class">    <span class="title">struct</span> <span class="title">EdgeNode</span></span></span><br><span class="line"><span class="class">    &#123;</span></span><br><span class="line">        <span class="keyword">int</span> _srcIndex;</span><br><span class="line">        <span class="keyword">int</span> _dstIndex;</span><br><span class="line">        <span class="keyword">const</span> W&amp; _w;</span><br><span class="line"></span><br><span class="line">        EdgeNode&lt;W&gt;* _next;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">V</span>, <span class="title">class</span> <span class="title">W</span>, <span class="title">bool</span> <span class="title">IsDirect</span> = <span class="title">false</span>&gt;</span></span><br><span class="line"><span class="class">    <span class="title">class</span> <span class="title">Graph</span></span></span><br><span class="line"><span class="class">    &#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">        Graph(V* vertexs, <span class="keyword">int</span> n)</span><br><span class="line">        &#123;</span><br><span class="line">            _vertexs.reserve(n);</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">            &#123;</span><br><span class="line">                _vertexs.push_back(vertexs[i]);</span><br><span class="line">                _vertexIndexMap[vertexs[i]] = i;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            _linkTable.resize(n, <span class="literal">nullptr</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">int</span> <span class="title">GetVertexIndex</span><span class="params">(<span class="keyword">const</span> V&amp; v)</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="keyword">auto</span> it = _vertexIndexMap.<span class="built_in">find</span>(v);</span><br><span class="line">            <span class="keyword">if</span>(it != _vertexIndexMap.<span class="built_in">end</span>())</span><br><span class="line">                <span class="keyword">return</span> it.second;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                <span class="comment">//return -1;</span></span><br><span class="line">                <span class="keyword">throw</span> invalid_argument(<span class="string">"非法顶点"</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//添加边</span></span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">AddEdge</span><span class="params">(<span class="keyword">const</span> V&amp; src, <span class="keyword">const</span> V&amp; dst, <span class="keyword">const</span> W&amp; w)</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="keyword">int</span> srcIndex = GetVertexIndex(src);</span><br><span class="line">            <span class="keyword">int</span> dstIndex = GetVertexIndex(dst);</span><br><span class="line"></span><br><span class="line">            EdgeNode&lt;W&gt;* node = <span class="keyword">new</span> EdgeNode&lt;W&gt;;</span><br><span class="line">            node-&gt;_srcIndex = srcIndex;</span><br><span class="line">            node-&gt;_dstIndex = dstIndex;</span><br><span class="line">            node-&gt;_w = w;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//挂起头</span></span><br><span class="line">            node-&gt;_next = _linkTable[srcIndex];<span class="comment">//链表的头插操作</span></span><br><span class="line">            _linkTable[srcIndex] = node;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(IsDirect == <span class="literal">false</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                EdgeNode&lt;W&gt;* node = <span class="keyword">new</span> EdgeNode&lt;W&gt;;</span><br><span class="line">                node-&gt;_srcIndex = dstIndex;</span><br><span class="line">                node-&gt;_dstIndex = srcIndex;</span><br><span class="line">                node-&gt;_w = w;</span><br><span class="line"></span><br><span class="line">                <span class="comment">//挂起头</span></span><br><span class="line">                node-&gt;_next = _linkTable[dstIndex];<span class="comment">//链表的头插操作</span></span><br><span class="line">                _linkTable[dstIndex] = node;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">        <span class="built_in">vector</span>&lt;V&gt; _vertexs;             <span class="comment">//顶点集合</span></span><br><span class="line">        <span class="built_in">map</span>&lt;V, <span class="keyword">int</span>&gt; _vertexIndexMap;    <span class="comment">//表示顶点的下表映射关系</span></span><br><span class="line">        <span class="built_in">vector</span>&lt;EdgeNode&lt;W&gt;*&gt; _linkTable;<span class="comment">//邻接表</span></span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="图的遍历"><a href="#图的遍历" class="headerlink" title="图的遍历"></a>图的遍历</h1><p>给定一个图G和其中任意一个顶点v0，从v0出发，沿着图中各边访问图中的所有顶点，且每个顶点仅被遍历 一次。”遍历”即对结点进行某种操作的意思</p>
+<h2 id="图的深度优先遍历"><a href="#图的深度优先遍历" class="headerlink" title="图的深度优先遍历"></a>图的深度优先遍历</h2><p>对邻接矩阵，深度优先可是使用递归的方式实现</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">void</span> _DFS(<span class="keyword">int</span> srcIndex, <span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt;&amp; visited)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; _vertexs[srcIndex] &lt;&lt; <span class="string">":"</span> &lt;&lt; srcIndex &lt;&lt; <span class="string">"-&gt;"</span>;<span class="comment">//输出当前节点</span></span><br><span class="line">  visited[srcIndex] = <span class="literal">true</span>;<span class="comment">//标记当前节点已访问</span></span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; _vertexs.<span class="built_in">size</span>(); i++)</span><br><span class="line">  &#123;<span class="comment">//访问当前节点的相邻顶点</span></span><br><span class="line">    <span class="keyword">if</span>(_matrex[srcIndex][i] != W() &amp;&amp; visited[i] == <span class="literal">false</span>)</span><br><span class="line">      _DFS(i, visited);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">DFS</span><span class="params">(<span class="keyword">const</span> V&amp; src)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt; <span class="title">visited</span><span class="params">(_vertexs.<span class="built_in">size</span>(), <span class="literal">false</span>)</span></span>;</span><br><span class="line">  <span class="keyword">int</span> srcIndex = GetVertexIndex(src);</span><br><span class="line">  _DFS(srcIndex, visited);</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="图的广度优先遍历"><a href="#图的广度优先遍历" class="headerlink" title="图的广度优先遍历"></a>图的广度优先遍历</h2><p>对邻接矩阵，广度优先可以使用队列实现</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">BFS</span><span class="params">(<span class="keyword">const</span> V&amp; src)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt; <span class="title">visited</span><span class="params">(_vertexs.<span class="built_in">size</span>(), <span class="literal">false</span>)</span></span>;</span><br><span class="line">  <span class="keyword">int</span> srcIndex = GetVertexIndex(src);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">queue</span>&lt;<span class="keyword">int</span>&gt; q;</span><br><span class="line">  q.push(srcIndex);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span>(!q.empty())</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">int</span> front = q.front();</span><br><span class="line">    q.pop();</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; _vertexs[front] &lt;&lt; <span class="string">":"</span> &lt;&lt; front &lt;&lt; <span class="string">"-&gt;"</span>;</span><br><span class="line">    <span class="comment">//好友入队</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; _vertexs.<span class="built_in">size</span>(); i++)</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">if</span>(visited[i] == <span class="literal">false</span> &amp;&amp; _matrex[front][i] != W())</span><br><span class="line">      &#123;</span><br><span class="line">        q.push(i);</span><br><span class="line">        visited[i] = <span class="literal">true</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="最小生成树"><a href="#最小生成树" class="headerlink" title="最小生成树"></a>最小生成树</h1><p>连通图中的每一棵生成树，都是原图的一个极大无环子图，即：从其中删去任何一条边，生成树就不再连通；反之，在其中引入任何一条新边，都会形成一条回路。 </p>
+<p>若连通图由n个顶点组成，则其生成树必含n个顶点和n-1条边。因此构造最小生成树的准则有三条：</p>
+<ol>
+<li>只能使用图中的边来构造最小生成树 </li>
+<li>只能使用恰好n-1条边来连接图中的n个顶点</li>
+<li>选用的n-1条边不能构成回路</li>
+</ol>
+<p>构造最小生成树的方法：<strong>Kruskal算法</strong>和<strong>Prim算法</strong>。</p>
+<ul>
+<li>这两个算法都采用了<strong>逐步求解的贪心策略</strong>。 贪心算法：是指在问题求解时，总是做出当前看起来最好的选择。也就是说贪心算法做出的不是整体最优的选择，而是某种意义上的局部最优解。贪心算法不是对所有的问题都能得到整体最优解。</li>
+</ul>
+<h2 id="Kruskal算法"><a href="#Kruskal算法" class="headerlink" title="Kruskal算法"></a>Kruskal算法</h2><ol>
+<li><p>任给一个有n个顶点的连通网络<code>N={V,E}</code></p>
+</li>
+<li><p>首先构造一个由这n个顶点组成、不含任何边的图<code>G={V,NULL}</code>，其中每个顶点自成一个连通分量</p>
+</li>
+<li><p>接着不断从E中取出权值最小的一条边(若有多条任取其一)，若该边的两个顶点来自不同的连通分量，则将此边加入到G中。</p>
+</li>
+<li><p>如此重复，直到所有顶点在同一个连通分量上为止。 </p>
+</li>
+</ol>
+<ul>
+<li>核心：每次迭代时，选出一条具有最小权值，且两端点不在同一连通分量上的边，加入生成树。</li>
+</ul>
+<blockquote>
+<p>如何判断选出一条边以后跟已有的边是否构成回路：并查集</p>
+<p>如果选的边在一个集合中，就不能再使用，不在一个集合才能添加</p>
+</blockquote>
+<h2 id="Prime算法"><a href="#Prime算法" class="headerlink" title="Prime算法"></a>Prime算法</h2><p>仍是贪心算法，但它先选出最小的一条边，接着并非从全局中找到最小的边，而是以最小的边为基础，选已有的边的邻接顶点链接出的边中最小的，避开了选出环路的情况</p>
+<h1 id="单元最短路径"><a href="#单元最短路径" class="headerlink" title="单元最短路径"></a>单元最短路径</h1><p>从在带权图的某一顶点出发，找出一条通往另一顶点的最短路径，最短也就是沿路径各边的权值总和达到最小。</p>
+<blockquote>
+<p>Dijkstra算法和Floyd算法</p>
+</blockquote>
+<h2 id="Dijkstra算法"><a href="#Dijkstra算法" class="headerlink" title="Dijkstra算法"></a>Dijkstra算法</h2><p>求一个点和图中的其他所有点之间的最路径</p>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNly1gptzx4hmntj30au0a0mxt.jpg" alt="截屏2021-04-23 21.25.02"></p>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNly1gpu0bcc8v9j30kv089wgk.jpg" alt="截屏2021-04-23 21.38.39"></p>
+<table>
+<thead>
+<tr>
+<th>路径</th>
+<th>路径长度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0，1</td>
+<td>无穷大</td>
+</tr>
+<tr>
+<td>0，2</td>
+<td>50</td>
+</tr>
+<tr>
+<td>0，3</td>
+<td>10</td>
+</tr>
+<tr>
+<td>0，4</td>
+<td>50</td>
+</tr>
+</tbody></table>
+<p>依次遍历所有的边，找出更短路径，找到则更新</p>
+]]></content>
+      <categories>
+        <category>数据结构</category>
+      </categories>
+      <tags>
+        <tag>图</tag>
+      </tags>
   </entry>
   <entry>
     <title>在线的面试预约系统</title>
@@ -2682,6 +2832,50 @@ d. 要删除的结点有左、右孩子结点</code></pre><ul>
       </tags>
   </entry>
   <entry>
+    <title>栈和队列</title>
+    <url>/2020/04/20200412.html</url>
+    <content><![CDATA[<h3 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h3><p>栈是一种特殊的线性表，其只允许在固定的一端进行插入删除，进行数据的插入和删除操作的一段称为栈顶，而另一端称为栈底。栈之中的元素遵循后进先出的原则。</p>
+<a id="more"></a>
+
+<ul>
+<li>压栈：栈的插入操作叫做进栈 / 压栈 / 入栈，入数据在栈顶。</li>
+<li>出栈：栈的删除操作叫出栈，出数据也在栈顶。<br><img src="https://img-blog.csdnimg.cn/20200412123007232.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzEwNTMyMw==,size_16,color_FFFFFF,t_70" alt="栈示意图"></li>
+</ul>
+<h4 id="C语言中栈的实现"><a href="#C语言中栈的实现" class="headerlink" title="C语言中栈的实现"></a>C语言中栈的实现</h4><p>栈的实现一般可用数组或链表形式实现，相对而言，数组的结构更好一些，因为数组的尾插时间复杂度为O(1)。<br>此处用数组实现，代码如下：</p>
+<ul>
+<li>头文件</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 支持动态增长的栈</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> STDataType;</span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Stack</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	STDataType* _a;</span><br><span class="line">	<span class="keyword">int</span> _top;		<span class="comment">// 栈顶</span></span><br><span class="line">	<span class="keyword">int</span> _capacity;  <span class="comment">// 容量 </span></span><br><span class="line">&#125;Stack;</span><br><span class="line"><span class="comment">// 初始化栈 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">StackInit</span><span class="params">(Stack* ps)</span></span>;</span><br><span class="line"><span class="comment">// 入栈 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">StackPush</span><span class="params">(Stack* ps, STDataType data)</span></span>;</span><br><span class="line"><span class="comment">// 出栈 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">StackPop</span><span class="params">(Stack* ps)</span></span>;</span><br><span class="line"><span class="comment">// 获取栈顶元素 </span></span><br><span class="line"><span class="function">STDataType <span class="title">StackTop</span><span class="params">(Stack* ps)</span></span>;</span><br><span class="line"><span class="comment">// 获取栈中有效元素个数 </span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">StackSize</span><span class="params">(Stack* ps)</span></span>;</span><br><span class="line"><span class="comment">// 检测栈是否为空，如果为空返回非零结果，如果不为空返回0 </span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">StackEmpty</span><span class="params">(Stack* ps)</span></span>;</span><br><span class="line"><span class="comment">// 销毁栈 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">StackDestroy</span><span class="params">(Stack* ps)</span></span>;</span><br><span class="line"><span class="comment">//扩容</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Realo</span><span class="params">(Stack* ps)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>函数部分</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _CRT_SECURE_NO_WARNINGS 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"stack.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化栈 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">StackInit</span><span class="params">(Stack* ps)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	ps-&gt;_capacity = <span class="number">20</span>;</span><br><span class="line">	ps-&gt;_a = (STDataType*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(STDataType) * ps-&gt;_capacity);</span><br><span class="line">	ps-&gt;_top = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//扩容</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Realo</span><span class="params">(Stack* ps)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	ps-&gt;_capacity *= <span class="number">2</span>;</span><br><span class="line">	ps-&gt;_a = (STDataType*)<span class="built_in">realloc</span>(ps-&gt;_a, <span class="keyword">sizeof</span>(STDataType)* ps-&gt;_capacity);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 入栈 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">StackPush</span><span class="params">(Stack* ps, STDataType data)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (ps-&gt;_top == ps-&gt;_capacity)</span><br><span class="line">	&#123;</span><br><span class="line">		Realo(ps);</span><br><span class="line">	&#125;</span><br><span class="line">	ps-&gt;_a[ps-&gt;_top] = data;</span><br><span class="line">	ps-&gt;_top++;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 出栈 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">StackPop</span><span class="params">(Stack* ps)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (ps-&gt;_top)</span><br><span class="line">		ps-&gt;_top--;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 获取栈顶元素 </span></span><br><span class="line"><span class="function">STDataType <span class="title">StackTop</span><span class="params">(Stack* ps)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(ps-&gt;_top)</span><br><span class="line">		<span class="keyword">return</span> ps-&gt;_a[ps-&gt;_top - <span class="number">1</span>];</span><br><span class="line">	<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 获取栈中有效元素个数 </span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">StackSize</span><span class="params">(Stack* ps)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> ps-&gt;_top;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 检测栈是否为空，如果为空返回非零结果，如果不为空返回0 </span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">StackEmpty</span><span class="params">(Stack* ps)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (ps-&gt;_top == <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 销毁栈 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">StackDestroy</span><span class="params">(Stack* ps)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">free</span>(ps-&gt;_a);</span><br><span class="line">	ps-&gt;_a = <span class="literal">NULL</span>;</span><br><span class="line">	ps-&gt;_capacity = <span class="number">0</span>;</span><br><span class="line">	ps-&gt;_top = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h3><p>队列也是一种特殊的线形表，其只允许在一段插入数据，在另一端删除数据，遵循<strong>先进先出</strong>的原则</p>
+<ul>
+<li>入队：从队尾进行插入数据的操作。</li>
+<li>出队：从队头进行数据删除的操作。<br><img src="https://img-blog.csdnimg.cn/20200412130059754.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzEwNTMyMw==,size_16,color_FFFFFF,t_70" alt="队列示意图"></li>
+</ul>
+<h4 id="C语言中队列的实现"><a href="#C语言中队列的实现" class="headerlink" title="C语言中队列的实现"></a>C语言中队列的实现</h4><p>队列的实现可以使用数组和链表，但是使用一个带尾指针的单链表效果更优。<br>代码如下：</p>
+<ul>
+<li>头文件部分</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> QDataType;</span><br><span class="line"><span class="comment">// 链式结构：表示队列 </span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">QListNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">QListNode</span>* _<span class="title">next</span>;</span></span><br><span class="line">	QDataType _data;</span><br><span class="line">&#125;QNode;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 队列的结构 </span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Queue</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	QNode* _front;</span><br><span class="line">	QNode* _rear;</span><br><span class="line">	<span class="keyword">size_t</span> <span class="built_in">size</span>;</span><br><span class="line">&#125;Queue;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化队列 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">QueueInit</span><span class="params">(Queue* q)</span></span>;</span><br><span class="line"><span class="comment">// 队尾入队列 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">QueuePush</span><span class="params">(Queue* q, QDataType data)</span></span>;</span><br><span class="line"><span class="comment">// 队头出队列 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">QueuePop</span><span class="params">(Queue* q)</span></span>;</span><br><span class="line"><span class="comment">//创建节点</span></span><br><span class="line"><span class="function">QNode* <span class="title">CreatNode</span><span class="params">(QDataType data)</span></span>;</span><br><span class="line"><span class="comment">// 获取队列头部元素 </span></span><br><span class="line"><span class="function">QDataType <span class="title">QueueFront</span><span class="params">(Queue* q)</span></span>;</span><br><span class="line"><span class="comment">// 获取队列队尾元素 </span></span><br><span class="line"><span class="function">QDataType <span class="title">QueueBack</span><span class="params">(Queue* q)</span></span>;</span><br><span class="line"><span class="comment">// 获取队列中有效元素个数 </span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">QueueSize</span><span class="params">(Queue* q)</span></span>;</span><br><span class="line"><span class="comment">// 检测队列是否为空，如果为空返回非零结果，如果非空返回0 </span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">QueueEmpty</span><span class="params">(Queue* q)</span></span>;</span><br><span class="line"><span class="comment">// 销毁队列 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">QueueDestroy</span><span class="params">(Queue* q)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>函数部分</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _CRT_SECURE_NO_WARNINGS 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"qnode.h"</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化队列 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">QueueInit</span><span class="params">(Queue* q)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	q-&gt;_front = <span class="literal">NULL</span>;</span><br><span class="line">	q-&gt;_rear = <span class="literal">NULL</span>;</span><br><span class="line">	q-&gt;<span class="built_in">size</span> = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//创建节点</span></span><br><span class="line"><span class="function">QNode* <span class="title">CreatNode</span><span class="params">(QDataType data)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	QNode* newNode = (QNode*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(QNode));</span><br><span class="line">	newNode-&gt;_data = data;</span><br><span class="line">	newNode-&gt;_next = <span class="literal">NULL</span>;</span><br><span class="line">	<span class="keyword">return</span> newNode;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 队尾入队列 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">QueuePush</span><span class="params">(Queue* q, QDataType data)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	QNode* newNode = CreatNode(data);</span><br><span class="line">	<span class="keyword">if</span> (q-&gt;_rear == <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		q-&gt;_front = newNode;</span><br><span class="line">		q-&gt;_rear = newNode;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		q-&gt;_rear-&gt;_next = newNode;</span><br><span class="line">		q-&gt;_rear = newNode;</span><br><span class="line">	&#125;</span><br><span class="line">	q-&gt;<span class="built_in">size</span>++;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 队头出队列 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">QueuePop</span><span class="params">(Queue* q)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (q-&gt;_front)</span><br><span class="line">	&#123;</span><br><span class="line">		QNode* next = q-&gt;_front-&gt;_next;</span><br><span class="line">		<span class="built_in">free</span>(q-&gt;_front);</span><br><span class="line">		q-&gt;_front = next;</span><br><span class="line">		<span class="keyword">if</span> (q-&gt;_front == <span class="literal">NULL</span>)</span><br><span class="line">			q-&gt;_rear = <span class="literal">NULL</span>;</span><br><span class="line">		q-&gt;<span class="built_in">size</span>--;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 获取队列头部元素 </span></span><br><span class="line"><span class="function">QDataType <span class="title">QueueFront</span><span class="params">(Queue* q)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> empty = QueueEmpty(q);</span><br><span class="line">	<span class="keyword">if</span> (!empty)</span><br><span class="line">		<span class="keyword">return</span> q-&gt;_front-&gt;_data;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 获取队列队尾元素 </span></span><br><span class="line"><span class="function">QDataType <span class="title">QueueBack</span><span class="params">(Queue* q)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> empty = QueueEmpty(q);</span><br><span class="line">	<span class="keyword">if</span> (!empty)</span><br><span class="line">		<span class="keyword">return</span> q-&gt;_rear-&gt;_data;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 获取队列中有效元素个数 </span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">QueueSize</span><span class="params">(Queue* q)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> q-&gt;<span class="built_in">size</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 检测队列是否为空，如果为空返回非零结果，如果非空返回0 </span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">QueueEmpty</span><span class="params">(Queue* q)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (q-&gt;_front == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 销毁队列 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">QueueDestroy</span><span class="params">(Queue* q)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	QNode* cur = q-&gt;_front;</span><br><span class="line">	<span class="keyword">while</span> (cur)</span><br><span class="line">	&#123;</span><br><span class="line">		QNode* next = cur-&gt;_next;</span><br><span class="line">		<span class="built_in">free</span>(cur);</span><br><span class="line">		cur = next;</span><br><span class="line">	&#125;</span><br><span class="line">	q-&gt;_front = <span class="literal">NULL</span>;</span><br><span class="line">	q-&gt;_rear = <span class="literal">NULL</span>;</span><br><span class="line">	q-&gt;<span class="built_in">size</span> = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>数据结构</category>
+      </categories>
+      <tags>
+        <tag>栈</tag>
+        <tag>队列</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>数据结构中常见的排序</title>
     <url>/2020/05/20200511.html</url>
     <content><![CDATA[<h2 id="排序的概念"><a href="#排序的概念" class="headerlink" title="排序的概念"></a>排序的概念</h2><ul>
@@ -2798,50 +2992,6 @@ d. 要删除的结点有左、右孩子结点</code></pre><ul>
       </categories>
       <tags>
         <tag>排序</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>栈和队列</title>
-    <url>/2020/04/20200412.html</url>
-    <content><![CDATA[<h3 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h3><p>栈是一种特殊的线性表，其只允许在固定的一端进行插入删除，进行数据的插入和删除操作的一段称为栈顶，而另一端称为栈底。栈之中的元素遵循后进先出的原则。</p>
-<a id="more"></a>
-
-<ul>
-<li>压栈：栈的插入操作叫做进栈 / 压栈 / 入栈，入数据在栈顶。</li>
-<li>出栈：栈的删除操作叫出栈，出数据也在栈顶。<br><img src="https://img-blog.csdnimg.cn/20200412123007232.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzEwNTMyMw==,size_16,color_FFFFFF,t_70" alt="栈示意图"></li>
-</ul>
-<h4 id="C语言中栈的实现"><a href="#C语言中栈的实现" class="headerlink" title="C语言中栈的实现"></a>C语言中栈的实现</h4><p>栈的实现一般可用数组或链表形式实现，相对而言，数组的结构更好一些，因为数组的尾插时间复杂度为O(1)。<br>此处用数组实现，代码如下：</p>
-<ul>
-<li>头文件</li>
-</ul>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 支持动态增长的栈</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> STDataType;</span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Stack</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	STDataType* _a;</span><br><span class="line">	<span class="keyword">int</span> _top;		<span class="comment">// 栈顶</span></span><br><span class="line">	<span class="keyword">int</span> _capacity;  <span class="comment">// 容量 </span></span><br><span class="line">&#125;Stack;</span><br><span class="line"><span class="comment">// 初始化栈 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">StackInit</span><span class="params">(Stack* ps)</span></span>;</span><br><span class="line"><span class="comment">// 入栈 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">StackPush</span><span class="params">(Stack* ps, STDataType data)</span></span>;</span><br><span class="line"><span class="comment">// 出栈 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">StackPop</span><span class="params">(Stack* ps)</span></span>;</span><br><span class="line"><span class="comment">// 获取栈顶元素 </span></span><br><span class="line"><span class="function">STDataType <span class="title">StackTop</span><span class="params">(Stack* ps)</span></span>;</span><br><span class="line"><span class="comment">// 获取栈中有效元素个数 </span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">StackSize</span><span class="params">(Stack* ps)</span></span>;</span><br><span class="line"><span class="comment">// 检测栈是否为空，如果为空返回非零结果，如果不为空返回0 </span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">StackEmpty</span><span class="params">(Stack* ps)</span></span>;</span><br><span class="line"><span class="comment">// 销毁栈 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">StackDestroy</span><span class="params">(Stack* ps)</span></span>;</span><br><span class="line"><span class="comment">//扩容</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Realo</span><span class="params">(Stack* ps)</span></span>;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>函数部分</li>
-</ul>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _CRT_SECURE_NO_WARNINGS 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"stack.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化栈 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">StackInit</span><span class="params">(Stack* ps)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	ps-&gt;_capacity = <span class="number">20</span>;</span><br><span class="line">	ps-&gt;_a = (STDataType*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(STDataType) * ps-&gt;_capacity);</span><br><span class="line">	ps-&gt;_top = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//扩容</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Realo</span><span class="params">(Stack* ps)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	ps-&gt;_capacity *= <span class="number">2</span>;</span><br><span class="line">	ps-&gt;_a = (STDataType*)<span class="built_in">realloc</span>(ps-&gt;_a, <span class="keyword">sizeof</span>(STDataType)* ps-&gt;_capacity);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 入栈 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">StackPush</span><span class="params">(Stack* ps, STDataType data)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (ps-&gt;_top == ps-&gt;_capacity)</span><br><span class="line">	&#123;</span><br><span class="line">		Realo(ps);</span><br><span class="line">	&#125;</span><br><span class="line">	ps-&gt;_a[ps-&gt;_top] = data;</span><br><span class="line">	ps-&gt;_top++;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 出栈 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">StackPop</span><span class="params">(Stack* ps)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (ps-&gt;_top)</span><br><span class="line">		ps-&gt;_top--;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 获取栈顶元素 </span></span><br><span class="line"><span class="function">STDataType <span class="title">StackTop</span><span class="params">(Stack* ps)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(ps-&gt;_top)</span><br><span class="line">		<span class="keyword">return</span> ps-&gt;_a[ps-&gt;_top - <span class="number">1</span>];</span><br><span class="line">	<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 获取栈中有效元素个数 </span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">StackSize</span><span class="params">(Stack* ps)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> ps-&gt;_top;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 检测栈是否为空，如果为空返回非零结果，如果不为空返回0 </span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">StackEmpty</span><span class="params">(Stack* ps)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (ps-&gt;_top == <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 销毁栈 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">StackDestroy</span><span class="params">(Stack* ps)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">free</span>(ps-&gt;_a);</span><br><span class="line">	ps-&gt;_a = <span class="literal">NULL</span>;</span><br><span class="line">	ps-&gt;_capacity = <span class="number">0</span>;</span><br><span class="line">	ps-&gt;_top = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h3><p>队列也是一种特殊的线形表，其只允许在一段插入数据，在另一端删除数据，遵循<strong>先进先出</strong>的原则</p>
-<ul>
-<li>入队：从队尾进行插入数据的操作。</li>
-<li>出队：从队头进行数据删除的操作。<br><img src="https://img-blog.csdnimg.cn/20200412130059754.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzEwNTMyMw==,size_16,color_FFFFFF,t_70" alt="队列示意图"></li>
-</ul>
-<h4 id="C语言中队列的实现"><a href="#C语言中队列的实现" class="headerlink" title="C语言中队列的实现"></a>C语言中队列的实现</h4><p>队列的实现可以使用数组和链表，但是使用一个带尾指针的单链表效果更优。<br>代码如下：</p>
-<ul>
-<li>头文件部分</li>
-</ul>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> QDataType;</span><br><span class="line"><span class="comment">// 链式结构：表示队列 </span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">QListNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">QListNode</span>* _<span class="title">next</span>;</span></span><br><span class="line">	QDataType _data;</span><br><span class="line">&#125;QNode;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 队列的结构 </span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Queue</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	QNode* _front;</span><br><span class="line">	QNode* _rear;</span><br><span class="line">	<span class="keyword">size_t</span> <span class="built_in">size</span>;</span><br><span class="line">&#125;Queue;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化队列 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">QueueInit</span><span class="params">(Queue* q)</span></span>;</span><br><span class="line"><span class="comment">// 队尾入队列 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">QueuePush</span><span class="params">(Queue* q, QDataType data)</span></span>;</span><br><span class="line"><span class="comment">// 队头出队列 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">QueuePop</span><span class="params">(Queue* q)</span></span>;</span><br><span class="line"><span class="comment">//创建节点</span></span><br><span class="line"><span class="function">QNode* <span class="title">CreatNode</span><span class="params">(QDataType data)</span></span>;</span><br><span class="line"><span class="comment">// 获取队列头部元素 </span></span><br><span class="line"><span class="function">QDataType <span class="title">QueueFront</span><span class="params">(Queue* q)</span></span>;</span><br><span class="line"><span class="comment">// 获取队列队尾元素 </span></span><br><span class="line"><span class="function">QDataType <span class="title">QueueBack</span><span class="params">(Queue* q)</span></span>;</span><br><span class="line"><span class="comment">// 获取队列中有效元素个数 </span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">QueueSize</span><span class="params">(Queue* q)</span></span>;</span><br><span class="line"><span class="comment">// 检测队列是否为空，如果为空返回非零结果，如果非空返回0 </span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">QueueEmpty</span><span class="params">(Queue* q)</span></span>;</span><br><span class="line"><span class="comment">// 销毁队列 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">QueueDestroy</span><span class="params">(Queue* q)</span></span>;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>函数部分</li>
-</ul>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _CRT_SECURE_NO_WARNINGS 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"qnode.h"</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化队列 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">QueueInit</span><span class="params">(Queue* q)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	q-&gt;_front = <span class="literal">NULL</span>;</span><br><span class="line">	q-&gt;_rear = <span class="literal">NULL</span>;</span><br><span class="line">	q-&gt;<span class="built_in">size</span> = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//创建节点</span></span><br><span class="line"><span class="function">QNode* <span class="title">CreatNode</span><span class="params">(QDataType data)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	QNode* newNode = (QNode*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(QNode));</span><br><span class="line">	newNode-&gt;_data = data;</span><br><span class="line">	newNode-&gt;_next = <span class="literal">NULL</span>;</span><br><span class="line">	<span class="keyword">return</span> newNode;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 队尾入队列 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">QueuePush</span><span class="params">(Queue* q, QDataType data)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	QNode* newNode = CreatNode(data);</span><br><span class="line">	<span class="keyword">if</span> (q-&gt;_rear == <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		q-&gt;_front = newNode;</span><br><span class="line">		q-&gt;_rear = newNode;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		q-&gt;_rear-&gt;_next = newNode;</span><br><span class="line">		q-&gt;_rear = newNode;</span><br><span class="line">	&#125;</span><br><span class="line">	q-&gt;<span class="built_in">size</span>++;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 队头出队列 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">QueuePop</span><span class="params">(Queue* q)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (q-&gt;_front)</span><br><span class="line">	&#123;</span><br><span class="line">		QNode* next = q-&gt;_front-&gt;_next;</span><br><span class="line">		<span class="built_in">free</span>(q-&gt;_front);</span><br><span class="line">		q-&gt;_front = next;</span><br><span class="line">		<span class="keyword">if</span> (q-&gt;_front == <span class="literal">NULL</span>)</span><br><span class="line">			q-&gt;_rear = <span class="literal">NULL</span>;</span><br><span class="line">		q-&gt;<span class="built_in">size</span>--;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 获取队列头部元素 </span></span><br><span class="line"><span class="function">QDataType <span class="title">QueueFront</span><span class="params">(Queue* q)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> empty = QueueEmpty(q);</span><br><span class="line">	<span class="keyword">if</span> (!empty)</span><br><span class="line">		<span class="keyword">return</span> q-&gt;_front-&gt;_data;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 获取队列队尾元素 </span></span><br><span class="line"><span class="function">QDataType <span class="title">QueueBack</span><span class="params">(Queue* q)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> empty = QueueEmpty(q);</span><br><span class="line">	<span class="keyword">if</span> (!empty)</span><br><span class="line">		<span class="keyword">return</span> q-&gt;_rear-&gt;_data;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 获取队列中有效元素个数 </span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">QueueSize</span><span class="params">(Queue* q)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> q-&gt;<span class="built_in">size</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 检测队列是否为空，如果为空返回非零结果，如果非空返回0 </span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">QueueEmpty</span><span class="params">(Queue* q)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (q-&gt;_front == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 销毁队列 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">QueueDestroy</span><span class="params">(Queue* q)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	QNode* cur = q-&gt;_front;</span><br><span class="line">	<span class="keyword">while</span> (cur)</span><br><span class="line">	&#123;</span><br><span class="line">		QNode* next = cur-&gt;_next;</span><br><span class="line">		<span class="built_in">free</span>(cur);</span><br><span class="line">		cur = next;</span><br><span class="line">	&#125;</span><br><span class="line">	q-&gt;_front = <span class="literal">NULL</span>;</span><br><span class="line">	q-&gt;_rear = <span class="literal">NULL</span>;</span><br><span class="line">	q-&gt;<span class="built_in">size</span> = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>数据结构</category>
-      </categories>
-      <tags>
-        <tag>栈</tag>
-        <tag>队列</tag>
       </tags>
   </entry>
   <entry>
