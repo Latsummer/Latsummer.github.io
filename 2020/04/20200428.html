@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/128x128.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png">
+  <link rel="mask-icon" href="/images/logo2.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-big-counter.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"zhaozhuolin.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#A9A9A9","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="树的概念 根没有父节点 子树互不相交 节点数 &#x3D; 边数 + 1 节点的度 &#x3D; 子树的个数 树的度：最大节点个数 树的高度：最大层次">
+<meta property="og:type" content="article">
+<meta property="og:title" content="二叉树与堆的概念以及实现">
+<meta property="og:url" content="http://zhaozhuolin.com/2020/04/20200428.html">
+<meta property="og:site_name" content="小赵的学习笔记">
+<meta property="og:description" content="树的概念 根没有父节点 子树互不相交 节点数 &#x3D; 边数 + 1 节点的度 &#x3D; 子树的个数 树的度：最大节点个数 树的高度：最大层次">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-04-28T01:43:12.000Z">
+<meta property="article:modified_time" content="2020-06-02T05:10:44.000Z">
+<meta property="article:author" content="Morgan">
+<meta property="article:tag" content="二叉树">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://zhaozhuolin.com/2020/04/20200428.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>二叉树与堆的概念以及实现 | 小赵的学习笔记</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="小赵的学习笔记" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">小赵的学习笔记</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">26</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">6</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">42</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/Latsummer" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+<article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+<link itemprop="mainEntityOfPage" href="http://zhaozhuolin.com/2020/04/20200428.html">
+
+<span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <meta itemprop="image" content="/images/IMG_6272.JPG">
+  <meta itemprop="name" content="Morgan">
+  <meta itemprop="description" content="八说了，我在学了！">
+</span>
+
+<span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+  <meta itemprop="name" content="小赵的学习笔记">
+</span>
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">
+      二叉树与堆的概念以及实现
+    </h1>
+
+    <div class="post-meta">
+        <span class="post-meta-item">
+          <span class="post-meta-item-icon">
+            <i class="far fa-calendar"></i>
+          </span>
+          <span class="post-meta-item-text">发表于</span>
+
+          <time title="创建时间：2020-04-28 09:43:12" itemprop="dateCreated datePublished" datetime="2020-04-28T09:43:12+08:00">2020-04-28</time>
+        </span>
+          <span class="post-meta-item">
+            <span class="post-meta-item-icon">
+              <i class="far fa-calendar-check"></i>
+            </span>
+            <span class="post-meta-item-text">更新于</span>
+            <time title="修改时间：2020-06-02 13:10:44" itemprop="dateModified" datetime="2020-06-02T13:10:44+08:00">2020-06-02</time>
+          </span>
+        <span class="post-meta-item">
+          <span class="post-meta-item-icon">
+            <i class="far fa-folder"></i>
+          </span>
+          <span class="post-meta-item-text">分类于</span>
+            <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
+            </span>
+        </span>
+
+      
+        <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+          <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+          </span>
+          <span class="post-meta-item-text">阅读次数：</span>
+          <span id="busuanzi_value_page_pv"></span>
+        </span><br>
+        <span class="post-meta-item" title="本文字数">
+          <span class="post-meta-item-icon">
+            <i class="far fa-file-word"></i>
+          </span>
+            <span class="post-meta-item-text">本文字数：</span>
+          <span>6.6k</span>
+        </span>
+        <span class="post-meta-item" title="阅读时长">
+          <span class="post-meta-item-icon">
+            <i class="far fa-clock"></i>
+          </span>
+            <span class="post-meta-item-text">阅读时长 &asymp;</span>
+          <span>6 分钟</span>
+        </span>
+
+    </div>
+  </header>
+
+
+
+
+<div class="post-body" itemprop="articleBody">
+
+  
+    <h2 id="树的概念"><a href="#树的概念" class="headerlink" title="树的概念"></a>树的概念</h2><ol>
+<li>根没有父节点</li>
+<li>子树互不相交</li>
+<li>节点数 &#x3D; 边数 + 1</li>
+<li>节点的度 &#x3D; 子树的个数</li>
+<li>树的度：最大节点个数</li>
+<li>树的高度：最大层次</li>
+</ol>
+<span id="more"></span>
+
+<blockquote>
+<p>树的表示：双亲表示法，孩子表示法，孩子兄弟表示法</p>
+</blockquote>
+<ul>
+<li>满二叉树：除过叶子，其他节点度都为二，并且每层都是满的</li>
+<li>完全二叉树：除过最后一层，剩余结构是一个满二叉树，并且最后一层的节点从左向右中间无间隔</li>
+</ul>
+<blockquote>
+<p>满二叉树一定是完全二叉树</p>
+<p>完全二叉树不一定是满二叉树</p>
+</blockquote>
+<h2 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h2><h4 id="二叉树的节点总数"><a href="#二叉树的节点总数" class="headerlink" title="二叉树的节点总数"></a>二叉树的节点总数</h4><blockquote>
+<p>n0 + n1 + n2 &#x3D; 二叉树的节点总数</p>
+<p>n1 + 2 * n2 &#x3D; 二叉树边的总数</p>
+<p>节点总数 - 1 &#x3D; 边的个数</p>
+<p>n0 + n1 + n2 - 1 &#x3D; n1 + 2 * n2</p>
+<p>n0 &#x3D; n2 + 1</p>
+</blockquote>
+<p>满二叉树高度：<br>log⁡2(N+1) \log_2(N+1) log2​(N+1)</p>
+<p>∵2h−1=N∴h=log2(N+1) \because2^h - 1 &#x3D;N \quad \therefore h &#x3D; log_2(N+1) ∵2h−1=N∴h=log2​(N+1)</p>
+<p><em><strong>满二叉树的节点一定为奇数</strong></em></p>
+<h4 id="二叉树的存储形式"><a href="#二叉树的存储形式" class="headerlink" title="二叉树的存储形式"></a>二叉树的存储形式</h4><ol>
+<li>顺序结构：<strong>适合存放完全二叉树，没有空间浪费</strong></li>
+</ol>
+<p>规则：从第一层开始存放，直到最后一层，每层从左向右依次存放，如果中间有空节点，保留空节点的位置</p>
+<blockquote>
+<p>完全二叉树</p>
+<p>父子节点的位置：</p>
+<p>parent： left_child &#x3D; 2 x parent + 1</p>
+<p> right_child &#x3D; 2 x parent +2</p>
+<p>child : parent &#x3D; (child - 1) &#x2F; 2</p>
+</blockquote>
+<ol start="2">
+<li>链式结构：_<strong>适合存放一般二叉树</strong>_</li>
+</ol>
+<p>二叉链：数据，指向左右孩子的指针</p>
+<p>三叉链：数据，指向左右孩子的指针 + 指向父亲的指针</p>
+<p>完全二叉树：总数 2n</p>
+<p>度为1的节点出现在<strong>倒数第二层</strong></p>
+<p>度为一的节点个数：</p>
+<p> 节点个数为偶数：n1 &#x3D; 1</p>
+<p> 节点个数为奇数：n1 &#x3D; 0</p>
+<h2 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h2><blockquote>
+<p>大小堆：</p>
+<p>大堆：每个父节点都比子节点大</p>
+<p>小堆：每个父节点都比子节点小</p>
+</blockquote>
+<h4 id="堆的向下调整："><a href="#堆的向下调整：" class="headerlink" title="堆的向下调整："></a>堆的向下调整：</h4><p><strong>隐含的前提：当前需要调整的位置以下的子结构已经是一个堆。</strong></p>
+<p><strong>1. 小堆</strong></p>
+<p>从当前需要调整的位置开始，（parent）</p>
+<p>a. 从左右孩子中选一个最小的（child）</p>
+<p>b. 如果最小的child仍然小于parent：</p>
+<p> 交换child和parent</p>
+<p> 更新：parent &#x3D; child，child &#x3D; 2 * parent + 1</p>
+<p> 如果child没有越界，跳到a，继续执行</p>
+<p> 如果最小的child仍然大于parent：结束调整</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">shiftDown</span><span class="params">(HPDataType* a, <span class="type">int</span> size, <span class="type">int</span> parent)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> child = <span class="number">2</span> * parent + <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span> (child &lt; size)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (child + <span class="number">1</span> &lt; size &amp;&amp; a[child + <span class="number">1</span>] &lt; a[child])</span><br><span class="line">			child++;</span><br><span class="line">		<span class="keyword">if</span> (a[child] &lt; a[parent])</span><br><span class="line">		&#123;</span><br><span class="line">			Swap(a, child, parent);</span><br><span class="line">			parent = child;</span><br><span class="line">			child = <span class="number">2</span> * parent + <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>2. 大堆</strong></p>
+<p>从当前需要调整的位置开始，（parent）</p>
+<p>a. 从左右孩子中选一个最大的（child）</p>
+<p>b. 如果最大的child仍然大于parent：</p>
+<p> 交换child和parent</p>
+<p> 更新：parent &#x3D; child，child &#x3D; 2 * parent + 1</p>
+<p> 如果child没有越界，跳到a，继续执行</p>
+<p> 如果最大的child仍然小于parent：结束调整</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">shiftDown</span><span class="params">(HPDataType* a, <span class="type">int</span> size, <span class="type">int</span> parent)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> child = <span class="number">2</span> * parent + <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span> (child &lt; size)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (child + <span class="number">1</span> &lt; size &amp;&amp; a[child + <span class="number">1</span>] &gt; a[child])</span><br><span class="line">			child++;</span><br><span class="line">		<span class="keyword">if</span> (a[child] &gt; a[parent])</span><br><span class="line">		&#123;</span><br><span class="line">			Swap(a, child, parent);</span><br><span class="line">			parent = child;</span><br><span class="line">			child = <span class="number">2</span> * parent + <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="堆的向上调整"><a href="#堆的向上调整" class="headerlink" title="堆的向上调整"></a>堆的向上调整</h4><p>从当前位置开始（child），与父节点进行比较，如果是大堆，则若孩子大于父亲，交换二者，如果是小堆，则若孩子小于父亲，交换二者，直到不能交换为止。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">shiftUp</span><span class="params">(HPDataType* a, <span class="type">int</span> child)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//小堆</span></span><br><span class="line">	<span class="comment">/*int parent = (child - 1) / 2;</span></span><br><span class="line"><span class="comment">	while (child &gt; 0)</span></span><br><span class="line"><span class="comment">	&#123;</span></span><br><span class="line"><span class="comment">		if (a[child] &lt; a[parent])</span></span><br><span class="line"><span class="comment">		&#123;</span></span><br><span class="line"><span class="comment">			Swap(a, child, parent);</span></span><br><span class="line"><span class="comment">			child = parent;</span></span><br><span class="line"><span class="comment">			parent = (child - 1) / 2;</span></span><br><span class="line"><span class="comment">		&#125;</span></span><br><span class="line"><span class="comment">		else</span></span><br><span class="line"><span class="comment">		&#123;</span></span><br><span class="line"><span class="comment">			break;</span></span><br><span class="line"><span class="comment">		&#125;</span></span><br><span class="line"><span class="comment">	&#125;*/</span></span><br><span class="line">	<span class="comment">//大堆</span></span><br><span class="line">	<span class="type">int</span> parent = (child - <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">	<span class="keyword">while</span> (child &gt; <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (a[child] &gt; a[parent])</span><br><span class="line">		&#123;</span><br><span class="line">			Swap(a, child, parent);</span><br><span class="line">			child = parent;</span><br><span class="line">			parent = (child - <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="堆的实现"><a href="#堆的实现" class="headerlink" title="堆的实现"></a>堆的实现</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">int</span> HPDataType;</span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Heap</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	HPDataType* _a;</span><br><span class="line">	<span class="type">int</span> _size;</span><br><span class="line">	<span class="type">int</span> _capacity;</span><br><span class="line">&#125;Heap;</span><br></pre></td></tr></table></figure>
+
+<p>堆的实现使用了线性表来存储数据</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">Swap</span><span class="params">(HPDataType* a, <span class="type">int</span> left, <span class="type">int</span> right)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> tmp = a[left];</span><br><span class="line">	a[left] = a[right];</span><br><span class="line">	a[right] = tmp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 堆的构建</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">HeapCreate</span><span class="params">(Heap* hp, HPDataType* a, <span class="type">int</span> size)</span></span><br><span class="line">&#123;</span><br><span class="line">	hp-&gt;_a = (HPDataType*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(HPDataType)* size);</span><br><span class="line">	<span class="built_in">memcpy</span>(hp-&gt;_a, a, <span class="keyword">sizeof</span>(HPDataType)* size);</span><br><span class="line">	hp-&gt;_size = size;</span><br><span class="line">	hp-&gt;_capacity = size;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> parent = (size - <span class="number">2</span>) / <span class="number">2</span>; parent &gt;= <span class="number">0</span>; parent--)</span><br><span class="line">	&#123;</span><br><span class="line">		shiftDown(hp-&gt;_a, size, parent);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>堆得插入与删除，堆得插入则直接在线性表末尾插入，然后进行向上调整，堆得删除则需先交换堆顶与最后一个叶子结点，接着线性表进行尾删，然后进行向下调整</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 堆的插入</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">HeapPush</span><span class="params">(Heap* hp, HPDataType x)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (hp-&gt;_size &gt;= hp-&gt;_capacity)</span><br><span class="line">	&#123;</span><br><span class="line">		hp-&gt;_capacity *= <span class="number">2</span>;</span><br><span class="line">		hp-&gt;_a = (HPDataType*)<span class="built_in">realloc</span>(hp-&gt;_a, <span class="keyword">sizeof</span>(HPDataType)* hp-&gt;_capacity);</span><br><span class="line">	&#125;</span><br><span class="line">	hp-&gt;_a[hp-&gt;_size++] = x;</span><br><span class="line">	shiftUp(hp-&gt;_a, hp-&gt;_size - <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 堆的删除</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">HeapPop</span><span class="params">(Heap* hp)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (hp-&gt;_size &gt; <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		Swap(hp-&gt;_a, <span class="number">0</span>, hp-&gt;_size - <span class="number">1</span>);</span><br><span class="line">		hp-&gt;_size--;</span><br><span class="line">		shiftDown(hp-&gt;_a, hp-&gt;_size, <span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="二叉树的实现"><a href="#二叉树的实现" class="headerlink" title="二叉树的实现"></a>二叉树的实现</h2><h4 id="二叉树的遍历"><a href="#二叉树的遍历" class="headerlink" title="二叉树的遍历"></a>二叉树的遍历</h4><ol>
+<li><pre><code>前序（先序）遍历，先访问父节点，在访问左孩子，最后访问右孩子。
+</code></pre>
+</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">BinaryTreePrevOrder</span><span class="params">(BTNode* root)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (root)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%c &quot;</span>, root-&gt;_data);</span><br><span class="line">		BinaryTreePrevOrder(root-&gt;_left);</span><br><span class="line">		BinaryTreePrevOrder(root-&gt;_right);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>递归方式</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">BinaryTreePrevOrderNoR</span><span class="params">(BTNode* root)</span></span><br><span class="line">&#123;</span><br><span class="line">	Stack st;</span><br><span class="line">	StackInit(&amp;st);</span><br><span class="line">	BTNode* cur = root;</span><br><span class="line">	BTNode* top = <span class="literal">NULL</span>;</span><br><span class="line">	<span class="keyword">while</span> (cur || !StackEmpty(&amp;st))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">while</span> (cur)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;%c &quot;</span>, cur-&gt;_data);</span><br><span class="line">			StackPush(&amp;st, cur);</span><br><span class="line">			cur = cur-&gt;_left;</span><br><span class="line">		&#125;</span><br><span class="line">		top = StackTop(&amp;st);</span><br><span class="line">		StackPop(&amp;st);</span><br><span class="line">		cur = top-&gt;_right;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>非递归方式，使用到了栈</p>
+</blockquote>
+<ol start="2">
+<li><pre><code>中序遍历，先访问左孩子，在访问父节点，最后访问右孩子。
+</code></pre>
+</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">BinaryTreeInOrder</span><span class="params">(BTNode* root)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (root)</span><br><span class="line">	&#123;</span><br><span class="line">		BinaryTreeInOrder(root-&gt;_left);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%c &quot;</span>, root-&gt;_data);</span><br><span class="line">		BinaryTreeInOrder(root-&gt;_right);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>递归方式</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">BinaryTreeInOrderNoR</span><span class="params">(BTNode* root)</span></span><br><span class="line">&#123;</span><br><span class="line">	Stack st;</span><br><span class="line">	StackInit(&amp;st);</span><br><span class="line">	BTNode* cur = root;</span><br><span class="line">	BTNode* top = <span class="literal">NULL</span>;</span><br><span class="line">	<span class="keyword">while</span> (cur || !StackEmpty(&amp;st))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">while</span> (cur)</span><br><span class="line">		&#123;</span><br><span class="line">			StackPush(&amp;st, cur);</span><br><span class="line">			cur = cur-&gt;_left;</span><br><span class="line">		&#125;</span><br><span class="line">		top = StackTop(&amp;st);</span><br><span class="line">		StackPop(&amp;st);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%c &quot;</span>, top-&gt;_data);</span><br><span class="line">		cur = top-&gt;_right;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>非递归，使用到了栈</p>
+</blockquote>
+<ol start="3">
+<li><pre><code>后序遍历，先访问左孩子，后访问右孩子，最后访问父节点。
+</code></pre>
+</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">BinaryTreePostOrder</span><span class="params">(BTNode* root)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (root)</span><br><span class="line">	&#123;</span><br><span class="line">		BinaryTreePostOrder(root-&gt;_left);</span><br><span class="line">		BinaryTreePostOrder(root-&gt;_right);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%c &quot;</span>, root-&gt;_data);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>递归方式</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">BinaryTreePostOrderNoR</span><span class="params">(BTNode* root)</span></span><br><span class="line">&#123;</span><br><span class="line">	Stack st;</span><br><span class="line">	StackInit(&amp;st);</span><br><span class="line">	BTNode* cur = root;</span><br><span class="line">	BTNode* top = <span class="literal">NULL</span>;</span><br><span class="line">	BTNode* prev = <span class="literal">NULL</span>;</span><br><span class="line">	<span class="keyword">while</span> (cur || !StackEmpty(&amp;st))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">while</span> (cur)</span><br><span class="line">		&#123;</span><br><span class="line">			StackPush(&amp;st, cur);</span><br><span class="line">			cur = cur-&gt;_left;</span><br><span class="line">		&#125;</span><br><span class="line">		top = StackTop(&amp;st);</span><br><span class="line">		<span class="keyword">if</span> (!top-&gt;_right || top-&gt;_right == prev)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;%c &quot;</span>, top-&gt;_data);</span><br><span class="line">			StackPop(&amp;st);</span><br><span class="line">			prev = top;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			cur = top-&gt;_right;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>非递归方式，使用到了栈</p>
+</blockquote>
+<ol start="5">
+<li>层序遍历，从第一层开始，每层向后遍历。</li>
+</ol>
+<blockquote>
+<p>使用队列实现</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">BinaryTreeLevelOrder</span><span class="params">(BTNode* root)</span></span><br><span class="line">&#123;</span><br><span class="line">	Queue q;</span><br><span class="line">	QueueInit(&amp;q);</span><br><span class="line">	<span class="keyword">if</span> (root)</span><br><span class="line">		QueuePush(&amp;q, root);</span><br><span class="line">	<span class="keyword">while</span> (!QueueEmpty(&amp;q))</span><br><span class="line">	&#123;</span><br><span class="line">		BTNode* front = QueueFront(&amp;q);</span><br><span class="line">		QueuePop(&amp;q);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%c &quot;</span>, front-&gt;_data);</span><br><span class="line">		<span class="keyword">if</span> (front-&gt;_left)</span><br><span class="line">			QueuePush(&amp;q, front-&gt;_left);</span><br><span class="line">		<span class="keyword">if</span> (front-&gt;_right)</span><br><span class="line">			QueuePush(&amp;q, front-&gt;_right);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="二叉树的构建"><a href="#二叉树的构建" class="headerlink" title="二叉树的构建"></a>二叉树的构建</h4><p>此处使用先序遍历的方式建树，‘ # ’代表数中的空节点NULL</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">BTNode* <span class="title function_">BinaryTreeCreate</span><span class="params">(BTDataType* a,<span class="type">int</span> n, <span class="type">int</span>* pi)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (a[*pi] != <span class="string">&#x27;#&#x27;</span> &amp;&amp; *pi &lt; n)</span><br><span class="line">	&#123;</span><br><span class="line">		BTNode* root = (BTNode*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(BTNode));</span><br><span class="line">		root-&gt;_data = a[*pi];</span><br><span class="line">		(*pi)++;</span><br><span class="line">		root-&gt;_left = BinaryTreeCreate(a, n, pi);</span><br><span class="line">		(*pi)++;</span><br><span class="line">		root-&gt;_right = BinaryTreeCreate(a, n, pi);</span><br><span class="line">		<span class="keyword">return</span> root;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="二叉树的节点个数问题"><a href="#二叉树的节点个数问题" class="headerlink" title="二叉树的节点个数问题"></a>二叉树的节点个数问题</h4><p>拆分成左右子数的问题，用递归实现</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 二叉树节点个数</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">BinaryTreeSize</span><span class="params">(BTNode* root)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (!root)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">return</span> BinaryTreeSize(root-&gt;_left)</span><br><span class="line">		+ BinaryTreeSize(root-&gt;_right)</span><br><span class="line">		+ <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 二叉树叶子节点个数</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">BinaryTreeLeafSize</span><span class="params">(BTNode* root)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (!root)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">if</span> (!root-&gt;_left &amp;&amp; !root-&gt;_right)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">return</span> BinaryTreeLeafSize(root-&gt;_left)</span><br><span class="line">		+ BinaryTreeLeafSize(root-&gt;_right);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 二叉树第k层节点个数</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">BinaryTreeLevelKSize</span><span class="params">(BTNode* root, <span class="type">int</span> k)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (!root)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">if</span> (k == <span class="number">1</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">return</span> BinaryTreeLevelKSize(root-&gt;_left, k - <span class="number">1</span>)</span><br><span class="line">		+ BinaryTreeLevelKSize(root-&gt;_right, k - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</div>
+
+
+
+
+    
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Morgan
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://zhaozhuolin.com/2020/04/20200428.html" title="二叉树与堆的概念以及实现">http://zhaozhuolin.com/2020/04/20200428.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+<div>
+
+<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+
+</div>
+
+  <footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" rel="tag"><i class="fa fa-tag"></i>二叉树</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/04/20200412.html" rel="prev" title="栈和队列">
+      <i class="fa fa-chevron-left"></i> 栈和队列
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/05/20200511.html" rel="next" title="数据结构中常见的排序">
+      数据结构中常见的排序 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%91%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">树的概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="nav-number">2.</span> <span class="nav-text">二叉树</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E8%8A%82%E7%82%B9%E6%80%BB%E6%95%B0"><span class="nav-number">2.0.1.</span> <span class="nav-text">二叉树的节点总数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%AD%98%E5%82%A8%E5%BD%A2%E5%BC%8F"><span class="nav-number">2.0.2.</span> <span class="nav-text">二叉树的存储形式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A0%86"><span class="nav-number">3.</span> <span class="nav-text">堆</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A0%86%E7%9A%84%E5%90%91%E4%B8%8B%E8%B0%83%E6%95%B4%EF%BC%9A"><span class="nav-number">3.0.1.</span> <span class="nav-text">堆的向下调整：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A0%86%E7%9A%84%E5%90%91%E4%B8%8A%E8%B0%83%E6%95%B4"><span class="nav-number">3.0.2.</span> <span class="nav-text">堆的向上调整</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A0%86%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-number">4.</span> <span class="nav-text">堆的实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-number">5.</span> <span class="nav-text">二叉树的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86"><span class="nav-number">5.0.1.</span> <span class="nav-text">二叉树的遍历</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9E%84%E5%BB%BA"><span class="nav-number">5.0.2.</span> <span class="nav-text">二叉树的构建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E8%8A%82%E7%82%B9%E4%B8%AA%E6%95%B0%E9%97%AE%E9%A2%98"><span class="nav-number">5.0.3.</span> <span class="nav-text">二叉树的节点个数问题</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Morgan"
+      src="/images/IMG_6272.JPG">
+  <p class="site-author-name" itemprop="name">Morgan</p>
+  <div class="site-description" itemprop="description">八说了，我在学了！</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Latsummer" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Latsummer" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/weixin_43105323" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;weixin_43105323" rel="noopener" target="_blank"><i class="crosshairs fa-fw"></i>CSDN</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:morganjeans0106@gmail.com" title="E-Mail → mailto:morganjeans0106@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=863515908&auto=1&height=66"></iframe>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Morgan</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">168k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:33</span>
+</div><script color="241,124,103" opacity="1" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>

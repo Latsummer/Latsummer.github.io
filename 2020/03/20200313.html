@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/128x128.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png">
+  <link rel="mask-icon" href="/images/logo2.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-big-counter.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"zhaozhuolin.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#A9A9A9","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="结构体结构体是一些值的集合，这些值被称为成员变量，结构的每个成员可以是不同类型的变量。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C语言中的自定义类型（结构体、枚举及联合）">
+<meta property="og:url" content="http://zhaozhuolin.com/2020/03/20200313.html">
+<meta property="og:site_name" content="小赵的学习笔记">
+<meta property="og:description" content="结构体结构体是一些值的集合，这些值被称为成员变量，结构的每个成员可以是不同类型的变量。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200313153047129.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200313153700911.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200313155450248.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200313155958775.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200313161457391.png">
+<meta property="article:published_time" content="2020-03-13T08:45:41.000Z">
+<meta property="article:modified_time" content="2020-06-02T05:10:44.000Z">
+<meta property="article:author" content="Morgan">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200313153047129.png">
+
+<link rel="canonical" href="http://zhaozhuolin.com/2020/03/20200313.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>C语言中的自定义类型（结构体、枚举及联合） | 小赵的学习笔记</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="小赵的学习笔记" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">小赵的学习笔记</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">26</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">6</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">42</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/Latsummer" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+<article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+<link itemprop="mainEntityOfPage" href="http://zhaozhuolin.com/2020/03/20200313.html">
+
+<span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <meta itemprop="image" content="/images/IMG_6272.JPG">
+  <meta itemprop="name" content="Morgan">
+  <meta itemprop="description" content="八说了，我在学了！">
+</span>
+
+<span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+  <meta itemprop="name" content="小赵的学习笔记">
+</span>
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">
+      C语言中的自定义类型（结构体、枚举及联合）
+    </h1>
+
+    <div class="post-meta">
+        <span class="post-meta-item">
+          <span class="post-meta-item-icon">
+            <i class="far fa-calendar"></i>
+          </span>
+          <span class="post-meta-item-text">发表于</span>
+
+          <time title="创建时间：2020-03-13 16:45:41" itemprop="dateCreated datePublished" datetime="2020-03-13T16:45:41+08:00">2020-03-13</time>
+        </span>
+          <span class="post-meta-item">
+            <span class="post-meta-item-icon">
+              <i class="far fa-calendar-check"></i>
+            </span>
+            <span class="post-meta-item-text">更新于</span>
+            <time title="修改时间：2020-06-02 13:10:44" itemprop="dateModified" datetime="2020-06-02T13:10:44+08:00">2020-06-02</time>
+          </span>
+        <span class="post-meta-item">
+          <span class="post-meta-item-icon">
+            <i class="far fa-folder"></i>
+          </span>
+          <span class="post-meta-item-text">分类于</span>
+            <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C</span></a>
+            </span>
+        </span>
+
+      
+        <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+          <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+          </span>
+          <span class="post-meta-item-text">阅读次数：</span>
+          <span id="busuanzi_value_page_pv"></span>
+        </span><br>
+        <span class="post-meta-item" title="本文字数">
+          <span class="post-meta-item-icon">
+            <i class="far fa-file-word"></i>
+          </span>
+            <span class="post-meta-item-text">本文字数：</span>
+          <span>2.5k</span>
+        </span>
+        <span class="post-meta-item" title="阅读时长">
+          <span class="post-meta-item-icon">
+            <i class="far fa-clock"></i>
+          </span>
+            <span class="post-meta-item-text">阅读时长 &asymp;</span>
+          <span>2 分钟</span>
+        </span>
+
+    </div>
+  </header>
+
+
+
+
+<div class="post-body" itemprop="articleBody">
+
+  
+    <h2 id="结构体"><a href="#结构体" class="headerlink" title="结构体"></a>结构体</h2><p>结构体是一些值的集合，这些值被称为成员变量，结构的每个成员可以是不同类型的变量。</p>
+<span id="more"></span>
+
+<h3 id="结构体的声明"><a href="#结构体的声明" class="headerlink" title="结构体的声明"></a>结构体的声明</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">piont</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="type">int</span> x;</span><br><span class="line">	<span class="type">int</span> y;</span><br><span class="line">&#125;p1;<span class="comment">//声明结构体类型，同时定义变量p1</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">point</span> <span class="title">p2</span>;</span><span class="comment">//定义结构体变量p2</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">point</span> <span class="title">p3</span> =</span> &#123;x, y&#125;;<span class="comment">//初始化：定义变量同时赋值</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">point</span>* <span class="title">p4</span>;</span><span class="comment">//定义结构体类型指针</span></span><br></pre></td></tr></table></figure>
+
+<p>结构体在声明的时候可以省略结构体标签（tag），称之为匿名结构体，但很少会用到。<br>结构体可以使用 { }初始化，但不能用它赋值。</p>
+<h3 id="结构体的成员访问"><a href="#结构体的成员访问" class="headerlink" title="结构体的成员访问"></a>结构体的成员访问</h3><p>结构体变量访问成员，通过（.）操作符来访问。<br>例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">p1.x = <span class="number">20</span>;</span><br><span class="line">p1.y = <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+
+<p>结构体指针访问指向变量的成员,使用( -&gt; )操作符来访问<br>例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d,%d\n&quot;</span>, p4-&gt;x, p4-&gt;y);</span><br></pre></td></tr></table></figure>
+
+<p>结构体可以自引用，但是只能通过包含自身类型的指针这种方式来自引用。</p>
+<h2 id="结构体的内存对齐"><a href="#结构体的内存对齐" class="headerlink" title="结构体的内存对齐"></a>结构体的内存对齐</h2><p><strong>结构体的内存对齐规则：</strong></p>
+<ol>
+<li>第一个成员在与结构体变量偏移量为 0 的地址处。</li>
+<li>其他成员变量要对齐到某个数字（称之为对齐数）的整数倍地址处。</li>
+<li>结构体总大小为最大对齐数（每个成员变量都有一个对齐数）的整数倍。</li>
+<li>如果嵌套了结构体的情况，嵌套的结构体对齐到自己的最大对齐数的整数倍处，结构体的整体大小就是所有最大对齐数（含嵌套结构体的对齐数）的整数倍</li>
+</ol>
+<blockquote>
+<p><strong>对齐数：</strong> 编译器默认的一个对齐数，与该成员大小的 <strong>较小值</strong></p>
+<hr>
+<ul>
+<li>VS中默认的对齐数值为8。</li>
+<li>Linux没有默认对齐数，它的默认对齐数等于当前字段的sizeof值。</li>
+<li>可以用 #pragma pack ( )来修改默认对齐数，如果括号内不填写数字，则 还原成默认对齐数。</li>
+</ul>
+</blockquote>
+<p><em><strong>举例一：</strong></em><br>（VS2013下）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">s</span>&#123;</span></span><br><span class="line">	<span class="type">char</span> a;<span class="comment">//1 字节</span></span><br><span class="line">	<span class="type">int</span> b;<span class="comment">//4 字节</span></span><br><span class="line">	<span class="type">double</span> c;<span class="comment">//8 字节</span></span><br><span class="line">	<span class="type">char</span> d;<span class="comment">//1 字节</span></span><br><span class="line">	<span class="type">short</span> e;<span class="comment">//2 字节</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>对于该结构体类型来说，它占据内存空间大小的计算方法是：</p>
+<ol>
+<li>根据第一条规则，对第一个成员变量，它在与结构体变量偏移量为0的地址处，此时算上一个字节。</li>
+<li>根据第二条规则，对第二个成员，它是int类型变量，4个字节，与最大对齐数8相比，4更小，所以该成员的对齐数是4，要放在4的整数倍地址处，此时第一个成员占据的第一个字节之后的三个字节被开辟，在距离结构体变量偏移为4的地址处算四个字节，此时结构体变量有八个字节。<br><img src="https://img-blog.csdnimg.cn/20200313153047129.png" alt="前两个成员"></li>
+</ol>
+<blockquote>
+<p>前两个成员</p>
+</blockquote>
+<ol start="3">
+<li>根据第二条规则，对于第三个成员，double类型，八个字节，与默认对齐数相等，所以对齐数取8，它放在8的整数倍地址上，即放在距离结构体变量偏移为8的地址处，此时结构体变量有16个字节。<br><img src="https://img-blog.csdnimg.cn/20200313153700911.png" alt="前三个成员"></li>
+</ol>
+<blockquote>
+<p>前三个成员</p>
+</blockquote>
+<ol start="4">
+<li>根据第二条规则，第四个成员，char类型，一个字节，同上，它的对齐数是 1，所以直接放置即可，此时结构体变量有17个字节</li>
+<li>根据第二条规则，第五个成员，类型是short，两个字节，同上，它的对齐数是2，放在地址是二的整数倍处,即第18个字节处，此时结构体变量为20个字节<br><img src="https://img-blog.csdnimg.cn/20200313155450248.png" alt="所有成员"></li>
+</ol>
+<blockquote>
+<p>所有的五个成员</p>
+</blockquote>
+<ol start="6">
+<li>根据第三条规则：结构体总大小为最大对齐数（每个成员变量都有一个对齐数）的整数倍，这个结构体的最大对齐数是8，那么它占据的内存应该是八的整数倍，此时20个字节，补齐到24个字节即为八的整数倍<br><img src="https://img-blog.csdnimg.cn/20200313155958775.png" alt="结构体全貌"></li>
+</ol>
+<p>所以，在举例一种，该结构体的大小为24个字节。</p>
+<p><em><strong>举例二：</strong></em><br>求此时struct s2 结构体类型的大小</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">s</span>&#123;</span></span><br><span class="line">	<span class="type">char</span> a;</span><br><span class="line">	<span class="type">int</span> b;</span><br><span class="line">	<span class="type">double</span> c;</span><br><span class="line">	<span class="type">char</span> d;</span><br><span class="line">	<span class="type">short</span> e;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">s2</span>&#123;</span></span><br><span class="line">	<span class="type">char</span> a;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">s</span> <span class="title">b</span>;</span></span><br><span class="line">	<span class="type">char</span> c;</span><br><span class="line">	<span class="type">int</span> d;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>根据第一条规则，对第一个成员变量，它在与结构体变量偏移量为0的地址处，此时算上一个字节。</li>
+<li>根据第四条规则，如果嵌套了结构体的情况，嵌套的结构体对齐到自己的最大对齐数的整数倍处，结构体的整体大小就是所有最大对齐数（含嵌套结构体的对齐数）的整数倍，结构体s中的最大对齐数是8，那么就要对齐到八的整数倍地址处，此时第一个字节往后开辟七个字节之后，来存放该结构体类型变量，这个结构体类型变量的大小在举例一中计算过，24个字节，所以此时s2为32个字节。<br><img src="https://img-blog.csdnimg.cn/20200313161457391.png" alt="前两个成员"></li>
+</ol>
+<blockquote>
+<p>前两个成员</p>
+</blockquote>
+<ol start="3">
+<li>根据第二条规则，第三成员是char类型，1个字节，对齐数为1，所以此时结构体s2为33个字节。</li>
+<li>根据第二条规则，第四成员为int类型，四个字节，对齐数为4，对齐到4的整数倍地址处，即第36个字节处，此时结构体大小为40字节。</li>
+<li>根据第三条规则，该结构体各个成员中最大对齐数是八，所以它占据的内存应为八的整数倍，而40正好是八的整数倍，所以不用补齐</li>
+</ol>
+<p>所以举例二中结构体类型的大小应为40字节。</p>
+<h2 id="位段"><a href="#位段" class="headerlink" title="位段"></a>位段</h2><p>位段的声明和结构体类似，但是位段的成员必须是int 、unsigned int或signed int，位段的成员后有一个冒号和一个数字。冒号后的数字是几，就说明前边的成员变量占几个<strong>比特位</strong>。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="type">int</span> a : <span class="number">1</span>;</span><br><span class="line">	<span class="type">int</span> b : <span class="number">3</span>;</span><br><span class="line">	<span class="type">int</span> c : <span class="number">5</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h2><p>将可能的取值一一列举，即为枚举</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">season</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	spring,</span><br><span class="line">	summer,</span><br><span class="line">	autumn,</span><br><span class="line">	winter</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>枚举常量的值默认由0开始依次递增，除非在声明中赋值</p>
+<h2 id="联合"><a href="#联合" class="headerlink" title="联合"></a>联合</h2><p>该类型定义的变量包含一系列成员，但是这些成员都公用同一块内存空间</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">union</span> <span class="title">Un</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="type">int</span> a;</span><br><span class="line">	<span class="type">char</span> b;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>可以用它的特性来判断大小端字节序，例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">union</span> <span class="title">Un</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="type">int</span> a;</span><br><span class="line">	<span class="type">char</span> b;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="class"><span class="keyword">union</span> <span class="title">Un</span> <span class="title">s</span>;</span></span><br><span class="line">	s.a = <span class="number">0x11223344</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%x\n&quot;</span>, s.b);</span><br><span class="line">	system(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;<span class="comment">//输出为44，当前机器为小端字节序。</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>联合的大小：</strong></p>
+<ul>
+<li>联合的大小至少是最大成员的大小</li>
+<li>当最大成员的大小不是最大对齐数的整数倍时，要对齐到最大对齐数的整数倍上。</li>
+</ul>
+
+</div>
+
+
+
+
+    
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Morgan
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://zhaozhuolin.com/2020/03/20200313.html" title="C语言中的自定义类型（结构体、枚举及联合）">http://zhaozhuolin.com/2020/03/20200313.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+<div>
+
+<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+
+</div>
+
+  <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/03/20200310.html" rel="prev" title="一些库函数的模拟实现合辑（字符串+内存函数）">
+      <i class="fa fa-chevron-left"></i> 一些库函数的模拟实现合辑（字符串+内存函数）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/03/20200320.html" rel="next" title="（C语言）内存的动态管理">
+      （C语言）内存的动态管理 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93"><span class="nav-number">1.</span> <span class="nav-text">结构体</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93%E7%9A%84%E5%A3%B0%E6%98%8E"><span class="nav-number">1.1.</span> <span class="nav-text">结构体的声明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93%E7%9A%84%E6%88%90%E5%91%98%E8%AE%BF%E9%97%AE"><span class="nav-number">1.2.</span> <span class="nav-text">结构体的成员访问</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93%E7%9A%84%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90"><span class="nav-number">2.</span> <span class="nav-text">结构体的内存对齐</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%8D%E6%AE%B5"><span class="nav-number">3.</span> <span class="nav-text">位段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%9A%E4%B8%BE"><span class="nav-number">4.</span> <span class="nav-text">枚举</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%81%94%E5%90%88"><span class="nav-number">5.</span> <span class="nav-text">联合</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Morgan"
+      src="/images/IMG_6272.JPG">
+  <p class="site-author-name" itemprop="name">Morgan</p>
+  <div class="site-description" itemprop="description">八说了，我在学了！</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Latsummer" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Latsummer" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/weixin_43105323" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;weixin_43105323" rel="noopener" target="_blank"><i class="crosshairs fa-fw"></i>CSDN</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:morganjeans0106@gmail.com" title="E-Mail → mailto:morganjeans0106@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=863515908&auto=1&height=66"></iframe>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Morgan</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">168k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:33</span>
+</div><script color="241,124,103" opacity="1" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>
