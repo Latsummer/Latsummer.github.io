@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/128x128.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png">
+  <link rel="mask-icon" href="/images/logo2.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-big-counter.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"zhaozhuolin.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#A9A9A9","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="结构体的定义与实例化举例如下 123456struct User &amp;#123;	active: bool,	username: String,	email: String,	sign_in_count: u64,&amp;#125;  实例化如下 123456789101112let user1 &#x3D; User &amp;#123;	active: true,	username: String::from(&amp;quo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Rust-结构体">
+<meta property="og:url" content="http://zhaozhuolin.com/2023/05/20230509.html">
+<meta property="og:site_name" content="小赵的学习笔记">
+<meta property="og:description" content="结构体的定义与实例化举例如下 123456struct User &amp;#123;	active: bool,	username: String,	email: String,	sign_in_count: u64,&amp;#125;  实例化如下 123456789101112let user1 &#x3D; User &amp;#123;	active: true,	username: String::from(&amp;quo">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-05-09T07:20:20.000Z">
+<meta property="article:modified_time" content="2023-05-10T15:35:33.423Z">
+<meta property="article:author" content="Morgan">
+<meta property="article:tag" content="Rust">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://zhaozhuolin.com/2023/05/20230509.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Rust-结构体 | 小赵的学习笔记</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="小赵的学习笔记" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">小赵的学习笔记</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">26</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">6</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">44</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/Latsummer" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+<article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+<link itemprop="mainEntityOfPage" href="http://zhaozhuolin.com/2023/05/20230509.html">
+
+<span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <meta itemprop="image" content="/images/IMG_6272.JPG">
+  <meta itemprop="name" content="Morgan">
+  <meta itemprop="description" content="八说了，我在学了！">
+</span>
+
+<span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+  <meta itemprop="name" content="小赵的学习笔记">
+</span>
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">
+      Rust-结构体
+    </h1>
+
+    <div class="post-meta">
+        <span class="post-meta-item">
+          <span class="post-meta-item-icon">
+            <i class="far fa-calendar"></i>
+          </span>
+          <span class="post-meta-item-text">发表于</span>
+
+          <time title="创建时间：2023-05-09 15:20:20" itemprop="dateCreated datePublished" datetime="2023-05-09T15:20:20+08:00">2023-05-09</time>
+        </span>
+          <span class="post-meta-item">
+            <span class="post-meta-item-icon">
+              <i class="far fa-calendar-check"></i>
+            </span>
+            <span class="post-meta-item-text">更新于</span>
+            <time title="修改时间：2023-05-10 23:35:33" itemprop="dateModified" datetime="2023-05-10T23:35:33+08:00">2023-05-10</time>
+          </span>
+        <span class="post-meta-item">
+          <span class="post-meta-item-icon">
+            <i class="far fa-folder"></i>
+          </span>
+          <span class="post-meta-item-text">分类于</span>
+            <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/Rust/" itemprop="url" rel="index"><span itemprop="name">Rust</span></a>
+            </span>
+        </span>
+
+      
+        <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+          <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+          </span>
+          <span class="post-meta-item-text">阅读次数：</span>
+          <span id="busuanzi_value_page_pv"></span>
+        </span><br>
+        <span class="post-meta-item" title="本文字数">
+          <span class="post-meta-item-icon">
+            <i class="far fa-file-word"></i>
+          </span>
+            <span class="post-meta-item-text">本文字数：</span>
+          <span>3.2k</span>
+        </span>
+        <span class="post-meta-item" title="阅读时长">
+          <span class="post-meta-item-icon">
+            <i class="far fa-clock"></i>
+          </span>
+            <span class="post-meta-item-text">阅读时长 &asymp;</span>
+          <span>3 分钟</span>
+        </span>
+
+    </div>
+  </header>
+
+
+
+
+<div class="post-body" itemprop="articleBody">
+
+  
+    <h1 id="结构体的定义与实例化"><a href="#结构体的定义与实例化" class="headerlink" title="结构体的定义与实例化"></a>结构体的定义与实例化</h1><p>举例如下</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">User</span> &#123;</span><br><span class="line">	active: <span class="type">bool</span>,</span><br><span class="line">	username: <span class="type">String</span>,</span><br><span class="line">	email: <span class="type">String</span>,</span><br><span class="line">	sign_in_count: <span class="type">u64</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>实例化如下</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">user1</span> = User &#123;</span><br><span class="line">	active: <span class="literal">true</span>,</span><br><span class="line">	username: <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;name&quot;</span>),</span><br><span class="line">	email: <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;email@email.com&quot;</span>),</span><br><span class="line">	sign_in_count: <span class="number">1</span>,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//若要使用值，则同C/C++</span></span><br><span class="line"><span class="comment">//若要修改值，则示例需是可变的，如下</span></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">user2</span> = User &#123;</span><br><span class="line">    <span class="comment">//....</span></span><br><span class="line">&#125;</span><br><span class="line">user2.email = <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;xxx&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<p>作为函数返回值如下</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">build_user</span>(email: <span class="type">String</span>, username: <span class="type">String</span>) <span class="punctuation">-&gt;</span> User &#123;</span><br><span class="line">    User &#123;</span><br><span class="line">        active: <span class="literal">true</span>,</span><br><span class="line">        username: username,</span><br><span class="line">        email: email,</span><br><span class="line">        sign_in_count: <span class="number">1</span>,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>如果函数参数和字段名相同，则可以使用简化写法</strong>如下</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">build_user</span>(email: <span class="type">String</span>, username: <span class="type">String</span>) <span class="punctuation">-&gt;</span> User &#123;</span><br><span class="line">    User &#123;</span><br><span class="line">        active: <span class="literal">true</span>,</span><br><span class="line">        username,</span><br><span class="line">        email,</span><br><span class="line">        sign_in_count: <span class="number">1</span>,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用结构体更新语法从其他实例创建"><a href="#使用结构体更新语法从其他实例创建" class="headerlink" title="使用结构体更新语法从其他实例创建"></a>使用结构体更新语法从其他实例创建</h2><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">user2</span> = User &#123;</span><br><span class="line">    active: user1.active,</span><br><span class="line">    username: user1.username,</span><br><span class="line">    email: <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;another@example.com&quot;</span>),</span><br><span class="line">    sign_in_count: user1.sign_in_count,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>也可使用简化写法，使用<code>..</code>来指定剩余没有变化的值，例如</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">user2</span> = User &#123;</span><br><span class="line">    email: <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;another@example.com&quot;</span>),</span><br><span class="line">    ..user1</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong><code>..user1</code>必须放在最后</strong></p>
+<blockquote>
+<p>请注意，转移与克隆的规则在此处仍然适用，例如用<code>user1</code>的<code>username</code>与<code>email</code>字段更新<code>user2</code>之后，这两个字段被转移到<code>user2</code>中，其余值则拷贝了一份，此时<code>user1</code>不能再使用。</p>
+<p>而如果<code>user2</code>的那两个字段使用<code>String::from()</code>来进行赋值，其余从<code>user1</code>更新，那二者都可使用</p>
+</blockquote>
+<h2 id="元组结构体-x2F-匿名结构体"><a href="#元组结构体-x2F-匿名结构体" class="headerlink" title="元组结构体&#x2F;匿名结构体"></a>元组结构体&#x2F;匿名结构体</h2><p>类似如下形式，使用时同元组，使用下标</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Color</span>(<span class="type">i32</span>, <span class="type">i32</span>, <span class="type">i32</span>);</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Point</span>(<span class="type">i32</span>, <span class="type">i32</span>, <span class="type">i32</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">black</span> = <span class="title function_ invoke__">Color</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">origin</span> = <span class="title function_ invoke__">Point</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="没有字段名称的类单元结构体"><a href="#没有字段名称的类单元结构体" class="headerlink" title="没有字段名称的类单元结构体"></a>没有字段名称的类单元结构体</h2><p>即元组类型中的<code>unit</code>类型，类单元结构体常常在你想要在某个类型上实现 trait 但不需要在类型中存储数据的时候发挥作用。形式如下：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">AlwaysEqual</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">subject</span> = AlwaysEqual;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="结构体数据的所有权"><a href="#结构体数据的所有权" class="headerlink" title="结构体数据的所有权"></a>结构体数据的所有权</h2><p>在上面的示例中，<code>User</code>结构体中的字符串类型使用了<code>String</code>而非<code>&amp;str</code>，这是因为想要这个结构体拥有它所有的数据，由此，只要整个结构体是有效的，那其中的数据也一定有效。</p>
+<p>也可以是结构体存储被其他对象拥有的数据的引用（切片类型），不过需要用上生命周期标识符。生命周期确保结构体引用的数据有效性跟结构体本身保持一致。如果你尝试在结构体中存储一个引用而不指定生命周期将是无效的</p>
+<h1 id="结构体的示例程序"><a href="#结构体的示例程序" class="headerlink" title="结构体的示例程序"></a>结构体的示例程序</h1><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Rectangle</span> &#123;</span><br><span class="line">    width: <span class="type">u32</span>,</span><br><span class="line">    height: <span class="type">u32</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">rect1</span> = Rectangle &#123;</span><br><span class="line">        width: <span class="number">30</span>,</span><br><span class="line">        height: <span class="number">50</span>,</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">println!</span>(</span><br><span class="line">        <span class="string">&quot;The area of the rectangle is &#123;&#125; square pixels.&quot;</span>,</span><br><span class="line">        <span class="title function_ invoke__">area</span>(&amp;rect1)</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">area</span>(rectangle: &amp;Rectangle) <span class="punctuation">-&gt;</span> <span class="type">u32</span> &#123;</span><br><span class="line">    rectangle.width * rectangle.height</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="通过派生trait增加实用功能"><a href="#通过派生trait增加实用功能" class="headerlink" title="通过派生trait增加实用功能"></a>通过派生<code>trait</code>增加实用功能</h2><p>在上面实现的结构体，无法直接通过<code>println!</code>，但可通过以下方式进行</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[derive(Debug)]</span> <span class="comment">//定义外部属性</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Rectangle</span> &#123;</span><br><span class="line">    width: <span class="type">u32</span>,</span><br><span class="line">    height: <span class="type">u32</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">rect1</span> = Rectangle &#123;</span><br><span class="line">        width: <span class="number">30</span>,</span><br><span class="line">        height: <span class="number">50</span>,</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;rect1 is &#123;:?&#125;&quot;</span>, rect1);</span><br><span class="line">    dbg!(&amp;rect1); <span class="comment">//另一种方式</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="方法语句"><a href="#方法语句" class="headerlink" title="方法语句"></a>方法语句</h1><p>关键字为<code>impl</code>，<code>impl</code>块中所有内容都将与结构体类型相关联，如下</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[derive(Debug)]</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Rectangle</span> &#123;</span><br><span class="line">    width: <span class="type">u32</span>,</span><br><span class="line">    height: <span class="type">u32</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> <span class="title class_">Rectangle</span> &#123;</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">area</span>(&amp;<span class="keyword">self</span>) <span class="punctuation">-&gt;</span> <span class="type">u32</span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.width * <span class="keyword">self</span>.height</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">width</span>(&amp;<span class="keyword">self</span>) <span class="punctuation">-&gt;</span> <span class="type">bool</span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.width &gt; <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">     <span class="keyword">fn</span> <span class="title function_">can_hold</span>(&amp;<span class="keyword">self</span>, other: &amp;Rectangle) <span class="punctuation">-&gt;</span> <span class="type">bool</span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.width &gt; other.width &amp;&amp; <span class="keyword">self</span>.height &gt; other.height</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">rect1</span> = Rectangle &#123;</span><br><span class="line">        width: <span class="number">30</span>,</span><br><span class="line">        height: <span class="number">50</span>,</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">println!</span>(</span><br><span class="line">        <span class="string">&quot;The area of the rectangle is &#123;&#125; square pixels.&quot;</span>,</span><br><span class="line">        rect1.<span class="title function_ invoke__">area</span>()</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在函数<code>area</code>中，<code>&amp;self</code>实际上是<code>self: &amp;self</code>的缩写，他会借用调用对象的值，而不获取他的所有权</p>
+<h2 id="关联函数"><a href="#关联函数" class="headerlink" title="关联函数"></a>关联函数</h2><p>所有在<code>impl</code>块中定义的函数被称为 <strong>关联函数</strong> （静态成员函数），因为其与<code>impl</code>后面命名的类型先关。可以定义不以<code>self</code>为第一参数的关联函数，因此他不是方法，不是方法的关联函数通常会被用作返回一个结构体新实例的构造函数，例如</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">impl</span> <span class="title class_">Rectangle</span> &#123;</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">square</span>(size: <span class="type">u32</span>) <span class="punctuation">-&gt;</span> <span class="keyword">Self</span> &#123;</span><br><span class="line">        <span class="keyword">Self</span> &#123;</span><br><span class="line">            width: size,</span><br><span class="line">            height: size,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable">sq</span> = Rectangle::<span class="title function_ invoke__">square</span>(<span class="number">3</span>);</span><br></pre></td></tr></table></figure>
+
+<p>使用<code>::</code>来使用结构体的关联函数，<code>::</code>语法用于关联函数和模块创建的命名空间</p>
+
+</div>
+
+
+
+
+    
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Morgan
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://zhaozhuolin.com/2023/05/20230509.html" title="Rust-结构体">http://zhaozhuolin.com/2023/05/20230509.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+<div>
+
+<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+
+</div>
+
+  <footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/Rust/" rel="tag"><i class="fa fa-tag"></i>Rust</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/05/20230508.html" rel="prev" title="Rust-所有权、引用与Slice">
+      <i class="fa fa-chevron-left"></i> Rust-所有权、引用与Slice
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93%E7%9A%84%E5%AE%9A%E4%B9%89%E4%B8%8E%E5%AE%9E%E4%BE%8B%E5%8C%96"><span class="nav-number">1.</span> <span class="nav-text">结构体的定义与实例化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E7%BB%93%E6%9E%84%E4%BD%93%E6%9B%B4%E6%96%B0%E8%AF%AD%E6%B3%95%E4%BB%8E%E5%85%B6%E4%BB%96%E5%AE%9E%E4%BE%8B%E5%88%9B%E5%BB%BA"><span class="nav-number">1.1.</span> <span class="nav-text">使用结构体更新语法从其他实例创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%83%E7%BB%84%E7%BB%93%E6%9E%84%E4%BD%93-x2F-%E5%8C%BF%E5%90%8D%E7%BB%93%E6%9E%84%E4%BD%93"><span class="nav-number">1.2.</span> <span class="nav-text">元组结构体&#x2F;匿名结构体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B2%A1%E6%9C%89%E5%AD%97%E6%AE%B5%E5%90%8D%E7%A7%B0%E7%9A%84%E7%B1%BB%E5%8D%95%E5%85%83%E7%BB%93%E6%9E%84%E4%BD%93"><span class="nav-number">1.3.</span> <span class="nav-text">没有字段名称的类单元结构体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93%E6%95%B0%E6%8D%AE%E7%9A%84%E6%89%80%E6%9C%89%E6%9D%83"><span class="nav-number">1.4.</span> <span class="nav-text">结构体数据的所有权</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93%E7%9A%84%E7%A4%BA%E4%BE%8B%E7%A8%8B%E5%BA%8F"><span class="nav-number">2.</span> <span class="nav-text">结构体的示例程序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E6%B4%BE%E7%94%9Ftrait%E5%A2%9E%E5%8A%A0%E5%AE%9E%E7%94%A8%E5%8A%9F%E8%83%BD"><span class="nav-number">2.1.</span> <span class="nav-text">通过派生trait增加实用功能</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E8%AF%AD%E5%8F%A5"><span class="nav-number">3.</span> <span class="nav-text">方法语句</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E8%81%94%E5%87%BD%E6%95%B0"><span class="nav-number">3.1.</span> <span class="nav-text">关联函数</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Morgan"
+      src="/images/IMG_6272.JPG">
+  <p class="site-author-name" itemprop="name">Morgan</p>
+  <div class="site-description" itemprop="description">八说了，我在学了！</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Latsummer" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Latsummer" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/weixin_43105323" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;weixin_43105323" rel="noopener" target="_blank"><i class="crosshairs fa-fw"></i>CSDN</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:morganjeans0106@gmail.com" title="E-Mail → mailto:morganjeans0106@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=863515908&auto=1&height=66"></iframe>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Morgan</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">177k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:41</span>
+</div><script color="241,124,103" opacity="1" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>

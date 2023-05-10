@@ -136,7 +136,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">42</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">44</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -193,6 +193,207 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+<article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+<link itemprop="mainEntityOfPage" href="http://zhaozhuolin.com/2023/05/20230509.html">
+
+<span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <meta itemprop="image" content="/images/IMG_6272.JPG">
+  <meta itemprop="name" content="Morgan">
+  <meta itemprop="description" content="八说了，我在学了！">
+</span>
+
+<span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+  <meta itemprop="name" content="小赵的学习笔记">
+</span>
+  <header class="post-header">
+    <h2 class="post-title" itemprop="name headline">
+      
+        <a href="/2023/05/20230509.html" class="post-title-link" itemprop="url">Rust-结构体</a>
+    </h2>
+
+    <div class="post-meta">
+        <span class="post-meta-item">
+          <span class="post-meta-item-icon">
+            <i class="far fa-calendar"></i>
+          </span>
+          <span class="post-meta-item-text">发表于</span>
+
+          <time title="创建时间：2023-05-09 15:20:20" itemprop="dateCreated datePublished" datetime="2023-05-09T15:20:20+08:00">2023-05-09</time>
+        </span>
+          <span class="post-meta-item">
+            <span class="post-meta-item-icon">
+              <i class="far fa-calendar-check"></i>
+            </span>
+            <span class="post-meta-item-text">更新于</span>
+            <time title="修改时间：2023-05-10 23:35:33" itemprop="dateModified" datetime="2023-05-10T23:35:33+08:00">2023-05-10</time>
+          </span>
+        <span class="post-meta-item">
+          <span class="post-meta-item-icon">
+            <i class="far fa-folder"></i>
+          </span>
+          <span class="post-meta-item-text">分类于</span>
+            <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/Rust/" itemprop="url" rel="index"><span itemprop="name">Rust</span></a>
+            </span>
+        </span>
+
+      <br>
+        <span class="post-meta-item" title="本文字数">
+          <span class="post-meta-item-icon">
+            <i class="far fa-file-word"></i>
+          </span>
+            <span class="post-meta-item-text">本文字数：</span>
+          <span>3.2k</span>
+        </span>
+        <span class="post-meta-item" title="阅读时长">
+          <span class="post-meta-item-icon">
+            <i class="far fa-clock"></i>
+          </span>
+            <span class="post-meta-item-text">阅读时长 &asymp;</span>
+          <span>3 分钟</span>
+        </span>
+
+    </div>
+  </header>
+
+
+
+
+<div class="post-body" itemprop="articleBody">
+
+  
+      <h1 id="结构体的定义与实例化"><a href="#结构体的定义与实例化" class="headerlink" title="结构体的定义与实例化"></a>结构体的定义与实例化</h1><p>举例如下</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">User</span> &#123;</span><br><span class="line">	active: <span class="type">bool</span>,</span><br><span class="line">	username: <span class="type">String</span>,</span><br><span class="line">	email: <span class="type">String</span>,</span><br><span class="line">	sign_in_count: <span class="type">u64</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>实例化如下</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">user1</span> = User &#123;</span><br><span class="line">	active: <span class="literal">true</span>,</span><br><span class="line">	username: <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;name&quot;</span>),</span><br><span class="line">	email: <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;email@email.com&quot;</span>),</span><br><span class="line">	sign_in_count: <span class="number">1</span>,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//若要使用值，则同C/C++</span></span><br><span class="line"><span class="comment">//若要修改值，则示例需是可变的，如下</span></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">user2</span> = User &#123;</span><br><span class="line">    <span class="comment">//....</span></span><br><span class="line">&#125;</span><br><span class="line">user2.email = <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;xxx&quot;</span>);</span><br></pre></td></tr></table></figure>
+      <!--noindex-->
+        <div class="post-button">
+          <a class="btn" href="/2023/05/20230509.html#more" rel="contents">
+            阅读全文 &raquo;
+          </a>
+        </div>
+      <!--/noindex-->
+    
+  
+</div>
+
+
+
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+<article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+<link itemprop="mainEntityOfPage" href="http://zhaozhuolin.com/2023/05/20230508.html">
+
+<span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <meta itemprop="image" content="/images/IMG_6272.JPG">
+  <meta itemprop="name" content="Morgan">
+  <meta itemprop="description" content="八说了，我在学了！">
+</span>
+
+<span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+  <meta itemprop="name" content="小赵的学习笔记">
+</span>
+  <header class="post-header">
+    <h2 class="post-title" itemprop="name headline">
+      
+        <a href="/2023/05/20230508.html" class="post-title-link" itemprop="url">Rust-所有权、引用与Slice</a>
+    </h2>
+
+    <div class="post-meta">
+        <span class="post-meta-item">
+          <span class="post-meta-item-icon">
+            <i class="far fa-calendar"></i>
+          </span>
+          <span class="post-meta-item-text">发表于</span>
+
+          <time title="创建时间：2023-05-08 20:12:50" itemprop="dateCreated datePublished" datetime="2023-05-08T20:12:50+08:00">2023-05-08</time>
+        </span>
+          <span class="post-meta-item">
+            <span class="post-meta-item-icon">
+              <i class="far fa-calendar-check"></i>
+            </span>
+            <span class="post-meta-item-text">更新于</span>
+            <time title="修改时间：2023-05-10 23:34:57" itemprop="dateModified" datetime="2023-05-10T23:34:57+08:00">2023-05-10</time>
+          </span>
+        <span class="post-meta-item">
+          <span class="post-meta-item-icon">
+            <i class="far fa-folder"></i>
+          </span>
+          <span class="post-meta-item-text">分类于</span>
+            <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/Rust/" itemprop="url" rel="index"><span itemprop="name">Rust</span></a>
+            </span>
+        </span>
+
+      <br>
+        <span class="post-meta-item" title="本文字数">
+          <span class="post-meta-item-icon">
+            <i class="far fa-file-word"></i>
+          </span>
+            <span class="post-meta-item-text">本文字数：</span>
+          <span>5.9k</span>
+        </span>
+        <span class="post-meta-item" title="阅读时长">
+          <span class="post-meta-item-icon">
+            <i class="far fa-clock"></i>
+          </span>
+            <span class="post-meta-item-text">阅读时长 &asymp;</span>
+          <span>5 分钟</span>
+        </span>
+
+    </div>
+  </header>
+
+
+
+
+<div class="post-body" itemprop="articleBody">
+
+  
+      <p>Rust 通过所有权系统管理内存，编译器在编译时会根据一系列规则进行检查，如果违反了这些规则，程序不能通过编译。在运行时，所有权系统的任何功能都不会减缓程序的运行</p>
+<h1 id="所有权规则"><a href="#所有权规则" class="headerlink" title="所有权规则"></a>所有权规则</h1><blockquote>
+<ol>
+<li>Rust 中的每一个值都有一个<strong>所有者</strong></li>
+<li>值在任意时刻有且仅有一个所有者</li>
+<li>当所有者（变量）离开作用域，这个值将被丢弃</li>
+</ol>
+</blockquote>
+      <!--noindex-->
+        <div class="post-button">
+          <a class="btn" href="/2023/05/20230508.html#more" rel="contents">
+            阅读全文 &raquo;
+          </a>
+        </div>
+      <!--/noindex-->
+    
+  
+</div>
+
+
+
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1001,201 +1202,6 @@
   
   
 
-      
-  
-  
-<article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-<link itemprop="mainEntityOfPage" href="http://zhaozhuolin.com/2020/07/20200717.html">
-
-<span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
-  <meta itemprop="description" content="八说了，我在学了！">
-</span>
-
-<span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-  <meta itemprop="name" content="小赵的学习笔记">
-</span>
-  <header class="post-header">
-    <h2 class="post-title" itemprop="name headline">
-      
-        <a href="/2020/07/20200717.html" class="post-title-link" itemprop="url">map和set的模拟实现</a>
-    </h2>
-
-    <div class="post-meta">
-        <span class="post-meta-item">
-          <span class="post-meta-item-icon">
-            <i class="far fa-calendar"></i>
-          </span>
-          <span class="post-meta-item-text">发表于</span>
-
-          <time title="创建时间：2020-07-17 22:40:10" itemprop="dateCreated datePublished" datetime="2020-07-17T22:40:10+08:00">2020-07-17</time>
-        </span>
-          <span class="post-meta-item">
-            <span class="post-meta-item-icon">
-              <i class="far fa-calendar-check"></i>
-            </span>
-            <span class="post-meta-item-text">更新于</span>
-            <time title="修改时间：2023-05-07 19:18:08" itemprop="dateModified" datetime="2023-05-07T19:18:08+08:00">2023-05-07</time>
-          </span>
-        <span class="post-meta-item">
-          <span class="post-meta-item-icon">
-            <i class="far fa-folder"></i>
-          </span>
-          <span class="post-meta-item-text">分类于</span>
-            <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-            </span>
-        </span>
-
-      <br>
-        <span class="post-meta-item" title="本文字数">
-          <span class="post-meta-item-icon">
-            <i class="far fa-file-word"></i>
-          </span>
-            <span class="post-meta-item-text">本文字数：</span>
-          <span>2.7k</span>
-        </span>
-        <span class="post-meta-item" title="阅读时长">
-          <span class="post-meta-item-icon">
-            <i class="far fa-clock"></i>
-          </span>
-            <span class="post-meta-item-text">阅读时长 &asymp;</span>
-          <span>2 分钟</span>
-        </span>
-
-    </div>
-  </header>
-
-
-
-
-<div class="post-body" itemprop="articleBody">
-
-  
-      <h1 id="改造红黑树"><a href="#改造红黑树" class="headerlink" title="改造红黑树"></a>改造红黑树</h1><p>关联式容器存储的是K， V键值对，故在改造红黑树时，K为key类型，对于V来说，如果是set，则其为K类型，如果是map则为</p>
-<p><code>pair&lt;K, V&gt;</code>，类型，除此之外，还需要一个仿函数类KeyOfValue来兼容map与set的大小比较，其迭代器也需要封装指针为一个类，迭代器的自加自减相当于红黑树的中序遍历</p>
-      <!--noindex-->
-        <div class="post-button">
-          <a class="btn" href="/2020/07/20200717.html#more" rel="contents">
-            阅读全文 &raquo;
-          </a>
-        </div>
-      <!--/noindex-->
-    
-  
-</div>
-
-
-
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-<article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-<link itemprop="mainEntityOfPage" href="http://zhaozhuolin.com/2020/07/20200713.html">
-
-<span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
-  <meta itemprop="description" content="八说了，我在学了！">
-</span>
-
-<span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-  <meta itemprop="name" content="小赵的学习笔记">
-</span>
-  <header class="post-header">
-    <h2 class="post-title" itemprop="name headline">
-      
-        <a href="/2020/07/20200713.html" class="post-title-link" itemprop="url">从AVL树到红黑树(的插入)</a>
-    </h2>
-
-    <div class="post-meta">
-        <span class="post-meta-item">
-          <span class="post-meta-item-icon">
-            <i class="far fa-calendar"></i>
-          </span>
-          <span class="post-meta-item-text">发表于</span>
-
-          <time title="创建时间：2020-07-13 18:01:11" itemprop="dateCreated datePublished" datetime="2020-07-13T18:01:11+08:00">2020-07-13</time>
-        </span>
-          <span class="post-meta-item">
-            <span class="post-meta-item-icon">
-              <i class="far fa-calendar-check"></i>
-            </span>
-            <span class="post-meta-item-text">更新于</span>
-            <time title="修改时间：2023-05-07 19:26:04" itemprop="dateModified" datetime="2023-05-07T19:26:04+08:00">2023-05-07</time>
-          </span>
-        <span class="post-meta-item">
-          <span class="post-meta-item-icon">
-            <i class="far fa-folder"></i>
-          </span>
-          <span class="post-meta-item-text">分类于</span>
-            <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-            </span>
-        </span>
-
-      <br>
-        <span class="post-meta-item" title="本文字数">
-          <span class="post-meta-item-icon">
-            <i class="far fa-file-word"></i>
-          </span>
-            <span class="post-meta-item-text">本文字数：</span>
-          <span>6.3k</span>
-        </span>
-        <span class="post-meta-item" title="阅读时长">
-          <span class="post-meta-item-icon">
-            <i class="far fa-clock"></i>
-          </span>
-            <span class="post-meta-item-text">阅读时长 &asymp;</span>
-          <span>6 分钟</span>
-        </span>
-
-    </div>
-  </header>
-
-
-
-
-<div class="post-body" itemprop="articleBody">
-
-  
-      <h1 id="AVL树"><a href="#AVL树" class="headerlink" title="AVL树"></a>AVL树</h1><ul>
-<li>左右子树都是AVL树</li>
-<li>左右子树高度差的绝对值不超过1（-1&#x2F;0&#x2F;1）（一般：右子树高度 - 左子树高度）</li>
-<li>如果一棵二叉搜索树树高度平衡的，它就是AVL树。如果它有n个节点，其高度可保持在O(log<sub>2</sub>N)，搜索时间复杂度O(log<sub>2</sub>N)</li>
-</ul>
-      <!--noindex-->
-        <div class="post-button">
-          <a class="btn" href="/2020/07/20200713.html#more" rel="contents">
-            阅读全文 &raquo;
-          </a>
-        </div>
-      <!--/noindex-->
-    
-  
-</div>
-
-
-
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1267,7 +1273,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1332,13 +1338,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">168k</span>
+    <span title="站点总字数">177k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:33</span>
+    <span title="站点阅读时长">2:41</span>
 </div><script color="241,124,103" opacity="1" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
 
 
