@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.3.0">
+<meta name="generator" content="Hexo 7.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/128x128.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png">
@@ -22,12 +22,12 @@
     var CONFIG = {"hostname":"zhaozhuolin.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#A9A9A9","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="图的构成顶点集合+边的集合：G &#x3D; (V, E)，顶点集合V &#x3D; &amp;#123;x | x属于某个数据对象及&amp;#125;是有穷非空集合  E &#x3D; &amp;#123;(x, y) | x, y属于V&amp;#125;或者E &#x3D; &amp;#123;&lt;x, y&gt; | x, y属于V &amp;&amp; Path(x, y)&amp;#125;是顶点间关系的有穷集合，也叫边集合  (x, y)表示x到y的一条双向通道，">
+  <meta name="description" content="图的构成顶点集合+边的集合：G &#x3D; (V, E)，顶点集合V &#x3D; {x | x属于某个数据对象及}是有穷非空集合  E &#x3D; {(x, y) | x, y属于V}或者E &#x3D; {&lt;x, y&gt; | x, y属于V &amp;&amp; Path(x, y)}是顶点间关系的有穷集合，也叫边集合  (x, y)表示x到y的一条双向通道，即(x, y)是无方向的，Path(x, y)表示从x到y的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="图">
 <meta property="og:url" content="http://zhaozhuolin.com/2021/03/20210312.html">
 <meta property="og:site_name" content="小赵的学习笔记">
-<meta property="og:description" content="图的构成顶点集合+边的集合：G &#x3D; (V, E)，顶点集合V &#x3D; &amp;#123;x | x属于某个数据对象及&amp;#125;是有穷非空集合  E &#x3D; &amp;#123;(x, y) | x, y属于V&amp;#125;或者E &#x3D; &amp;#123;&lt;x, y&gt; | x, y属于V &amp;&amp; Path(x, y)&amp;#125;是顶点间关系的有穷集合，也叫边集合  (x, y)表示x到y的一条双向通道，">
+<meta property="og:description" content="图的构成顶点集合+边的集合：G &#x3D; (V, E)，顶点集合V &#x3D; {x | x属于某个数据对象及}是有穷非空集合  E &#x3D; {(x, y) | x, y属于V}或者E &#x3D; {&lt;x, y&gt; | x, y属于V &amp;&amp; Path(x, y)}是顶点间关系的有穷集合，也叫边集合  (x, y)表示x到y的一条双向通道，即(x, y)是无方向的，Path(x, y)表示从x到y的">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://zhaozhuolin.com/2021/03/20210312/008eGmZEly1gpljuxnpgij30k00i1aby.jpg">
 <meta property="og:image" content="http://zhaozhuolin.com/2021/03/20210312/008eGmZEly1gplp3axgjsj306n06wjrm.jpg">
@@ -37,8 +37,8 @@
 <meta property="og:image" content="http://zhaozhuolin.com/2021/03/20210312/008i3skNly1gptzx4hmntj30au0a0mxt.jpg">
 <meta property="og:image" content="http://zhaozhuolin.com/2021/03/20210312/008i3skNly1gpu0bcc8v9j30kv089wgk.jpg">
 <meta property="article:published_time" content="2021-03-12T05:08:09.000Z">
-<meta property="article:modified_time" content="2024-05-22T02:50:24.000Z">
-<meta property="article:author" content="Morgan">
+<meta property="article:modified_time" content="2024-05-25T04:19:41.856Z">
+<meta property="article:author" content="Latsummer">
 <meta property="article:tag" content="图">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://zhaozhuolin.com/2021/03/20210312/008eGmZEly1gpljuxnpgij30k00i1aby.jpg">
@@ -87,7 +87,119 @@
   </style>
 </noscript>
 
-<link rel="alternate" href="/atom.xml" title="小赵的学习笔记" type="application/atom+xml">
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style><link rel="alternate" href="/atom.xml" title="小赵的学习笔记" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -213,7 +325,7 @@
 
 <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
   <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
+  <meta itemprop="name" content="Latsummer">
   <meta itemprop="description" content="八说了，我在学了！">
 </span>
 
@@ -239,7 +351,7 @@
               <i class="far fa-calendar-check"></i>
             </span>
             <span class="post-meta-item-text">更新于</span>
-            <time title="修改时间：2024-05-22 10:50:24" itemprop="dateModified" datetime="2024-05-22T10:50:24+08:00">2024-05-22</time>
+            <time title="修改时间：2024-05-25 12:19:41" itemprop="dateModified" datetime="2024-05-25T12:19:41+08:00">2024-05-25</time>
           </span>
         <span class="post-meta-item">
           <span class="post-meta-item-icon">
@@ -264,14 +376,14 @@
             <i class="far fa-file-word"></i>
           </span>
             <span class="post-meta-item-text">本文字数：</span>
-          <span>6.9k</span>
+          <span>8.3k</span>
         </span>
         <span class="post-meta-item" title="阅读时长">
           <span class="post-meta-item-icon">
             <i class="far fa-clock"></i>
           </span>
             <span class="post-meta-item-text">阅读时长 &asymp;</span>
-          <span>6 分钟</span>
+          <span>8 分钟</span>
         </span>
 
     </div>
@@ -283,9 +395,9 @@
 <div class="post-body" itemprop="articleBody">
 
   
-    <h1 id="图的构成"><a href="#图的构成" class="headerlink" title="图的构成"></a>图的构成</h1><p><strong>顶点集合</strong>+<strong>边的集合</strong>：<code>G = (V, E)</code>，顶点集合<code>V = &#123;x | x属于某个数据对象及&#125;</code>是有穷非空集合</p>
+    <h1 id="图的构成"><a href="#图的构成" class="headerlink" title="图的构成"></a>图的构成</h1><p><strong>顶点集合</strong>+<strong>边的集合</strong>：<code>G = (V, E)</code>，顶点集合<code>V = {x | x属于某个数据对象及}</code>是有穷非空集合</p>
 <ul>
-<li><p><code>E = &#123;(x, y) | x, y属于V&#125;</code>或者<code>E = &#123;&lt;x, y&gt; | x, y属于V &amp;&amp; Path(x, y)&#125;</code>是顶点间关系的有穷集合，也叫边集合</p>
+<li><p><code>E = {(x, y) | x, y属于V}</code>或者<code>E = {&lt;x, y&gt; | x, y属于V &amp;&amp; Path(x, y)}</code>是顶点间关系的有穷集合，也叫边集合</p>
 </li>
 <li><p><code>(x, y)</code>表示x到y的一条双向通道，即<code>(x, y)</code>是无方向的，<code>Path(x, y)</code>表示从x到y的一条单向通路，即<code>Path(x, y)是有方向的</code></p>
 </li>
@@ -297,7 +409,6 @@
 <li>注意：<strong>无向边<code>(x, y)</code>等于有向边<code>&lt;x, y&gt;</code>和<code>&lt;y, x&gt;</code></strong></li>
 </ul>
 <span id="more"></span>
-
 <p><em>可以表示</em>：社交关系</p>
 <ul>
 <li>社交关系中，每个人就是一个顶点，两个人是好友，他们之间就有了边，那么边的权值可以是他们的亲密度</li>
@@ -331,18 +442,18 @@
 <h1 id="图的存储结构"><a href="#图的存储结构" class="headerlink" title="图的存储结构"></a>图的存储结构</h1><p>保存节点以及边的关系</p>
 <h2 id="邻接矩阵"><a href="#邻接矩阵" class="headerlink" title="邻接矩阵"></a>邻接矩阵</h2><p>因为节点与节点之间的关系就是连通与否，即为0或者1，因此邻接矩阵(二维数组)即是：先用一个数组将顶点保存，然后采用矩阵来表示节点与节点之间的关系。</p>
 <p><img src="/2021/03/20210312/008eGmZEly1gplp3axgjsj306n06wjrm.jpg" alt="截屏2021-04-16 17.05.50"></p>
-<p>用<code>vector&lt;char&gt; vertex	</code>保存顶点，用矩阵<code>vector&lt;vector&lt;W&gt; &gt; edge</code>保存边，如下<br>$$<br>edge &#x3D; \left[ \begin{matrix}  &amp; A &amp; B &amp; C &amp; D \ A &amp; 0 &amp; 1 &amp; 0 &amp; 1 \ B &amp; 1 &amp; 0 &amp; 1 &amp; 0 \ C &amp; 0 &amp; 1 &amp; 0 &amp; 1 \ D &amp; 1 &amp; 0 &amp; 1 &amp; 0 \end{matrix} \right]<br>$$<br><img src="/2021/03/20210312/008eGmZEly1gpltlbqflfj305i098jrl.jpg" alt="截屏2021-04-16 19.41.36"></p>
-<p>用<code>vector&lt;char&gt; vertex	</code>保存顶点，用矩阵<code>vector&lt;vector&lt;W&gt; &gt; edge</code>保存边，如下<br>$$<br>edge &#x3D; \left[ \begin{matrix}  &amp; A &amp; B &amp; C  \ A &amp; 0 &amp; 1 &amp; 0 \ B &amp; 1 &amp; 0 &amp; 1 \ C &amp; 0 &amp; 0 &amp; 0\end{matrix} \right]<br>$$</p>
-<ul>
+<p>用<code>vector&lt;char&gt; vertex</code>保存顶点，用矩阵<code>vector&lt;vector&lt;W&gt; &gt; edge</code>保存边，如下</p>
+<script type="math/tex; mode=display">
+edge = \left[ \begin{matrix}  & A & B & C & D \\ A & 0 & 1 & 0 & 1 \\ B & 1 & 0 & 1 & 0 \\ C & 0 & 1 & 0 & 1 \\ D & 1 & 0 & 1 & 0 \end{matrix} \right]</script><p><img src="/2021/03/20210312/008eGmZEly1gpltlbqflfj305i098jrl.jpg" alt="截屏2021-04-16 19.41.36"></p>
+<p>用<code>vector&lt;char&gt; vertex</code>保存顶点，用矩阵<code>vector&lt;vector&lt;W&gt; &gt; edge</code>保存边，如下</p>
+<script type="math/tex; mode=display">
+edge = \left[ \begin{matrix}  & A & B & C  \\ A & 0 & 1 & 0 \\ B & 1 & 0 & 1 \\ C & 0 & 0 & 0\end{matrix} \right]</script><ul>
 <li>无向图的邻接矩阵是对称的，第i行(列)元素之和，就是顶点i的度。有向图的邻接矩阵则不一定是对称 的，第i行(列)元素之后就是顶点i 的出(入)度</li>
 <li>如果边带有权值，并且两个节点之间是连通的，上图中的边的关系就用权值代替，如果两个顶点不通， 则使用无穷大代替</li>
 <li>用邻接矩阵存储图的有点是能够快速知道两个顶点是否连通，缺陷是如果顶点比较多，边比较少时，矩 阵中存储了大量的0成为系数矩阵，比较浪费空间，并且要求两个节点之间的路径不是很好求。</li>
 </ul>
 <p><img src="/2021/03/20210312/008eGmZEly1gpluoyfacuj30m409f406.jpg" alt="截屏2021-04-16 20.18.53"></p>
-<h3 id="邻接矩阵代码实现"><a href="#邻接矩阵代码实现" class="headerlink" title="邻接矩阵代码实现"></a>邻接矩阵代码实现</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//vertex 顶点</span></span><br><span class="line"><span class="comment">//edge 边</span></span><br><span class="line"><span class="comment">//weight 权值</span></span><br><span class="line"><span class="comment">//matrix矩阵</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> matrix</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">V</span>, <span class="keyword">class</span> <span class="title class_">W</span>, <span class="type">bool</span> IsDirect = <span class="literal">false</span>&gt;</span><br><span class="line">    <span class="keyword">class</span> Graph</span><br><span class="line">    &#123;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">        <span class="built_in">Graph</span>(V* vertexs, <span class="type">int</span> n)</span><br><span class="line">        &#123;</span><br><span class="line">            _vertexs.<span class="built_in">reserve</span>(n);</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">            &#123;</span><br><span class="line">                _vertexs.<span class="built_in">push_back</span>(vertexs[i]);</span><br><span class="line">                _vertexIndexMap[vertexs[i]] = i;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            _matrex.<span class="built_in">resize</span>(n);</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">                _matrex[i].<span class="built_in">resize</span>(n, <span class="built_in">W</span>());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="type">int</span> <span class="title">GetVertexIndex</span><span class="params">(<span class="type">const</span> V&amp; v)</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="keyword">auto</span> it = _vertexIndexMap.<span class="built_in">find</span>(v);</span><br><span class="line">            <span class="keyword">if</span>(it != _vertexIndexMap.<span class="built_in">end</span>())</span><br><span class="line">                <span class="keyword">return</span> it.second;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                <span class="comment">//return -1;</span></span><br><span class="line">                <span class="keyword">throw</span> <span class="built_in">invalid_argument</span>(<span class="string">&quot;非法顶点&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//添加边</span></span><br><span class="line">        <span class="function"><span class="type">void</span> <span class="title">AddEdge</span><span class="params">(<span class="type">const</span> V&amp; src, <span class="type">const</span> V&amp; dst, <span class="type">const</span> W&amp; w)</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="type">int</span> srcIndex = <span class="built_in">GetVertexIndex</span>(src);</span><br><span class="line">            <span class="type">int</span> dstIndex = <span class="built_in">GetVertexIndex</span>(dst);</span><br><span class="line"></span><br><span class="line">            _matrex[srcIndex][dstIndex] = w;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(IsDirect == <span class="literal">false</span>)</span><br><span class="line">                _matrex[dstIndex][srcIndex] = w;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">        vector&lt;V&gt; _vertexs;             <span class="comment">//顶点集合</span></span><br><span class="line">        map&lt;V, <span class="type">int</span>&gt; _vertexIndexMap;    <span class="comment">//表示顶点的下表映射关系</span></span><br><span class="line">        vector&lt;vector&lt;W&gt; &gt; _matrex;     <span class="comment">//表示邻接矩阵的边</span></span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
+<h3 id="邻接矩阵代码实现"><a href="#邻接矩阵代码实现" class="headerlink" title="邻接矩阵代码实现"></a>邻接矩阵代码实现</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//vertex 顶点</span></span><br><span class="line"><span class="comment">//edge 边</span></span><br><span class="line"><span class="comment">//weight 权值</span></span><br><span class="line"><span class="comment">//matrix矩阵</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> matrix</span><br><span class="line">{</span><br><span class="line">    <span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">V</span>, <span class="keyword">class</span> <span class="title class_">W</span>, <span class="type">bool</span> IsDirect = <span class="literal">false</span>&gt;</span><br><span class="line">    <span class="keyword">class</span> Graph</span><br><span class="line">    {</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">        <span class="built_in">Graph</span>(V* vertexs, <span class="type">int</span> n)</span><br><span class="line">        {</span><br><span class="line">            _vertexs.<span class="built_in">reserve</span>(n);</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">            {</span><br><span class="line">                _vertexs.<span class="built_in">push_back</span>(vertexs[i]);</span><br><span class="line">                _vertexIndexMap[vertexs[i]] = i;</span><br><span class="line">            }</span><br><span class="line"></span><br><span class="line">            _matrex.<span class="built_in">resize</span>(n);</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">                _matrex[i].<span class="built_in">resize</span>(n, <span class="built_in">W</span>());</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="type">int</span> <span class="title">GetVertexIndex</span><span class="params">(<span class="type">const</span> V&amp; v)</span></span></span><br><span class="line"><span class="function">        </span>{</span><br><span class="line">            <span class="keyword">auto</span> it = _vertexIndexMap.<span class="built_in">find</span>(v);</span><br><span class="line">            <span class="keyword">if</span>(it != _vertexIndexMap.<span class="built_in">end</span>())</span><br><span class="line">                <span class="keyword">return</span> it.second;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                <span class="comment">//return -1;</span></span><br><span class="line">                <span class="keyword">throw</span> <span class="built_in">invalid_argument</span>(<span class="string">"非法顶点"</span>);</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="comment">//添加边</span></span><br><span class="line">        <span class="function"><span class="type">void</span> <span class="title">AddEdge</span><span class="params">(<span class="type">const</span> V&amp; src, <span class="type">const</span> V&amp; dst, <span class="type">const</span> W&amp; w)</span></span></span><br><span class="line"><span class="function">        </span>{</span><br><span class="line">            <span class="type">int</span> srcIndex = <span class="built_in">GetVertexIndex</span>(src);</span><br><span class="line">            <span class="type">int</span> dstIndex = <span class="built_in">GetVertexIndex</span>(dst);</span><br><span class="line"></span><br><span class="line">            _matrex[srcIndex][dstIndex] = w;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(IsDirect == <span class="literal">false</span>)</span><br><span class="line">                _matrex[dstIndex][srcIndex] = w;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">        vector&lt;V&gt; _vertexs;             <span class="comment">//顶点集合</span></span><br><span class="line">        map&lt;V, <span class="type">int</span>&gt; _vertexIndexMap;    <span class="comment">//表示顶点的下表映射关系</span></span><br><span class="line">        vector&lt;vector&lt;W&gt; &gt; _matrex;     <span class="comment">//表示邻接矩阵的边</span></span><br><span class="line">    };</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
 <h2 id="邻接表"><a href="#邻接表" class="headerlink" title="邻接表"></a>邻接表</h2><p>使用数组表示顶点的集合，使用链表表示边的关系。</p>
 <ul>
 <li>图为无向图的邻接表存储</li>
@@ -352,15 +463,12 @@
 <li>注意：无向图中同一条边在邻接表中出现了两次。如果想知道顶点vi的度，只需要知道顶点vi边链表集合中结点的数目即可</li>
 <li>有向图则添加一个边的集合或者反向添加一次</li>
 </ul>
-<h2 id="邻接表的代码实现"><a href="#邻接表的代码实现" class="headerlink" title="邻接表的代码实现"></a>邻接表的代码实现</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> table</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">W</span>&gt;</span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">EdgeNode</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> _srcIndex;</span><br><span class="line">        <span class="type">int</span> _dstIndex;</span><br><span class="line">        <span class="type">const</span> W&amp; _w;</span><br><span class="line"></span><br><span class="line">        EdgeNode&lt;W&gt;* _next;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">V</span>, <span class="keyword">class</span> <span class="title class_">W</span>, <span class="type">bool</span> IsDirect = <span class="literal">false</span>&gt;</span><br><span class="line">    <span class="keyword">class</span> Graph</span><br><span class="line">    &#123;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">        <span class="built_in">Graph</span>(V* vertexs, <span class="type">int</span> n)</span><br><span class="line">        &#123;</span><br><span class="line">            _vertexs.<span class="built_in">reserve</span>(n);</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">            &#123;</span><br><span class="line">                _vertexs.<span class="built_in">push_back</span>(vertexs[i]);</span><br><span class="line">                _vertexIndexMap[vertexs[i]] = i;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            _linkTable.<span class="built_in">resize</span>(n, <span class="literal">nullptr</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="type">int</span> <span class="title">GetVertexIndex</span><span class="params">(<span class="type">const</span> V&amp; v)</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="keyword">auto</span> it = _vertexIndexMap.<span class="built_in">find</span>(v);</span><br><span class="line">            <span class="keyword">if</span>(it != _vertexIndexMap.<span class="built_in">end</span>())</span><br><span class="line">                <span class="keyword">return</span> it.second;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                <span class="comment">//return -1;</span></span><br><span class="line">                <span class="keyword">throw</span> <span class="built_in">invalid_argument</span>(<span class="string">&quot;非法顶点&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//添加边</span></span><br><span class="line">        <span class="function"><span class="type">void</span> <span class="title">AddEdge</span><span class="params">(<span class="type">const</span> V&amp; src, <span class="type">const</span> V&amp; dst, <span class="type">const</span> W&amp; w)</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="type">int</span> srcIndex = <span class="built_in">GetVertexIndex</span>(src);</span><br><span class="line">            <span class="type">int</span> dstIndex = <span class="built_in">GetVertexIndex</span>(dst);</span><br><span class="line"></span><br><span class="line">            EdgeNode&lt;W&gt;* node = <span class="keyword">new</span> EdgeNode&lt;W&gt;;</span><br><span class="line">            node-&gt;_srcIndex = srcIndex;</span><br><span class="line">            node-&gt;_dstIndex = dstIndex;</span><br><span class="line">            node-&gt;_w = w;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//挂起头</span></span><br><span class="line">            node-&gt;_next = _linkTable[srcIndex];<span class="comment">//链表的头插操作</span></span><br><span class="line">            _linkTable[srcIndex] = node;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(IsDirect == <span class="literal">false</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                EdgeNode&lt;W&gt;* node = <span class="keyword">new</span> EdgeNode&lt;W&gt;;</span><br><span class="line">                node-&gt;_srcIndex = dstIndex;</span><br><span class="line">                node-&gt;_dstIndex = srcIndex;</span><br><span class="line">                node-&gt;_w = w;</span><br><span class="line"></span><br><span class="line">                <span class="comment">//挂起头</span></span><br><span class="line">                node-&gt;_next = _linkTable[dstIndex];<span class="comment">//链表的头插操作</span></span><br><span class="line">                _linkTable[dstIndex] = node;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">        vector&lt;V&gt; _vertexs;             <span class="comment">//顶点集合</span></span><br><span class="line">        map&lt;V, <span class="type">int</span>&gt; _vertexIndexMap;    <span class="comment">//表示顶点的下表映射关系</span></span><br><span class="line">        vector&lt;EdgeNode&lt;W&gt;*&gt; _linkTable;<span class="comment">//邻接表</span></span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<h2 id="邻接表的代码实现"><a href="#邻接表的代码实现" class="headerlink" title="邻接表的代码实现"></a>邻接表的代码实现</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> table</span><br><span class="line">{</span><br><span class="line">    <span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">W</span>&gt;</span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">EdgeNode</span></span><br><span class="line">    {</span><br><span class="line">        <span class="type">int</span> _srcIndex;</span><br><span class="line">        <span class="type">int</span> _dstIndex;</span><br><span class="line">        <span class="type">const</span> W&amp; _w;</span><br><span class="line"></span><br><span class="line">        EdgeNode&lt;W&gt;* _next;</span><br><span class="line">    };</span><br><span class="line"></span><br><span class="line">    <span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">V</span>, <span class="keyword">class</span> <span class="title class_">W</span>, <span class="type">bool</span> IsDirect = <span class="literal">false</span>&gt;</span><br><span class="line">    <span class="keyword">class</span> Graph</span><br><span class="line">    {</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">        <span class="built_in">Graph</span>(V* vertexs, <span class="type">int</span> n)</span><br><span class="line">        {</span><br><span class="line">            _vertexs.<span class="built_in">reserve</span>(n);</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">            {</span><br><span class="line">                _vertexs.<span class="built_in">push_back</span>(vertexs[i]);</span><br><span class="line">                _vertexIndexMap[vertexs[i]] = i;</span><br><span class="line">            }</span><br><span class="line"></span><br><span class="line">            _linkTable.<span class="built_in">resize</span>(n, <span class="literal">nullptr</span>);</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="type">int</span> <span class="title">GetVertexIndex</span><span class="params">(<span class="type">const</span> V&amp; v)</span></span></span><br><span class="line"><span class="function">        </span>{</span><br><span class="line">            <span class="keyword">auto</span> it = _vertexIndexMap.<span class="built_in">find</span>(v);</span><br><span class="line">            <span class="keyword">if</span>(it != _vertexIndexMap.<span class="built_in">end</span>())</span><br><span class="line">                <span class="keyword">return</span> it.second;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                <span class="comment">//return -1;</span></span><br><span class="line">                <span class="keyword">throw</span> <span class="built_in">invalid_argument</span>(<span class="string">"非法顶点"</span>);</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="comment">//添加边</span></span><br><span class="line">        <span class="function"><span class="type">void</span> <span class="title">AddEdge</span><span class="params">(<span class="type">const</span> V&amp; src, <span class="type">const</span> V&amp; dst, <span class="type">const</span> W&amp; w)</span></span></span><br><span class="line"><span class="function">        </span>{</span><br><span class="line">            <span class="type">int</span> srcIndex = <span class="built_in">GetVertexIndex</span>(src);</span><br><span class="line">            <span class="type">int</span> dstIndex = <span class="built_in">GetVertexIndex</span>(dst);</span><br><span class="line"></span><br><span class="line">            EdgeNode&lt;W&gt;* node = <span class="keyword">new</span> EdgeNode&lt;W&gt;;</span><br><span class="line">            node-&gt;_srcIndex = srcIndex;</span><br><span class="line">            node-&gt;_dstIndex = dstIndex;</span><br><span class="line">            node-&gt;_w = w;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//挂起头</span></span><br><span class="line">            node-&gt;_next = _linkTable[srcIndex];<span class="comment">//链表的头插操作</span></span><br><span class="line">            _linkTable[srcIndex] = node;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(IsDirect == <span class="literal">false</span>)</span><br><span class="line">            {</span><br><span class="line">                EdgeNode&lt;W&gt;* node = <span class="keyword">new</span> EdgeNode&lt;W&gt;;</span><br><span class="line">                node-&gt;_srcIndex = dstIndex;</span><br><span class="line">                node-&gt;_dstIndex = srcIndex;</span><br><span class="line">                node-&gt;_w = w;</span><br><span class="line"></span><br><span class="line">                <span class="comment">//挂起头</span></span><br><span class="line">                node-&gt;_next = _linkTable[dstIndex];<span class="comment">//链表的头插操作</span></span><br><span class="line">                _linkTable[dstIndex] = node;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">        vector&lt;V&gt; _vertexs;             <span class="comment">//顶点集合</span></span><br><span class="line">        map&lt;V, <span class="type">int</span>&gt; _vertexIndexMap;    <span class="comment">//表示顶点的下表映射关系</span></span><br><span class="line">        vector&lt;EdgeNode&lt;W&gt;*&gt; _linkTable;<span class="comment">//邻接表</span></span><br><span class="line">    };</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
 <h1 id="图的遍历"><a href="#图的遍历" class="headerlink" title="图的遍历"></a>图的遍历</h1><p>给定一个图G和其中任意一个顶点v0，从v0出发，沿着图中各边访问图中的所有顶点，且每个顶点仅被遍历 一次。”遍历”即对结点进行某种操作的意思</p>
 <h2 id="图的深度优先遍历"><a href="#图的深度优先遍历" class="headerlink" title="图的深度优先遍历"></a>图的深度优先遍历</h2><p>对邻接矩阵，深度优先可是使用递归的方式实现</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> _DFS(<span class="type">int</span> srcIndex, vector&lt;<span class="type">bool</span>&gt;&amp; visited)</span><br><span class="line">&#123;</span><br><span class="line">  cout &lt;&lt; _vertexs[srcIndex] &lt;&lt; <span class="string">&quot;:&quot;</span> &lt;&lt; srcIndex &lt;&lt; <span class="string">&quot;-&gt;&quot;</span>;<span class="comment">//输出当前节点</span></span><br><span class="line">  visited[srcIndex] = <span class="literal">true</span>;<span class="comment">//标记当前节点已访问</span></span><br><span class="line">  <span class="keyword">for</span>(<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; _vertexs.<span class="built_in">size</span>(); i++)</span><br><span class="line">  &#123;<span class="comment">//访问当前节点的相邻顶点</span></span><br><span class="line">    <span class="keyword">if</span>(_matrex[srcIndex][i] != <span class="built_in">W</span>() &amp;&amp; visited[i] == <span class="literal">false</span>)</span><br><span class="line">      _DFS(i, visited);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">DFS</span><span class="params">(<span class="type">const</span> V&amp; src)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="function">vector&lt;<span class="type">bool</span>&gt; <span class="title">visited</span><span class="params">(_vertexs.size(), <span class="literal">false</span>)</span></span>;</span><br><span class="line">  <span class="type">int</span> srcIndex = <span class="built_in">GetVertexIndex</span>(src);</span><br><span class="line">  _DFS(srcIndex, visited);</span><br><span class="line">  cout &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> _DFS(<span class="type">int</span> srcIndex, vector&lt;<span class="type">bool</span>&gt;&amp; visited)</span><br><span class="line">{</span><br><span class="line">  cout &lt;&lt; _vertexs[srcIndex] &lt;&lt; <span class="string">":"</span> &lt;&lt; srcIndex &lt;&lt; <span class="string">"-&gt;"</span>;<span class="comment">//输出当前节点</span></span><br><span class="line">  visited[srcIndex] = <span class="literal">true</span>;<span class="comment">//标记当前节点已访问</span></span><br><span class="line">  <span class="keyword">for</span>(<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; _vertexs.<span class="built_in">size</span>(); i++)</span><br><span class="line">  {<span class="comment">//访问当前节点的相邻顶点</span></span><br><span class="line">    <span class="keyword">if</span>(_matrex[srcIndex][i] != <span class="built_in">W</span>() &amp;&amp; visited[i] == <span class="literal">false</span>)</span><br><span class="line">      _DFS(i, visited);</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">DFS</span><span class="params">(<span class="type">const</span> V&amp; src)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">  <span class="function">vector&lt;<span class="type">bool</span>&gt; <span class="title">visited</span><span class="params">(_vertexs.size(), <span class="literal">false</span>)</span></span>;</span><br><span class="line">  <span class="type">int</span> srcIndex = <span class="built_in">GetVertexIndex</span>(src);</span><br><span class="line">  _DFS(srcIndex, visited);</span><br><span class="line">  cout &lt;&lt; endl;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
 <h2 id="图的广度优先遍历"><a href="#图的广度优先遍历" class="headerlink" title="图的广度优先遍历"></a>图的广度优先遍历</h2><p>对邻接矩阵，广度优先可以使用队列实现</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">BFS</span><span class="params">(<span class="type">const</span> V&amp; src)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="function">vector&lt;<span class="type">bool</span>&gt; <span class="title">visited</span><span class="params">(_vertexs.size(), <span class="literal">false</span>)</span></span>;</span><br><span class="line">  <span class="type">int</span> srcIndex = <span class="built_in">GetVertexIndex</span>(src);</span><br><span class="line"></span><br><span class="line">  queue&lt;<span class="type">int</span>&gt; q;</span><br><span class="line">  q.<span class="built_in">push</span>(srcIndex);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span>(!q.<span class="built_in">empty</span>())</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="type">int</span> front = q.<span class="built_in">front</span>();</span><br><span class="line">    q.<span class="built_in">pop</span>();</span><br><span class="line">    cout &lt;&lt; _vertexs[front] &lt;&lt; <span class="string">&quot;:&quot;</span> &lt;&lt; front &lt;&lt; <span class="string">&quot;-&gt;&quot;</span>;</span><br><span class="line">    <span class="comment">//好友入队</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; _vertexs.<span class="built_in">size</span>(); i++)</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">if</span>(visited[i] == <span class="literal">false</span> &amp;&amp; _matrex[front][i] != <span class="built_in">W</span>())</span><br><span class="line">      &#123;</span><br><span class="line">        q.<span class="built_in">push</span>(i);</span><br><span class="line">        visited[i] = <span class="literal">true</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  cout &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">BFS</span><span class="params">(<span class="type">const</span> V&amp; src)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">  <span class="function">vector&lt;<span class="type">bool</span>&gt; <span class="title">visited</span><span class="params">(_vertexs.size(), <span class="literal">false</span>)</span></span>;</span><br><span class="line">  <span class="type">int</span> srcIndex = <span class="built_in">GetVertexIndex</span>(src);</span><br><span class="line"></span><br><span class="line">  queue&lt;<span class="type">int</span>&gt; q;</span><br><span class="line">  q.<span class="built_in">push</span>(srcIndex);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span>(!q.<span class="built_in">empty</span>())</span><br><span class="line">  {</span><br><span class="line">    <span class="type">int</span> front = q.<span class="built_in">front</span>();</span><br><span class="line">    q.<span class="built_in">pop</span>();</span><br><span class="line">    cout &lt;&lt; _vertexs[front] &lt;&lt; <span class="string">":"</span> &lt;&lt; front &lt;&lt; <span class="string">"-&gt;"</span>;</span><br><span class="line">    <span class="comment">//好友入队</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; _vertexs.<span class="built_in">size</span>(); i++)</span><br><span class="line">    {</span><br><span class="line">      <span class="keyword">if</span>(visited[i] == <span class="literal">false</span> &amp;&amp; _matrex[front][i] != <span class="built_in">W</span>())</span><br><span class="line">      {</span><br><span class="line">        q.<span class="built_in">push</span>(i);</span><br><span class="line">        visited[i] = <span class="literal">true</span>;</span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  cout &lt;&lt; endl;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
 <h1 id="最小生成树"><a href="#最小生成树" class="headerlink" title="最小生成树"></a>最小生成树</h1><p>连通图中的每一棵生成树，都是原图的一个极大无环子图，即：从其中删去任何一条边，生成树就不再连通；反之，在其中引入任何一条新边，都会形成一条回路。 </p>
 <p>若连通图由n个顶点组成，则其生成树必含n个顶点和n-1条边。因此构造最小生成树的准则有三条：</p>
 <ol>
@@ -373,14 +481,12 @@
 <li>这两个算法都采用了<strong>逐步求解的贪心策略</strong>。 贪心算法：是指在问题求解时，总是做出当前看起来最好的选择。也就是说贪心算法做出的不是整体最优的选择，而是某种意义上的局部最优解。贪心算法不是对所有的问题都能得到整体最优解。</li>
 </ul>
 <h2 id="Kruskal算法"><a href="#Kruskal算法" class="headerlink" title="Kruskal算法"></a>Kruskal算法</h2><ol>
-<li><p>任给一个有n个顶点的连通网络<code>N=&#123;V,E&#125;</code></p>
+<li><p>任给一个有n个顶点的连通网络<code>N={V,E}</code></p>
 </li>
-<li><p>首先构造一个由这n个顶点组成、不含任何边的图<code>G=&#123;V,NULL&#125;</code>，其中每个顶点自成一个连通分量</p>
+<li><p>首先构造一个由这n个顶点组成、不含任何边的图<code>G={V,NULL}</code>，其中每个顶点自成一个连通分量</p>
 </li>
-<li><p>接着不断从E中取出权值最小的一条边(若有多条任取其一)，若该边的两个顶点来自不同的连通分量，则将此边加入到G中。</p>
-</li>
-<li><p>如此重复，直到所有顶点在同一个连通分量上为止。</p>
-</li>
+<li>接着不断从E中取出权值最小的一条边(若有多条任取其一)，若该边的两个顶点来自不同的连通分量，则将此边加入到G中。</li>
+<li>如此重复，直到所有顶点在同一个连通分量上为止。 </li>
 </ol>
 <ul>
 <li>核心：每次迭代时，选出一条具有最小权值，且两端点不在同一连通分量上的边，加入生成树。</li>
@@ -397,6 +503,7 @@
 <h2 id="Dijkstra算法"><a href="#Dijkstra算法" class="headerlink" title="Dijkstra算法"></a>Dijkstra算法</h2><p>求一个点和图中的其他所有点之间的最路径</p>
 <p><img src="/2021/03/20210312/008i3skNly1gptzx4hmntj30au0a0mxt.jpg" alt="截屏2021-04-23 21.25.02"></p>
 <p><img src="/2021/03/20210312/008i3skNly1gpu0bcc8v9j30kv089wgk.jpg" alt="截屏2021-04-23 21.38.39"></p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -404,7 +511,8 @@
 <th>路径长度</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>0，1</td>
 <td>无穷大</td>
 </tr>
@@ -420,7 +528,9 @@
 <td>0，4</td>
 <td>50</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>依次遍历所有的边，找出更短路径，找到则更新</p>
 
 </div>
@@ -433,7 +543,7 @@
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
-    <strong>本文作者： </strong>Morgan
+    <strong>本文作者： </strong>Latsummer
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
@@ -539,9 +649,9 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Morgan"
+    <img class="site-author-image" itemprop="image" alt="Latsummer"
       src="/images/IMG_6272.JPG">
-  <p class="site-author-name" itemprop="name">Morgan</p>
+  <p class="site-author-name" itemprop="name">Latsummer</p>
   <div class="site-description" itemprop="description">八说了，我在学了！</div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -608,19 +718,13 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Morgan</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-chart-area"></i>
-    </span>
-      <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">186k</span>
+  <span class="author" itemprop="copyrightHolder">Latsummer</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:49</span>
+    <span title="站点阅读时长">3:08</span>
 </div><script color="241,124,103" opacity="1" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
 
 
@@ -698,6 +802,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

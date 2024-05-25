@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.3.0">
+<meta name="generator" content="Hexo 7.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/128x128.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png">
@@ -22,16 +22,16 @@
     var CONFIG = {"hostname":"zhaozhuolin.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#A9A9A9","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="类的定义C++ struct：可以定义数据以及函数，一般使用class 1234567891011121314151617181920212223242526272829303132struct Student&amp;#123;  void display()  &amp;#123;  &amp;#125;  void setId(int id)  &amp;#123;    _id &#x3D; id  &amp;#125;  char na">
+  <meta name="description" content="类的定义C++ struct：可以定义数据以及函数，一般使用class 1234567891011121314151617181920212223242526272829303132struct Student&#123;  void display()  &#123;  &#125;  void setId(int id)  &#123;    _id &#x3D; id  &#125;  char na">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++中的类与this指针">
 <meta property="og:url" content="http://zhaozhuolin.com/2020/05/20200523.html">
 <meta property="og:site_name" content="小赵的学习笔记">
-<meta property="og:description" content="类的定义C++ struct：可以定义数据以及函数，一般使用class 1234567891011121314151617181920212223242526272829303132struct Student&amp;#123;  void display()  &amp;#123;  &amp;#125;  void setId(int id)  &amp;#123;    _id &#x3D; id  &amp;#125;  char na">
+<meta property="og:description" content="类的定义C++ struct：可以定义数据以及函数，一般使用class 1234567891011121314151617181920212223242526272829303132struct Student&#123;  void display()  &#123;  &#125;  void setId(int id)  &#123;    _id &#x3D; id  &#125;  char na">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-05-23T12:42:08.000Z">
 <meta property="article:modified_time" content="2020-06-02T05:10:44.000Z">
-<meta property="article:author" content="Morgan">
+<meta property="article:author" content="Latsummer">
 <meta property="article:tag" content="类与对象">
 <meta name="twitter:card" content="summary">
 
@@ -205,7 +205,7 @@
 
 <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
   <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
+  <meta itemprop="name" content="Latsummer">
   <meta itemprop="description" content="八说了，我在学了！">
 </span>
 
@@ -256,7 +256,7 @@
             <i class="far fa-file-word"></i>
           </span>
             <span class="post-meta-item-text">本文字数：</span>
-          <span>1.9k</span>
+          <span>2.1k</span>
         </span>
         <span class="post-meta-item" title="阅读时长">
           <span class="post-meta-item-icon">
@@ -277,9 +277,7 @@
   
     <h1 id="类的定义"><a href="#类的定义" class="headerlink" title="类的定义"></a>类的定义</h1><p>C++ struct：可以定义数据以及函数，一般使用class</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Student</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">display</span><span class="params">()</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">setId</span><span class="params">(<span class="type">int</span> id)</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    _id = id</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">char</span> name[<span class="number">10</span>];</span><br><span class="line">  <span class="type">int</span> _id;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span></span><br><span class="line">&#123;<span class="comment">//成员函数</span></span><br><span class="line"><span class="keyword">public</span>:<span class="comment">//共有成员在任何地方可用</span></span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">display</span><span class="params">()</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">setId</span><span class="params">(<span class="type">int</span> id)</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    _id = id</span><br><span class="line">  &#125;</span><br><span class="line"> <span class="keyword">private</span>:<span class="comment">//私有的成员在类外不可见</span></span><br><span class="line">  <span class="comment">//成员变量，属性</span></span><br><span class="line">  <span class="type">char</span> name[<span class="number">10</span>];</span><br><span class="line">  <span class="type">int</span> _id;</span><br><span class="line"> <span class="keyword">protected</span>:<span class="comment">//保护的成员在类外不可见</span></span><br><span class="line">  <span class="type">char</span> major[<span class="number">10</span>];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 <span id="more"></span>
-
 <h1 id="类的限定符以及封装"><a href="#类的限定符以及封装" class="headerlink" title="类的限定符以及封装"></a>类的限定符以及封装</h1><blockquote>
 <p>访问限定符：public，protected， private</p>
 </blockquote>
@@ -289,32 +287,26 @@
 </blockquote>
 <p><strong>建议显式的写出来，以增加可读性</strong><br><strong>类的封装</strong>：将数据和操作数据的方法有机结合，隐藏属性和实现的细节，仅对外公开接口来和对象进行交互</p>
 <h1 id="类的作用域："><a href="#类的作用域：" class="headerlink" title="类的作用域："></a>类的作用域：</h1><p> 类定义了一个新的作用域，所有类的成员都在类的作用域中。在类体外定义成员，需要使用：：作为域解析符，指明成员属于哪个类域</p>
-<h1 id="类的实例化："><a href="#类的实例化：" class="headerlink" title="类的实例化："></a>类的实例化：</h1><p> 变量：对象 -—&gt;自定义类型的变量一般习惯称为对象</p>
+<h1 id="类的实例化："><a href="#类的实例化：" class="headerlink" title="类的实例化："></a>类的实例化：</h1><p> 变量：对象 -—-&gt;自定义类型的变量一般习惯称为对象</p>
 <p>类只是一个模型一样的东西，限定了类有哪些成员，定义一个<strong>没有分配实际的内存空间</strong>来存储它</p>
 <p>一个类可以实例化多个对象，实例化出的对象，占用实际的物理空间，存储类成员变量</p>
 <h1 id="类对象模型（大小）"><a href="#类对象模型（大小）" class="headerlink" title="类对象模型（大小）"></a>类对象模型（大小）</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">A</span>  <span class="comment">//4字节</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> _a;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">B</span>  <span class="comment">//4字节</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> _b;</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">fun1</span><span class="params">()</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">1</span>;</span><br><span class="line">    <span class="type">float</span> b = <span class="number">2.0</span>;</span><br><span class="line">    <span class="type">char</span> c = <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">C</span>  <span class="comment">//1字节</span></span><br><span class="line">&#123;</span><br><span class="line"> <span class="function"><span class="type">void</span> <span class="title">fun1</span><span class="params">()</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">1</span>;</span><br><span class="line">    <span class="type">float</span> b = <span class="number">2.0</span>;</span><br><span class="line">    <span class="type">char</span> c = <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">  &#125; </span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">D</span>  <span class="comment">//1字节</span></span><br><span class="line">&#123;&#125;;</span><br></pre></td></tr></table></figure>
-
 <blockquote>
 <p>对象模型中只存放普通的成员变量，不存放成员函数，成员函数存放在公共代码段</p>
-</blockquote>
-<blockquote>
 <p>空类占一个字节（起到标记作用）</p>
 </blockquote>
 <p>类的大小遵循<strong>内存对齐</strong>规则</p>
 <ol>
 <li><strong>第一个成员在与结构体偏移量为0的地址处。</strong></li>
-<li><strong>其他成员变量要对齐到某个数字（对齐数）的整数倍地址处。</strong> <em>（对齐数 &#x3D; 编译器默认对齐数与该成员大小的较小值，VS默认为 8 ，Linux和当前字段sizeof值一样）</em></li>
+<li><strong>其他成员变量要对齐到某个数字（对齐数）的整数倍地址处。</strong> _（对齐数 = 编译器默认对齐数与该成员大小的较小值，VS默认为 8 ，Linux和当前字段sizeof值一样）_</li>
 <li><strong>结构体总大小为：最大对齐数（所有变量类型的最大者与默认对齐数取最小）的整数倍。</strong></li>
 <li><strong>如果存在嵌套，嵌套的结构体对齐到自己的最大对齐数的整数倍处，结构体的整体大小就是所有最大对齐数（含嵌套结构体的对齐数）的整数倍处。</strong></li>
 </ol>
 <p><strong>！！！！如果嵌套的结构体只有定义，那么算大小的时候不算它！！！！！</strong></p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">A</span>  <span class="comment">//48 字节</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">char</span> _a;</span><br><span class="line">	<span class="type">double</span> _b;</span><br><span class="line">	<span class="type">int</span> _c;</span><br><span class="line">	<span class="type">char</span> _d;</span><br><span class="line">	<span class="keyword">class</span> <span class="title class_">B</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">double</span> _a;</span><br><span class="line">		<span class="type">char</span> _b;</span><br><span class="line">		<span class="type">int</span> _c;</span><br><span class="line">		<span class="type">char</span> _d;</span><br><span class="line">	&#125;;</span><br><span class="line">	B b;<span class="comment">//关键点</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">A</span>  <span class="comment">//24字节</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">char</span> _a;</span><br><span class="line">	<span class="type">double</span> _b;</span><br><span class="line">	<span class="type">int</span> _c;</span><br><span class="line">	<span class="type">char</span> _d;</span><br><span class="line">	<span class="keyword">class</span> <span class="title class_">B</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">double</span> _a;</span><br><span class="line">		<span class="type">char</span> _b;</span><br><span class="line">		<span class="type">int</span> _c;</span><br><span class="line">		<span class="type">char</span> _d;</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 <blockquote>
 <p>为什么要内存对齐？</p>
 <p>答：提高访问效率，CPU读取内存是按块读取的，内存对齐可以提高访问效率，方便一些硬件（如嵌入式）读取数据</p>
-</blockquote>
-<blockquote>
 <p>如何修改内存对齐数：#pargma pack()</p>
 </blockquote>
 <h1 id="this-指针"><a href="#this-指针" class="headerlink" title="this 指针"></a>this 指针</h1><p>C++编译器给每个“非静态的成员函数“增加了一个隐藏的指针参数，让该指针指向当前对象(函数运行时调用该函数的对象)，在函数体中所有成员变量的操作，都是通过该 指针去访问。只不过所有的操作对用户是透明的，即用户不需要来传递，编译器自动完成。<br>this 指针类型：类类型* const</p>
@@ -335,7 +327,7 @@
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
-    <strong>本文作者： </strong>Morgan
+    <strong>本文作者： </strong>Latsummer
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
@@ -441,9 +433,9 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Morgan"
+    <img class="site-author-image" itemprop="image" alt="Latsummer"
       src="/images/IMG_6272.JPG">
-  <p class="site-author-name" itemprop="name">Morgan</p>
+  <p class="site-author-name" itemprop="name">Latsummer</p>
   <div class="site-description" itemprop="description">八说了，我在学了！</div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -510,19 +502,13 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Morgan</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-chart-area"></i>
-    </span>
-      <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">186k</span>
+  <span class="author" itemprop="copyrightHolder">Latsummer</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:49</span>
+    <span title="站点阅读时长">3:08</span>
 </div><script color="241,124,103" opacity="1" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
 
 
@@ -600,6 +586,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

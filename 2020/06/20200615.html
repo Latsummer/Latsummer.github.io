@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.3.0">
+<meta name="generator" content="Hexo 7.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/128x128.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png">
@@ -31,7 +31,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-06-14T16:57:13.000Z">
 <meta property="article:modified_time" content="2020-09-01T02:09:59.000Z">
-<meta property="article:author" content="Morgan">
+<meta property="article:author" content="Latsummer">
 <meta property="article:tag" content="list">
 <meta name="twitter:card" content="summary">
 
@@ -205,7 +205,7 @@
 
 <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
   <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
+  <meta itemprop="name" content="Latsummer">
   <meta itemprop="description" content="八说了，我在学了！">
 </span>
 
@@ -256,7 +256,7 @@
             <i class="far fa-file-word"></i>
           </span>
             <span class="post-meta-item-text">本文字数：</span>
-          <span>2.8k</span>
+          <span>3k</span>
         </span>
         <span class="post-meta-item" title="阅读时长">
           <span class="post-meta-item-icon">
@@ -280,12 +280,12 @@
 <li>list是可以在常数范围内在任意位置进行插入和删除的序列式容器，并且该容器可以前后双向迭代。 </li>
 <li>list的底层是双向带头循环链表，双向链表中每个元素存储在互不相关的独立节点中，在节点中通过指针指向其前一个元素和后一个元素。 </li>
 <li>与其他的序列式容器相比(array，vector，deque)，list通常在任意位置进行插入、移除元素的执行效率更好。 </li>
-<li>与其他序列式容器相比，list和forward_list最大的缺陷是不支持任意位置的随机访问，比如：要访问list的第6个元素，必须从已知的位置(比如头部或者尾部)迭代到该位置，在这段位置上迭代需要线性的时间开销；list还需要一些额外的空间，以保存每个节点的相关联信息(对于存储类型较小元素的大list来说这可能是一个重要的因素)<span id="more"></span></li>
+<li>与其他序列式容器相比，list和forward_list最大的缺陷是不支持任意位置的随机访问，比如：要访问list的第6个元素，必须从已知的位置(比如头部或者尾部)迭代到该位置，在这段位置上迭代需要线性的时间开销；list还需要一些额外的空间，以保存每个节点的相关联信息(对于存储类型较小元素的大list来说这可能是一个重要的因素)<span id="more"></span>
+</li>
 </ol>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">list&lt;<span class="type">int</span>&gt; lst;</span><br><span class="line"><span class="function">list&lt;<span class="type">char</span>&gt; <span class="title">lst2</span><span class="params">(<span class="number">5</span>, <span class="string">&#x27;a&#x27;</span>)</span></span>;<span class="comment">//五个a</span></span><br><span class="line"><span class="type">char</span> str[] = <span class="string">&quot;12345&quot;</span>;</span><br><span class="line"><span class="function">list&lt;<span class="type">char</span>&gt; <span class="title">lst3</span><span class="params">(str, str + <span class="number">5</span>)</span></span>;<span class="comment">//12345</span></span><br><span class="line"><span class="function">list&lt;<span class="type">int</span>&gt; <span class="title">lst4</span><span class="params">(list2.begin(), list2.end())</span></span>;<span class="comment">//aaaaa</span></span><br><span class="line"><span class="function">list&lt;<span class="type">char</span>&gt; <span class="title">copy</span><span class="params">(lst3)</span></span>;<span class="comment">//12345</span></span><br><span class="line">list&lt;<span class="type">char</span>&gt;::iterator it = lst3.<span class="built_in">begin</span>();</span><br><span class="line"><span class="keyword">while</span>( it != lst3.<span class="built_in">end</span>() )</span><br><span class="line">&#123;</span><br><span class="line">  cout &lt;&lt; *it &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">  it++;</span><br><span class="line">&#125;</span><br><span class="line">cout &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line"><span class="function">list&lt;<span class="type">int</span>&gt; <span class="title">lst5</span><span class="params">(<span class="number">3</span>, <span class="number">1</span>)</span></span>;</span><br><span class="line">list&lt;<span class="type">int</span>&gt;::iterator it2 = lst5.<span class="built_in">brgin</span>();</span><br><span class="line"><span class="keyword">while</span>(it2 != lst5.<span class="built_in">end</span>())</span><br><span class="line">&#123;</span><br><span class="line">  cout &lt;&lt; *it &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">  it++;</span><br><span class="line">&#125;</span><br><span class="line">cout &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
-
 <ul>
-<li><p>list迭代器在插入元素之后&#x3D;&#x3D;不会失效&#x3D;&#x3D;</p>
+<li><p>list迭代器在插入元素之后==不会失效==</p>
 </li>
 <li><p>删除元素会导致迭代器失效，调用删除接口之后，需要重新更新迭代器</p>
 <ul>
@@ -299,14 +299,13 @@
 <p><code>unique</code>：去重，使用之前需要lst元素有序，先调sort，再unique，如果自定义类型需要排序，则自定义类型需要支持比较运算</p>
 <h1 id="list迭代器"><a href="#list迭代器" class="headerlink" title="list迭代器"></a>list迭代器</h1><p>list迭代器不是原生态指针实现的，一般通过封装节点，定义一个自定义类型，通过运算符重载函数完成迭代器规定的操作，例如：</p>
 <ul>
-<li><code>*iterator</code>：<code>operator*( ) </code>—&gt; _node-&gt;_val</li>
-<li><code>++iterator</code>：<code>operator++( )</code> —&gt; _node &#x3D; _node-&gt;_next</li>
-<li><code>iterator-&gt;</code>：<code>operator-&gt;( )</code>—&gt; &amp;_node-&gt;_val</li>
-<li><code>!=iterator</code>：<code>operator!=( )</code>—&gt; _node !&#x3D; iterator2._node;</li>
+<li><code>*iterator</code>：<code>operator*( )</code>—-&gt; _node-&gt;_val</li>
+<li><code>++iterator</code>：<code>operator++( )</code> —-&gt; _node = _node-&gt;_next</li>
+<li><code>iterator-&gt;</code>：<code>operator-&gt;( )</code>—-&gt; &amp;_node-&gt;_val</li>
+<li><code>!=iterator</code>：<code>operator!=( )</code>—-&gt; _node != iterator2._node;</li>
 </ul>
 <p>即list迭代器不是一个指针，而是一个对象，以下为一个模拟实现</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">T</span>, <span class="keyword">class</span> <span class="title class_">Ref</span>, <span class="keyword">class</span> <span class="title class_">Ptr</span>&gt;<span class="comment">//迭代器</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ListIterator</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">typedef</span> ListNode&lt;T&gt;* PNode;</span><br><span class="line">	<span class="keyword">typedef</span> ListIterator&lt;T, Ref, Ptr&gt; Self;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">ListIterator</span>(PNode pNode = <span class="literal">nullptr</span>)</span><br><span class="line">		: _pNode(pNode)</span><br><span class="line">	&#123; &#125;</span><br><span class="line">	<span class="built_in">ListIterator</span>(<span class="type">const</span> Self&amp; ls)</span><br><span class="line">		: _pNode(ls._pNode)</span><br><span class="line">	&#123; &#125;</span><br><span class="line">	T&amp; <span class="keyword">operator</span>*()</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> _pNode-&gt;_val;</span><br><span class="line">	&#125;	</span><br><span class="line">	T* <span class="keyword">operator</span>-&gt;()</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	Self&amp; <span class="keyword">operator</span>++()</span><br><span class="line">	&#123;</span><br><span class="line">		_pNode = _pNode-&gt;_pNext;</span><br><span class="line">		<span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	Self <span class="keyword">operator</span>++(<span class="type">int</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="function">Self <span class="title">tmp</span><span class="params">(*<span class="keyword">this</span>)</span></span>;</span><br><span class="line">		_pNode = _pNode-&gt;_pNext;</span><br><span class="line">		<span class="keyword">return</span> tmp;</span><br><span class="line">	&#125;</span><br><span class="line">	Self&amp; <span class="keyword">operator</span>--()</span><br><span class="line">	&#123;</span><br><span class="line">		_pNode = _pNode-&gt;_pPre;</span><br><span class="line">		<span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	Self <span class="keyword">operator</span>--(<span class="type">int</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="function">Self <span class="title">tmp</span><span class="params">(*<span class="keyword">this</span>)</span></span>;</span><br><span class="line">		_pNode = _pNode-&gt;_pPre;</span><br><span class="line">		<span class="keyword">return</span> tmp;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="type">bool</span> <span class="keyword">operator</span>!=(<span class="type">const</span> Self&amp; l)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> _pNode != l._pNode;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="type">bool</span> <span class="keyword">operator</span>==(<span class="type">const</span> Self&amp; l)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> _pNode == l._pNode;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	PNode _pNode;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 <h1 id="list与vector的差异"><a href="#list与vector的差异" class="headerlink" title="list与vector的差异"></a>list与vector的差异</h1><ol>
 <li>list底层结构为带头双向循环链表，vector则为顺序表</li>
 <li>由第一条，vector支持随机访问，访问某个元素效率为O(1)，而list则不支持，访问某个元素效率为O(n)</li>
@@ -316,7 +315,7 @@
 <li>对于vector来说，插入元素时，要给所有迭代器重新赋值，因为插入元素可能导致增容，使原来的迭代器失效，删除时，当前迭代器需要重新赋值，否则会失效；对于list来说，插入元素不会导致迭代器失效，删除元素时，只会导致当前迭代器失效，其他迭代器不受影响</li>
 <li>使用场景：vector适合需要高效存储，随机访问，不关心插入删除效率；list适合需要大量插入删除操作，不进行随机访问的场景</li>
 </ol>
-<h1 id="list的模拟实现"><a href="#list的模拟实现" class="headerlink" title="list的模拟实现"></a>list的模拟实现</h1><p><a href="%5Bhttps://github.com/Latsummer/FinishedProducts/tree/master/List%E6%A8%A1%E6%8B%9F%E5%AE%9E%E7%8E%B0%5D(https://github.com/Latsummer/FinishedProducts/tree/master/List%E6%A8%A1%E6%8B%9F%E5%AE%9E%E7%8E%B0)">list的模拟实现</a></p>
+<h1 id="list的模拟实现"><a href="#list的模拟实现" class="headerlink" title="list的模拟实现"></a>list的模拟实现</h1><p><a href="[https://github.com/Latsummer/FinishedProducts/tree/master/List%E6%A8%A1%E6%8B%9F%E5%AE%9E%E7%8E%B0](https://github.com/Latsummer/FinishedProducts/tree/master/List模拟实现">list的模拟实现</a>)</p>
 
 </div>
 
@@ -328,7 +327,7 @@
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
-    <strong>本文作者： </strong>Morgan
+    <strong>本文作者： </strong>Latsummer
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
@@ -434,9 +433,9 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Morgan"
+    <img class="site-author-image" itemprop="image" alt="Latsummer"
       src="/images/IMG_6272.JPG">
-  <p class="site-author-name" itemprop="name">Morgan</p>
+  <p class="site-author-name" itemprop="name">Latsummer</p>
   <div class="site-description" itemprop="description">八说了，我在学了！</div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -503,19 +502,13 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Morgan</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-chart-area"></i>
-    </span>
-      <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">186k</span>
+  <span class="author" itemprop="copyrightHolder">Latsummer</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:49</span>
+    <span title="站点阅读时长">3:08</span>
 </div><script color="241,124,103" opacity="1" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
 
 
@@ -593,6 +586,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

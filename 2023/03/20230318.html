@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.3.0">
+<meta name="generator" content="Hexo 7.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/128x128.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png">
@@ -31,7 +31,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-03-18T12:55:09.000Z">
 <meta property="article:modified_time" content="2023-05-07T11:15:56.000Z">
-<meta property="article:author" content="Morgan">
+<meta property="article:author" content="Latsummer">
 <meta property="article:tag" content="cmake">
 <meta name="twitter:card" content="summary">
 
@@ -205,7 +205,7 @@
 
 <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
   <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
+  <meta itemprop="name" content="Latsummer">
   <meta itemprop="description" content="八说了，我在学了！">
 </span>
 
@@ -256,7 +256,7 @@
             <i class="far fa-file-word"></i>
           </span>
             <span class="post-meta-item-text">本文字数：</span>
-          <span>2.5k</span>
+          <span>2.6k</span>
         </span>
         <span class="post-meta-item" title="阅读时长">
           <span class="post-meta-item-icon">
@@ -291,7 +291,6 @@
 <li>FATAL_ERROR，终止cmake过程</li>
 </ul>
 <span id="more"></span>
-
 <h3 id="ADD-EXECUTABLE"><a href="#ADD-EXECUTABLE" class="headerlink" title="ADD_EXECUTABLE"></a>ADD_EXECUTABLE</h3><p>生成可执行文件<code>ADD_EXECUTABLE(target src)</code></p>
 <h3 id="ADD-SUBDIRECTORY"><a href="#ADD-SUBDIRECTORY" class="headerlink" title="ADD_SUBDIRECTORY"></a>ADD_SUBDIRECTORY</h3><ul>
 <li>添加存放源文件的子目录，并可指定中间二进制与目标二进制的存放位置</li>
@@ -314,10 +313,10 @@
 </ol>
 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><blockquote>
 <p>INSTALL：安装指令，包括二进制，动态库，静态库以及文件，目录，脚本等</p>
-<p>CMAKE_INSTALL_PREFIX：–prefix</p>
+<p>CMAKE_INSTALL_PREFIX：—prefix</p>
 </blockquote>
 <ul>
-<li>安装文件：<code>INSTALL(FILES file1 file2 DESTINATION dst_dir)</code>，将<code>file1</code>以及<code>file2</code>安装到<code>dest_dir</code>中，其中<code>FILES</code>为文件，<code>DESTINATION </code>一般为：<ul>
+<li>安装文件：<code>INSTALL(FILES file1 file2 DESTINATION dst_dir)</code>，将<code>file1</code>以及<code>file2</code>安装到<code>dest_dir</code>中，其中<code>FILES</code>为文件，<code>DESTINATION</code>一般为：<ul>
 <li>绝对路径</li>
 <li>相对路径，即为<code>$&#123;CMAKE_INSTALL_PREFIX&#125;/$&#123;DESTINATION&#125;</code>，<code>CMAKE_INSTALL_PREFIX</code>一般默认为<code>/usr/local/</code>，可使用<code>cmake -DCMAKE_INSTALL_PREFIX=/usr</code>指定该变量的值</li>
 </ul>
@@ -346,7 +345,8 @@
 </ul>
 </li>
 <li><p>使用<code>SET_TARGET_PROPERTIES</code>，设置输出名称</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span>(LIB_NAME_SRC lib_src.cpp)</span><br><span class="line"><span class="keyword">ADD_LIBRARY</span>(lib_name_static STATIC <span class="variable">$&#123;LIBNAME_SRC&#125;</span>)</span><br><span class="line">   </span><br><span class="line">//重命名lib_name_static为lib_name</span><br><span class="line">SET_TARGET_PROPETIES(lib_name_static PROPETIES OUTPUT <span class="string">&quot;lib_name&quot;</span>)</span><br><span class="line">//在构建新的目标时，会尝试清理掉其他使用使用这个名称的库，例如构建lib_name.so时会清除掉lib_name.a</span><br><span class="line">SET_TARGET_PROPETIES(lib_name_static PROPETIES CLEAN_DIRECT_OUTPUT <span class="number">1</span>)</span><br><span class="line">   </span><br><span class="line"><span class="keyword">ADD_LIBRARY</span>(lib_name SHARED <span class="variable">$&#123;LIBNAME_SRC&#125;</span>)</span><br><span class="line">   </span><br><span class="line">SET_TARGET_PROPETIES(lib_name PROPETIES OUTPUT <span class="string">&quot;lib_name&quot;</span>)</span><br><span class="line">SET_TARGET_PROPETIES(lib_name PROPETIES CLEAN_DIRECT_OUTPUT <span class="number">1</span>)</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span>(LIB_NAME_SRC lib_src.cpp)</span><br><span class="line"><span class="keyword">ADD_LIBRARY</span>(lib_name_static STATIC <span class="variable">$&#123;LIBNAME_SRC&#125;</span>)</span><br><span class="line">   </span><br><span class="line">//重命名lib_name_static为lib_name</span><br><span class="line">SET_TARGET_PROPETIES(lib_name_static PROPETIES OUTPUT <span class="string">&quot;lib_name&quot;</span>)</span><br><span class="line">//在构建新的目标时，会尝试清理掉其他使用使用这个名称的库，例如构建lib_name.so时会清除掉lib_name.a</span><br><span class="line">SET_TARGET_PROPETIES(lib_name_static PROPETIES CLEAN_DIRECT_OUTPUT <span class="number">1</span>)</span><br><span class="line">   </span><br><span class="line"><span class="keyword">ADD_LIBRARY</span>(lib_name SHARED <span class="variable">$&#123;LIBNAME_SRC&#125;</span>)</span><br><span class="line">   </span><br><span class="line">SET_TARGET_PROPETIES(lib_name PROPETIES OUTPUT <span class="string">&quot;lib_name&quot;</span>)</span><br><span class="line">SET_TARGET_PROPETIES(lib_name PROPETIES CLEAN_DIRECT_OUTPUT <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+</li>
 </ol>
 </blockquote>
 <h3 id="动态库版本号设定"><a href="#动态库版本号设定" class="headerlink" title="动态库版本号设定"></a>动态库版本号设定</h3><p><code>SET_TARGET_PROPERTIES(lib_name PROPERTIES VERSION 1.2 SOVERSION 1)</code>，其中：</p>
@@ -373,7 +373,7 @@
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
-    <strong>本文作者： </strong>Morgan
+    <strong>本文作者： </strong>Latsummer
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
@@ -479,9 +479,9 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Morgan"
+    <img class="site-author-image" itemprop="image" alt="Latsummer"
       src="/images/IMG_6272.JPG">
-  <p class="site-author-name" itemprop="name">Morgan</p>
+  <p class="site-author-name" itemprop="name">Latsummer</p>
   <div class="site-description" itemprop="description">八说了，我在学了！</div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -548,19 +548,13 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Morgan</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-chart-area"></i>
-    </span>
-      <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">186k</span>
+  <span class="author" itemprop="copyrightHolder">Latsummer</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:49</span>
+    <span title="站点阅读时长">3:08</span>
 </div><script color="241,124,103" opacity="1" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
 
 
@@ -638,6 +632,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

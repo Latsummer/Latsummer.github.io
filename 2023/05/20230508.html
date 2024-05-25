@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.3.0">
+<meta name="generator" content="Hexo 7.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/128x128.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png">
@@ -31,7 +31,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-05-08T12:12:50.000Z">
 <meta property="article:modified_time" content="2024-05-25T03:28:46.299Z">
-<meta property="article:author" content="Morgan">
+<meta property="article:author" content="Latsummer">
 <meta property="article:tag" content="Rust">
 <meta name="twitter:card" content="summary">
 
@@ -205,7 +205,7 @@
 
 <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
   <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
+  <meta itemprop="name" content="Latsummer">
   <meta itemprop="description" content="八说了，我在学了！">
 </span>
 
@@ -256,14 +256,14 @@
             <i class="far fa-file-word"></i>
           </span>
             <span class="post-meta-item-text">本文字数：</span>
-          <span>5.9k</span>
+          <span>7k</span>
         </span>
         <span class="post-meta-item" title="阅读时长">
           <span class="post-meta-item-icon">
             <i class="far fa-clock"></i>
           </span>
             <span class="post-meta-item-text">阅读时长 &asymp;</span>
-          <span>5 分钟</span>
+          <span>6 分钟</span>
         </span>
 
     </div>
@@ -284,23 +284,18 @@
 </ol>
 </blockquote>
 <span id="more"></span>
-
 <h2 id="变量作用域"><a href="#变量作用域" class="headerlink" title="变量作用域"></a>变量作用域</h2><p>同C语言，以 Rust 中的<code>String</code>类型举例</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">str</span> = <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">    <span class="type">str</span>.<span class="title function_ invoke__">push_str</span>(<span class="string">&quot;, world !&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>当变量<code>str</code>离开作用域时，会自动调用一个名为<code>drop</code>的函数，类似C++中的<code>RAII</code></p>
 <h2 id="变量与数据交互的方式：移动"><a href="#变量与数据交互的方式：移动" class="headerlink" title="变量与数据交互的方式：移动"></a>变量与数据交互的方式：移动</h2><p>对于以下代码</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">x</span> = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">let</span> <span class="variable">y</span> = x;</span><br></pre></td></tr></table></figure>
-
 <p>其将5绑定到<code>x</code>，接着生成一个<code>x</code>的拷贝并绑定到<code>y</code>，两个变量都在栈上</p>
 <p>而对于以下代码</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">s1</span> = <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> <span class="variable">s2</span> = s1;</span><br></pre></td></tr></table></figure>
-
 <p>变量<code>s1</code>实际内容是存放在堆中，<code>String</code>对象由指向字符串内容的指针，一个长度与一个容量组成，这一部分数据是在栈上的，此处的操作类似于C++11中的<code>std::move()</code>操作，将<code>s1</code>中长度与容量赋值给<code>s2</code>，将<code>s2</code>的指针指向<code>s1</code>所指向的字符串内容，在C++11中，<code>std::move()</code>这一操作一般是对将亡值使用，在Rust中并无这一限制，但是在Rust中一旦使用这样的<strong>移动</strong>，则移动前的变量将不再有效，不能使用，这样就避免了变量离开作用域时的多次释放导致的未定义行为</p>
 <p>简单来说，以上的操作是直接将<code>s1</code>认定为将亡值并使用移动语义将其内容转义到<code>s2</code>中</p>
 <h2 id="变量与数据的交互方式：克隆"><a href="#变量与数据的交互方式：克隆" class="headerlink" title="变量与数据的交互方式：克隆"></a>变量与数据的交互方式：克隆</h2><p>如下</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">s1</span> = <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> <span class="variable">s2</span> = s1.<span class="title function_ invoke__">clone</span>();</span><br></pre></td></tr></table></figure>
-
 <p>类似C++中的拷贝构造</p>
 <h3 id="只在栈上的数据：拷贝"><a href="#只在栈上的数据：拷贝" class="headerlink" title="只在栈上的数据：拷贝"></a>只在栈上的数据：拷贝</h3><p>如果数据本身大小已知，且整个存储在栈上，则在赋值时会进行拷贝操作，Rust 中存在一个 <code>Copy</code>traitde的特殊注解，可以用在类似整型这样存储在栈上的类型上，一个类型如果实现了 <code>Copy</code> trait，那么一个旧的变量在将其赋值给其他变量后仍然可用。同时，<strong>Rust 不允许自身或其任何部分实现了 <code>Drop</code> trait 的类型使用 <code>Copy</code> trait。</strong>如果我们对其值离开作用域时需要特殊处理的类型使用 <code>Copy</code> 注解，将会出现一个编译时错误。</p>
 <p>一下是一些实现了 <code>Copy</code> trait 的类型：</p>
@@ -313,17 +308,13 @@
 </ul>
 <h2 id="所有权与函数"><a href="#所有权与函数" class="headerlink" title="所有权与函数"></a>所有权与函数</h2><p>将值传递给函数与给变量赋值类似，可能会移动或赋值</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">s</span> = <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;hello&quot;</span>);  <span class="comment">// s 进入作用域</span></span><br><span class="line"></span><br><span class="line">    <span class="title function_ invoke__">takes_ownership</span>(s);             <span class="comment">// s 的值移动到函数里 ...</span></span><br><span class="line">                                    <span class="comment">// ... 所以到这里不再有效</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">x</span> = <span class="number">5</span>;                      <span class="comment">// x 进入作用域</span></span><br><span class="line"></span><br><span class="line">    <span class="title function_ invoke__">makes_copy</span>(x);                  <span class="comment">// x 应该移动函数里，</span></span><br><span class="line">                                    <span class="comment">// 但 i32 是 Copy 的，</span></span><br><span class="line">                                    <span class="comment">// 所以在后面可继续使用 x</span></span><br><span class="line"></span><br><span class="line">&#125; <span class="comment">// 这里，x 先移出了作用域，然后是 s。但因为 s 的值已被移走，</span></span><br><span class="line">  <span class="comment">// 没有特殊之处（没有调用drop析构）</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">takes_ownership</span>(some_string: <span class="type">String</span>) &#123; <span class="comment">// some_string 进入作用域</span></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, some_string);</span><br><span class="line">&#125; <span class="comment">// 这里，some_string 移出作用域并调用 `drop` 方法。</span></span><br><span class="line">  <span class="comment">// 占用的内存被释放</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">makes_copy</span>(some_integer: <span class="type">i32</span>) &#123; <span class="comment">// some_integer 进入作用域</span></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, some_integer);</span><br><span class="line">&#125; <span class="comment">// 这里，some_integer 移出作用域。没有特殊之处</span></span><br></pre></td></tr></table></figure>
-
 <h2 id="返回值与作用域"><a href="#返回值与作用域" class="headerlink" title="返回值与作用域"></a>返回值与作用域</h2><p>返回值也可以转移所有权</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">s1</span> = <span class="title function_ invoke__">gives_ownership</span>();         <span class="comment">// gives_ownership 将返回值</span></span><br><span class="line">                                        <span class="comment">// 转移给 s1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">s2</span> = <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;hello&quot;</span>);     <span class="comment">// s2 进入作用域</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">s3</span> = <span class="title function_ invoke__">takes_and_gives_back</span>(s2);  <span class="comment">// s2 被移动到</span></span><br><span class="line">                                        <span class="comment">// takes_and_gives_back 中，</span></span><br><span class="line">                                        <span class="comment">// 它也将返回值移给 s3</span></span><br><span class="line">&#125; <span class="comment">// 这里，s3 移出作用域并被丢弃。s2 也移出作用域，但已被移走，</span></span><br><span class="line">  <span class="comment">// 所以什么也不会发生。s1 离开作用域并被丢弃</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">gives_ownership</span>() <span class="punctuation">-&gt;</span> <span class="type">String</span> &#123;             <span class="comment">// gives_ownership 会将</span></span><br><span class="line">                                             <span class="comment">// 返回值移动给</span></span><br><span class="line">                                             <span class="comment">// 调用它的函数</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">let</span> <span class="variable">some_string</span> = <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;yours&quot;</span>); <span class="comment">// some_string 进入作用域。</span></span><br><span class="line">    </span><br><span class="line">    some_string                              <span class="comment">// 返回 some_string </span></span><br><span class="line">                                             <span class="comment">// 并移出给调用的函数</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// takes_and_gives_back 将传入字符串并返回该值</span></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">takes_and_gives_back</span>(a_string: <span class="type">String</span>) <span class="punctuation">-&gt;</span> <span class="type">String</span> &#123; <span class="comment">// a_string 进入作用域</span></span><br><span class="line">    a_string  <span class="comment">// 返回 a_string 并移出给调用的函数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>变量的所有权总是遵循相同的模式：将值赋给另一个变量时移动它。当持有堆中数据值的变量离开作用域时，其值将通过 <code>drop</code> 被清理掉，除非数据被移动为另一个变量所有。</p>
 <h1 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h1><p>引用可以不获取所有权就可以使用值</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">str</span> = <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;tets&quot;</span>);</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">len</span> = <span class="title function_ invoke__">get_str_len</span>(&amp;<span class="type">str</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">get_str_len</span>(<span class="type">str</span>: &amp;<span class="type">String</span>) <span class="punctuation">-&gt;</span> <span class="type">usize</span> &#123;</span><br><span class="line">    <span class="type">str</span>.<span class="title function_ invoke__">len</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p><code>&amp;s1</code>语法可以创建一个指向值<code>s1</code>的引用，但不拥有它，这种行为被称为<strong>借用，借用的变量不能进行修改</strong></p>
 <h2 id="可变引用"><a href="#可变引用" class="headerlink" title="可变引用"></a>可变引用</h2><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">s</span> = <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">    <span class="title function_ invoke__">change</span>(&amp;<span class="keyword">mut</span> s);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">change</span>(some_string: &amp;<span class="keyword">mut</span> <span class="type">String</span>) &#123;</span><br><span class="line">    some_string.<span class="title function_ invoke__">push_str</span>(<span class="string">&quot;, world&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>可以看到，在增加了<code>mut</code>关键字后，可以对引用值进行修改，但需要注意的是，如果<strong>拥有一个对该变量的可变引用，那就不能再对该变量创建引用</strong>，不能同一时间多次将一个值作为可变变量借用，这样的限制可以避免数据竞争，数据竞争主要由以下三个行为造成：</p>
 <ul>
 <li>两个或更多指针同时访问同一数据。</li>
@@ -332,36 +323,28 @@
 </ul>
 <p>当然，可以使用花括号来划分不同的作用域来实现同意值得多次借用，但在同一个作用域内，这样的行为不被允许。<strong>而可变引用与不可变引用也不能在同一个作用域中出现，但不可变引用可以在同一作用域出现多个</strong>，例如</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">str</span> = <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> <span class="variable">p1</span> = &amp;<span class="type">str</span>;<span class="comment">//没毛病</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">p2</span> = &amp;<span class="type">str</span>;<span class="comment">//没毛病</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">p3</span> = &amp;<span class="keyword">mut</span> <span class="type">str</span>;<span class="comment">//有毛病</span></span><br></pre></td></tr></table></figure>
-
 <p>不过，<strong>一个引用的作用域是从声明的地方到最后一次使用位置</strong>，所以可以进行如下改造</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">str</span> = <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> <span class="variable">p1</span> = &amp;<span class="type">str</span>;<span class="comment">//没毛病</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">p2</span> = &amp;<span class="type">str</span>;<span class="comment">//没毛病</span></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125; and &#123;&#125;&quot;</span>, p1, p2);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable">p3</span> = &amp;<span class="keyword">mut</span> <span class="type">str</span>;<span class="comment">//没毛病</span></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, p3);</span><br></pre></td></tr></table></figure>
-
 <h2 id="悬垂引用"><a href="#悬垂引用" class="headerlink" title="悬垂引用"></a>悬垂引用</h2><p>我习惯称为野引用，指被借用的值的生命周期小于引用，例如</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">	<span class="keyword">let</span> <span class="variable">str</span> = <span class="title function_ invoke__">get_str</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">get_str</span>() &#123;</span><br><span class="line">	<span class="keyword">let</span> <span class="variable">s</span> = <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">	&amp;s</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <h2 id="引用的规则"><a href="#引用的规则" class="headerlink" title="引用的规则"></a>引用的规则</h2><ul>
 <li>在任意给定时间，<strong>要么</strong> 只能有一个可变引用，<strong>要么</strong> 只能有多个不可变引用。</li>
 <li>引用必须总是有效的。</li>
 </ul>
 <h1 id="Slice类型"><a href="#Slice类型" class="headerlink" title="Slice类型"></a>Slice类型</h1><p><code>slice</code>允许引用集合中一段连续的元素序列，而不是引用整个集合，它是一类引用，所以没有所有权。</p>
 <p>现在假设一个场景，在一个以空格为分隔符的字符串中，找到第一个子串并返回，如果没有空格则返回其本身，在不使用<code>slice</code>的情况下，我们没有办法真正获取<strong>部分</strong>字符串，但可以返回索引，例如</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">first_word</span>(s: &amp;<span class="type">String</span>) <span class="punctuation">-&gt;</span> <span class="type">usize</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">bytes</span> = s.<span class="title function_ invoke__">as_bytes</span>();</span><br><span class="line">    <span class="title function_ invoke__">for</span> (i, &amp;item) <span class="keyword">in</span> bytes.<span class="title function_ invoke__">iter</span>().<span class="title function_ invoke__">enumerate</span>() &#123;</span><br><span class="line">        <span class="keyword">if</span> item == <span class="string">b&#x27; &#x27;</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    s.<span class="title function_ invoke__">len</span>()</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">s</span> = <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;hello world&quot;</span>);</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">word</span> = <span class="title function_ invoke__">first_word</span>(&amp;s); <span class="comment">// word 的值为 5</span></span><br><span class="line">    s.<span class="title function_ invoke__">clear</span>(); <span class="comment">// 这清空了字符串，使其等于 &quot;&quot;</span></span><br><span class="line">    <span class="comment">// word 在此处的值仍然是 5，</span></span><br><span class="line">    <span class="comment">// 但是没有更多的字符串让我们可以有效地应用数值 5。word 的值现在完全无效！</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">first_word</span>(s: &amp;<span class="type">String</span>) <span class="punctuation">-&gt;</span> <span class="type">usize</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">bytes</span> = s.<span class="title function_ invoke__">as_bytes</span>();</span><br><span class="line">    <span class="keyword">for</span> (i, &amp;item) <span class="keyword">in</span> bytes.<span class="title function_ invoke__">iter</span>().<span class="title function_ invoke__">enumerate</span>() &#123;</span><br><span class="line">        <span class="keyword">if</span> item == <span class="string">b&#x27; &#x27;</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    s.<span class="title function_ invoke__">len</span>()</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">s</span> = <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;hello world&quot;</span>);</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">word</span> = <span class="title function_ invoke__">first_word</span>(&amp;s); <span class="comment">// word 的值为 5</span></span><br><span class="line">    s.<span class="title function_ invoke__">clear</span>(); <span class="comment">// 这清空了字符串，使其等于 &quot;&quot;</span></span><br><span class="line">    <span class="comment">// word 在此处的值仍然是 5，</span></span><br><span class="line">    <span class="comment">// 但是没有更多的字符串让我们可以有效地应用数值 5。word 的值现在完全无效！</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这会引发一个问题，索引和字符串本身没什么关系，但凡字符串有改动，那么拿到的索引就会失效</p>
 <h2 id="字符串slice"><a href="#字符串slice" class="headerlink" title="字符串slice"></a>字符串<code>slice</code></h2><p>字符串<code>slice</code>是<code>String</code>中一部分值的引用，写法如下：</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">s</span> = <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;hello world&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable">hello</span> = &amp;s[<span class="number">0</span>..<span class="number">5</span>];</span><br><span class="line"><span class="keyword">let</span> <span class="variable">world</span> = &amp;s[<span class="number">6</span>..<span class="number">11</span>];</span><br></pre></td></tr></table></figure>
-
 <p>不同于<code>String</code>的引用，通过切片，将其分为了两个引用，分别是从第0个元素到第5个元素前，第6个元素到第11个元素前，形式为<code>[start_idx..end_idx]</code>，如果<code>start_idx</code>的值为0，那么也可以简写为<code>[..end_idx]</code>，如果<code>end_idx</code>的值为最后一个元素的位置，那么也可写作<code>[start_idx..]</code>，若要获取整个元素的切片，可以写作<code>[..]</code></p>
 <p>现在，试着使用切片重写获取第一个子串的函数</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">first_word</span>(s: &amp;<span class="type">String</span>) <span class="punctuation">-&gt;</span> &amp;<span class="type">str</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">bytes</span> = s.<span class="title function_ invoke__">as_bytes</span>();</span><br><span class="line"></span><br><span class="line">    <span class="title function_ invoke__">for</span> (i, &amp;item) <span class="keyword">in</span> bytes.<span class="title function_ invoke__">iter</span>().<span class="title function_ invoke__">enumerate</span>() &#123;</span><br><span class="line">        <span class="keyword">if</span> item == <span class="string">b&#x27; &#x27;</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> &amp;s[<span class="number">0</span>..i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &amp;s[..]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">s</span> = <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;hello world&quot;</span>);</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">word</span> = <span class="title function_ invoke__">first_word</span>(&amp;s);</span><br><span class="line">    s.<span class="title function_ invoke__">clear</span>(); <span class="comment">// 错误！</span></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;the first word is: &#123;&#125;&quot;</span>, word);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">first_word</span>(s: &amp;<span class="type">String</span>) <span class="punctuation">-&gt;</span> &amp;<span class="type">str</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">bytes</span> = s.<span class="title function_ invoke__">as_bytes</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (i, &amp;item) <span class="keyword">in</span> bytes.<span class="title function_ invoke__">iter</span>().<span class="title function_ invoke__">enumerate</span>() &#123;</span><br><span class="line">        <span class="keyword">if</span> item == <span class="string">b&#x27; &#x27;</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> &amp;s[<span class="number">0</span>..i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &amp;s[..]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">s</span> = <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;hello world&quot;</span>);</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">word</span> = <span class="title function_ invoke__">first_word</span>(&amp;s);</span><br><span class="line">    s.<span class="title function_ invoke__">clear</span>(); <span class="comment">// 错误！</span></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;the first word is: &#123;&#125;&quot;</span>, word);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>在进行编译是，会发现<code>sclear()</code>会引发编译错误，这是因为<code>clear</code>想要清空字符串，需要获取一个可变的引用，而其下一句<code>println!</code>则使用了字符串中的不可变引用，rust中，可变引用和不可变引用不能同时存在，可变引用的最后一次使用应该位于不可变引用最后一次使用前</p>
 <h2 id="字符串面值也是slice"><a href="#字符串面值也是slice" class="headerlink" title="字符串面值也是slice"></a>字符串面值也是<code>slice</code></h2><p>例如<code>let s = &quot;hello world&quot;;</code>此处<code>s</code>的类型是<code>&amp;str</code>，其是指向二进制程序特定位置的<code>slice</code>（静态区），所以<code>&amp;str</code>是一个不可变引用</p>
 <h2 id="字符串slice做参数"><a href="#字符串slice做参数" class="headerlink" title="字符串slice做参数"></a>字符串<code>slice</code>做参数</h2><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//对于以下函数定义</span></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">first_word</span>(s: &amp;<span class="type">String</span>) <span class="punctuation">-&gt;</span> &amp;<span class="type">str</span> &#123;</span><br><span class="line"><span class="comment">//也可写作</span></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">first_word</span>(s: &amp;<span class="type">str</span>) <span class="punctuation">-&gt;</span> &amp;<span class="type">str</span> &#123;</span><br></pre></td></tr></table></figure>
-
 <p>对第二种写法，如果有一个字符串<code>slice</code>，可以传递，如果有一个<code>String</code>，则可以传递整个<code>String</code>的引用或对<code>String</code>的引用，即这里会进行一次隐式类型转换，在使用时可如下</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">my_string</span> = <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;hello world&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// first_word 适用于String（的 slice），部分或全部</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">word</span> = <span class="title function_ invoke__">first_word</span>(&amp;my_string[<span class="number">0</span>..<span class="number">6</span>]);</span><br><span class="line"><span class="keyword">let</span> <span class="variable">word</span> = <span class="title function_ invoke__">first_word</span>(&amp;my_string[..]);</span><br><span class="line"><span class="comment">// first_word 也适用于 String 的引用，</span></span><br><span class="line"><span class="comment">// 这等价于整个 String 的 slice</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">word</span> = <span class="title function_ invoke__">first_word</span>(&amp;my_string);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable">my_string_literal</span> = <span class="string">&quot;hello world&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// first_word 适用于字符串字面值，部分或全部</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">word</span> = <span class="title function_ invoke__">first_word</span>(&amp;my_string_literal[<span class="number">0</span>..<span class="number">6</span>]);</span><br><span class="line"><span class="keyword">let</span> <span class="variable">word</span> = <span class="title function_ invoke__">first_word</span>(&amp;my_string_literal[..]);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 因为字符串字面值已经是字符串 slice 了，</span></span><br><span class="line"><span class="comment">// 这也是适用的，无需 slice 语法！</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">word</span> = <span class="title function_ invoke__">first_word</span>(my_string_literal);</span><br></pre></td></tr></table></figure>
-
 <h2 id="其他类型slice"><a href="#其他类型slice" class="headerlink" title="其他类型slice"></a>其他类型<code>slice</code></h2><p>跟<code>string</code>差裘不多</p>
 
 </div>
@@ -374,7 +357,7 @@
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
-    <strong>本文作者： </strong>Morgan
+    <strong>本文作者： </strong>Latsummer
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
@@ -480,9 +463,9 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Morgan"
+    <img class="site-author-image" itemprop="image" alt="Latsummer"
       src="/images/IMG_6272.JPG">
-  <p class="site-author-name" itemprop="name">Morgan</p>
+  <p class="site-author-name" itemprop="name">Latsummer</p>
   <div class="site-description" itemprop="description">八说了，我在学了！</div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -549,19 +532,13 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Morgan</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-chart-area"></i>
-    </span>
-      <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">186k</span>
+  <span class="author" itemprop="copyrightHolder">Latsummer</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:49</span>
+    <span title="站点阅读时长">3:08</span>
 </div><script color="241,124,103" opacity="1" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
 
 
@@ -639,6 +616,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

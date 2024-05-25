@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.3.0">
+<meta name="generator" content="Hexo 7.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/128x128.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png">
@@ -31,7 +31,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-03-22T06:18:26.000Z">
 <meta property="article:modified_time" content="2020-06-02T05:10:44.000Z">
-<meta property="article:author" content="Morgan">
+<meta property="article:author" content="Latsummer">
 <meta property="article:tag" content="文件操作">
 <meta name="twitter:card" content="summary">
 
@@ -205,7 +205,7 @@
 
 <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
   <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
+  <meta itemprop="name" content="Latsummer">
   <meta itemprop="description" content="八说了，我在学了！">
 </span>
 
@@ -256,7 +256,7 @@
             <i class="far fa-file-word"></i>
           </span>
             <span class="post-meta-item-text">本文字数：</span>
-          <span>2.5k</span>
+          <span>2.6k</span>
         </span>
         <span class="post-meta-item" title="阅读时长">
           <span class="post-meta-item-icon">
@@ -280,12 +280,11 @@
 <li>文件是通过操作系统进行管理的，每个文件都有一个独一无二的名字，文件的完整路径可分为绝对路径和相对路径。绝对路径是指从盘符开始一直到文件所在位置的目录的集合，而相对路径则以当前工作目录为基准，找到一个对应文件，想要用代码操作文件，需要先知道文件的路径。</li>
 </ul>
 <span id="more"></span>
-
 <h1 id="缓冲区"><a href="#缓冲区" class="headerlink" title="缓冲区"></a>缓冲区</h1><p>缓冲区就是一个内存区域，由于CPU读取内存的速度较快，而读取外存速度较慢，为了提高效率，就应尽量减少访问外存的次数，由此设立了缓冲区。在读取数据时，先将外存中的数据拷贝至内存（缓冲区），然后程序再由缓冲区进行数据读取，反之，将数据放入缓冲区，然后再写入外存。缓冲区在文件操作的过程中起到了至关重要的作用。</p>
 <h1 id="文件的打开和关闭（fopen、fclose）"><a href="#文件的打开和关闭（fopen、fclose）" class="headerlink" title="文件的打开和关闭（fopen、fclose）"></a>文件的打开和关闭（fopen、fclose）</h1><p>文件在读写之前应该先<strong>打开文件</strong>，在使用结束之后应该<strong>关闭文件</strong>，在打开文件的同时，会返回一个FILE* 的指针变量指向该文件，也相当于建立了指针和文件的关系。fopen函数和fclose函数在打开或关闭文件失败时，都会返回一个空指针NULL。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">FIlE* <span class="title function_">fopen</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* filename, <span class="type">const</span> <span class="type">char</span>* mode)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">fclose</span><span class="params">(FILE* stream)</span>;</span><br><span class="line"><span class="comment">//fopen函数和fclose函数</span></span><br></pre></td></tr></table></figure>
-
 <p>对于fopen函数，它的第一个参数是文件名，在传参时应输入文件的绝对路径或相对路径，第二个参数是文件的使用方式，具体如下。</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -294,7 +293,8 @@
 <th>如果指定文件不存在</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>“r”（只读）</td>
 <td>为了输入数据，打开一个已经存在的文本文件</td>
 <td>出错</td>
@@ -354,20 +354,18 @@
 <td>打开一个二进制文件，在文件尾进行读和写</td>
 <td>建立一个新的文件</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>需要注意的是，<strong>在使用fopen和fclose函数是，需要对返回值进行判空，以避免文件打开失败却又继续运行程序的情况。</strong></p>
-<h1 id="字符输入-x2F-输出函数（fgetc-x2F-fputc）"><a href="#字符输入-x2F-输出函数（fgetc-x2F-fputc）" class="headerlink" title="字符输入&#x2F;输出函数（fgetc&#x2F;fputc）"></a>字符输入&#x2F;输出函数（fgetc&#x2F;fputc）</h1><p>使用fgetc来读取一个字符，使用fputc来输出一个字符</p>
+<h1 id="字符输入-输出函数（fgetc-fputc）"><a href="#字符输入-输出函数（fgetc-fputc）" class="headerlink" title="字符输入/输出函数（fgetc/fputc）"></a>字符输入/输出函数（fgetc/fputc）</h1><p>使用fgetc来读取一个字符，使用fputc来输出一个字符</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">fgetc</span><span class="params">( FILE* stream )</span>;</span><br><span class="line"><span class="comment">//字符输入函数</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">fputc</span><span class="params">( <span class="type">int</span> c, FILE* stream )</span>;</span><br><span class="line"><span class="comment">//字符输出函数</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//示例</span></span><br><span class="line"><span class="type">int</span> c;</span><br><span class="line"><span class="keyword">while</span>(c = fgetc(<span class="built_in">stdin</span>) != EOF)</span><br><span class="line">&#123;</span><br><span class="line">    fputc(c, <span class="built_in">stdout</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//当返回值为EOF时表示读取到文件结束符</span></span><br><span class="line"><span class="comment">//stdin:标准输入，从键盘输入到缓冲区</span></span><br><span class="line"><span class="comment">//stdout:标准输出，输出到屏幕</span></span><br></pre></td></tr></table></figure>
-
-<h1 id="文本行输入-x2F-输出函数（fgets-x2F-fputs）"><a href="#文本行输入-x2F-输出函数（fgets-x2F-fputs）" class="headerlink" title="文本行输入&#x2F;输出函数（fgets&#x2F;fputs）"></a>文本行输入&#x2F;输出函数（fgets&#x2F;fputs）</h1><p>使用fgets读取一行内容，使用fputs写入一行内容</p>
+<h1 id="文本行输入-输出函数（fgets-fputs）"><a href="#文本行输入-输出函数（fgets-fputs）" class="headerlink" title="文本行输入/输出函数（fgets/fputs）"></a>文本行输入/输出函数（fgets/fputs）</h1><p>使用fgets读取一行内容，使用fputs写入一行内容</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span>* <span class="title function_">fgets</span><span class="params">( <span class="type">char</span>* <span class="built_in">string</span>, <span class="type">int</span> n, FILE* stream )</span>;</span><br><span class="line"><span class="comment">//三个参数分别是读取之后存放的位置，读取多少个字节，文件指针</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">fputs</span><span class="params">( <span class="type">const</span> <span class="type">char</span>* <span class="built_in">string</span>, FILE* stream )</span>;</span><br><span class="line"><span class="comment">//两个参数分别是缓冲区地址和文件指针</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//示例</span></span><br><span class="line"><span class="type">char</span> buf[<span class="number">1024</span>] = &#123; <span class="number">0</span> &#125;;<span class="comment">//缓冲区</span></span><br><span class="line"><span class="keyword">while</span>(fgets(buf, <span class="keyword">sizeof</span>(buf) - <span class="number">1</span>, fp) != <span class="literal">NULL</span>)</span><br><span class="line">&#123;<span class="comment">//把文件中的内容按行读取到buf中</span></span><br><span class="line"> <span class="comment">//减一是为了留出‘\0’的位置</span></span><br><span class="line"> <span class="comment">//当返回值为NULL时，表示读到了EOF</span></span><br><span class="line">    <span class="built_in">fputs</span>(buf, <span class="built_in">stdout</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="格式化输入-x2F-输出函数（fscanf-x2F-fprintf）"><a href="#格式化输入-x2F-输出函数（fscanf-x2F-fprintf）" class="headerlink" title="格式化输入&#x2F;输出函数（fscanf&#x2F;fprintf）"></a>格式化输入&#x2F;输出函数（fscanf&#x2F;fprintf）</h1><p>格式化的读写方式，用法类似scanf和printf</p>
+<h1 id="格式化输入-输出函数（fscanf-fprintf）"><a href="#格式化输入-输出函数（fscanf-fprintf）" class="headerlink" title="格式化输入/输出函数（fscanf/fprintf）"></a>格式化输入/输出函数（fscanf/fprintf）</h1><p>格式化的读写方式，用法类似scanf和printf</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">fscanf</span><span class="params">( FILE *stream, <span class="type">const</span> <span class="type">char</span> *format [, argument ]... )</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">fprintf</span><span class="params">( FILE *stream, <span class="type">const</span> <span class="type">char</span> *format [, argument ]...)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//示例</span></span><br><span class="line"><span class="type">char</span> buf[<span class="number">1024</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line"><span class="built_in">fscanf</span>(fp, <span class="string">&quot;%S&quot;</span>, buf);</span><br><span class="line"><span class="built_in">fprintf</span>(<span class="built_in">stdout</span>, <span class="string">&quot;%s&quot;</span>, buf);</span><br></pre></td></tr></table></figure>
-
-<h1 id="二进制输入-x2F-输出函数（fread-x2F-fwrite）"><a href="#二进制输入-x2F-输出函数（fread-x2F-fwrite）" class="headerlink" title="二进制输入&#x2F;输出函数（fread&#x2F;fwrite）"></a>二进制输入&#x2F;输出函数（fread&#x2F;fwrite）</h1><p>使用fread读取n个字节，使用fwrite写入n个字节</p>
+<h1 id="二进制输入-输出函数（fread-fwrite）"><a href="#二进制输入-输出函数（fread-fwrite）" class="headerlink" title="二进制输入/输出函数（fread/fwrite）"></a>二进制输入/输出函数（fread/fwrite）</h1><p>使用fread读取n个字节，使用fwrite写入n个字节</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">size_t</span> <span class="title function_">fread</span><span class="params">( <span class="type">void</span> *buffer, <span class="type">size_t</span> size, <span class="type">size_t</span> count, FILE *stream )</span>;</span><br><span class="line"><span class="comment">//返回值为实际读取到的元素个数。实际读取到的元素个数如果比预期的少，说明文件读取完毕</span></span><br><span class="line"><span class="comment">//参数分别为，缓冲区地址，每次读取的字节数，要写入缓存区的最大字节数，文件指针</span></span><br><span class="line"><span class="type">size_t</span> <span class="title function_">fwrite</span><span class="params">( <span class="type">const</span> <span class="type">void</span> *buffer, <span class="type">size_t</span> size, <span class="type">size_t</span> count, FILE *stream )</span>;</span><br><span class="line"><span class="comment">//参数含分别为缓冲区地址，每次写入的字节数，最大写入字节数，文件指针</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//示例</span></span><br><span class="line"><span class="type">char</span> buf[<span class="number">1024</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line"><span class="type">int</span> n = fread(buf, <span class="number">1</span>, <span class="keyword">sizeof</span>(buf) - <span class="number">1</span>, fp);</span><br><span class="line"><span class="comment">//减去一是为了留下‘\0’的位置</span></span><br><span class="line">fwrite(buf, <span class="number">1</span>, <span class="built_in">strlen</span>(buf), <span class="built_in">stdout</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
 <h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>在文件的操作这一方面，各种编程语言的操作方式都大同小异，需要先打开文件，进行读写，最后关闭文件，需要注意的就是在打开文件后记得要关闭，否则可能会导致文件出错。</p>
 
 </div>
@@ -380,7 +378,7 @@
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
-    <strong>本文作者： </strong>Morgan
+    <strong>本文作者： </strong>Latsummer
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
@@ -480,15 +478,15 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%93%E5%86%B2%E5%8C%BA"><span class="nav-number">2.</span> <span class="nav-text">缓冲区</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E6%89%93%E5%BC%80%E5%92%8C%E5%85%B3%E9%97%AD%EF%BC%88fopen%E3%80%81fclose%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">文件的打开和关闭（fopen、fclose）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E8%BE%93%E5%85%A5-x2F-%E8%BE%93%E5%87%BA%E5%87%BD%E6%95%B0%EF%BC%88fgetc-x2F-fputc%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">字符输入&#x2F;输出函数（fgetc&#x2F;fputc）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E8%A1%8C%E8%BE%93%E5%85%A5-x2F-%E8%BE%93%E5%87%BA%E5%87%BD%E6%95%B0%EF%BC%88fgets-x2F-fputs%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">文本行输入&#x2F;输出函数（fgets&#x2F;fputs）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%BE%93%E5%85%A5-x2F-%E8%BE%93%E5%87%BA%E5%87%BD%E6%95%B0%EF%BC%88fscanf-x2F-fprintf%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">格式化输入&#x2F;输出函数（fscanf&#x2F;fprintf）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E8%BE%93%E5%85%A5-x2F-%E8%BE%93%E5%87%BA%E5%87%BD%E6%95%B0%EF%BC%88fread-x2F-fwrite%EF%BC%89"><span class="nav-number">7.</span> <span class="nav-text">二进制输入&#x2F;输出函数（fread&#x2F;fwrite）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">8.</span> <span class="nav-text">小结</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%93%E5%86%B2%E5%8C%BA"><span class="nav-number">2.</span> <span class="nav-text">缓冲区</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E6%89%93%E5%BC%80%E5%92%8C%E5%85%B3%E9%97%AD%EF%BC%88fopen%E3%80%81fclose%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">文件的打开和关闭（fopen、fclose）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E5%87%BD%E6%95%B0%EF%BC%88fgetc-fputc%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">字符输入&#x2F;输出函数（fgetc&#x2F;fputc）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E8%A1%8C%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E5%87%BD%E6%95%B0%EF%BC%88fgets-fputs%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">文本行输入&#x2F;输出函数（fgets&#x2F;fputs）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E5%87%BD%E6%95%B0%EF%BC%88fscanf-fprintf%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">格式化输入&#x2F;输出函数（fscanf&#x2F;fprintf）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E5%87%BD%E6%95%B0%EF%BC%88fread-fwrite%EF%BC%89"><span class="nav-number">7.</span> <span class="nav-text">二进制输入&#x2F;输出函数（fread&#x2F;fwrite）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">8.</span> <span class="nav-text">小结</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Morgan"
+    <img class="site-author-image" itemprop="image" alt="Latsummer"
       src="/images/IMG_6272.JPG">
-  <p class="site-author-name" itemprop="name">Morgan</p>
+  <p class="site-author-name" itemprop="name">Latsummer</p>
   <div class="site-description" itemprop="description">八说了，我在学了！</div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -555,19 +553,13 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Morgan</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-chart-area"></i>
-    </span>
-      <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">186k</span>
+  <span class="author" itemprop="copyrightHolder">Latsummer</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:49</span>
+    <span title="站点阅读时长">3:08</span>
 </div><script color="241,124,103" opacity="1" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
 
 
@@ -645,6 +637,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

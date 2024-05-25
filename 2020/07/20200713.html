@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.3.0">
+<meta name="generator" content="Hexo 7.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/128x128.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png">
@@ -35,7 +35,7 @@
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlly1ggo0qurg82j31bo0tot9k.jpg">
 <meta property="article:published_time" content="2020-07-13T10:01:11.000Z">
 <meta property="article:modified_time" content="2023-05-07T11:26:04.000Z">
-<meta property="article:author" content="Morgan">
+<meta property="article:author" content="Latsummer">
 <meta property="article:tag" content="C++">
 <meta property="article:tag" content="数据结构">
 <meta name="twitter:card" content="summary">
@@ -211,7 +211,7 @@
 
 <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
   <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
+  <meta itemprop="name" content="Latsummer">
   <meta itemprop="description" content="八说了，我在学了！">
 </span>
 
@@ -262,14 +262,14 @@
             <i class="far fa-file-word"></i>
           </span>
             <span class="post-meta-item-text">本文字数：</span>
-          <span>6.3k</span>
+          <span>7.7k</span>
         </span>
         <span class="post-meta-item" title="阅读时长">
           <span class="post-meta-item-icon">
             <i class="far fa-clock"></i>
           </span>
             <span class="post-meta-item-text">阅读时长 &asymp;</span>
-          <span>6 分钟</span>
+          <span>7 分钟</span>
         </span>
 
     </div>
@@ -283,13 +283,11 @@
   
     <h1 id="AVL树"><a href="#AVL树" class="headerlink" title="AVL树"></a>AVL树</h1><ul>
 <li>左右子树都是AVL树</li>
-<li>左右子树高度差的绝对值不超过1（-1&#x2F;0&#x2F;1）（一般：右子树高度 - 左子树高度）</li>
+<li>左右子树高度差的绝对值不超过1（-1/0/1）（一般：右子树高度 - 左子树高度）</li>
 <li>如果一棵二叉搜索树树高度平衡的，它就是AVL树。如果它有n个节点，其高度可保持在O(log<sub>2</sub>N)，搜索时间复杂度O(log<sub>2</sub>N)</li>
 </ul>
 <span id="more"></span>
-
 <h2 id="节点结构"><a href="#节点结构" class="headerlink" title="节点结构"></a>节点结构</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">AVLNode</span></span><br><span class="line">&#123;</span><br><span class="line">	T _value;</span><br><span class="line">	<span class="type">int</span> _bf;<span class="comment">//平衡因子</span></span><br><span class="line">	AVLNode&lt;T&gt;* _left;</span><br><span class="line">	AVLNode&lt;T&gt;* _right;</span><br><span class="line">	AVLNode&lt;T&gt;* _parent;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">AVLNode</span>(<span class="type">const</span> T&amp; val = <span class="built_in">T</span>())</span><br><span class="line">		: _value(val)</span><br><span class="line">		, _bf(<span class="number">0</span>)</span><br><span class="line">		, _left(<span class="literal">nullptr</span>)</span><br><span class="line">		, _right(<span class="literal">nullptr</span>)</span><br><span class="line">		, _parent(<span class="literal">nullptr</span>)</span><br><span class="line">	&#123; &#125;</span><br><span class="line">&#125;; </span><br></pre></td></tr></table></figure>
-
 <blockquote>
 <p>插入节点后：必须要更新平衡因子</p>
 <p>可能需要更新平衡因子的节点：</p>
@@ -305,22 +303,22 @@
 </li>
 <li><p>在第二步的过程中，平衡因子更新之后：</p>
 <ol>
-<li><p>平衡因子：0	—&gt; 	停止更新</p>
+<li><p>平衡因子：0    —-&gt;     停止更新</p>
 </li>
-<li><p>平衡因子：-1&#x2F;1    —&gt;    继续向上更新</p>
+<li><p>平衡因子：-1/1    —-&gt;    继续向上更新</p>
 </li>
-<li><p>平衡因子：-2&#x2F;2    —&gt;    旋转</p>
+<li><p>平衡因子：-2/2    —-&gt;    旋转</p>
 <ol>
 <li><p>单旋：</p>
 <ol>
 <li><p>左单旋：右边的右边高，<code>parent-&gt;_bf == 2 &amp;&amp; cur-&gt;_bf == 1</code></p>
 <p> 修改链接：parent、subRL、subR</p>
-<p> ​					parent-&gt;_right : subRL、subR-&gt;left : parent</p>
+<p> ​                    parent-&gt;_right : subRL、subR-&gt;left : parent</p>
 <p> 更新平衡因子：parent、subR：0</p>
 </li>
 <li><p>右单旋：左边的左边高，<code>parent-&gt;_bf == -2 &amp;&amp; cur-&gt;_bf == -1</code></p>
 <p> 修改链接：subL、subLR、parent</p>
-<p> ​					parent-&gt;left : subLR、subL-&gt;right : parent</p>
+<p> ​                    parent-&gt;left : subLR、subL-&gt;right : parent</p>
 <p> 更新平衡因子：parent、subL：0</p>
 </li>
 </ol>
@@ -329,23 +327,23 @@
 <ol>
 <li><p>左右双旋：左边的右边高，<code>parent-&gt;_bf == -2 &amp;&amp; cur-&gt;_bf == 1</code></p>
 <p> 修改链接：subL、subLR、parent</p>
-<p> ​		左旋：以subL为轴</p>
-<p> ​		右旋：以parent为轴</p>
+<p> ​        左旋：以subL为轴</p>
+<p> ​        右旋：以parent为轴</p>
 <p> 重新更新平衡因子：</p>
-<p> if(subLR-&gt;bf &#x3D;&#x3D; -1)</p>
-<p> ​	subL-&gt;bf &#x3D; 0, parent-&gt;bf &#x3D; 1;</p>
-<p> else if(subLR-&gt;bf &#x3D;&#x3D; 1)</p>
-<p> ​	subL-&gt;bf &#x3D; -1, parent-&gt;bf &#x3D; 0;</p>
+<p> if(subLR-&gt;bf == -1)</p>
+<p> ​    subL-&gt;bf = 0, parent-&gt;bf = 1;</p>
+<p> else if(subLR-&gt;bf == 1)</p>
+<p> ​    subL-&gt;bf = -1, parent-&gt;bf = 0;</p>
 </li>
 <li><p>右左双旋右边的左边高，<code>parent-&gt;_bf == 2 &amp;&amp; cur-&gt;_bf == -1</code></p>
 <p> 修改链接：parent、subRL、subR</p>
-<p> ​		右旋：以subR为轴</p>
-<p> ​		左旋：以parent为轴</p>
-<p> ​	重新更新平衡因子：</p>
-<p> ​	if(subRL-&gt;bf &#x3D;&#x3D; 1)</p>
-<p> ​		parent-&gt;bf &#x3D; -1, subR-&gt;bf &#x3D; 0;</p>
-<p> else if(subRL-&gt;bf &#x3D;&#x3D; -1)</p>
-<p> ​		parent-&gt;bf &#x3D; 0, subR-&gt;bf &#x3D; 1;</p>
+<p> ​        右旋：以subR为轴</p>
+<p> ​        左旋：以parent为轴</p>
+<p> ​    重新更新平衡因子：</p>
+<p> ​    if(subRL-&gt;bf == 1)</p>
+<p> ​        parent-&gt;bf = -1, subR-&gt;bf = 0;</p>
+<p> else if(subRL-&gt;bf == -1)</p>
+<p> ​        parent-&gt;bf = 0, subR-&gt;bf = 1;</p>
 </li>
 </ol>
 </li>
@@ -355,13 +353,8 @@
 </li>
 </ol>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">insert</span><span class="params">(<span class="type">const</span> T&amp; val)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (_root == <span class="literal">nullptr</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			_root = <span class="keyword">new</span> <span class="built_in">Node</span>(val);</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		Node* cur = _root;</span><br><span class="line">		Node* parent = <span class="literal">nullptr</span>;</span><br><span class="line">		<span class="keyword">while</span> (cur)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="comment">//插入</span></span><br><span class="line">			parent = cur;</span><br><span class="line">			<span class="keyword">if</span> (cur-&gt;_value == val) &#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">if</span> (cur-&gt;_value &lt; val) &#123;</span><br><span class="line">				cur = cur-&gt;_right;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> &#123;</span><br><span class="line">				cur = cur-&gt;_left;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		cur = <span class="keyword">new</span> <span class="built_in">Node</span>(val);</span><br><span class="line">		<span class="keyword">if</span> (parent-&gt;_value &lt; val) &#123;</span><br><span class="line">			parent-&gt;_right = cur;</span><br><span class="line">		&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">			parent-&gt;_left = cur;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		cur-&gt;_parent = parent;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//更新 + 调整</span></span><br><span class="line">		<span class="keyword">while</span> (parent)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="comment">//1.更新parent平衡因子</span></span><br><span class="line">			<span class="keyword">if</span> (parent-&gt;_left == cur)</span><br><span class="line">				parent-&gt;_bf--;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">				parent-&gt;_bf++;</span><br><span class="line">			<span class="comment">//2.判断是否需要继续更新</span></span><br><span class="line">			<span class="keyword">if</span> (parent-&gt;_bf == <span class="number">0</span>) &#123;<span class="comment">//被补齐了，parent的父节点左右子树高度未发生变化</span></span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			&#125;<span class="keyword">else</span> <span class="keyword">if</span> (parent-&gt;_bf == <span class="number">-1</span> || parent-&gt;_bf == <span class="number">1</span>) &#123;</span><br><span class="line">				cur = parent;</span><br><span class="line">				parent = parent-&gt;_parent;</span><br><span class="line">			&#125;<span class="keyword">else</span> <span class="keyword">if</span> (parent-&gt;_bf == <span class="number">-2</span> || parent-&gt;_bf == <span class="number">2</span>) &#123;</span><br><span class="line">				<span class="comment">//调整</span></span><br><span class="line">				<span class="keyword">if</span> (parent-&gt;_bf == <span class="number">-2</span> &amp;&amp; cur-&gt;_bf == <span class="number">-1</span>) &#123;</span><br><span class="line">					<span class="comment">//左边的左边高，右旋</span></span><br><span class="line">					<span class="built_in">RotateR</span>(parent);</span><br><span class="line">				&#125; <span class="keyword">else</span> <span class="keyword">if</span> (parent-&gt;_bf == <span class="number">2</span> &amp;&amp; cur-&gt;_bf == <span class="number">1</span>) &#123;</span><br><span class="line">					<span class="comment">//右边的右边高，左旋</span></span><br><span class="line">					<span class="built_in">RotateL</span>(parent);</span><br><span class="line">				&#125; <span class="keyword">else</span> <span class="keyword">if</span> (parent-&gt;_bf == <span class="number">2</span> &amp;&amp; cur-&gt;_bf == <span class="number">-1</span>) &#123;</span><br><span class="line">					<span class="comment">//右边的左边高，右左双旋</span></span><br><span class="line">          Node* subR = parent-&gt;_right;</span><br><span class="line">          Node* subRl = subR-&gt;_left;</span><br><span class="line">          <span class="type">int</span> bf = subRL-&gt;_bf;</span><br><span class="line">          </span><br><span class="line">					<span class="built_in">RotateR</span>(cur);</span><br><span class="line">					<span class="built_in">RotateL</span>(parent);</span><br><span class="line">          </span><br><span class="line">          <span class="comment">//调整平衡因子</span></span><br><span class="line">          <span class="keyword">if</span>(bf == <span class="number">1</span>)</span><br><span class="line">          &#123;</span><br><span class="line">            <span class="comment">//subRL右子树高</span></span><br><span class="line">            subR-&gt;_bf = <span class="number">0</span>;</span><br><span class="line">            parent-&gt;_bf = <span class="number">-1</span>;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">else</span> <span class="keyword">if</span>(bf == <span class="number">-1</span>)</span><br><span class="line">          &#123;</span><br><span class="line">            <span class="comment">//subRL左子树高</span></span><br><span class="line">            parent-&gt;_bf = <span class="number">0</span>;</span><br><span class="line">            subR-&gt;_bf = <span class="number">1</span>;</span><br><span class="line">          &#125;</span><br><span class="line">				&#125; <span class="keyword">else</span> <span class="keyword">if</span> (parent-&gt;_bf == <span class="number">-2</span> &amp;&amp; cur-&gt;_bf == <span class="number">1</span>) &#123;</span><br><span class="line">					<span class="comment">//左边的右边高,左右双旋</span></span><br><span class="line">					<span class="built_in">RotateL</span>(cur);</span><br><span class="line">					<span class="built_in">RotateR</span>(parent);</span><br><span class="line">				&#125;</span><br><span class="line"></span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-
 <h3 id="左旋"><a href="#左旋" class="headerlink" title="左旋"></a>左旋</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">RotateL</span><span class="params">(Node* parent)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		Node* subR = parent-&gt;_right;</span><br><span class="line">		Node* subRL = subR-&gt;_left;</span><br><span class="line"></span><br><span class="line">		subR-&gt;_left = parent;</span><br><span class="line">		parent-&gt;_right = subRL;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (subRL)</span><br><span class="line">			subRL-&gt;_parent = parent;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (parent == _root)</span><br><span class="line">		&#123;</span><br><span class="line">			_root = subR;</span><br><span class="line">			subR-&gt;_parent = <span class="literal">nullptr</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			Node* g = parent-&gt;_parent;</span><br><span class="line">			subR-&gt;_parent = g;</span><br><span class="line">			<span class="keyword">if</span> (g-&gt;_left == parent)</span><br><span class="line">				g-&gt;_left = subR;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">				g-&gt;_right = subR;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		parent-&gt;_parent = subR;</span><br><span class="line">		parent-&gt;_bf = subR-&gt;_bf = <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-
-
-
 <h3 id="右旋"><a href="#右旋" class="headerlink" title="右旋"></a>右旋</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">RotateR</span><span class="params">(Node* parent)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		Node* subL = parent-&gt;_left;</span><br><span class="line">		Node* subLR = subL-&gt;_right;</span><br><span class="line"></span><br><span class="line">		subL-&gt;_right = parent;</span><br><span class="line">		parent-&gt;_left = subLR;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (subLR)</span><br><span class="line">			subLR-&gt;_parent = parent;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (parent == _root)</span><br><span class="line">		&#123;</span><br><span class="line">			_root = subL;</span><br><span class="line">			subL-&gt;_parent = <span class="literal">nullptr</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			Node* g = parent-&gt;_parent;</span><br><span class="line">			subL-&gt;_parent = g;</span><br><span class="line">			<span class="keyword">if</span> (g-&gt;_left == parent)</span><br><span class="line">				g-&gt;_left = subL;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">				g-&gt;_right = subL;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		parent-&gt;_parent = subL;</span><br><span class="line">		parent-&gt;_bf = subL-&gt;_bf = <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-
 <h1 id="红黑树"><a href="#红黑树" class="headerlink" title="红黑树"></a>红黑树</h1><ol>
 <li>每个节点不是红色就是黑色</li>
 <li>根结点是黑色的</li>
@@ -377,7 +370,6 @@
 </blockquote>
 <p><a target="_blank" rel="noopener" href="https://github.com/Latsummer/FinishedProducts/tree/master/RBTree">一个红黑树的简单实现 - GitHub</a></p>
 <h2 id="节点结构-1"><a href="#节点结构-1" class="headerlink" title="节点结构"></a>节点结构</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="title class_">Color</span></span><br><span class="line">&#123;</span><br><span class="line">	BLACK,</span><br><span class="line">	RED</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">K</span>, <span class="keyword">class</span> <span class="title class_">V</span>&gt;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">RBNode</span></span><br><span class="line">&#123;</span><br><span class="line">	pair&lt;K, V&gt; _value;</span><br><span class="line">	Color _color;</span><br><span class="line">	RBNode&lt;K, V&gt; _parent;</span><br><span class="line">	RBNode&lt;K, V&gt; _left;</span><br><span class="line">	RBNode&lt;K, V&gt; _right;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">RBNode</span>(<span class="type">const</span> pair&lt;K, V&gt;&amp; value = <span class="built_in">pair</span>&lt;K, V&gt;())</span><br><span class="line">		: _value(value)</span><br><span class="line">		, _color(RED)</span><br><span class="line">		, _parent(<span class="literal">nullptr</span>)</span><br><span class="line">		, _left(<span class="literal">nullptr</span>)</span><br><span class="line">		, _right(<span class="literal">nullptr</span>)</span><br><span class="line">	&#123; &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 <h2 id="插入-1"><a href="#插入-1" class="headerlink" title="插入"></a>插入</h2><p>不能改变当前结构中的黑色节点的个数，除了祖父节点为根节点的情况</p>
 <ul>
 <li>g：祖父</li>
@@ -387,13 +379,12 @@
 </ul>
 <ol>
 <li>搜索树的插入</li>
-<li>判断是否需要调整：红色连续</li>
+<li>判断是否需要调整：红色连续 </li>
 </ol>
 <ul>
 <li>cur在p左边，叔叔存在且为红色，将p、u置为黑色，g为红色</li>
 </ul>
-<img src="https://tva1.sinaimg.cn/large/007S8ZIlly1ggnzzrztvuj31bo0toaak.jpg" alt="IMG_7063">
-
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1ggnzzrztvuj31bo0toaak.jpg" alt="IMG_7063"></p>
 <ul>
 <li>cur在p左边，叔叔不存在，以g为轴心进行右旋，将g变红，将p变黑</li>
 </ul>
@@ -412,7 +403,6 @@
 <p>代码如下，其中旋转部分代码与AVL树相同：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">insert</span><span class="params">(<span class="type">const</span> pair&lt;K, V&gt;&amp; val)</span></span></span><br><span class="line"><span class="function"> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (_header-&gt;_parent == <span class="literal">nullptr</span>)</span><br><span class="line">  &#123;</span><br><span class="line">   <span class="comment">//空树</span></span><br><span class="line">   Node* root = <span class="keyword">new</span> <span class="built_in">Node</span>(val);</span><br><span class="line">   root-&gt;_color = BLACK;<span class="comment">//根为黑色</span></span><br><span class="line"></span><br><span class="line">   _header-&gt;_parent = root;</span><br><span class="line">   root-&gt;_parent = _header;</span><br><span class="line"></span><br><span class="line">   _header-&gt;_left = root;</span><br><span class="line">   _header-&gt;_right = root;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//非空树</span></span><br><span class="line">  Node* cur = _header-&gt;_parent;</span><br><span class="line">  Node* parent = <span class="literal">nullptr</span>;</span><br><span class="line">  <span class="keyword">while</span> (cur)</span><br><span class="line">  &#123;</span><br><span class="line">   parent = cur;</span><br><span class="line">   <span class="keyword">if</span> (cur-&gt;_value.first == val.first)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">   <span class="keyword">if</span> (cur-&gt;_value.first &lt; val.first)</span><br><span class="line">    cur = cur-&gt;_right;</span><br><span class="line">   <span class="keyword">else</span></span><br><span class="line">    cur = cur-&gt;_left;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  cur = <span class="keyword">new</span> <span class="built_in">Node</span>(val);</span><br><span class="line">  <span class="keyword">if</span> (parent-&gt;_value.first &lt; val.first)</span><br><span class="line">   parent-&gt;_right = cur;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">   parent-&gt;_left = cur;</span><br><span class="line"></span><br><span class="line">  cur-&gt;_parent = parent;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//调整:修改颜色，旋转</span></span><br><span class="line">  <span class="keyword">while</span> (cur != _header-&gt;_parent &amp;&amp; cur-&gt;_parent-&gt;_color == RED)</span><br><span class="line">  &#123;</span><br><span class="line">   Node* p = cur-&gt;_parent;</span><br><span class="line">   Node* g = p-&gt;_parent;</span><br><span class="line">   <span class="keyword">if</span> (g-&gt;_left == p)</span><br><span class="line">   &#123;</span><br><span class="line">    Node* u = g-&gt;_right;</span><br><span class="line">    <span class="keyword">if</span> (u &amp;&amp; u-&gt;_color == RED)</span><br><span class="line">    &#123;</span><br><span class="line">     u-&gt;_color = p-&gt;_color = BLACK;</span><br><span class="line">     g-&gt;_color = RED;</span><br><span class="line"></span><br><span class="line">     cur = g;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">     <span class="comment">//ub不存在或u存在且为黑色</span></span><br><span class="line">     <span class="keyword">if</span> (cur == p-&gt;_right)</span><br><span class="line">     &#123;</span><br><span class="line">      <span class="built_in">RotateL</span>(p);</span><br><span class="line">      <span class="built_in">swap</span>(cur, p);</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="comment">//cur在p左边,右旋+修改颜色</span></span><br><span class="line">     <span class="built_in">RotateR</span>(g);</span><br><span class="line">     p-&gt;_color = BLACK;</span><br><span class="line">     g-&gt;_color = RED;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">else</span><span class="comment">//p在g右边</span></span><br><span class="line">   &#123;</span><br><span class="line">    Node* u = g-&gt;_left;</span><br><span class="line">    <span class="keyword">if</span> (u &amp;&amp; u-&gt;_color == RED)</span><br><span class="line">    &#123;</span><br><span class="line">     u-&gt;_color = p-&gt;_color = BLACK;</span><br><span class="line">     g-&gt;_color = RED;</span><br><span class="line">     cur = g;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">     <span class="keyword">if</span> (cur == p-&gt;_left)</span><br><span class="line">     &#123;</span><br><span class="line">      <span class="built_in">RotateR</span>(p);</span><br><span class="line">      <span class="built_in">swap</span>(cur, p);</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="built_in">RotateL</span>(g);</span><br><span class="line">     g-&gt;_color = RED;</span><br><span class="line">     p-&gt;_color = BLACK;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//将根置为黑</span></span><br><span class="line">  _header-&gt;_parent-&gt;_color = BLACK;</span><br><span class="line">  <span class="comment">//更新头的左右指针</span></span><br><span class="line">  _header-&gt;_left = <span class="built_in">leftMost</span>();</span><br><span class="line">  _header-&gt;_right = <span class="built_in">rightMost</span>();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
 
-
 </div>
 
 
@@ -423,7 +413,7 @@
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
-    <strong>本文作者： </strong>Morgan
+    <strong>本文作者： </strong>Latsummer
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
@@ -530,9 +520,9 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Morgan"
+    <img class="site-author-image" itemprop="image" alt="Latsummer"
       src="/images/IMG_6272.JPG">
-  <p class="site-author-name" itemprop="name">Morgan</p>
+  <p class="site-author-name" itemprop="name">Latsummer</p>
   <div class="site-description" itemprop="description">八说了，我在学了！</div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -599,19 +589,13 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Morgan</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-chart-area"></i>
-    </span>
-      <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">186k</span>
+  <span class="author" itemprop="copyrightHolder">Latsummer</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:49</span>
+    <span title="站点阅读时长">3:08</span>
 </div><script color="241,124,103" opacity="1" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
 
 
@@ -689,6 +673,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.3.0">
+<meta name="generator" content="Hexo 7.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/128x128.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png">
@@ -22,16 +22,16 @@
     var CONFIG = {"hostname":"zhaozhuolin.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#A9A9A9","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="枚举结构体将字段与数据聚合，而枚举可以将同一类型的东西（同时你可以将它可能的情况列举出来）作为一个集合，使用IP地址举例如下 1234enum IpAddrKind &amp;#123;	v4,	v6,&amp;#125;  枚举值可使用::访问枚举值 12let ipv4 &#x3D; IpAddrKind::v4;let ipv6 &#x3D; IpAddrKind::v6;  也可将其传入函数，如func(IpAddrKind">
+  <meta name="description" content="枚举结构体将字段与数据聚合，而枚举可以将同一类型的东西（同时你可以将它可能的情况列举出来）作为一个集合，使用IP地址举例如下 1234enum IpAddrKind &#123;	v4,	v6,&#125; 枚举值可使用::访问枚举值 12let ipv4 &#x3D; IpAddrKind::v4;let ipv6 &#x3D; IpAddrKind::v6; 也可将其传入函数，如func(IpAddrKind::">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Rust-枚举与模式匹配">
 <meta property="og:url" content="http://zhaozhuolin.com/2023/05/20230512.html">
 <meta property="og:site_name" content="小赵的学习笔记">
-<meta property="og:description" content="枚举结构体将字段与数据聚合，而枚举可以将同一类型的东西（同时你可以将它可能的情况列举出来）作为一个集合，使用IP地址举例如下 1234enum IpAddrKind &amp;#123;	v4,	v6,&amp;#125;  枚举值可使用::访问枚举值 12let ipv4 &#x3D; IpAddrKind::v4;let ipv6 &#x3D; IpAddrKind::v6;  也可将其传入函数，如func(IpAddrKind">
+<meta property="og:description" content="枚举结构体将字段与数据聚合，而枚举可以将同一类型的东西（同时你可以将它可能的情况列举出来）作为一个集合，使用IP地址举例如下 1234enum IpAddrKind &#123;	v4,	v6,&#125; 枚举值可使用::访问枚举值 12let ipv4 &#x3D; IpAddrKind::v4;let ipv6 &#x3D; IpAddrKind::v6; 也可将其传入函数，如func(IpAddrKind::">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-05-12T01:47:50.000Z">
 <meta property="article:modified_time" content="2024-05-25T03:28:46.297Z">
-<meta property="article:author" content="Morgan">
+<meta property="article:author" content="Latsummer">
 <meta property="article:tag" content="Rust">
 <meta name="twitter:card" content="summary">
 
@@ -205,7 +205,7 @@
 
 <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
   <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
+  <meta itemprop="name" content="Latsummer">
   <meta itemprop="description" content="八说了，我在学了！">
 </span>
 
@@ -256,14 +256,14 @@
             <i class="far fa-file-word"></i>
           </span>
             <span class="post-meta-item-text">本文字数：</span>
-          <span>4.6k</span>
+          <span>5.3k</span>
         </span>
         <span class="post-meta-item" title="阅读时长">
           <span class="post-meta-item-icon">
             <i class="far fa-clock"></i>
           </span>
             <span class="post-meta-item-text">阅读时长 &asymp;</span>
-          <span>4 分钟</span>
+          <span>5 分钟</span>
         </span>
 
     </div>
@@ -277,28 +277,21 @@
   
     <h1 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h1><p>结构体将字段与数据聚合，而枚举可以将同一类型的东西（同时你可以将它可能的情况列举出来）作为一个集合，使用IP地址举例如下</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="title class_">IpAddrKind</span> &#123;</span><br><span class="line">	v4,</span><br><span class="line">	v6,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <h2 id="枚举值"><a href="#枚举值" class="headerlink" title="枚举值"></a>枚举值</h2><p>可使用<code>::</code>访问枚举值</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">ipv4</span> = IpAddrKind::v4;</span><br><span class="line"><span class="keyword">let</span> <span class="variable">ipv6</span> = IpAddrKind::v6;</span><br></pre></td></tr></table></figure>
-
 <p>也可将其传入函数，如<code>func(IpAddrKind::v4)</code></p>
 <span id="more"></span>
-
 <p>也可结合结构体使用如下</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="title class_">IpAddrKind</span> &#123;</span><br><span class="line">    V4,</span><br><span class="line">    V6,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">IpAddr</span> &#123;</span><br><span class="line">    kind: IpAddrKind,</span><br><span class="line">    address: <span class="type">String</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable">home</span> = IpAddr &#123;</span><br><span class="line">    kind: IpAddrKind::V4,</span><br><span class="line">    address: <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;127.0.0.1&quot;</span>),</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable">loopback</span> = IpAddr &#123;</span><br><span class="line">    kind: IpAddrKind::V6,</span><br><span class="line">    address: <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;::1&quot;</span>),</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 <p>也可直接指定枚举值类型如</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="title class_">IpAddr</span> &#123;</span><br><span class="line">    <span class="title function_ invoke__">V4</span>(<span class="type">String</span>),</span><br><span class="line">    <span class="title function_ invoke__">V6</span>(<span class="type">String</span>),</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable">home</span> = IpAddr::<span class="title function_ invoke__">V4</span>(<span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;127.0.0.1&quot;</span>));</span><br><span class="line"><span class="keyword">let</span> <span class="variable">loopback</span> = IpAddr::<span class="title function_ invoke__">V6</span>(<span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;::1&quot;</span>));</span><br></pre></td></tr></table></figure>
-
 <p>此时，<code>IpAddr::V4()</code>实际上为一个获取<code>String</code>参数并返回<code>IpAddr</code>类型示例的函数调用，而这些构造函数会被自动定义，枚举可以为每个值指定不同的数据类型，例如</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="title class_">IpAddr</span> &#123;</span><br><span class="line">    <span class="title function_ invoke__">V4</span>(<span class="type">u8</span>, <span class="type">u8</span>, <span class="type">u8</span>, <span class="type">u8</span>),</span><br><span class="line">    <span class="title function_ invoke__">V6</span>(<span class="type">String</span>),</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable">home</span> = IpAddr::<span class="title function_ invoke__">V4</span>(<span class="number">127</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line"><span class="keyword">let</span> <span class="variable">loopback</span> = IpAddr::<span class="title function_ invoke__">V6</span>(<span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;::1&quot;</span>));</span><br></pre></td></tr></table></figure>
-
 <blockquote>
 <p>可以将任意类型的数据放入枚举成员中，例如字符串，数字或者结构体，甚至可以嵌套枚举</p>
 </blockquote>
 <p>以下为一个多种成员类型的枚举类型</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="title class_">Message</span> &#123;</span><br><span class="line">    Quit,</span><br><span class="line">    Move &#123; x: <span class="type">i32</span>, y: <span class="type">i32</span> &#125;,</span><br><span class="line">    <span class="title function_ invoke__">Write</span>(<span class="type">String</span>),</span><br><span class="line">    <span class="title function_ invoke__">ChangeColor</span>(<span class="type">i32</span>, <span class="type">i32</span>, <span class="type">i32</span>),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>该枚举类型有四个成员，分别为：</p>
 <ul>
 <li><code>Quit</code> 没有关联任何数据。</li>
@@ -308,46 +301,34 @@
 </ul>
 <p>如果使用结构体的话，他将会是这样，如果不能使用枚举类型的话，使用结构体需要定义四个不同的结构体类型</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">QuitMessage</span>; <span class="comment">// 类单元结构体</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">MoveMessage</span> &#123;</span><br><span class="line">    x: <span class="type">i32</span>,</span><br><span class="line">    y: <span class="type">i32</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">WriteMessage</span>(<span class="type">String</span>); <span class="comment">// 元组结构体</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">ChangeColorMessage</span>(<span class="type">i32</span>, <span class="type">i32</span>, <span class="type">i32</span>); <span class="comment">// 元组结构体</span></span><br></pre></td></tr></table></figure>
-
 <p>枚举同结构体一样可以使用<code>impl</code>来定义方法</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">impl</span> <span class="title class_">Message</span> &#123;</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">call</span>(&amp;<span class="keyword">self</span>) &#123;</span><br><span class="line">        <span class="comment">// 在这里定义方法体</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable">m</span> = Message::<span class="title function_ invoke__">Write</span>(<span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;hello&quot;</span>));</span><br><span class="line">m.<span class="title function_ invoke__">call</span>();</span><br></pre></td></tr></table></figure>
-
 <h2 id="Option枚举"><a href="#Option枚举" class="headerlink" title="Option枚举"></a><code>Option</code>枚举</h2><p><code>Option</code>是标准库定义的另一个枚举，这个枚举可以表示一个空值，Rust没有<code>nil</code>，<code>nullptr</code>，<code>NULL</code>那样的空值，取而代之为如下</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="title class_">Option</span>&lt;T&gt; &#123;</span><br><span class="line">	<span class="literal">None</span>,</span><br><span class="line">	<span class="title function_ invoke__">Some</span>(T),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>可以不使用<code>Option::</code>前缀来直接使用<code>Some</code>与<code>None</code>，但即便如此<code>Option&lt;T&gt;</code>也是常规的枚举， <code>Some&lt;T&gt;</code>与<code>None</code>是其成员，以下是一些例子</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">some_num</span> = <span class="title function_ invoke__">Some</span>(<span class="number">6</span>);</span><br><span class="line"><span class="keyword">let</span> <span class="variable">some_char</span> = <span class="title function_ invoke__">Some</span>(<span class="string">&#x27;a&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable">absent_num</span>: <span class="type">Option</span>&lt;<span class="type">i32</span>&gt; = <span class="literal">None</span>;</span><br></pre></td></tr></table></figure>
-
 <p>在上述例子中，<code>some_num</code>的类型是<code>Option&lt;i32&gt;</code>，<code>some_char</code>的类型是<code>Option&lt;char&gt;</code>，对于<code>absent_num</code>则通过<code>: Option&lt;i32&gt;</code>显示的指明其类型</p>
 <p>当有一个<code>Some</code>值时，我们就知道存在一个值，而这个值保存在 <code>Some</code> 中。当有个 <code>None</code> 值时，在某种意义上，它跟空值具有相同的意义：并没有一个有效的值。这样做会比空值更好，因为<code>Option&lt;T&gt;</code> 和 <code>T</code>（这里 <code>T</code> 可以是任何类型）是不同的类型，编译器不允许像一个肯定有效的值那样使用 <code>Option&lt;T&gt;</code></p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">let</span> <span class="variable">x</span>: <span class="type">i8</span> = <span class="number">5</span>;</span><br><span class="line"> <span class="keyword">let</span> <span class="variable">y</span>: <span class="type">Option</span>&lt;<span class="type">i8</span>&gt; = <span class="title function_ invoke__">Some</span>(<span class="number">5</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable">sum</span> = x + y; <span class="comment">//这两个值不能相加，因为不是同一个类型</span></span><br></pre></td></tr></table></figure>
-
 <h1 id="match控制流"><a href="#match控制流" class="headerlink" title="match控制流"></a><code>match</code>控制流</h1><p>允许讲一个值与一系列的模式相比较，并根据与相匹配的模式执行相应的代码。模式可以由字面值、变量以及通配符等其他内容构成，以下为一个案例，利用<code>match</code>语法获取对应衣服尺码的袖长</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="title class_">ClothingSize</span> &#123;</span><br><span class="line">    Size_XS,</span><br><span class="line">    Szie_S,</span><br><span class="line">    Size_M,</span><br><span class="line">    Size_L,</span><br><span class="line">    Size_XL,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">get_sleeve_len</span>(clothing_size: ClothingSize) <span class="punctuation">-&gt;</span> <span class="type">u8</span> &#123;</span><br><span class="line">    <span class="keyword">match</span> clothing_size &#123;</span><br><span class="line">        ClothingSize::Size_XS =&gt; &#123;</span><br><span class="line">            <span class="built_in">println!</span>(<span class="string">&quot;This is XS&quot;</span>);</span><br><span class="line">            <span class="number">10</span></span><br><span class="line">        &#125; <span class="comment">//使用 &#123;&#125; 形式时 逗号可写可不写</span></span><br><span class="line">        ClothingSize::Szie_S =&gt; <span class="number">20</span>,</span><br><span class="line">        ClothingSize::Size_M =&gt; <span class="number">30</span>,</span><br><span class="line">        ClothingSize::Size_L =&gt; <span class="number">40</span>,</span><br><span class="line">        ClothingSize::Size_XL =&gt; <span class="number">50</span>,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <h2 id="绑定值的模式"><a href="#绑定值的模式" class="headerlink" title="绑定值的模式"></a>绑定值的模式</h2><p>匹配分支的另一个功能是可以绑定匹配模式的部分值，这也就是如何从枚举成员中提取值的。</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="title class_">Brand</span> &#123;</span><br><span class="line">    AAA,</span><br><span class="line">    BBB</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">enum</span> <span class="title class_">ClothingSize</span> &#123;</span><br><span class="line">    Size_XS,</span><br><span class="line">    Szie_S,</span><br><span class="line">    Size_M,</span><br><span class="line">    <span class="title function_ invoke__">Size_L</span>(Brand),</span><br><span class="line">    Size_XL,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">get_sleeve_len</span>(clothing_size: ClothingSize) <span class="punctuation">-&gt;</span> <span class="type">u8</span> &#123;</span><br><span class="line">    <span class="keyword">match</span> clothing_size &#123;</span><br><span class="line">        ClothingSize::Size_XS =&gt; &#123;</span><br><span class="line">            <span class="built_in">println!</span>(<span class="string">&quot;This is XS&quot;</span>);</span><br><span class="line">            <span class="number">10</span></span><br><span class="line">        &#125; <span class="comment">//使用 &#123;&#125; 形式时 逗号可写可不写</span></span><br><span class="line">        ClothingSize::Szie_S =&gt; <span class="number">20</span>,</span><br><span class="line">        ClothingSize::Size_M =&gt; <span class="number">30</span>,</span><br><span class="line">        ClothingSize::<span class="title function_ invoke__">Size_L</span>(brand) =&gt; &#123;</span><br><span class="line">        	<span class="built_in">println!</span>(<span class="string">&quot;clothing brand is &#123;:?&#125;&quot;</span>, brand);</span><br><span class="line">            <span class="number">40</span></span><br><span class="line">        &#125;,</span><br><span class="line">        ClothingSize::Size_XL =&gt; <span class="number">50</span>,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>在以上场景中，调用<code>get_sleeve_len(ClothingSize::Size_L(Brand::AAA))</code>，传入函数内部的<code>clothing_size</code>遇到<code>ClothingSize::Size_L(brand)</code>会匹配上，接着就可以直接使用<code>AAA</code>这个值</p>
 <h2 id="匹配Option-lt-T-gt"><a href="#匹配Option-lt-T-gt" class="headerlink" title="匹配Option&lt;T&gt;"></a>匹配<code>Option&lt;T&gt;</code></h2><p><code>Option&lt;T&gt;</code>也可以被用作<code>match</code>匹配，例如一个函数，接受一个类型为<code>Option&lt;T&gt;</code>的参数，如果其中有值，则将其加一，如果没有则不进行操作</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">plus_one</span>(x: <span class="type">Option</span>&lt;<span class="type">i32</span>&gt;) <span class="punctuation">-&gt;</span> <span class="type">Option</span>&lt;<span class="type">i32</span>&gt; &#123;</span><br><span class="line">    <span class="keyword">match</span> x &#123;</span><br><span class="line">        <span class="literal">None</span> =&gt; <span class="literal">None</span>,</span><br><span class="line">        <span class="title function_ invoke__">Some</span>(i) =&gt; <span class="title function_ invoke__">Some</span>(i + <span class="number">1</span>),</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable">five</span> = <span class="title function_ invoke__">Some</span>(<span class="number">5</span>);</span><br><span class="line"><span class="keyword">let</span> <span class="variable">six</span> = <span class="title function_ invoke__">plus_one</span>(five);</span><br><span class="line"><span class="keyword">let</span> <span class="variable">none</span> = <span class="title function_ invoke__">plus_one</span>(<span class="literal">None</span>);</span><br></pre></td></tr></table></figure>
-
 <h2 id="匹配的穷尽性，通配模式与占位符"><a href="#匹配的穷尽性，通配模式与占位符" class="headerlink" title="匹配的穷尽性，通配模式与占位符_"></a>匹配的穷尽性，通配模式与占位符<code>_</code></h2><p>匹配需要列出所有的可能，所有可能出现的值都必须能匹配到，在<code>Rust</code>中可以使用通配模式与<code>_</code>占位符来实现穷尽例如</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">num</span> = <span class="title function_ invoke__">rand</span>();</span><br><span class="line"><span class="keyword">match</span> num &#123;</span><br><span class="line">    <span class="number">7</span> =&gt; <span class="title function_ invoke__">deal_seven</span>(),</span><br><span class="line">    <span class="number">9</span> =&gt; <span class="title function_ invoke__">deal_nine</span>(),</span><br><span class="line">    other =&gt; <span class="title function_ invoke__">deal_other</span>(other),</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">deal_seven</span>() &#123;&#125;</span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">deal_nine</span>() &#123;&#125;</span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">deal_other</span>(num: <span class="type">u8</span>) &#123;&#125;</span><br></pre></td></tr></table></figure>
-
 <p>对于前两个分支，匹配模式是字面值 <code>7</code> 和 <code>9</code>，最后一个分支则涵盖了所有其他可能的值，模式是我们命名为 <code>other</code> 的一个变量。<code>other</code> 分支的代码通过将其传递给 <code>deal_other</code> 函数来使用这个变量。</p>
 <blockquote>
 <p>通配模式应该放在最后一位，因为<code>match</code>是按照分支顺序依次匹配的</p>
 </blockquote>
 <p>如果不想使用通配模式获取的值，使用<code>_</code>来替代，其可以匹配任意值而不绑定到该值</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">num</span> = <span class="title function_ invoke__">rand</span>();</span><br><span class="line"><span class="keyword">match</span> num &#123;</span><br><span class="line">    <span class="number">7</span> =&gt; <span class="title function_ invoke__">deal_seven</span>(),</span><br><span class="line">    <span class="number">9</span> =&gt; <span class="title function_ invoke__">deal_nine</span>(),</span><br><span class="line">    _ =&gt; <span class="title function_ invoke__">deal_other</span>(),</span><br><span class="line">    <span class="comment">// 如果不想做任何事，可以使用以下写法，返回一个空的元组</span></span><br><span class="line">    _ =&gt; (),</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">deal_seven</span>() &#123;&#125;</span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">deal_nine</span>() &#123;&#125;</span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">deal_other</span>() &#123;&#125;</span><br></pre></td></tr></table></figure>
-
 <h1 id="if-let简洁控制流"><a href="#if-let简洁控制流" class="headerlink" title="if let简洁控制流"></a><code>if let</code>简洁控制流</h1><p>如果有以下类似的逻辑</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">config_max</span> = <span class="title function_ invoke__">Some</span>(<span class="number">3u8</span>);</span><br><span class="line"><span class="keyword">match</span> config_max &#123;</span><br><span class="line">    <span class="title function_ invoke__">Some</span>(max) =&gt; <span class="built_in">println!</span>(<span class="string">&quot;The maximum is configured to be &#123;&#125;&quot;</span>, max),</span><br><span class="line">    _ =&gt; (),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>仅关心<code>Some</code>得值，其余不做任何操作，可使用<code>if let</code>来简写</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">config_max</span> = <span class="title function_ invoke__">Some</span>(<span class="number">3u8</span>);</span><br><span class="line"><span class="keyword">if</span> <span class="keyword">let</span> <span class="variable">Some</span>(max) = config_max &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;The maximum is configured to be &#123;&#125;&quot;</span>, max);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 
 </div>
 
@@ -359,7 +340,7 @@
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
-    <strong>本文作者： </strong>Morgan
+    <strong>本文作者： </strong>Latsummer
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
@@ -465,9 +446,9 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Morgan"
+    <img class="site-author-image" itemprop="image" alt="Latsummer"
       src="/images/IMG_6272.JPG">
-  <p class="site-author-name" itemprop="name">Morgan</p>
+  <p class="site-author-name" itemprop="name">Latsummer</p>
   <div class="site-description" itemprop="description">八说了，我在学了！</div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -534,19 +515,13 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Morgan</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-chart-area"></i>
-    </span>
-      <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">186k</span>
+  <span class="author" itemprop="copyrightHolder">Latsummer</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:49</span>
+    <span title="站点阅读时长">3:08</span>
 </div><script color="241,124,103" opacity="1" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
 
 
@@ -624,6 +599,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

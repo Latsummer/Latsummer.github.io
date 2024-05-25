@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.3.0">
+<meta name="generator" content="Hexo 7.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/128x128.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png">
@@ -36,7 +36,7 @@
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20200313161457391.png">
 <meta property="article:published_time" content="2020-03-13T08:45:41.000Z">
 <meta property="article:modified_time" content="2020-06-02T05:10:44.000Z">
-<meta property="article:author" content="Morgan">
+<meta property="article:author" content="Latsummer">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200313153047129.png">
 
@@ -210,7 +210,7 @@
 
 <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
   <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
+  <meta itemprop="name" content="Latsummer">
   <meta itemprop="description" content="八说了，我在学了！">
 </span>
 
@@ -261,7 +261,7 @@
             <i class="far fa-file-word"></i>
           </span>
             <span class="post-meta-item-text">本文字数：</span>
-          <span>2.5k</span>
+          <span>2.6k</span>
         </span>
         <span class="post-meta-item" title="阅读时长">
           <span class="post-meta-item-icon">
@@ -282,16 +282,12 @@
   
     <h2 id="结构体"><a href="#结构体" class="headerlink" title="结构体"></a>结构体</h2><p>结构体是一些值的集合，这些值被称为成员变量，结构的每个成员可以是不同类型的变量。</p>
 <span id="more"></span>
-
 <h3 id="结构体的声明"><a href="#结构体的声明" class="headerlink" title="结构体的声明"></a>结构体的声明</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">piont</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="type">int</span> x;</span><br><span class="line">	<span class="type">int</span> y;</span><br><span class="line">&#125;p1;<span class="comment">//声明结构体类型，同时定义变量p1</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">point</span> <span class="title">p2</span>;</span><span class="comment">//定义结构体变量p2</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">point</span> <span class="title">p3</span> =</span> &#123;x, y&#125;;<span class="comment">//初始化：定义变量同时赋值</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">point</span>* <span class="title">p4</span>;</span><span class="comment">//定义结构体类型指针</span></span><br></pre></td></tr></table></figure>
-
-<p>结构体在声明的时候可以省略结构体标签（tag），称之为匿名结构体，但很少会用到。<br>结构体可以使用 { }初始化，但不能用它赋值。</p>
+<p>结构体在声明的时候可以省略结构体标签（tag），称之为匿名结构体，但很少会用到。<br>结构体可以使用 \{ \}初始化，但不能用它赋值。</p>
 <h3 id="结构体的成员访问"><a href="#结构体的成员访问" class="headerlink" title="结构体的成员访问"></a>结构体的成员访问</h3><p>结构体变量访问成员，通过（.）操作符来访问。<br>例如：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">p1.x = <span class="number">20</span>;</span><br><span class="line">p1.y = <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
-
 <p>结构体指针访问指向变量的成员,使用( -&gt; )操作符来访问<br>例如：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d,%d\n&quot;</span>, p4-&gt;x, p4-&gt;y);</span><br></pre></td></tr></table></figure>
-
 <p>结构体可以自引用，但是只能通过包含自身类型的指针这种方式来自引用。</p>
 <h2 id="结构体的内存对齐"><a href="#结构体的内存对齐" class="headerlink" title="结构体的内存对齐"></a>结构体的内存对齐</h2><p><strong>结构体的内存对齐规则：</strong></p>
 <ol>
@@ -309,9 +305,8 @@
 <li>可以用 #pragma pack ( )来修改默认对齐数，如果括号内不填写数字，则 还原成默认对齐数。</li>
 </ul>
 </blockquote>
-<p><em><strong>举例一：</strong></em><br>（VS2013下）</p>
+<p>_<strong>举例一：</strong>_<br>（VS2013下）</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">s</span>&#123;</span></span><br><span class="line">	<span class="type">char</span> a;<span class="comment">//1 字节</span></span><br><span class="line">	<span class="type">int</span> b;<span class="comment">//4 字节</span></span><br><span class="line">	<span class="type">double</span> c;<span class="comment">//8 字节</span></span><br><span class="line">	<span class="type">char</span> d;<span class="comment">//1 字节</span></span><br><span class="line">	<span class="type">short</span> e;<span class="comment">//2 字节</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 <p>对于该结构体类型来说，它占据内存空间大小的计算方法是：</p>
 <ol>
 <li>根据第一条规则，对第一个成员变量，它在与结构体变量偏移量为0的地址处，此时算上一个字节。</li>
@@ -320,26 +315,25 @@
 <blockquote>
 <p>前两个成员</p>
 </blockquote>
-<ol start="3">
+<ol>
 <li>根据第二条规则，对于第三个成员，double类型，八个字节，与默认对齐数相等，所以对齐数取8，它放在8的整数倍地址上，即放在距离结构体变量偏移为8的地址处，此时结构体变量有16个字节。<br><img src="https://img-blog.csdnimg.cn/20200313153700911.png" alt="前三个成员"></li>
 </ol>
 <blockquote>
 <p>前三个成员</p>
 </blockquote>
-<ol start="4">
+<ol>
 <li>根据第二条规则，第四个成员，char类型，一个字节，同上，它的对齐数是 1，所以直接放置即可，此时结构体变量有17个字节</li>
 <li>根据第二条规则，第五个成员，类型是short，两个字节，同上，它的对齐数是2，放在地址是二的整数倍处,即第18个字节处，此时结构体变量为20个字节<br><img src="https://img-blog.csdnimg.cn/20200313155450248.png" alt="所有成员"></li>
 </ol>
 <blockquote>
 <p>所有的五个成员</p>
 </blockquote>
-<ol start="6">
+<ol>
 <li>根据第三条规则：结构体总大小为最大对齐数（每个成员变量都有一个对齐数）的整数倍，这个结构体的最大对齐数是8，那么它占据的内存应该是八的整数倍，此时20个字节，补齐到24个字节即为八的整数倍<br><img src="https://img-blog.csdnimg.cn/20200313155958775.png" alt="结构体全貌"></li>
 </ol>
 <p>所以，在举例一种，该结构体的大小为24个字节。</p>
-<p><em><strong>举例二：</strong></em><br>求此时struct s2 结构体类型的大小</p>
+<p>_<strong>举例二：</strong>_<br>求此时struct s2 结构体类型的大小</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">s</span>&#123;</span></span><br><span class="line">	<span class="type">char</span> a;</span><br><span class="line">	<span class="type">int</span> b;</span><br><span class="line">	<span class="type">double</span> c;</span><br><span class="line">	<span class="type">char</span> d;</span><br><span class="line">	<span class="type">short</span> e;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">s2</span>&#123;</span></span><br><span class="line">	<span class="type">char</span> a;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">s</span> <span class="title">b</span>;</span></span><br><span class="line">	<span class="type">char</span> c;</span><br><span class="line">	<span class="type">int</span> d;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 <ol>
 <li>根据第一条规则，对第一个成员变量，它在与结构体变量偏移量为0的地址处，此时算上一个字节。</li>
 <li>根据第四条规则，如果嵌套了结构体的情况，嵌套的结构体对齐到自己的最大对齐数的整数倍处，结构体的整体大小就是所有最大对齐数（含嵌套结构体的对齐数）的整数倍，结构体s中的最大对齐数是8，那么就要对齐到八的整数倍地址处，此时第一个字节往后开辟七个字节之后，来存放该结构体类型变量，这个结构体类型变量的大小在举例一中计算过，24个字节，所以此时s2为32个字节。<br><img src="https://img-blog.csdnimg.cn/20200313161457391.png" alt="前两个成员"></li>
@@ -347,7 +341,7 @@
 <blockquote>
 <p>前两个成员</p>
 </blockquote>
-<ol start="3">
+<ol>
 <li>根据第二条规则，第三成员是char类型，1个字节，对齐数为1，所以此时结构体s2为33个字节。</li>
 <li>根据第二条规则，第四成员为int类型，四个字节，对齐数为4，对齐到4的整数倍地址处，即第36个字节处，此时结构体大小为40字节。</li>
 <li>根据第三条规则，该结构体各个成员中最大对齐数是八，所以它占据的内存应为八的整数倍，而40正好是八的整数倍，所以不用补齐</li>
@@ -355,17 +349,13 @@
 <p>所以举例二中结构体类型的大小应为40字节。</p>
 <h2 id="位段"><a href="#位段" class="headerlink" title="位段"></a>位段</h2><p>位段的声明和结构体类似，但是位段的成员必须是int 、unsigned int或signed int，位段的成员后有一个冒号和一个数字。冒号后的数字是几，就说明前边的成员变量占几个<strong>比特位</strong>。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="type">int</span> a : <span class="number">1</span>;</span><br><span class="line">	<span class="type">int</span> b : <span class="number">3</span>;</span><br><span class="line">	<span class="type">int</span> c : <span class="number">5</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 <h2 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h2><p>将可能的取值一一列举，即为枚举</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">season</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	spring,</span><br><span class="line">	summer,</span><br><span class="line">	autumn,</span><br><span class="line">	winter</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 <p>枚举常量的值默认由0开始依次递增，除非在声明中赋值</p>
 <h2 id="联合"><a href="#联合" class="headerlink" title="联合"></a>联合</h2><p>该类型定义的变量包含一系列成员，但是这些成员都公用同一块内存空间</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">union</span> <span class="title">Un</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="type">int</span> a;</span><br><span class="line">	<span class="type">char</span> b;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 <p>可以用它的特性来判断大小端字节序，例如：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">union</span> <span class="title">Un</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="type">int</span> a;</span><br><span class="line">	<span class="type">char</span> b;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="class"><span class="keyword">union</span> <span class="title">Un</span> <span class="title">s</span>;</span></span><br><span class="line">	s.a = <span class="number">0x11223344</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%x\n&quot;</span>, s.b);</span><br><span class="line">	system(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;<span class="comment">//输出为44，当前机器为小端字节序。</span></span><br></pre></td></tr></table></figure>
-
 <p><strong>联合的大小：</strong></p>
 <ul>
 <li>联合的大小至少是最大成员的大小</li>
@@ -382,7 +372,7 @@
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
-    <strong>本文作者： </strong>Morgan
+    <strong>本文作者： </strong>Latsummer
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
@@ -485,9 +475,9 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Morgan"
+    <img class="site-author-image" itemprop="image" alt="Latsummer"
       src="/images/IMG_6272.JPG">
-  <p class="site-author-name" itemprop="name">Morgan</p>
+  <p class="site-author-name" itemprop="name">Latsummer</p>
   <div class="site-description" itemprop="description">八说了，我在学了！</div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -554,19 +544,13 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Morgan</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-chart-area"></i>
-    </span>
-      <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">186k</span>
+  <span class="author" itemprop="copyrightHolder">Latsummer</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:49</span>
+    <span title="站点阅读时长">3:08</span>
 </div><script color="241,124,103" opacity="1" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
 
 
@@ -644,6 +628,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

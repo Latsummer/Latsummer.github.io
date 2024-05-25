@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.3.0">
+<meta name="generator" content="Hexo 7.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/128x128.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png">
@@ -22,16 +22,16 @@
     var CONFIG = {"hostname":"zhaozhuolin.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#A9A9A9","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="stack的基本使用1234567891011#include&lt;stack&gt;stack&lt;int&gt; st;st.push(1);st.push(2);st.push(3);while(!st.empty())&amp;#123;  cout &lt;&lt; st.top() &lt;&lt; &quot; &quot;;  st.pop();&amp;#125;cout &lt;&lt;">
+  <meta name="description" content="stack的基本使用1234567891011#include&lt;stack&gt;stack&lt;int&gt; st;st.push(1);st.push(2);st.push(3);while(!st.empty())&#123;  cout &lt;&lt; st.top() &lt;&lt; &quot; &quot;;  st.pop();&#125;cout &lt;&lt;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="stack、queue及priority_queue">
 <meta property="og:url" content="http://zhaozhuolin.com/2020/06/20200617.html">
 <meta property="og:site_name" content="小赵的学习笔记">
-<meta property="og:description" content="stack的基本使用1234567891011#include&lt;stack&gt;stack&lt;int&gt; st;st.push(1);st.push(2);st.push(3);while(!st.empty())&amp;#123;  cout &lt;&lt; st.top() &lt;&lt; &quot; &quot;;  st.pop();&amp;#125;cout &lt;&lt;">
+<meta property="og:description" content="stack的基本使用1234567891011#include&lt;stack&gt;stack&lt;int&gt; st;st.push(1);st.push(2);st.push(3);while(!st.empty())&#123;  cout &lt;&lt; st.top() &lt;&lt; &quot; &quot;;  st.pop();&#125;cout &lt;&lt;">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-06-17T05:59:46.000Z">
 <meta property="article:modified_time" content="2020-06-17T06:01:10.000Z">
-<meta property="article:author" content="Morgan">
+<meta property="article:author" content="Latsummer">
 <meta property="article:tag" content="-stakc -queue">
 <meta name="twitter:card" content="summary">
 
@@ -205,7 +205,7 @@
 
 <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
   <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
+  <meta itemprop="name" content="Latsummer">
   <meta itemprop="description" content="八说了，我在学了！">
 </span>
 
@@ -250,7 +250,7 @@
             <i class="far fa-file-word"></i>
           </span>
             <span class="post-meta-item-text">本文字数：</span>
-          <span>2.3k</span>
+          <span>2.5k</span>
         </span>
         <span class="post-meta-item" title="阅读时长">
           <span class="post-meta-item-icon">
@@ -272,9 +272,7 @@
     <h1 id="stack的基本使用"><a href="#stack的基本使用" class="headerlink" title="stack的基本使用"></a>stack的基本使用</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stack&gt;</span></span></span><br><span class="line">stack&lt;<span class="type">int</span>&gt; st;</span><br><span class="line">st.<span class="built_in">push</span>(<span class="number">1</span>);</span><br><span class="line">st.<span class="built_in">push</span>(<span class="number">2</span>);</span><br><span class="line">st.<span class="built_in">push</span>(<span class="number">3</span>);</span><br><span class="line"><span class="keyword">while</span>(!st.<span class="built_in">empty</span>())</span><br><span class="line">&#123;</span><br><span class="line">  cout &lt;&lt; st.<span class="built_in">top</span>() &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">  st.<span class="built_in">pop</span>();</span><br><span class="line">&#125;</span><br><span class="line">cout &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
 <span id="more"></span>
 <h1 id="queue的基本使用"><a href="#queue的基本使用" class="headerlink" title="queue的基本使用"></a>queue的基本使用</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;queue&gt;</span></span></span><br><span class="line">queue&lt;<span class="type">int</span>&gt; q;</span><br><span class="line">q.<span class="built_in">push</span>();</span><br><span class="line"><span class="keyword">while</span>(!q.<span class="built_in">empty</span>())</span><br><span class="line">&#123;</span><br><span class="line">	cout &lt;&lt; q.<span class="built_in">front</span>() &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">	q.<span class="built_in">pop</span>();</span><br><span class="line">&#125;</span><br><span class="line">cout &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
-
 <h2 id="priority-queue"><a href="#priority-queue" class="headerlink" title="priority_queue"></a>priority_queue</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">priority_queue&lt;<span class="type">int</span>&gt; pq;</span><br><span class="line">pq.<span class="built_in">push</span>(<span class="number">10</span>);</span><br><span class="line">pq.<span class="built_in">push</span>(<span class="number">1</span>);</span><br><span class="line">pq.<span class="built_in">push</span>(<span class="number">15</span>);</span><br><span class="line">pq.<span class="built_in">push</span>(<span class="number">20</span>);</span><br><span class="line">pq.<span class="built_in">push</span>(<span class="number">2</span>);</span><br><span class="line">pq.<span class="built_in">push</span>(<span class="number">4</span>);</span><br><span class="line">pq.<span class="built_in">push</span>(<span class="number">19</span>);</span><br><span class="line"><span class="keyword">while</span>(!pq.<span class="built_in">empty</span>())</span><br><span class="line">&#123;</span><br><span class="line">  cout &lt;&lt; pq.<span class="built_in">top</span>() &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">  pq.<span class="built_in">pop</span>();</span><br><span class="line">&#125;</span><br><span class="line">cout &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
-
 <p>优先级队列存放自定义类型，自定义类型需要支持大小比较运算</p>
 <ul>
 <li><p>建大堆需要提供小于比较的仿函数类</p>
@@ -282,60 +280,59 @@
 <li><p>建小堆需要提供大于比较的仿函数类</p>
 </li>
 </ul>
-<h1 id="仿函数"><a href="#仿函数" class="headerlink" title="仿函数"></a>仿函数</h1><p>STL组件：使用方式类似于函数的类 —&gt; 重载圆括号 “( )” 的运算符重载函数</p>
+<h1 id="仿函数"><a href="#仿函数" class="headerlink" title="仿函数"></a>仿函数</h1><p>STL组件：使用方式类似于函数的类 —-&gt; 重载圆括号 “( )” 的运算符重载函数</p>
 <p>仿函数对象：由仿函数类创建的对象</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//仿函数类模版</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Less</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="function"><span class="type">bool</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="type">const</span> T&amp; c1, <span class="type">const</span> T&amp; c2)</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> c1 &lt; c2;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  Less&lt;C&gt; lc;</span><br><span class="line">  <span class="function">C <span class="title">c1</span><span class="params">(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span></span>;</span><br><span class="line">  <span class="function">C <span class="title">c2</span><span class="params">(<span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>)</span></span>;</span><br><span class="line">  <span class="type">bool</span> ret = lc.<span class="built_in">operator</span>()(c1, c2);</span><br><span class="line">  ret = <span class="built_in">lc</span>(c1, c2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <h1 id="容器适配器"><a href="#容器适配器" class="headerlink" title="容器适配器"></a>容器适配器</h1><p>STL组件，stack，queue，priority_queue</p>
 <p>通过适配器的设计模式定义的新的数据结构</p>
 <p>适配器：把一种接口转化为另一种接口的方法</p>
 <ol>
 <li><p>stack：<code>template&lt; class T, class Container = deque&lt;T&gt; &gt; class stack</code></p>
-<p> 实现：vector，list，deque  &#x3D;&#x3D;默认实现：deque&#x3D;&#x3D;</p>
+<p> 实现：vector，list，deque  ==默认实现：deque==</p>
 <p> stack实现规范：只要包含以下接口，都可以作为stack低层容器</p>
 </li>
 </ol>
 <ul>
-<li><p>Push_back —&gt; push</p>
+<li><p>Push_back —-&gt; push</p>
 </li>
-<li><p>Pop_back —&gt;pop</p>
+<li><p>Pop_back —-&gt;pop</p>
 </li>
-<li><p>front —&gt; top</p>
+<li><p>front —-&gt; top</p>
 </li>
-<li><p>size —&gt; size</p>
+<li><p>size —-&gt; size</p>
 </li>
-<li><p>Empty —&gt; empty</p>
+<li><p>Empty —-&gt; empty</p>
 </li>
 </ul>
-<ol start="2">
-<li><p>Queue实现：list， deque   &#x3D;&#x3D;默认实现：deque&#x3D;&#x3D;</p>
+<ol>
+<li><p>Queue实现：list， deque   ==默认实现：deque==</p>
 <p> queue实现规范：只要包含以下接口，都可以作为queue低层容器</p>
 </li>
 </ol>
 <ul>
-<li>Push_back —&gt; push</li>
-<li>Pop_back —&gt; pop</li>
-<li>front —&gt; front</li>
-<li>back —&gt; back</li>
-<li>size —&gt; size</li>
-<li>empty —&gt; empty</li>
+<li>Push_back —-&gt; push</li>
+<li>Pop_back —-&gt; pop</li>
+<li>front —-&gt; front</li>
+<li>back —-&gt; back</li>
+<li>size —-&gt; size</li>
+<li>empty —-&gt; empty</li>
 </ul>
 <p>vector不能实现queue，因为它不提供pop_front接口</p>
-<ol start="3">
-<li><p>Priority_queue实现：vector  deque，&#x3D;&#x3D;默认实现：vector&#x3D;&#x3D;</p>
+<ol>
+<li><p>Priority_queue实现：vector  deque，==默认实现：vector==</p>
 <p> 实现规范：只要包含以下接口，其容器本身支持随机访问，都可以作为priority_queue的低层容器</p>
 </li>
 </ol>
 <ul>
-<li>Push_back —&gt; push</li>
-<li>Pop_back —&gt; pop</li>
-<li>Front —&gt; top</li>
-<li>Size —&gt; size</li>
-<li>Empty —&gt; empty</li>
+<li>Push_back —-&gt; push</li>
+<li>Pop_back —-&gt; pop</li>
+<li>Front —-&gt; top</li>
+<li>Size —-&gt; size</li>
+<li>Empty —-&gt; empty</li>
 </ul>
 <p>list不能实现priority_queue，因为其不支持随机访问</p>
 <h1 id="duque-双端队列"><a href="#duque-双端队列" class="headerlink" title="duque 双端队列"></a>duque 双端队列</h1><p>逻辑连续，物理上不完全连续的线性表</p>
-<p>实现：指针数组 + buffer —&gt; 动态二维数组</p>
+<p>实现：指针数组 + buffer —-&gt; 动态二维数组</p>
 <ol>
 <li>头插、头删、尾插、尾删时间复杂度都为O(1)，不需要移动元素</li>
 <li>支持随机访问，但是随机访问的效率低于vector，需要进行位置换算</li>
@@ -361,7 +358,7 @@
 <ul>
 <li><p>模版参数：Compare：</p>
 <ol>
-<li>执行大小比较的逻辑 —&gt; 通过仿函数实现</li>
+<li>执行大小比较的逻辑 —-&gt; 通过仿函数实现</li>
 <li>提供的仿函数不同，可以产生不同的堆结构。不需要修改源代码，极大的增加了代码的灵活性及通用性</li>
 <li>如果是自定义类型数据，需要重载<code>&gt;</code> <code>&lt;</code>运算符</li>
 </ol>
@@ -369,7 +366,7 @@
 </ul>
 </li>
 </ul>
-<h1 id="模拟实现"><a href="#模拟实现" class="headerlink" title="模拟实现"></a>模拟实现</h1><p><a target="_blank" rel="noopener" href="https://github.com/Latsummer/FinishedProducts/tree/master/stack.queue.pqm%E6%A8%A1%E6%8B%9F%E5%AE%9E%E7%8E%B0">stack、queue及priority_queue的模拟实现–GitHub</a></p>
+<h1 id="模拟实现"><a href="#模拟实现" class="headerlink" title="模拟实现"></a>模拟实现</h1><p><a target="_blank" rel="noopener" href="https://github.com/Latsummer/FinishedProducts/tree/master/stack.queue.pqm模拟实现">stack、queue及priority_queue的模拟实现—GitHub</a></p>
 
 </div>
 
@@ -381,7 +378,7 @@
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
-    <strong>本文作者： </strong>Morgan
+    <strong>本文作者： </strong>Latsummer
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
@@ -487,9 +484,9 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Morgan"
+    <img class="site-author-image" itemprop="image" alt="Latsummer"
       src="/images/IMG_6272.JPG">
-  <p class="site-author-name" itemprop="name">Morgan</p>
+  <p class="site-author-name" itemprop="name">Latsummer</p>
   <div class="site-description" itemprop="description">八说了，我在学了！</div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -556,19 +553,13 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Morgan</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-chart-area"></i>
-    </span>
-      <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">186k</span>
+  <span class="author" itemprop="copyrightHolder">Latsummer</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:49</span>
+    <span title="站点阅读时长">3:08</span>
 </div><script color="241,124,103" opacity="1" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
 
 
@@ -646,6 +637,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

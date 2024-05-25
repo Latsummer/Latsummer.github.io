@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.3.0">
+<meta name="generator" content="Hexo 7.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/128x128.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png">
@@ -22,16 +22,16 @@
     var CONFIG = {"hostname":"zhaozhuolin.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#A9A9A9","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="泛型编程编写与类型无关的代码 1template &lt;typename &#x2F; class 泛型参数1, typename &#x2F; class 泛型参数2 ...... &gt;  告诉编译器一个模板，让编译器根据不同的类型利用该模板生成代码">
+  <meta name="description" content="泛型编程编写与类型无关的代码 1template &lt;typename &#x2F; class 泛型参数1, typename &#x2F; class 泛型参数2 ...... &gt; 告诉编译器一个模板，让编译器根据不同的类型利用该模板生成代码">
 <meta property="og:type" content="article">
 <meta property="og:title" content="初识模板">
 <meta property="og:url" content="http://zhaozhuolin.com/2020/05/20200531.html">
 <meta property="og:site_name" content="小赵的学习笔记">
-<meta property="og:description" content="泛型编程编写与类型无关的代码 1template &lt;typename &#x2F; class 泛型参数1, typename &#x2F; class 泛型参数2 ...... &gt;  告诉编译器一个模板，让编译器根据不同的类型利用该模板生成代码">
+<meta property="og:description" content="泛型编程编写与类型无关的代码 1template &lt;typename &#x2F; class 泛型参数1, typename &#x2F; class 泛型参数2 ...... &gt; 告诉编译器一个模板，让编译器根据不同的类型利用该模板生成代码">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-05-31T06:59:34.000Z">
 <meta property="article:modified_time" content="2020-06-02T05:10:44.000Z">
-<meta property="article:author" content="Morgan">
+<meta property="article:author" content="Latsummer">
 <meta property="article:tag" content="C++">
 <meta property="article:tag" content="模版">
 <meta name="twitter:card" content="summary">
@@ -206,7 +206,7 @@
 
 <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
   <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
+  <meta itemprop="name" content="Latsummer">
   <meta itemprop="description" content="八说了，我在学了！">
 </span>
 
@@ -257,7 +257,7 @@
             <i class="far fa-file-word"></i>
           </span>
             <span class="post-meta-item-text">本文字数：</span>
-          <span>1.4k</span>
+          <span>1.6k</span>
         </span>
         <span class="post-meta-item" title="阅读时长">
           <span class="post-meta-item-icon">
@@ -278,12 +278,9 @@
   
     <h1 id="泛型编程"><a href="#泛型编程" class="headerlink" title="泛型编程"></a>泛型编程</h1><p>编写与类型无关的代码</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> / <span class="keyword">class</span> 泛型参数<span class="number">1</span>, <span class="keyword">typename</span> / <span class="keyword">class</span> 泛型参数<span class="number">2</span> ...... &gt;</span><br></pre></td></tr></table></figure>
-
 <p>告诉编译器一个模板，让编译器根据不同的类型利用该模板生成代码</p>
 <span id="more"></span>
-
 <h1 id="函数模版"><a href="#函数模版" class="headerlink" title="函数模版"></a>函数模版</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Swap</span><span class="params">(T&amp; left, T&amp; right)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  T tmp = left;</span><br><span class="line">  left = right;</span><br><span class="line">  right = tmp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt;</span><br><span class="line"><span class="function">T <span class="title">add</span><span class="params">(T a, T b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="type">int</span> a = <span class="number">1</span>, b = <span class="number">10</span>;</span><br><span class="line">  <span class="type">char</span> c = <span class="string">&#x27;a&#x27;</span>, d = <span class="string">&#x27;b&#x27;</span>;</span><br><span class="line">  <span class="function">Date <span class="title">d1</span><span class="params">(<span class="number">2020</span>)</span></span>;</span><br><span class="line">  <span class="function">Date <span class="title">d2</span><span class="params">(<span class="number">1010</span>)</span></span>;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//隐式实例化：编译器根据参数进行自动推导，产生直接可执行的代码</span></span><br><span class="line">  <span class="built_in">Swap</span>(a, b);</span><br><span class="line">  <span class="built_in">Swap</span>(c, d);</span><br><span class="line">  <span class="built_in">Swap</span> (d1, d2);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//显示实例化：函数名 + &lt;类型&gt; + （参数列表）</span></span><br><span class="line">  <span class="built_in">Swap</span>&lt;<span class="type">int</span>&gt;(a, b);</span><br><span class="line">  <span class="built_in">add</span>&lt;<span class="type">int</span>&gt;(a, c);</span><br><span class="line">  <span class="built_in">add</span>&lt;<span class="type">char</span>&gt;(a, c);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>函数模版实例化：用实际参数类型，生成可执行的函数</p>
 <blockquote>
 <p>实际上并没有减少实际的代码量，只是把重复的代码交给机器自动生成</p>
@@ -298,14 +295,13 @@
 </li>
 </ul>
 <h1 id="类模版"><a href="#类模版" class="headerlink" title="类模版"></a>类模版</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">T1</span>, <span class="keyword">class</span> <span class="title class_">T2</span>, <span class="keyword">class</span> <span class="title class_">T3</span>&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Date</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="built_in">Date</span>(T1 year, T2 month, T3 day)</span><br><span class="line">    : _year(year)</span><br><span class="line">    , _month(month)</span><br><span class="line">    , _day(day)</span><br><span class="line">    &#123;&#125;</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">Display</span><span class="params">()</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  T1 _year;</span><br><span class="line">  T2 _month;</span><br><span class="line">  T3 _day;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">T1</span>, <span class="keyword">class</span> <span class="title class_">T2</span>, <span class="keyword">class</span> <span class="title class_">T3</span>&gt;</span><br><span class="line"><span class="type">void</span> Date&lt;T1, T2, T3&gt;::<span class="built_in">Display</span>()</span><br><span class="line">&#123;</span><br><span class="line">  cout &lt;&lt; _year &lt;&lt; <span class="string">&quot;-&quot;</span> &lt;&lt; _month &lt;&lt; <span class="string">&quot;-&quot;</span> &lt;&lt; _day &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="function">Date&lt;<span class="type">int</span>, <span class="type">int</span>, <span class="type">int</span>&gt; <span class="title">d</span><span class="params">(<span class="number">2000</span>, <span class="number">1</span>, <span class="number">1</span>)</span></span>;</span><br><span class="line">  d.<span class="built_in">Display</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>类模版只能显示实例化，不能进行隐式实例化</p>
 <ul>
-<li>类型和类名不同；类型：类名&lt;模版实际参数类型&gt;</li>
+<li>类型和类名不同；类型：类名\&lt;模版实际参数类型&gt;</li>
 </ul>
 <blockquote>
 <p>如果在类外定义类模版的成员函数，需要加上泛型的声明</p>
-<p>作用域为 “类名&lt;泛型参数&gt;”</p>
+<p>作用域为 “类名\&lt;泛型参数&gt;”</p>
 </blockquote>
 
 </div>
@@ -318,7 +314,7 @@
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
-    <strong>本文作者： </strong>Morgan
+    <strong>本文作者： </strong>Latsummer
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
@@ -425,9 +421,9 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Morgan"
+    <img class="site-author-image" itemprop="image" alt="Latsummer"
       src="/images/IMG_6272.JPG">
-  <p class="site-author-name" itemprop="name">Morgan</p>
+  <p class="site-author-name" itemprop="name">Latsummer</p>
   <div class="site-description" itemprop="description">八说了，我在学了！</div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -494,19 +490,13 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Morgan</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-chart-area"></i>
-    </span>
-      <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">186k</span>
+  <span class="author" itemprop="copyrightHolder">Latsummer</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:49</span>
+    <span title="站点阅读时长">3:08</span>
 </div><script color="241,124,103" opacity="1" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
 
 
@@ -584,6 +574,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.3.0">
+<meta name="generator" content="Hexo 7.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/128x128.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png">
@@ -22,16 +22,16 @@
     var CONFIG = {"hostname":"zhaozhuolin.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#A9A9A9","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="大小端字节序小端:数字的低位存到内存的低地址上。大端:数字的低位存到内存的高地址上。大端字节序符合平时直觉，一台机器大端还是小端，取决于CPU">
+  <meta name="description" content="大小端字节序小端:数字的低位存到内存的低地址上。大端:数字的低位存到内存的高地址上。_大端字节序符合平时直觉，一台机器大端还是小端，取决于CPU_">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于原码、反码及补码的一些总结">
 <meta property="og:url" content="http://zhaozhuolin.com/2020/02/20200227.html">
 <meta property="og:site_name" content="小赵的学习笔记">
-<meta property="og:description" content="大小端字节序小端:数字的低位存到内存的低地址上。大端:数字的低位存到内存的高地址上。大端字节序符合平时直觉，一台机器大端还是小端，取决于CPU">
+<meta property="og:description" content="大小端字节序小端:数字的低位存到内存的低地址上。大端:数字的低位存到内存的高地址上。_大端字节序符合平时直觉，一台机器大端还是小端，取决于CPU_">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-02-27T04:11:09.000Z">
 <meta property="article:modified_time" content="2020-06-02T05:10:44.000Z">
-<meta property="article:author" content="Morgan">
+<meta property="article:author" content="Latsummer">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://zhaozhuolin.com/2020/02/20200227.html">
@@ -204,7 +204,7 @@
 
 <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
   <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
+  <meta itemprop="name" content="Latsummer">
   <meta itemprop="description" content="八说了，我在学了！">
 </span>
 
@@ -255,7 +255,7 @@
             <i class="far fa-file-word"></i>
           </span>
             <span class="post-meta-item-text">本文字数：</span>
-          <span>1.5k</span>
+          <span>1.6k</span>
         </span>
         <span class="post-meta-item" title="阅读时长">
           <span class="post-meta-item-icon">
@@ -274,10 +274,10 @@
 <div class="post-body" itemprop="articleBody">
 
   
-    <h4 id="大小端字节序"><a href="#大小端字节序" class="headerlink" title="大小端字节序"></a>大小端字节序</h4><p><strong>小端:数字的低位存到内存的低地址上。</strong><br><strong>大端:数字的低位存到内存的高地址上。</strong><br><em>大端字节序符合平时直觉，一台机器大端还是小端，取决于CPU</em>  </p>
+    <h4 id="大小端字节序"><a href="#大小端字节序" class="headerlink" title="大小端字节序"></a>大小端字节序</h4><p><strong>小端:数字的低位存到内存的低地址上。</strong><br><strong>大端:数字的低位存到内存的高地址上。</strong><br>_大端字节序符合平时直觉，一台机器大端还是小端，取决于CPU_  </p>
 <span id="more"></span>
-
-<p>int a &#x3D; 0x11223344</p>
+<p>int a = 0x11223344</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -289,7 +289,8 @@
 <th>高地址</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>低地址</td>
 <td>44</td>
 <td>33</td>
@@ -305,16 +306,18 @@
 <td>44</td>
 <td>大端</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h4 id="原码反码与补码"><a href="#原码反码与补码" class="headerlink" title="原码反码与补码"></a>原码反码与补码</h4><p>例如-10：<br>1000 0000 0000 0000 0000 0000 0000 1010 原码<br>1111 1111 1111 1111 1111 1111 1111 0101反码<br>1111 1111 1111 1111 1111 1111 1111 0110补码(原码取反再加一，得到补码)</p>
-<p>计算机采用补码来存储，肯定要比直接用原码麻烦，付出这样的代价是为了让计算机的硬件 设备实现起来更简单，通过补码的方式，能够把二进制的加减法统一成加法运算<br>例如：<br>计算 0 - 1 &#x3D;&gt; 0 + (-1)<br>1000 0000 0000 0000 0000 0000 0000 0001 -1的原码<br>1111 1111 1111 1111 1111 1111 1111 1110 ,-1的反码<br>1111 1111 1111 1111 1111 1111 1111 1111 , -1的补码<br>计算 2-1 2+（-1）<br>1111 1111 1111 1111 1111 1111 1111 1111 ,-1的补码<br>1000 0000 0000 0000 0000 0000 0000 0010 ,2的补码（正数的原码反码补码都一样）<br><strong>「对于负数来说，需要把原码转成补码在储存，也需要用到补码转原码」<br>「原码转补码是 取反+1」<br>「补码转原码还是 取反+1」</strong></p>
-<h4 id="关于char类型的一些问题"><a href="#关于char类型的一些问题" class="headerlink" title="关于char类型的一些问题"></a>关于char类型的一些问题</h4><p>char 一个字节的变量，当按照%d打印的时候，就会把char隐式转换成int类型的变量,再打印</p>
-<p>1000 0001 -1的原码<br>1111 1110 -1的反码<br>1111 1111 -1的补码<br>%d打印的时候就先将a先隐式转换成int<br>这个转换过程中，高位的三个字节也要填充，按照符号为来填充（如果a的符号位是0，高位就补0；反之补1）<br>此时<br>char &#x3D;&gt; int<br>1111 1111 &#x3D;&gt; 1111 1111 1111 1111 1111 1111 1111 1111 &#x3D;&gt; -1的补码<br>高位补1也就是为了防止出现这样转换过程中出现数据错误的情况</p>
-<p>1111 1111 -1在内存中的存储 unsigned char 存的还是八个1，此时最高位的1 不再是符号位了，八个1理解成正数（不考虑符号位）的结果就是255，%d打印时，1111 1111 &#x3D;&gt; 高位补0（unsigned char没有符号位）<br>0000 0000 0000 0000 0000 0000 1111 1111</p>
-<p>char的范围：-128 &#x3D;&gt; +127<br>128 转化成二进制</p>
+<p>计算机采用补码来存储，肯定要比直接用原码麻烦，付出这样的代价是为了让计算机的硬件 设备实现起来更简单，通过补码的方式，能够把二进制的加减法统一成加法运算<br>例如：<br>计算 0 - 1 =&gt; 0 + (-1)<br>1000 0000 0000 0000 0000 0000 0000 0001 -1的原码<br>1111 1111 1111 1111 1111 1111 1111 1110 ,-1的反码<br>1111 1111 1111 1111 1111 1111 1111 1111 , -1的补码<br>计算 2-1 2+（-1）<br>1111 1111 1111 1111 1111 1111 1111 1111 ,-1的补码<br>1000 0000 0000 0000 0000 0000 0000 0010 ,2的补码（正数的原码反码补码都一样）<br><strong>「对于负数来说，需要把原码转成补码在储存，也需要用到补码转原码」<br>「原码转补码是 取反+1」<br>「补码转原码还是 取反+1」</strong></p>
+<h4 id="关于char类型的一些问题"><a href="#关于char类型的一些问题" class="headerlink" title="关于char类型的一些问题"></a>关于char类型的一些问题</h4><p>char 一个字节的变量，当按照\%d打印的时候，就会把char隐式转换成int类型的变量,再打印</p>
+<p>1000 0001 -1的原码<br>1111 1110 -1的反码<br>1111 1111 -1的补码<br>\%d打印的时候就先将a先隐式转换成int<br>这个转换过程中，高位的三个字节也要填充，按照符号为来填充（如果a的符号位是0，高位就补0；反之补1）<br>此时<br>char =&gt; int<br>1111 1111 =&gt; 1111 1111 1111 1111 1111 1111 1111 1111 =&gt; -1的补码<br>高位补1也就是为了防止出现这样转换过程中出现数据错误的情况</p>
+<p>1111 1111 -1在内存中的存储 unsigned char 存的还是八个1，此时最高位的1 不再是符号位了，八个1理解成正数（不考虑符号位）的结果就是255，\%d打印时，1111 1111 =&gt; 高位补0（unsigned char没有符号位）<br>0000 0000 0000 0000 0000 0000 1111 1111</p>
+<p>char的范围：-128 =&gt; +127<br>128 转化成二进制</p>
 <p>1000 0000 0000 0000 0000 0000 1000 0000 -128原码<br>1111 1111 1111 1111 1111 1111 0111 1111 -128反码<br>1111 1111 1111 1111 1111 1111 1000 0000 -128补码</p>
-<p>Char a &#x3D; -128<br>1000 0000<br>👇<br>1111 1111 1111 1111 1111 1111 1000 0000（int）<br>👇<br>1111 1111 1111 1111 1111 1111 1000 0000（unsigned int）<br>此时最高位不再是符号位，不再表示负数，被理解成了一个很大的数字</p>
-<p>128 内存中的二进制表示方式<br>0000 0000 0000 0000 0000 0000 1000 0000 （int）<br>Char a &#x3D;128；<br>1000 0000<br>发生了截断<br>导致唯一的一个1阴差阳错的成了符号位，此时a的本质上是-128</p>
+<p>Char a = -128<br>1000 0000<br>👇<br>1111 1111 1111 1111 1111 1111 1000 0000（int）<br>👇<br>1111 1111 1111 1111 1111 1111 1000 0000（unsigned int）<br>此时最高位不再是符号位，不再表示负数，被理解成了一个很大的数字</p>
+<p>128 内存中的二进制表示方式<br>0000 0000 0000 0000 0000 0000 1000 0000 （int）<br>Char a =128；<br>1000 0000<br>发生了截断<br>导致唯一的一个1阴差阳错的成了符号位，此时a的本质上是-128</p>
 
 </div>
 
@@ -326,7 +329,7 @@
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
-    <strong>本文作者： </strong>Morgan
+    <strong>本文作者： </strong>Latsummer
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
@@ -429,9 +432,9 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Morgan"
+    <img class="site-author-image" itemprop="image" alt="Latsummer"
       src="/images/IMG_6272.JPG">
-  <p class="site-author-name" itemprop="name">Morgan</p>
+  <p class="site-author-name" itemprop="name">Latsummer</p>
   <div class="site-description" itemprop="description">八说了，我在学了！</div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -498,19 +501,13 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Morgan</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-chart-area"></i>
-    </span>
-      <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">186k</span>
+  <span class="author" itemprop="copyrightHolder">Latsummer</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:49</span>
+    <span title="站点阅读时长">3:08</span>
 </div><script color="241,124,103" opacity="1" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
 
 
@@ -588,6 +585,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

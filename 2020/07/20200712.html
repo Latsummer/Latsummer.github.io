@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.3.0">
+<meta name="generator" content="Hexo 7.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/128x128.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png">
@@ -22,16 +22,16 @@
     var CONFIG = {"hostname":"zhaozhuolin.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#A9A9A9","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="set 实现—&gt;目前使用搜索树实现（红黑树） 底层是一个存放KV结构的搜索树，但是此处K、V相同 set中只需要存放value set中不能存放重复的元素 set中的元素不能修改，不支持修改的操作 set默认比较是小于，可以通过修改仿函数，修改比较逻辑 迭代器遍历有序：底层顺序是二叉搜索树的中序遍历 迭代器只能读取内容，不能修改内容 插入：如果用迭代器指定插入位置，最终实际的插入位置可能不是">
+  <meta name="description" content="set 实现—-&gt;目前使用搜索树实现（红黑树） 底层是一个存放KV结构的搜索树，但是此处K、V相同 set中只需要存放value set中不能存放重复的元素 set中的元素不能修改，不支持修改的操作 set默认比较是小于，可以通过修改仿函数，修改比较逻辑 迭代器遍历有序：底层顺序是二叉搜索树的中序遍历 迭代器只能读取内容，不能修改内容 插入：如果用迭代器指定插入位置，最终实际的插入位置可能不">
 <meta property="og:type" content="article">
 <meta property="og:title" content="set与map的基本使用及特性">
 <meta property="og:url" content="http://zhaozhuolin.com/2020/07/20200712.html">
 <meta property="og:site_name" content="小赵的学习笔记">
-<meta property="og:description" content="set 实现—&gt;目前使用搜索树实现（红黑树） 底层是一个存放KV结构的搜索树，但是此处K、V相同 set中只需要存放value set中不能存放重复的元素 set中的元素不能修改，不支持修改的操作 set默认比较是小于，可以通过修改仿函数，修改比较逻辑 迭代器遍历有序：底层顺序是二叉搜索树的中序遍历 迭代器只能读取内容，不能修改内容 插入：如果用迭代器指定插入位置，最终实际的插入位置可能不是">
+<meta property="og:description" content="set 实现—-&gt;目前使用搜索树实现（红黑树） 底层是一个存放KV结构的搜索树，但是此处K、V相同 set中只需要存放value set中不能存放重复的元素 set中的元素不能修改，不支持修改的操作 set默认比较是小于，可以通过修改仿函数，修改比较逻辑 迭代器遍历有序：底层顺序是二叉搜索树的中序遍历 迭代器只能读取内容，不能修改内容 插入：如果用迭代器指定插入位置，最终实际的插入位置可能不">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-07-12T09:08:00.000Z">
 <meta property="article:modified_time" content="2023-05-07T11:18:08.000Z">
-<meta property="article:author" content="Morgan">
+<meta property="article:author" content="Latsummer">
 <meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
 
@@ -205,7 +205,7 @@
 
 <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
   <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
+  <meta itemprop="name" content="Latsummer">
   <meta itemprop="description" content="八说了，我在学了！">
 </span>
 
@@ -256,14 +256,14 @@
             <i class="far fa-file-word"></i>
           </span>
             <span class="post-meta-item-text">本文字数：</span>
-          <span>5.9k</span>
+          <span>6.4k</span>
         </span>
         <span class="post-meta-item" title="阅读时长">
           <span class="post-meta-item-icon">
             <i class="far fa-clock"></i>
           </span>
             <span class="post-meta-item-text">阅读时长 &asymp;</span>
-          <span>5 分钟</span>
+          <span>6 分钟</span>
         </span>
 
     </div>
@@ -276,7 +276,7 @@
 
   
     <h1 id="set"><a href="#set" class="headerlink" title="set"></a>set</h1><ol>
-<li>实现—&gt;目前使用搜索树实现（红黑树）</li>
+<li>实现—-&gt;目前使用搜索树实现（红黑树）</li>
 <li>底层是一个存放KV结构的搜索树，但是此处K、V相同</li>
 <li>set中只需要存放value</li>
 <li>set中不能存放重复的元素</li>
@@ -290,18 +290,13 @@
 <li>count：获取指定元素在set中的个数，根据性质4，只用两个值，1或0</li>
 </ol>
 <span id="more"></span>
-
 <h2 id="基本使用与遍历"><a href="#基本使用与遍历" class="headerlink" title="基本使用与遍历"></a>基本使用与遍历</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">set&lt;<span class="type">int</span>&gt; s;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> arr[] = &#123; <span class="number">10</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">8</span>,<span class="number">11</span> &#125;;</span><br><span class="line"><span class="function">set&lt;<span class="type">int</span>&gt; <span class="title">s2</span><span class="params">(arr, arr + <span class="number">5</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function">set&lt;<span class="type">int</span>&gt; <span class="title">copy</span><span class="params">(s2)</span></span>;</span><br><span class="line"></span><br><span class="line">set&lt;<span class="type">int</span>&gt;::iterator it = s2.<span class="built_in">begin</span>();</span><br><span class="line"><span class="keyword">while</span> (it != s2.<span class="built_in">end</span>())</span><br><span class="line">&#123;</span><br><span class="line">  cout &lt;&lt; *it &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">  it++;</span><br><span class="line">&#125;<span class="comment">//2,3,8,10,11</span></span><br><span class="line">cout &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">set&lt;<span class="type">int</span>&gt;::const_iterator cit = s2.<span class="built_in">cbegin</span>();</span><br><span class="line"></span><br><span class="line">set&lt;<span class="type">int</span>&gt;::reverse_iterator rit = s2.<span class="built_in">rbegin</span>();<span class="comment">//11， 10， 8， 3， 2</span></span><br></pre></td></tr></table></figure>
-
 <p>set元素不能被修改</p>
 <p>遍历有序：搜索树的中序遍历</p>
 <h2 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> arr[] = &#123; <span class="number">10</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">8</span>,<span class="number">11</span> &#125;;</span><br><span class="line"><span class="function">set&lt;<span class="type">int</span>&gt; <span class="title">s2</span><span class="params">(arr, arr + <span class="number">5</span>)</span></span>;</span><br><span class="line"><span class="built_in">PrntSet</span>(s2);<span class="comment">//2,3,8,10,11</span></span><br><span class="line">s2.<span class="built_in">insert</span>(<span class="number">6</span>);</span><br><span class="line"><span class="built_in">PrntSet</span>(s2);<span class="comment">//2,3,6,8,10,11</span></span><br><span class="line">s2.<span class="built_in">insert</span>(s2.<span class="built_in">begin</span>(), <span class="number">15</span>);</span><br><span class="line"><span class="comment">//itreator只是一个建议，新插入的元素不一定是指定位置，最终插入位置需要遵循搜索树的性质</span></span><br><span class="line"><span class="built_in">PrntSet</span>(s2);<span class="comment">//2,3,6,8,10,11,15</span></span><br><span class="line"><span class="type">int</span> arr2[] = &#123; <span class="number">9</span>, <span class="number">7</span>, <span class="number">20</span>, <span class="number">0</span> &#125;;</span><br><span class="line">s2.<span class="built_in">insert</span>(arr2, arr2 + <span class="number">4</span>);</span><br><span class="line"><span class="built_in">PrntSet</span>(s2);<span class="comment">//0,2,3,6,7,8,9,10,11,15,20</span></span><br><span class="line">s2.<span class="built_in">insert</span>(<span class="number">10</span>);</span><br><span class="line"><span class="comment">//set不会插入重复元素</span></span><br><span class="line"><span class="built_in">PrntSet</span>(s2);<span class="comment">//0,2,3,6,7,8,9,10,11,15,20</span></span><br></pre></td></tr></table></figure>
-
 <h2 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//删除时候传入的位置必须有效</span></span><br><span class="line">s2.<span class="built_in">erase</span>(<span class="number">10</span>);<span class="comment">//删除10</span></span><br><span class="line"><span class="built_in">PrntSet</span>(s2);<span class="comment">//0,2,3,6,7,8,9,11,15,20</span></span><br><span class="line">s2.<span class="built_in">erase</span>(s2.<span class="built_in">begin</span>());<span class="comment">//删除最左节点</span></span><br><span class="line"><span class="built_in">PrntSet</span>(s2);<span class="comment">//2,3,6,7,8,9,10,11,15,20</span></span><br><span class="line"><span class="comment">//s2.erase(s2.end());//end指向最后一个元素的下一个位置，此时运行会报错</span></span><br><span class="line"><span class="comment">//PrntSet(s2);</span></span><br><span class="line">s2.<span class="built_in">erase</span>(s2.<span class="built_in">begin</span>(), s2.<span class="built_in">end</span>());</span><br><span class="line"><span class="built_in">PrntSet</span>(s2);</span><br></pre></td></tr></table></figure>
-
 <p>删除操作会导致当前位置的迭代器失效，不影响其他位置</p>
 <h2 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> arr[] = &#123; <span class="number">10</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">8</span>,<span class="number">11</span> &#125;;</span><br><span class="line">	<span class="function">set&lt;<span class="type">int</span>&gt; <span class="title">s2</span><span class="params">(arr, arr + <span class="number">5</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">	set&lt;<span class="type">int</span>&gt;::iterator it = s2.<span class="built_in">find</span>(<span class="number">2</span>);</span><br><span class="line">	<span class="keyword">if</span> (it != s2.<span class="built_in">end</span>())</span><br><span class="line">		cout &lt;&lt; *it &lt;&lt; endl;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;NONE&quot;</span> &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">	set&lt;<span class="type">int</span>&gt;::iterator it2 = s2.<span class="built_in">find</span>(<span class="number">100</span>);</span><br><span class="line">	<span class="keyword">if</span> (it2 != s2.<span class="built_in">end</span>())</span><br><span class="line">		cout &lt;&lt; *it2 &lt;&lt; endl;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;NONE&quot;</span> &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//count返回：元素个数，存在返回1，否则0</span></span><br><span class="line">	cout &lt;&lt; s2.<span class="built_in">count</span>(<span class="number">11</span>) &lt;&lt; endl;</span><br><span class="line">	cout &lt;&lt; s2.<span class="built_in">count</span>(<span class="number">100</span>) &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
-
 <h1 id="map"><a href="#map" class="headerlink" title="map"></a>map</h1><ol>
 <li>实现：通过二叉搜索树实现（红黑树）</li>
 <li>底层结构为存放kv键值对的搜索树，k和v不一定相同</li>
@@ -313,15 +308,12 @@
 <li>迭代器可以修改value，不能修改key</li>
 <li>插入：如果用迭代器指定插入位置，最终实际的插入位置可能不是指定的位置，此处的位置只是一个建议，新的元素的插入位置必须符合搜索树的性质</li>
 <li>删除会导致当前删除位置的迭代器失效，但是不影响其他位置的迭代器</li>
-<li>find：找到返回元素的迭代器，未找到返回end迭代器，&#x3D;&#x3D;按照key查找&#x3D;&#x3D;</li>
-<li>count：获取指定元素在set中的个数，根据性质4，只用两个值，1或0， &#x3D;&#x3D;按照key查找&#x3D;&#x3D;</li>
+<li>find：找到返回元素的迭代器，未找到返回end迭代器，==按照key查找==</li>
+<li>count：获取指定元素在set中的个数，根据性质4，只用两个值，1或0， ==按照key查找==</li>
 <li>operator[ ]：可读可写可插入</li>
 <li>at：如果key不存在，抛异常</li>
 </ol>
 <h2 id="基本使用以及遍历"><a href="#基本使用以及遍历" class="headerlink" title="基本使用以及遍历"></a>基本使用以及遍历</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;map&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  map&lt;string, <span class="type">int</span>&gt; m;<span class="comment">//key：字符串，value：数值</span></span><br><span class="line">  vector&lt;pair&lt;string, <span class="type">int</span>&gt;&gt; vec;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i ++)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="function">pair&lt;string, <span class="type">int</span>&gt; <span class="title">p</span><span class="params">((string)<span class="string">&quot;abc&quot;</span> + (<span class="type">char</span>)(i + <span class="string">&#x27;0&#x27;</span>), <span class="number">5</span>)</span></span>;</span><br><span class="line">    vec.<span class="built_in">push_back</span>(p);</span><br><span class="line">    vec.<span class="built_in">push_back</span>(<span class="built_in">pair</span>&lt;string, <span class="type">int</span>&gt;((string)<span class="string">&quot;zzl&quot;</span>+ (<span class="type">char</span>)(i + <span class="string">&#x27;0&#x27;</span>), <span class="number">14</span>));</span><br><span class="line">    vec.<span class="built_in">push_back</span>(<span class="built_in">make_pair</span>((string)<span class="string">&quot;xyz&quot;</span>+ (<span class="type">char</span>)(i + <span class="string">&#x27;0&#x27;</span>), <span class="number">3</span>));</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function">map&lt;string, <span class="type">int</span>&gt; <span class="title">m2</span><span class="params">(vec.begin(), vec.end())</span></span>;</span><br><span class="line">  <span class="function">map&lt;string, <span class="type">int</span>&gt; <span class="title">copy</span><span class="params">(m2)</span></span>;</span><br><span class="line">  </span><br><span class="line">  cout &lt;&lt; m2.<span class="built_in">size</span>() &lt;&lt; endl;<span class="comment">//30</span></span><br><span class="line">  </span><br><span class="line">  map&lt;string, <span class="type">int</span>&gt;::iterator it = m2.<span class="built_in">begin</span>();</span><br><span class="line">  <span class="keyword">while</span>(it != m2.<span class="built_in">end</span>())</span><br><span class="line">  &#123;</span><br><span class="line">    cout &lt;&lt; it-&gt;first &lt;&lt; <span class="string">&quot;---&gt;&quot;</span> &lt;&lt; it-&gt;second &lt;&lt; endl;</span><br><span class="line">    it++;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  map&lt;string, <span class="type">int</span>&gt;::iterator it = m2.<span class="built_in">begin</span>();</span><br><span class="line">  <span class="keyword">while</span>(it != m2.<span class="built_in">end</span>())</span><br><span class="line">  &#123;</span><br><span class="line">    it-&gt;second = <span class="number">100</span>;<span class="comment">//map的非const迭代器支持修改value，但不支持修改key</span></span><br><span class="line">    it++;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  map&lt;<span class="type">int</span>, <span class="type">int</span>&gt; mm;</span><br><span class="line">  cout &lt;&lt; mm.<span class="built_in">at</span>(<span class="number">2</span>) &lt;&lt; endl;<span class="comment">//key不存在，抛异常</span></span><br><span class="line">  cout &lt;&lt; mm[<span class="number">2</span>] &lt;&lt; endl;<span class="comment">//key不存在，插入</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
 <ul>
 <li>map中key不能重复，但是value可以</li>
 <li>迭代器解引用类型：pair</li>
@@ -331,9 +323,6 @@
 <li>operator[]：key不存在，插入</li>
 </ul>
 <h2 id="插入-1"><a href="#插入-1" class="headerlink" title="插入"></a>插入</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">map&lt;<span class="type">int</span>, <span class="type">int</span>&gt; m;</span><br><span class="line">pair&lt;map&lt;<span class="type">int</span>, <span class="type">int</span>&gt;::iterator, <span class="type">bool</span>&gt; ret = m.<span class="built_in">insert</span>(<span class="built_in">make_pair</span>(<span class="number">3</span>, <span class="number">3</span>));<span class="comment">//插入成功</span></span><br><span class="line">cout &lt;&lt; ret.first-&gt;first &lt;&lt; <span class="string">&quot;---&gt;&quot;</span> &lt;&lt; ret.first-&gt;second &lt;&lt; endl;<span class="comment">//3---&gt;3</span></span><br><span class="line">cout &lt;&lt; ret.second &lt;&lt; endl;<span class="comment">//1</span></span><br><span class="line"></span><br><span class="line">ret = m.<span class="built_in">insert</span>(<span class="built_in">make_pair</span>(<span class="number">3</span>, <span class="number">10</span>));<span class="comment">//key重复，插入失败</span></span><br><span class="line">cout &lt;&lt; ret.first-&gt;first &lt;&lt; <span class="string">&quot;---&gt;&quot;</span> &lt;&lt; ret.first-&gt;second &lt;&lt; endl;<span class="comment">//3---&gt;3</span></span><br><span class="line">cout &lt;&lt; ret.second &lt;&lt; endl;<span class="comment">//0</span></span><br></pre></td></tr></table></figure>
-
-
-
 <p><code>pair&lt;iterator, bool&gt;</code>iterator</p>
 <ul>
 <li>map中kv键值对 对应的迭代器，bool：插入是否成功</li>
@@ -341,16 +330,13 @@
 <p>插入成功：iterator表示新插入的kv键值对的迭代器</p>
 <p>插入失败：iterator表示已经存在的某个kv键值对的迭代器</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">map</span>(<span class="type">int</span>, <span class="type">int</span>) m;</span><br><span class="line">m[<span class="number">1</span>] = <span class="number">1</span>;<span class="comment">//1---&gt;1</span></span><br><span class="line">m[<span class="number">2</span>] = <span class="number">2</span>;<span class="comment">//2---&gt;2</span></span><br><span class="line">m[<span class="number">3</span>] = <span class="number">3</span>;<span class="comment">//3---&gt;3</span></span><br><span class="line">m[<span class="number">4</span>] = <span class="number">4</span>;<span class="comment">//4---&gt;4</span></span><br><span class="line"></span><br><span class="line">m[<span class="number">3</span>] = <span class="number">100</span>;</span><br><span class="line">m[<span class="number">1</span>] = <span class="number">-1</span>;</span><br></pre></td></tr></table></figure>
-
-
-
 <p><code>value&amp; operator[](key)</code></p>
 <p><code>(*((this-&gt;insert(make_pair(k, mapped_type())).first)).second</code></p>
 <ol>
 <li>创建一个kv键值对：key value 默认值</li>
 <li>执行插入操作，插入第一步创建的kv键值对</li>
 <li>获取插入接口返回值的第一个迭代器成员<ol>
-<li><code>prir&lt;iterator,bool&gt;.first</code> —&gt; iterator —&gt; 指向map中的一个键值对</li>
+<li><code>prir&lt;iterator,bool&gt;.first</code> —-&gt; iterator —-&gt; 指向map中的一个键值对</li>
 <li>插入成功：返回新的kv键值对的迭代器</li>
 <li>插入失败：返回已经存在的键值key的kv键值对的迭代器</li>
 </ol>
@@ -359,12 +345,9 @@
 <li>获取迭代器指向的kv键值对的value</li>
 </ol>
 <h2 id="删除-1"><a href="#删除-1" class="headerlink" title="删除"></a>删除</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">map</span>(<span class="type">int</span>, <span class="type">int</span>) m;</span><br><span class="line">m[<span class="number">1</span>] = <span class="number">1</span>;<span class="comment">//1---&gt;1</span></span><br><span class="line">m[<span class="number">2</span>] = <span class="number">2</span>;<span class="comment">//2---&gt;2</span></span><br><span class="line">m[<span class="number">3</span>] = <span class="number">3</span>;<span class="comment">//3---&gt;3</span></span><br><span class="line">m[<span class="number">4</span>] = <span class="number">4</span>;<span class="comment">//4---&gt;4</span></span><br><span class="line"></span><br><span class="line">m[<span class="number">3</span>] = <span class="number">100</span>;</span><br><span class="line">m[<span class="number">1</span>] = <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">map&lt;<span class="type">int</span>, <span class="type">int</span>&gt;::iterator it = m.<span class="built_in">begin</span>();</span><br><span class="line">cout &lt;&lt; it-&gt;first &lt;&lt; <span class="string">&quot;---&gt;&quot;</span> &lt;&lt; it-&gt;second &lt;&lt; endl;</span><br><span class="line">m.<span class="built_in">erase</span>(it);</span><br><span class="line">cout &lt;&lt; it-&gt;first &lt;&lt; <span class="string">&quot;---&gt;&quot;</span> &lt;&lt; it-&gt;second &lt;&lt; endl;<span class="comment">//删除会导致指向当前位置的迭代器失效</span></span><br></pre></td></tr></table></figure>
-
 <h2 id="查找-1"><a href="#查找-1" class="headerlink" title="查找"></a>查找</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">map</span>(<span class="type">int</span>, <span class="type">int</span>) m;</span><br><span class="line">m[<span class="number">1</span>] = <span class="number">1</span>;<span class="comment">//1---&gt;1</span></span><br><span class="line">m[<span class="number">2</span>] = <span class="number">2</span>;<span class="comment">//2---&gt;2</span></span><br><span class="line">m[<span class="number">3</span>] = <span class="number">3</span>;<span class="comment">//3---&gt;3</span></span><br><span class="line">m[<span class="number">4</span>] = <span class="number">4</span>;<span class="comment">//4---&gt;4</span></span><br><span class="line"></span><br><span class="line">m[<span class="number">3</span>] = <span class="number">100</span>;</span><br><span class="line">m[<span class="number">1</span>] = <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">map&lt;<span class="type">int</span>, <span class="type">int</span>&gt;::iterator it = m.<span class="built_in">begin</span>();</span><br><span class="line">it = m.<span class="built_in">find</span>(<span class="number">3</span>);<span class="comment">//按照key查找，存在返回指向目标的迭代器，否则返回end迭代器</span></span><br><span class="line">it = m.<span class="built_in">find</span>(<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">cout &lt;&lt; m.<span class="built_in">count</span>(<span class="number">3</span>) &lt;&lt; endl;<span class="comment">//按照key值查找，存在返回1，否则返回0</span></span><br><span class="line">cout &lt;&lt; m.<span class="built_in">count</span>(<span class="number">100</span>) &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
-
 <h1 id="multiset和multimap"><a href="#multiset和multimap" class="headerlink" title="multiset和multimap"></a>multiset和multimap</h1><p>与set及map最大的区别是其元素可以重复</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">testSet</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	multiset&lt;<span class="type">int</span>&gt; s;</span><br><span class="line">	s.<span class="built_in">insert</span>(<span class="number">1</span>);</span><br><span class="line">	s.<span class="built_in">insert</span>(<span class="number">2</span>);</span><br><span class="line">	s.<span class="built_in">insert</span>(<span class="number">9</span>);</span><br><span class="line">	s.<span class="built_in">insert</span>(<span class="number">-1</span>);</span><br><span class="line">	s.<span class="built_in">insert</span>(<span class="number">18</span>);</span><br><span class="line">	s.<span class="built_in">insert</span>(<span class="number">15</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="type">const</span> <span class="keyword">auto</span>&amp; e : s)</span><br><span class="line">		cout &lt;&lt; e &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">	cout &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">testMap</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//multimap不提供[]操作符重载，at函数</span></span><br><span class="line">	multimap&lt;<span class="type">int</span>, <span class="type">int</span>&gt; m;</span><br><span class="line">	m.<span class="built_in">insert</span>(<span class="built_in">make_pair</span>(<span class="number">1</span>, <span class="number">1</span>));</span><br><span class="line">	m.<span class="built_in">insert</span>(<span class="built_in">make_pair</span>(<span class="number">10</span>, <span class="number">1</span>));</span><br><span class="line">	m.<span class="built_in">insert</span>(<span class="built_in">make_pair</span>(<span class="number">1</span>, <span class="number">1</span>));</span><br><span class="line">	m.<span class="built_in">insert</span>(<span class="built_in">make_pair</span>(<span class="number">0</span>, <span class="number">1</span>));</span><br><span class="line">	m.<span class="built_in">insert</span>(<span class="built_in">make_pair</span>(<span class="number">1</span>, <span class="number">1</span>));</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="type">const</span> <span class="keyword">auto</span>&amp; e : m)</span><br><span class="line">		cout &lt;&lt; e.first &lt;&lt; <span class="string">&quot;---&gt;&quot;</span> &lt;&lt; e.second &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//pair&lt;multimap&lt;int, int&gt;::iterator, multimap&lt;int, int&gt;::iterator&gt; p = m.equal_range(1);</span></span><br><span class="line">	<span class="keyword">auto</span> p = m.<span class="built_in">equal_range</span>(<span class="number">1</span>);</span><br><span class="line">	multimap&lt;<span class="type">int</span>, <span class="type">int</span>&gt;::iterator it = p.first;</span><br><span class="line">	<span class="keyword">while</span> (it != p.second)</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; it-&gt;first &lt;&lt; <span class="string">&quot;---&gt;&quot;</span> &lt;&lt; it-&gt;second &lt;&lt; endl;</span><br><span class="line">		it++;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 </div>
@@ -377,7 +360,7 @@
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
-    <strong>本文作者： </strong>Morgan
+    <strong>本文作者： </strong>Latsummer
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
@@ -483,9 +466,9 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Morgan"
+    <img class="site-author-image" itemprop="image" alt="Latsummer"
       src="/images/IMG_6272.JPG">
-  <p class="site-author-name" itemprop="name">Morgan</p>
+  <p class="site-author-name" itemprop="name">Latsummer</p>
   <div class="site-description" itemprop="description">八说了，我在学了！</div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -552,19 +535,13 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Morgan</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-chart-area"></i>
-    </span>
-      <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">186k</span>
+  <span class="author" itemprop="copyrightHolder">Latsummer</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:49</span>
+    <span title="站点阅读时长">3:08</span>
 </div><script color="241,124,103" opacity="1" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
 
 
@@ -642,6 +619,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

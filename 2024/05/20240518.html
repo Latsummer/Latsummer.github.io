@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.3.0">
+<meta name="generator" content="Hexo 7.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/128x128.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png">
@@ -39,7 +39,7 @@
 <meta property="og:image" content="http://zhaozhuolin.com/2024/05/20240518/image-20240508144549717.png">
 <meta property="article:published_time" content="2024-05-18T01:47:50.000Z">
 <meta property="article:modified_time" content="2024-05-25T03:28:46.301Z">
-<meta property="article:author" content="Morgan">
+<meta property="article:author" content="Latsummer">
 <meta property="article:tag" content="杂记">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://zhaozhuolin.com/2024/05/20240518/image-20240508143943090.png">
@@ -214,7 +214,7 @@
 
 <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
   <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
+  <meta itemprop="name" content="Latsummer">
   <meta itemprop="description" content="八说了，我在学了！">
 </span>
 
@@ -265,7 +265,7 @@
             <i class="far fa-file-word"></i>
           </span>
             <span class="post-meta-item-text">本文字数：</span>
-          <span>2.9k</span>
+          <span>3k</span>
         </span>
         <span class="post-meta-item" title="阅读时长">
           <span class="post-meta-item-icon">
@@ -295,10 +295,13 @@
 </li>
 <li><p>替换完成后，碰到一些系统命令调用的问题，由于eps_service脚本会指定LD_LIBRARY_PATH，所以在该脚本中执行的系统调用命令会优先使用刚在替换的库，先在尝试将这些命令也替换为高版本gcc编译出的可执行文件，为了避免造成系统出错，这里将脚本中的系统命令换位执行本地目录的命令</p>
 <ol>
-<li><p>替换&#x2F;增加的文件有</p>
- <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">bash</span>、ln、sleep、pidof、mkdir、dirname</span><br><span class="line"><span class="attribute">ld</span>-linux-x86-<span class="number">64</span>.so.<span class="number">2</span> -&gt; ld-<span class="number">2</span>.<span class="number">17</span>.so</span><br><span class="line"><span class="attribute">libtinfo</span>.so.<span class="number">5</span> -&gt; libtinfo.so.<span class="number">5</span>.<span class="number">9</span></span><br><span class="line"><span class="attribute">libgcc_s</span>.so.<span class="number">1</span> -&gt; libgcc_s-<span class="number">4</span>.<span class="number">8</span>.<span class="number">5</span>-<span class="number">20150702</span>.so.<span class="number">1</span></span><br><span class="line"><span class="attribute">libm</span>.so.<span class="number">6</span> -&gt; libm-<span class="number">2</span>.<span class="number">17</span>.so</span><br><span class="line"><span class="attribute">libstdc</span>++.so.<span class="number">6</span> -&gt; libstdc++.so.<span class="number">6</span>.<span class="number">0</span>.<span class="number">19</span></span><br><span class="line"><span class="attribute">libc</span>.so.<span class="number">6</span> -&gt; libc-<span class="number">2</span>.<span class="number">17</span>.so</span><br></pre></td></tr></table></figure></li>
+<li><p>替换/增加的文件有</p>
+ <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">bash</span>、ln、sleep、pidof、mkdir、dirname</span><br><span class="line"><span class="attribute">ld</span>-linux-x86-<span class="number">64</span>.so.<span class="number">2</span> -&gt; ld-<span class="number">2</span>.<span class="number">17</span>.so</span><br><span class="line"><span class="attribute">libtinfo</span>.so.<span class="number">5</span> -&gt; libtinfo.so.<span class="number">5</span>.<span class="number">9</span></span><br><span class="line"><span class="attribute">libgcc_s</span>.so.<span class="number">1</span> -&gt; libgcc_s-<span class="number">4</span>.<span class="number">8</span>.<span class="number">5</span>-<span class="number">20150702</span>.so.<span class="number">1</span></span><br><span class="line"><span class="attribute">libm</span>.so.<span class="number">6</span> -&gt; libm-<span class="number">2</span>.<span class="number">17</span>.so</span><br><span class="line"><span class="attribute">libstdc</span>++.so.<span class="number">6</span> -&gt; libstdc++.so.<span class="number">6</span>.<span class="number">0</span>.<span class="number">19</span></span><br><span class="line"><span class="attribute">libc</span>.so.<span class="number">6</span> -&gt; libc-<span class="number">2</span>.<span class="number">17</span>.so</span><br></pre></td></tr></table></figure>
+</li>
 </ol>
 </li>
+</ol>
+<ol>
 <li><p>替换这些文件后， 报错信息仍然如下</p>
  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">relocation error: /opt/apps/xxx/lib/libc.so.6: symbol _dl_starting_up, version GLIBC_PRIVATE not defined in file ld-linux-x86-64.so.2 with link time reference</span><br></pre></td></tr></table></figure>
 </li>
@@ -306,20 +309,20 @@
 <p> <code>ld-linux-x86-64.so.2</code>所指向的ld-2.17.so是一个链接器，他是可执行的，并且可执行文件所需要的链接器路径是写死在文件头信息中的，可通过工具<code>patchelf</code>来修改文件头部信息，命令如下</p>
 <p> <code>patchelf --set-interpreter $&#123;从别处拷贝的链接器(ld-linux-x86-64.so.2)&#125; --set-rpath $&#123;自己的lib目录&#125; $&#123;文件名&#125;</code></p>
 <p> 例如<code>patchelf --set-interpreter /opt/apps/xxx/lib/ld-linux-x86-64.so.2 --set-rpath /opt/apps/xxx/lib/ /opt/apps/xxx/bin/bash</code></p>
-<p> 同时，也可直接使用<code>ld-linux-x86-64.so.2</code>文件本身来单次指定链接器，<strong>仅当次生效</strong>，这在设置了<code>LD_LIBRARY_PATH</code>后想要执行系统自身命令，如想要使用gdb看看情况时&#x3D;&#x3D;非常有用&#x3D;&#x3D;。可以用低版本系统本身的<code>ld-linux-x86-64.so.2</code>指向系统本身的库，如下</p>
+<p> 同时，也可直接使用<code>ld-linux-x86-64.so.2</code>文件本身来单次指定链接器，<strong>仅当次生效</strong>，这在设置了<code>LD_LIBRARY_PATH</code>后想要执行系统自身命令，如想要使用gdb看看情况时==非常有用==。可以用低版本系统本身的<code>ld-linux-x86-64.so.2</code>指向系统本身的库，如下</p>
 <p> <code>/lib64/ld-linux-x86-64.so.2 --library-path /lib64 /usr/bin/gdb ./edr_monitor</code></p>
 </li>
-<li><p>当做完这些后，发现仍然无法启动程序，启动报段错误，使用<code>/lib64/ld-linux-x86-64.so.2 --library-path /lib64 /usr/bin/gdb ./app</code>调试，未能发现其他问题，而&#x3D;&#x3D;导入环境变量后直接执行程序会段错误&#x3D;&#x3D;</p>
+<li><p>当做完这些后，发现仍然无法启动程序，启动报段错误，使用<code>/lib64/ld-linux-x86-64.so.2 --library-path /lib64 /usr/bin/gdb ./app</code>调试，未能发现其他问题，而==导入环境变量后直接执行程序会段错误==</p>
 </li>
 </ol>
 <h2 id="改变思路"><a href="#改变思路" class="headerlink" title="改变思路"></a>改变思路</h2><ol>
 <li><p>在凝思606上安装gcc4.8.5编译器</p>
  <figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure -<span class="keyword">enable</span>-checking=<span class="keyword">release</span> -<span class="keyword">enable</span>-languages=c,c++ -<span class="keyword">disable</span>-multilib</span><br></pre></td></tr></table></figure>
-
 </li>
+</ol>
+<ol>
 <li><p>编译QT5.9.8</p>
  <figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure -<span class="keyword">confirm</span>-license -opensource -release -prefix <span class="string">&quot;/tmp/qt&quot;</span> -nomake tests -nomake examples -<span class="keyword">no</span>-compile-examples -qt-xcb -<span class="keyword">no</span>-openssl -skip webengine -skip tools -skip <span class="number">3</span>d -skip gamepad -skip multimedia -skip doc -skip location -skip sensors -skip androidextras -<span class="keyword">c</span>++std <span class="keyword">c</span>++<span class="number">11</span> -<span class="keyword">no</span>-static -<span class="keyword">no</span>-use-gold-linker -<span class="keyword">no</span>-glib -<span class="keyword">no</span>-<span class="built_in">iconv</span> -<span class="keyword">no</span>-icu -qt-freetype -qt-harfbuzz -<span class="keyword">no</span>-fontconfig -<span class="keyword">no</span>-xkbcommon-evdev -<span class="keyword">no</span>-gtk -qt-libjpeg -qt-libpng -<span class="keyword">no</span>-libinput -<span class="keyword">no</span>-cups -dbus-<span class="keyword">runtime</span> -<span class="keyword">no</span>-eglfs -skip wayland -optimize-size -skip serialport -skip virtualkeyboard -skip connectivity -skip activeqt -<span class="keyword">no</span>-avx2</span><br></pre></td></tr></table></figure>
-
 <p> 其中<code>-no-avx2</code>这个参数很重要, <strong>指定编译用的CPU指令集不包含avx2</strong>, qt的configure在这个环境下无法自动检测, 会造成一些编译错误, 例如下图</p>
 <p> <img src="/2024/05/20240518/image-20240508144334144.png" alt="image-20240508144334144"></p>
 </li>
@@ -355,7 +358,7 @@
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
-    <strong>本文作者： </strong>Morgan
+    <strong>本文作者： </strong>Latsummer
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
@@ -461,9 +464,9 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Morgan"
+    <img class="site-author-image" itemprop="image" alt="Latsummer"
       src="/images/IMG_6272.JPG">
-  <p class="site-author-name" itemprop="name">Morgan</p>
+  <p class="site-author-name" itemprop="name">Latsummer</p>
   <div class="site-description" itemprop="description">八说了，我在学了！</div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -530,19 +533,13 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Morgan</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-chart-area"></i>
-    </span>
-      <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">186k</span>
+  <span class="author" itemprop="copyrightHolder">Latsummer</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:49</span>
+    <span title="站点阅读时长">3:08</span>
 </div><script color="241,124,103" opacity="1" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
 
 
@@ -620,6 +617,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

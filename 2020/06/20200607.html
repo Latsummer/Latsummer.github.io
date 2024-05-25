@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.3.0">
+<meta name="generator" content="Hexo 7.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/128x128.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png">
@@ -22,16 +22,16 @@
     var CONFIG = {"hostname":"zhaozhuolin.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#A9A9A9","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="string类基本使用1234567891011121314151617#include &lt;string&gt;void test()&amp;#123;  string str;&#x2F;&#x2F;&quot;&quot;  string str2(&quot;123&quot;);&#x2F;&#x2F;&quot;123&quot;  string str3 &#x3D; &quot;abc&quot;;&#x2F;&#x2F;&quot;abc&quot;">
+  <meta name="description" content="string类基本使用1234567891011121314151617#include &lt;string&gt;void test()&#123;  string str;&#x2F;&#x2F;&quot;&quot;  string str2(&quot;123&quot;);&#x2F;&#x2F;&quot;123&quot;  string str3 &#x3D; &quot;abc&quot;;&#x2F;&#x2F;&quot;abc&quot;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="string类的基本使用及常用接口">
 <meta property="og:url" content="http://zhaozhuolin.com/2020/06/20200607.html">
 <meta property="og:site_name" content="小赵的学习笔记">
-<meta property="og:description" content="string类基本使用1234567891011121314151617#include &lt;string&gt;void test()&amp;#123;  string str;&#x2F;&#x2F;&quot;&quot;  string str2(&quot;123&quot;);&#x2F;&#x2F;&quot;123&quot;  string str3 &#x3D; &quot;abc&quot;;&#x2F;&#x2F;&quot;abc&quot;">
+<meta property="og:description" content="string类基本使用1234567891011121314151617#include &lt;string&gt;void test()&#123;  string str;&#x2F;&#x2F;&quot;&quot;  string str2(&quot;123&quot;);&#x2F;&#x2F;&quot;123&quot;  string str3 &#x3D; &quot;abc&quot;;&#x2F;&#x2F;&quot;abc&quot;">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-06-07T12:45:13.000Z">
 <meta property="article:modified_time" content="2020-06-07T12:51:35.000Z">
-<meta property="article:author" content="Morgan">
+<meta property="article:author" content="Latsummer">
 <meta property="article:tag" content="C++">
 <meta property="article:tag" content="string类">
 <meta name="twitter:card" content="summary">
@@ -206,7 +206,7 @@
 
 <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
   <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
+  <meta itemprop="name" content="Latsummer">
   <meta itemprop="description" content="八说了，我在学了！">
 </span>
 
@@ -251,14 +251,14 @@
             <i class="far fa-file-word"></i>
           </span>
             <span class="post-meta-item-text">本文字数：</span>
-          <span>5.9k</span>
+          <span>6.5k</span>
         </span>
         <span class="post-meta-item" title="阅读时长">
           <span class="post-meta-item-icon">
             <i class="far fa-clock"></i>
           </span>
             <span class="post-meta-item-text">阅读时长 &asymp;</span>
-          <span>5 分钟</span>
+          <span>6 分钟</span>
         </span>
 
     </div>
@@ -272,12 +272,11 @@
   
     <h1 id="string类基本使用"><a href="#string类基本使用" class="headerlink" title="string类基本使用"></a>string类基本使用</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  string str;<span class="comment">//&quot;&quot;</span></span><br><span class="line">  <span class="function">string <span class="title">str2</span><span class="params">(<span class="string">&quot;123&quot;</span>)</span></span>;<span class="comment">//&quot;123&quot;</span></span><br><span class="line">  string str3 = <span class="string">&quot;abc&quot;</span>;<span class="comment">//&quot;abc&quot;</span></span><br><span class="line">  <span class="function">string <span class="title">str4</span><span class="params">(<span class="string">&quot;0123456789&quot;</span>, <span class="number">5</span>)</span></span>;<span class="comment">//&quot;01234&quot;</span></span><br><span class="line">  <span class="function">string <span class="title">cpy</span><span class="params">(str3)</span></span>;<span class="comment">//&quot;abc&quot;</span></span><br><span class="line">  </span><br><span class="line">  <span class="function">string <span class="title">str5</span><span class="params">(str4, <span class="number">2</span>, <span class="number">2</span>)</span></span>;<span class="comment">//&quot;23&quot; 从str4的第2个位置拿两个字符创建一个字符串</span></span><br><span class="line">  <span class="function">string <span class="title">str6</span><span class="params">(<span class="number">10</span>, a)</span></span>;<span class="comment">//&quot;aaaaaaaaaa&quot;</span></span><br><span class="line">  </span><br><span class="line">  str6 = str5;<span class="comment">//操作符重载</span></span><br><span class="line">  str6 = <span class="string">&quot;321&quot;</span>;</span><br><span class="line">  str6 = <span class="string">&quot;xyz&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <span id="more"></span>
-
 <h1 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h1><p>访问容器的一种通用方式， 所有支持迭代器的容器，其迭代器的使用方式完全相同</p>
 <p>迭代器的使用方式：类似于指针的使用方式，可以通过解引用获取元素内容，可以通过<code>++， --</code>进行位置移动</p>
 <ul>
 <li>begin迭代器：第一个元素的位置</li>
-<li>end迭代器：最后一个元素的&#x3D;&#x3D;下一个位置&#x3D;&#x3D;</li>
+<li>end迭代器：最后一个元素的==下一个位置==</li>
 <li>迭代器的范围，左闭右开<code>[begin, end)</code></li>
 <li>迭代器是一个可读可写的接口</li>
 </ul>
@@ -285,17 +284,14 @@
 <p>正向迭代器</p>
 </blockquote>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="function">string <span class="title">str</span><span class="params">(<span class="string">&quot;0123456789&quot;</span>)</span></span>;</span><br><span class="line">  <span class="comment">//迭代器的遍历方式</span></span><br><span class="line">  string::iterator it = str.<span class="built_in">begin</span>();</span><br><span class="line">  <span class="keyword">while</span>(it != str.<span class="built_in">end</span>())</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="comment">//迭代器的解引用</span></span><br><span class="line">    cout &lt;&lt; *it &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">    <span class="comment">//迭代器可读可写</span></span><br><span class="line">    *it = <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">    <span class="comment">//迭代器向后移动</span></span><br><span class="line">  	++it;</span><br><span class="line">  &#125;</span><br><span class="line">  cout &lt;&lt; endl;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//#include&lt;vector&gt;</span></span><br><span class="line">  vector&lt;<span class="type">int</span>&gt; vec = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>&#125;;</span><br><span class="line">  vector&lt;<span class="type">int</span>&gt;::iterator vit = vec.<span class="built_in">begin</span>();</span><br><span class="line">  <span class="keyword">while</span>(vit != vec.<span class="built_in">end</span>())</span><br><span class="line">  &#123;</span><br><span class="line">    cout &lt;&lt; *vit &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">    ++vit;</span><br><span class="line">  &#125;</span><br><span class="line">  cout &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <blockquote>
 <p>反向迭代器</p>
 </blockquote>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="function">string <span class="title">str</span><span class="params">(<span class="string">&quot;123456789&quot;</span>)</span></span>;</span><br><span class="line">  string::reverse_iterator rit = str.<span class="built_in">rbegin</span>();</span><br><span class="line">  <span class="keyword">while</span>(rit != str.<span class="built_in">rend</span>())</span><br><span class="line">  &#123;</span><br><span class="line">    cout &lt;&lt; *rit &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">    <span class="comment">//反向迭代器向前移动</span></span><br><span class="line">    ++rit;</span><br><span class="line">  &#125;</span><br><span class="line">  cout &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <blockquote>
 <p>正向const迭代器</p>
 </blockquote>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">string::const_iterator cit = str.<span class="built_in">begin</span>();</span><br><span class="line">string::const_iterator cit2 = str.<span class="built_in">cbegin</span>();</span><br><span class="line"><span class="comment">//const迭代器建议使用const接口获取：c...</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>(cit != str.<span class="built_in">cend</span>())</span><br><span class="line">&#123;<span class="comment">//const迭代器不支持写操作，其为只读迭代器</span></span><br><span class="line">  cout &lt;&lt; *cit &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">  ++cit;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>const创建的对象只能使用const接口</li>
 </ul>
@@ -304,39 +300,34 @@
 <li>可读可写的迭代器<code>iterator, reverse_iterator</code></li>
 <li>只读迭代器<code>const_iterator, const_reverse_iterator</code></li>
 <li><code>begin();</code><ul>
-<li><code>iterator begin()</code> —&gt; 非const对象调用</li>
-<li><code>const_iterator begin() const</code> —&gt; const对象调用</li>
+<li><code>iterator begin()</code> —-&gt; 非const对象调用</li>
+<li><code>const_iterator begin() const</code> —-&gt; const对象调用</li>
 </ul>
 </li>
 <li><code>end();</code><ul>
-<li><code>iterator end()</code> —&gt; 非const对象调用</li>
-<li><code>const_iterator end() const</code> —&gt; const对象调用</li>
+<li><code>iterator end()</code> —-&gt; 非const对象调用</li>
+<li><code>const_iterator end() const</code> —-&gt; const对象调用</li>
 </ul>
 </li>
 <li><code>rbegin, rend</code>  同上，也有两个接口</li>
-<li><code>cbegin, cend, crbegin, crend</code>  —&gt; 都返回const迭代器</li>
+<li><code>cbegin, cend, crbegin, crend</code>  —-&gt; 都返回const迭代器</li>
 </ul>
 <h1 id="capacity等接口"><a href="#capacity等接口" class="headerlink" title="capacity等接口"></a>capacity等接口</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="function">string <span class="title">str</span><span class="params">(<span class="string">&quot;0123456789&quot;</span>)</span></span>;</span><br><span class="line">	<span class="comment">//size：返回有效字符的个数（常用）</span></span><br><span class="line">  <span class="type">int</span> ret = str.<span class="built_in">size</span>();</span><br><span class="line">  <span class="comment">//length：返回有效字符的个数</span></span><br><span class="line">  ret = str.<span class="built_in">length</span>();</span><br><span class="line">  <span class="comment">//capacity：可以存放的最大有效字符个数</span></span><br><span class="line">  ret = str.<span class="built_in">capacity</span>();</span><br><span class="line">  </span><br><span class="line">  <span class="type">size_t</span> maxSize = str.<span class="built_in">max_size</span>();</span><br><span class="line">  </span><br><span class="line">  str.<span class="built_in">clear</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="function">string <span class="title">str</span><span class="params">(<span class="string">&quot;0123456789&quot;</span>)</span></span>;</span><br><span class="line">  <span class="type">int</span> size = str.<span class="built_in">size</span>();</span><br><span class="line">  <span class="type">int</span> cap = str.<span class="built_in">capacity</span>();</span><br><span class="line">  </span><br><span class="line">  str.<span class="built_in">resize</span>(<span class="number">20</span>);<span class="comment">//9之后用&#x27;\0&#x27;填充</span></span><br><span class="line">  size = str.<span class="built_in">size</span>();</span><br><span class="line">  cap = str.<span class="built_in">capacity</span>();</span><br><span class="line">  </span><br><span class="line">  str.<span class="built_in">resize</span>(<span class="number">10</span>);</span><br><span class="line">  size = str.<span class="built_in">size</span>();</span><br><span class="line">  cap = str.<span class="built_in">capacity</span>();</span><br><span class="line">  </span><br><span class="line">  str.<span class="built_in">resize</span>(<span class="number">30</span>, <span class="string">&#x27;a&#x27;</span>);<span class="comment">//9之后用&#x27;a&#x27;填充</span></span><br><span class="line">  size = str.<span class="built_in">size</span>();</span><br><span class="line">  cap = str.<span class="built_in">capacity</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <ol>
 <li>n &gt; size &amp;&amp; n &gt; capacity ：增容（开新空间 + 拷贝 + 释放原有空间） + 新的位置赋值（如果没有给默认字符，默认是 ‘\0’ ）</li>
 <li>n &lt; size：只修改size</li>
 <li>当 n &gt; size &amp;&amp; n &lt; capacity：新的位置赋值（如果没有给赋值字符，默认赋值 ‘\0’  + 修改size  ）</li>
 </ol>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="function">string <span class="title">str</span><span class="params">(<span class="string">&quot;0123456789&quot;</span>)</span></span>;</span><br><span class="line">  <span class="type">int</span> size = str.<span class="built_in">size</span>();</span><br><span class="line">  <span class="type">int</span> cap = str.<span class="built_in">capacity</span>();</span><br><span class="line">  </span><br><span class="line">  str.<span class="built_in">reserve</span>(<span class="number">20</span>);</span><br><span class="line">  size = str.<span class="built_in">size</span>();</span><br><span class="line">  cap = str.<span class="built_in">capacity</span>();</span><br><span class="line">  </span><br><span class="line">  str.<span class="built_in">reserve</span>(<span class="number">5</span>);</span><br><span class="line">  size = str.<span class="built_in">size</span>();</span><br><span class="line">  cap = str.<span class="built_in">capacity</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <ul>
-<li><p>reserve：调整容量大小：增加容量(原有基础上增加)，不修改size，&#x3D;&#x3D;也可减少容量&#x3D;&#x3D;，按需减小，如果要减小的容量小于size，不做任何操作，如果要减小的容量大于size，则进行减小操作。</p>
+<li><p>reserve：调整容量大小：增加容量(原有基础上增加)，不修改size，==也可减少容量==，按需减小，如果要减小的容量小于size，不做任何操作，如果要减小的容量大于size，则进行减小操作。</p>
 </li>
 <li><p>PJ版string增容过程：如果为空字符串对象，初识容量大小为15，第一次增容为2倍，后续按照1.5倍增容。</p>
 </li>
-<li><p>可使用reserve提前开好空间，后续节省增容开销，提高代码效率</p>
-</li>
+<li>可使用reserve提前开好空间，后续节省增容开销，提高代码效率</li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  string s;</span><br><span class="line">  </span><br><span class="line">  s.<span class="built_in">reserve</span>(<span class="number">100</span>);</span><br><span class="line">  <span class="type">int</span> size = str.<span class="built_in">size</span>();</span><br><span class="line">  <span class="type">int</span> cap = str.<span class="built_in">capacity</span>();</span><br><span class="line">  </span><br><span class="line">  s.<span class="built_in">reserve</span>(<span class="number">20</span>);</span><br><span class="line">  size = str.<span class="built_in">size</span>();</span><br><span class="line">  cap = str.<span class="built_in">capacity</span>();</span><br><span class="line">  </span><br><span class="line">  s.<span class="built_in">shrink_to_fit</span>();</span><br><span class="line">  size = str.<span class="built_in">size</span>();</span><br><span class="line">  cap = str.<span class="built_in">capacity</span>();</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><code>shrink_to_fit()</code>缩小容量到合适范围</li>
 </ul>
@@ -344,7 +335,6 @@
 <p><code>at</code>可读可写接口，如<code>str.at(i)</code>，但是代码可读性不强，如果越界，抛异常</p>
 <p>范围for也可读可写，如果需要修改，则接收类型为引用类型，底层通过迭代器实现</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; str.<span class="built_in">size</span>(); i++)</span><br><span class="line">&#123;</span><br><span class="line">  cout &lt;&lt; str[i] &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; str.<span class="built_in">size</span>(); i++)</span><br><span class="line">&#123;</span><br><span class="line">  cout &lt;&lt; str.<span class="built_in">at</span>(i) &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span>&amp; ch : str)</span><br><span class="line">&#123;</span><br><span class="line">  cout &lt;&lt; ch &lt;&lt; <span class="string">&quot; &quot;</span>；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p><code>back</code>返回最后一个字符</p>
 <p><code>front</code>返回第一个字符</p>
 <h1 id="string类对象的修改操作"><a href="#string类对象的修改操作" class="headerlink" title="string类对象的修改操作"></a>string类对象的修改操作</h1><ul>
@@ -352,42 +342,34 @@
 <li><code>append</code> 追加</li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">string s;</span><br><span class="line">s.<span class="built_in">push_back</span>(<span class="string">&#x27;a&#x27;</span>);<span class="comment">// a</span></span><br><span class="line">s.<span class="built_in">append</span>(<span class="number">2</span>, <span class="string">&#x27;b&#x27;</span>);<span class="comment">// abb 追加两个b</span></span><br><span class="line">s.<span class="built_in">append</span>(<span class="string">&quot;cde&quot;</span>);<span class="comment">//  abbcde 追加cde</span></span><br><span class="line"></span><br><span class="line">string s2;</span><br><span class="line">s2.<span class="built_in">append</span>(s);<span class="comment">// 		abbcde 追加addcde</span></span><br><span class="line"></span><br><span class="line">string s3;</span><br><span class="line">s3.<span class="built_in">append</span>(s, <span class="number">3</span>, <span class="number">2</span>);<span class="comment">//	cd 从s的第三个位置追加两个字符</span></span><br><span class="line"></span><br><span class="line"><span class="type">char</span> strArr[] = <span class="string">&quot;1234&quot;</span>;</span><br><span class="line">s3.<span class="built_in">append</span>(strArr, strArr + <span class="number">2</span>);<span class="comment">// cd34 //从strArr第二个位置之后追加到s3</span></span><br><span class="line">s3.<span class="built_in">append</span>(s2.<span class="built_in">begin</span>(), s2.<span class="built_in">end</span>());<span class="comment">// cd34abbcde 通过迭代器追加</span></span><br></pre></td></tr></table></figure>
-
 <ul>
-<li><code>operator+=</code> +&#x3D;操作符重载（&#x3D;&#x3D;常用&#x3D;&#x3D;）</li>
+<li><code>operator+=</code> +=操作符重载（==常用==）</li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">string s4;</span><br><span class="line">s4 += <span class="string">&#x27;1&#x27;</span>; <span class="comment">//1</span></span><br><span class="line">s4 += <span class="string">&#x27;234&#x27;</span>; <span class="comment">// 1234</span></span><br><span class="line">s4 += s;<span class="comment">// 1234abbcde</span></span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><code>inster</code> 插入，除尾插之外插入效率较低O(n)</li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">s4.<span class="built_in">inster</span>(<span class="number">0</span>, s3);<span class="comment">//cd1234abbcde</span></span><br><span class="line">s4.<span class="built_in">inster</span>(<span class="number">0</span>, s3, <span class="number">7</span>, <span class="number">3</span>);</span><br><span class="line">s4.<span class="built_in">inster</span>(s4.<span class="built_in">end</span>(), <span class="number">3</span>, <span class="string">&#x27;1&#x27;</span>);</span><br><span class="line">s4.<span class="built_in">inster</span>(s4.<span class="built_in">end</span>(), strArr + <span class="number">1</span>, strArr + <span class="number">3</span>);</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><code>assign</code> 赋值</li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">s4.<span class="built_in">assign</span>(<span class="string">&quot;11111&quot;</span>);<span class="comment">// 11111 效果和下面相同</span></span><br><span class="line">s4 = <span class="string">&quot;11111&quot;</span>;</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><code>erase</code> 删除</li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">s4.<span class="built_in">erase</span>(<span class="number">0</span>, <span class="number">2</span>);<span class="comment">// 111</span></span><br><span class="line">s4.<span class="built_in">erase</span>(s4.<span class="built_in">begin</span>());<span class="comment">//11</span></span><br><span class="line">s4.<span class="built_in">erase</span>(s4.<span class="built_in">end</span>());<span class="comment">// 11 此时end迭代器位置非法，不做操作</span></span><br><span class="line">s4.<span class="built_in">erase</span>(s4.begin, s4.<span class="built_in">end</span>());<span class="comment">// &quot;&quot; 删完了</span></span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><code>replace</code> 替换</li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">string s = <span class="string">&quot;0123456789&quot;</span>;</span><br><span class="line">s.replace = (<span class="number">3</span>, <span class="number">5</span>, <span class="string">&quot;aa&quot;</span>);<span class="comment">// 12aa89 从第三个元素开始替换五个字符</span></span><br><span class="line">s.replace = (s.<span class="built_in">begin</span>() + <span class="number">1</span>, s.<span class="built_in">end</span>() - <span class="number">1</span>, <span class="string">&quot;0&quot;</span>);<span class="comment">// 009 迭代器左闭右开，begin + 1第二个字符开始，end - 1指的是9</span></span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><code>swap</code> 交换</li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">string s2 = <span class="string">&quot;abc&quot;</span>;</span><br><span class="line">s2.<span class="built_in">swap</span>(s, s2);<span class="comment">//s2: 009, s: abc</span></span><br><span class="line"><span class="comment">//调用string成员函数交换</span></span><br><span class="line"><span class="built_in">swap</span>(s, s2);<span class="comment">//s2: abc, s: 009</span></span><br><span class="line"><span class="comment">//全局swap函数：内部调用string的成员函数swap完成交换</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="type">int</span> b = <span class="number">2</span>;</span><br><span class="line"><span class="built_in">swap</span>(a, b);</span><br><span class="line"><span class="comment">//全局任何类型的swap函数</span></span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><code>c_str</code>、<code>data</code>，返回C风格的字符串，即字符串首元素地址，返回值类型是<code>const char*</code></li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">char</span>* ptr2 = s.<span class="built_in">c_str</span>();</span><br><span class="line"><span class="type">const</span> <span class="type">char</span>* ptr2 = s.<span class="built_in">data</span>();</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><code>find</code>正向查找，<code>rfind</code>反向查找，找到第一个匹配的位置 就结束，返回值类型为<code>size_t</code><ul>
 <li>找不到返回npos：<code>static const size_t npos = -1</code>， 可以通过与npos判断来确定是否找到</li>
@@ -395,13 +377,11 @@
 </li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">string s = <span class="string">&quot;aaaaaaaaaa&quot;</span>;</span><br><span class="line"><span class="type">size_t</span> pos = str.<span class="built_in">find</span>(<span class="string">&#x27;a&#x27;</span>);</span><br><span class="line"><span class="type">size_t</span> pos2 = str.<span class="built_in">rfind</span>(<span class="string">&#x27;a&#x27;</span>);</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><code>substr</code> 截取字符串</li>
 <li><code>substr(pos, len)</code> 如果len大于从pos到结束位置的字符串长度，则把剩余字符串全部截取出来</li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">string str = <span class="string">&quot;0123456789&quot;</span>;</span><br><span class="line">string str2 = str.<span class="built_in">substr</span>(<span class="number">0</span>, <span class="number">5</span>);<span class="comment">//01234 从索引为0开始截取五个字符</span></span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><p><code>operator+</code>， 非成员函数，拼接字符串，返回一个string对象</p>
 </li>
@@ -413,7 +393,6 @@
 </li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">string s = <span class="string">&quot;9&quot;</span>;</span><br><span class="line">string s2 = <span class="string">&quot;123&quot;</span>;</span><br><span class="line">string s3 = <span class="string">&quot;1234&quot;</span>;</span><br><span class="line"><span class="type">bool</span> ret = s &gt; s2; <span class="comment">//true</span></span><br><span class="line">ret = s2 &gt; s3; <span class="comment">//false</span></span><br><span class="line">ret  = s &gt; s3; <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>string支持<code>&gt;&gt;</code>和<code>&lt;&lt;</code><ul>
 <li><code>cin</code>：遇到空格，结束内容读取，如果读取的内容有空格，可以使用<code>getline</code>接口，<code>getline(cin, s)</code>遇到换行结束。还可以指定结束的标记字符，标记字符不会存放在string对象当中<code>getline(cin, s, &#39;。&#39;)</code></li>
@@ -438,7 +417,7 @@
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
-    <strong>本文作者： </strong>Morgan
+    <strong>本文作者： </strong>Latsummer
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
@@ -545,9 +524,9 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Morgan"
+    <img class="site-author-image" itemprop="image" alt="Latsummer"
       src="/images/IMG_6272.JPG">
-  <p class="site-author-name" itemprop="name">Morgan</p>
+  <p class="site-author-name" itemprop="name">Latsummer</p>
   <div class="site-description" itemprop="description">八说了，我在学了！</div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -614,19 +593,13 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Morgan</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-chart-area"></i>
-    </span>
-      <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">186k</span>
+  <span class="author" itemprop="copyrightHolder">Latsummer</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:49</span>
+    <span title="站点阅读时长">3:08</span>
 </div><script color="241,124,103" opacity="1" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
 
 
@@ -704,6 +677,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

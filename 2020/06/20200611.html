@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.3.0">
+<meta name="generator" content="Hexo 7.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/128x128.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png">
@@ -31,7 +31,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-06-11T03:39:52.000Z">
 <meta property="article:modified_time" content="2020-06-11T03:41:55.000Z">
-<meta property="article:author" content="Morgan">
+<meta property="article:author" content="Latsummer">
 <meta property="article:tag" content="vector">
 <meta name="twitter:card" content="summary">
 
@@ -205,7 +205,7 @@
 
 <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
   <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
+  <meta itemprop="name" content="Latsummer">
   <meta itemprop="description" content="八说了，我在学了！">
 </span>
 
@@ -250,7 +250,7 @@
             <i class="far fa-file-word"></i>
           </span>
             <span class="post-meta-item-text">本文字数：</span>
-          <span>2.5k</span>
+          <span>2.7k</span>
         </span>
         <span class="post-meta-item" title="阅读时长">
           <span class="post-meta-item-icon">
@@ -270,21 +270,16 @@
 
   
     <h1 id="vector的基本使用"><a href="#vector的基本使用" class="headerlink" title="vector的基本使用"></a>vector的基本使用</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;<span class="type">int</span>&gt; v;</span><br><span class="line">vector&lt;<span class="type">char</span>&gt; v2;</span><br><span class="line">vector&lt;string&gt; v3;</span><br><span class="line"></span><br><span class="line"><span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">v4</span><span class="params">(<span class="number">10</span>, <span class="number">5</span>)</span></span>;<span class="comment">//10个5</span></span><br><span class="line"></span><br><span class="line">string s2 = <span class="string">&quot;0123456789&quot;</span>;</span><br><span class="line"><span class="function">vector&lt;<span class="type">char</span>&gt; <span class="title">v5</span><span class="params">(s2.begin(), s2.end())</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function">vector&lt;<span class="type">char</span>&gt; <span class="title">v6</span><span class="params">(v5)</span></span>;</span><br></pre></td></tr></table></figure>
-
 <span id="more"></span>
-
 <h1 id="vector的遍历"><a href="#vector的遍历" class="headerlink" title="vector的遍历"></a>vector的遍历</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">string s = <span class="string">&quot;0123456789&quot;</span>;</span><br><span class="line"><span class="function">vector&lt;<span class="type">char</span>&gt; <span class="title">v</span><span class="params">(s.begin(), s.end())</span></span>;</span><br><span class="line">vector&lt;<span class="type">char</span>&gt;::iterator it = v.<span class="built_in">begin</span>();</span><br><span class="line"><span class="keyword">while</span>(it != v.<span class="built_in">end</span>())</span><br><span class="line">&#123;</span><br><span class="line">  cout &lt;&lt; *it &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">  *it = <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">  it++;</span><br><span class="line">&#125;</span><br><span class="line">cout &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="type">char</span>&amp; ch : v)</span><br><span class="line">&#123;</span><br><span class="line">  cout &lt;&lt; ch &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">  ch = <span class="string">&#x27;b&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line">cout &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; v.<span class="built_in">size</span>(); i++)</span><br><span class="line">&#123;</span><br><span class="line">  cout &lt;&lt; v[i] &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">  v[i] = <span class="string">&#x27;c&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line">cout &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span>&amp; ch : v)</span><br><span class="line">&#123;</span><br><span class="line">  cout &lt;&lt; ch &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>反向迭代器</li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">string s = <span class="string">&quot;0123456789&quot;</span>;</span><br><span class="line"><span class="function">vector&lt;<span class="type">char</span>&gt; <span class="title">v</span><span class="params">(s.begin(), s.end())</span></span>;</span><br><span class="line"></span><br><span class="line">vector&lt;<span class="type">char</span>&gt;::reverse_iterator rit = s.<span class="built_in">rbegin</span>();</span><br><span class="line"><span class="keyword">while</span>(rit != s.<span class="built_in">rend</span>())</span><br><span class="line">&#123;</span><br><span class="line">  cout &lt;&lt; *rit &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">  rit++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>只读迭代器</li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">printVec</span><span class="params">(<span class="type">const</span> vector&lt;T&gt;&amp; v)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  vector&lt;T&gt;::const_iterator cit = v.<span class="built_in">cbegin</span>();</span><br><span class="line">  <span class="keyword">while</span>(it != c.<span class="built_in">cend</span>())</span><br><span class="line">  &#123;</span><br><span class="line">    cout &lt;&lt; *cit &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">    cit++;</span><br><span class="line">  &#125;</span><br><span class="line">  cout &lt;&lt; endl;</span><br><span class="line">  </span><br><span class="line">  vector&lt;T&gt;::const_reverse_iterator it = v.<span class="built_in">crbegin</span>();</span><br><span class="line">  <span class="keyword">while</span>(crit != c.<span class="built_in">crend</span>())</span><br><span class="line">  &#123;</span><br><span class="line">    cout &lt;&lt; *icrt &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">    crit++;</span><br><span class="line">  &#125;</span><br><span class="line">  cout &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p><code>operator[ ]</code>遍历越界，调试版本产生断言错误</p>
 <p><code>at( )</code>遍历越界，抛异常</p>
 <h1 id="vector容量"><a href="#vector容量" class="headerlink" title="vector容量"></a>vector容量</h1><ul>
@@ -292,25 +287,23 @@
 <p>  PJ版本中增容按照大于1.5倍进行，SGI一般是2倍</p>
 </li>
 </ul>
-<p><code>resize(n, val)</code>：如果不给val参数，则使用默认值：内置类型 —&gt; 0；自定义类型 —&gt; 调用无参构造</p>
+<p><code>resize(n, val)</code>：如果不给val参数，则使用默认值：内置类型 —-&gt; 0；自定义类型 —-&gt; 调用无参构造</p>
 <ul>
 <li><code>data()</code> 返回首地址指针</li>
 </ul>
 <h1 id="vector修改操作"><a href="#vector修改操作" class="headerlink" title="vector修改操作"></a>vector修改操作</h1><ul>
-<li><code>insert()</code>插入，&#x3D;&#x3D;参数需要迭代器&#x3D;&#x3D;，在pos之前插入元素</li>
+<li><code>insert()</code>插入，==参数需要迭代器==，在pos之前插入元素</li>
 <li><code>erase()</code>删除pos之前的数据</li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">vectot&lt;<span class="type">int</span>&gt; v;</span><br><span class="line">v.<span class="built_in">insert</span>(v.<span class="built_in">begin</span>(), <span class="number">1</span>);<span class="comment">//1</span></span><br><span class="line">v.<span class="built_in">insert</span>(v.<span class="built_in">begin</span>(), <span class="number">5</span>, <span class="number">0</span>);<span class="comment">//000001</span></span><br><span class="line"><span class="type">int</span> a[] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line">v.<span class="built_in">insert</span>(v.<span class="built_in">begin</span>(), a + <span class="number">1</span>, a + <span class="number">3</span>);<span class="comment">//23000001  表示左闭右开的范围（a + 1 , a + 3]</span></span><br><span class="line">v.<span class="built_in">erase</span>(<span class="built_in">begin</span>());</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><code>push_back()</code>尾插；·<code>pop_back()</code>尾删</li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;<span class="type">int</span>&gt; v</span><br><span class="line">v.<span class="built_in">push_back</span>(<span class="number">1</span>);</span><br><span class="line">v.<span class="built_in">push_back</span>(<span class="number">2</span>);</span><br><span class="line">v.<span class="built_in">pop_back</span>();</span><br></pre></td></tr></table></figure>
-
-<p>&#x3D;&#x3D;迭代器失效问题&#x3D;&#x3D;：迭代器指向的位置，空间被释放或者变成一个不可访问的位置</p>
+<p>==迭代器失效问题==：迭代器指向的位置，空间被释放或者变成一个不可访问的位置</p>
 <ol>
-<li>空间发生了变化，就会导致原来的迭代器失效 —&gt; push_back, insert, reserve, resize, assign</li>
-<li>位置错位 —&gt; erase</li>
+<li>空间发生了变化，就会导致原来的迭代器失效 —-&gt; push_back, insert, reserve, resize, assign</li>
+<li>位置错位 —-&gt; erase</li>
 </ol>
 <p>解决方案：</p>
 <ol>
@@ -322,7 +315,6 @@
 <li><code>emplace</code>、<code>emplace_back</code>插入（更高效）</li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;B&gt; v;</span><br><span class="line"><span class="function">B <span class="title">b</span><span class="params">(<span class="number">1</span>, <span class="number">2</span>)</span></span>;</span><br><span class="line">v.<span class="built_in">insert</span>(v.<span class="built_in">begin</span>(), b);<span class="comment">//12  插入</span></span><br><span class="line">v.<span class="built_in">emplace</span>(v.<span class="built_in">begin</span>(), <span class="number">3</span>, <span class="number">4</span>);<span class="comment">//12  34 构造 + 插入</span></span><br><span class="line"><span class="function">B <span class="title">b2</span><span class="params">(<span class="number">5</span>, <span class="number">6</span>)</span></span>;</span><br><span class="line">v.<span class="built_in">emplace</span>(v.<span class="built_in">begin</span>(), b2);</span><br><span class="line"></span><br><span class="line">v.<span class="built_in">push_back</span>(b2);</span><br><span class="line">v.<span class="built_in">emplace_back</span>(b);</span><br><span class="line">v.<span class="built_in">emplace_back</span>(<span class="number">7</span>, <span class="number">8</span>);<span class="comment">//构造 + 尾插</span></span><br></pre></td></tr></table></figure>
-
 <h1 id="vector的实现"><a href="#vector的实现" class="headerlink" title="vector的实现"></a>vector的实现</h1><p><code>start</code> <code>finish</code> <code>end_of_storage</code> T * 类型</p>
 <ul>
 <li><code>start</code> 空间的首地址，第一个元素的首地址</li>
@@ -341,7 +333,7 @@
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
-    <strong>本文作者： </strong>Morgan
+    <strong>本文作者： </strong>Latsummer
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
@@ -447,9 +439,9 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Morgan"
+    <img class="site-author-image" itemprop="image" alt="Latsummer"
       src="/images/IMG_6272.JPG">
-  <p class="site-author-name" itemprop="name">Morgan</p>
+  <p class="site-author-name" itemprop="name">Latsummer</p>
   <div class="site-description" itemprop="description">八说了，我在学了！</div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -516,19 +508,13 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Morgan</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-chart-area"></i>
-    </span>
-      <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">186k</span>
+  <span class="author" itemprop="copyrightHolder">Latsummer</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:49</span>
+    <span title="站点阅读时长">3:08</span>
 </div><script color="241,124,103" opacity="1" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
 
 
@@ -606,6 +592,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

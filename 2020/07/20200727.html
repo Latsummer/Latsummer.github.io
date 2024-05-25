@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.3.0">
+<meta name="generator" content="Hexo 7.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/128x128.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png">
@@ -22,16 +22,16 @@
     var CONFIG = {"hostname":"zhaozhuolin.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#A9A9A9","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="列表初始化C++11：支持内置类型与自定义类型的列表初始化，其中自定义类型不是天然支持列表初始化，需要显示定义参数类型为initiaizer_list的构造函数 12345678910111213141516171819202122232425262728class A&amp;#123;public:  A (int a, int b)    : _a(a)    , _b(b)  &amp;#123; &amp;#1">
+  <meta name="description" content="列表初始化C++11：支持内置类型与自定义类型的列表初始化，其中自定义类型不是天然支持列表初始化，需要显示定义参数类型为initiaizer_list的构造函数 12345678910111213141516171819202122232425262728class A&#123;public:  A (int a, int b)    : _a(a)    , _b(b)  &#123; &amp;#1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++11中的新特性">
 <meta property="og:url" content="http://zhaozhuolin.com/2020/07/20200727.html">
 <meta property="og:site_name" content="小赵的学习笔记">
-<meta property="og:description" content="列表初始化C++11：支持内置类型与自定义类型的列表初始化，其中自定义类型不是天然支持列表初始化，需要显示定义参数类型为initiaizer_list的构造函数 12345678910111213141516171819202122232425262728class A&amp;#123;public:  A (int a, int b)    : _a(a)    , _b(b)  &amp;#123; &amp;#1">
+<meta property="og:description" content="列表初始化C++11：支持内置类型与自定义类型的列表初始化，其中自定义类型不是天然支持列表初始化，需要显示定义参数类型为initiaizer_list的构造函数 12345678910111213141516171819202122232425262728class A&#123;public:  A (int a, int b)    : _a(a)    , _b(b)  &#123; &amp;#1">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-07-27T08:40:15.000Z">
 <meta property="article:modified_time" content="2023-05-07T11:18:08.000Z">
-<meta property="article:author" content="Morgan">
+<meta property="article:author" content="Latsummer">
 <meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
 
@@ -205,7 +205,7 @@
 
 <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
   <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
+  <meta itemprop="name" content="Latsummer">
   <meta itemprop="description" content="八说了，我在学了！">
 </span>
 
@@ -256,7 +256,7 @@
             <i class="far fa-file-word"></i>
           </span>
             <span class="post-meta-item-text">本文字数：</span>
-          <span>8.3k</span>
+          <span>9k</span>
         </span>
         <span class="post-meta-item" title="阅读时长">
           <span class="post-meta-item-icon">
@@ -277,26 +277,20 @@
   
     <h1 id="列表初始化"><a href="#列表初始化" class="headerlink" title="列表初始化"></a>列表初始化</h1><p>C++11：支持内置类型与自定义类型的列表初始化，其中自定义类型不是天然支持列表初始化，需要显示定义参数类型为<code>initiaizer_list</code>的构造函数</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">A</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="built_in">A</span> (<span class="type">int</span> a, <span class="type">int</span> b)</span><br><span class="line">    : _a(a)</span><br><span class="line">    , _b(b)</span><br><span class="line">  &#123; &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  <span class="type">int</span> _a;</span><br><span class="line">  <span class="type">int</span> _b;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> arr[] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="type">int</span> b = &#123; <span class="number">1</span> &#125;;</span><br><span class="line"><span class="type">int</span> c&#123; <span class="number">1</span> &#125;;</span><br><span class="line"><span class="type">float</span> d = &#123; <span class="number">1.2</span> &#125;;</span><br><span class="line"></span><br><span class="line">vector&lt;<span class="type">int</span>&gt; arr1&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; arr2 = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;</span><br><span class="line"></span><br><span class="line">pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt; p = &#123;<span class="number">1</span>, <span class="number">1</span>&#125;;</span><br><span class="line">map&lt;<span class="type">int</span>, <span class="type">int</span>&gt; m = &#123; &#123;<span class="number">1</span>, <span class="number">1</span>&#125;, &#123;<span class="number">2</span>, <span class="number">2</span>&#125;, &#123;<span class="number">3</span>, <span class="number">3</span>&#125; &#125;;</span><br><span class="line"></span><br><span class="line">A a = &#123;<span class="number">1</span>, <span class="number">2</span>&#125;;</span><br><span class="line"><span class="function">A <span class="title">a</span><span class="params">(<span class="number">1</span>, <span class="number">2</span>)</span></span>;</span><br></pre></td></tr></table></figure>
-
 <span id="more"></span>
-
 <h1 id="变量类型推导"><a href="#变量类型推导" class="headerlink" title="变量类型推导"></a>变量类型推导</h1><ul>
 <li>auto：编译时根据初始化表达式进行类型推导</li>
 <li>decltype：运行时类型识别，如果有参数列表，推导返回值类型，如果没有参数列表，只有函数名，推导为函数的接口类型</li>
 </ul>
 <h1 id="final与override"><a href="#final与override" class="headerlink" title="final与override"></a>final与override</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">A</span> <span class="keyword">final</span> <span class="comment">//不能被继承</span></span><br><span class="line">&#123;</span><br><span class="line">  </span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">B</span> <span class="keyword">override</span> <span class="comment">//强制子类重写父类虚函数</span></span><br><span class="line">&#123;</span><br><span class="line">  </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 <h1 id="默认成员函数控制"><a href="#默认成员函数控制" class="headerlink" title="默认成员函数控制"></a>默认成员函数控制</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">A</span> </span><br><span class="line">&#123; </span><br><span class="line"><span class="keyword">public</span>: </span><br><span class="line">	<span class="built_in">A</span>(<span class="type">int</span> a): _a(a) </span><br><span class="line">	&#123;&#125; </span><br><span class="line">  <span class="comment">// 显式缺省构造函数，由编译器生成 </span></span><br><span class="line">	<span class="built_in">A</span>() = <span class="keyword">default</span>; </span><br><span class="line"></span><br><span class="line">  <span class="built_in">A</span>(<span class="type">const</span> C&amp; c) = <span class="keyword">delete</span>;</span><br><span class="line">  <span class="comment">//把一个函数声明成已删除函数，不能再被使用</span></span><br><span class="line">  <span class="comment">//拷贝构造声明为delete：放拷贝</span></span><br><span class="line">  </span><br><span class="line">	A&amp; <span class="keyword">operator</span>=(<span class="type">const</span> A&amp; a); </span><br><span class="line"> <span class="comment">// 在类中声明，在类外定义时让编译器生成默认赋值运算符重载 </span></span><br><span class="line">  </span><br><span class="line"><span class="keyword">private</span>: </span><br><span class="line">	<span class="type">int</span> _a; </span><br><span class="line">&#125;; </span><br><span class="line"></span><br><span class="line">A&amp; A::<span class="keyword">operator</span>=(<span class="type">const</span> A&amp; a) = <span class="keyword">default</span>; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">	<span class="function">A <span class="title">a1</span><span class="params">(<span class="number">10</span>)</span></span>; </span><br><span class="line">	A a2; </span><br><span class="line">	a2 = a1; </span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-
 <h1 id="右值引用"><a href="#右值引用" class="headerlink" title="右值引用"></a>右值引用</h1><p>简单来说，左值：可以出现在<code>=</code>的两边、或者可以取地址的</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="type">int</span> b = a;</span><br><span class="line"><span class="type">int</span>* p = &amp;a;</span><br><span class="line"><span class="type">int</span>* p2 = &amp;b;</span><br></pre></td></tr></table></figure>
-
 <p>右值：只能出现在<code>=</code>的右边，或者不可以取地址（非绝对）</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">10</span> = <span class="number">20</span>；</span><br><span class="line"><span class="type">int</span>* p = &amp;<span class="number">10</span>;</span><br><span class="line"><span class="comment">//此处10和20均为右值</span></span><br></pre></td></tr></table></figure>
-
 <p>C++中的右值：</p>
 <ul>
-<li>纯右值：常量、临时变量。<code>getA(A) = b;	int* p = &amp;(getA());</code></li>
+<li>纯右值：常量、临时变量。<code>getA(A) = b;    int* p = &amp;(getA());</code></li>
 <li>将亡值：声明周期即将结束的值</li>
 </ul>
 <p>临时变量：函数以值返回的变量，调用类的构造函数创建的变量</p>
@@ -304,12 +298,10 @@
 <li>左值引用：引用的实体既可以为左值，也可以为右值</li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span>&amp; ra = a;</span><br><span class="line"><span class="comment">//ra实体为左值</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span>&amp; ri = <span class="number">10</span>;</span><br><span class="line"><span class="comment">//ri实体为右值</span></span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>右值引用</li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span>&amp;&amp; lr = <span class="number">10</span>;</span><br><span class="line"><span class="comment">//实体为常量</span></span><br><span class="line"><span class="type">int</span>&amp;&amp; lr2 = <span class="built_in">getA</span>();</span><br><span class="line"><span class="comment">//实体为临时变量</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span>&amp; r3 = <span class="built_in">getA</span>();<span class="comment">//左值引用，实体为右值</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span>&amp;&amp; r4 = a;<span class="comment">//不能使用，右值引用语法不能用来引用左值</span></span><br></pre></td></tr></table></figure>
-
 <p>小结：</p>
 <p>左值引用，右值引用的语法意义：都是变量的别名</p>
 <p>左值引用：就可以引用左值，也可以引用右值，如果引用右值，需要为const左值引用</p>
@@ -329,13 +321,12 @@
 <li>参数列表（parameters）：与普通函数的参数列表一致，如果不需要参数传递，则可以连同()一起省略 </li>
 <li>mutable：默认情况下，lambda函数总是一个const函数，mutable可以取消其常量性。使用该修饰符时，参数列表不可省略(即使参数为空)。 </li>
 <li>返回值类型（returntype）：用追踪返回类型形式声明函数的返回值类型，没有返回值时此部分 可省略。返回值类型明确情况下，也可省略，由编译器对返回类型进行推导。 </li>
-<li>函数体（statement）：在该函数体内，除了可以使用其参数外，还可以使用所有捕获到的变量。</li>
+<li>函数体（statement）：在该函数体内，除了可以使用其参数外，还可以使用所有捕获到的变量。 </li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="type">int</span> b = <span class="number">5</span>;</span><br><span class="line">[] &#123;&#125;;</span><br><span class="line">[a, b]()<span class="keyword">mutable</span> &#123;a = <span class="number">100</span>; b = <span class="number">200</span>; <span class="keyword">return</span> a + b; &#125;;</span><br><span class="line"><span class="keyword">auto</span> func = [](<span class="type">int</span> a, <span class="type">int</span> b)-&gt;<span class="type">int</span> &#123;a = <span class="number">1</span>; b = <span class="number">2</span>; <span class="keyword">return</span> a + b; &#125;;</span><br><span class="line"><span class="built_in">func</span>(a, b);</span><br></pre></td></tr></table></figure>
-
 <h2 id="捕捉列表"><a href="#捕捉列表" class="headerlink" title="捕捉列表"></a>捕捉列表</h2><ul>
 <li>[var]：以值传递的方式捕捉变量var</li>
-<li>[&#x3D;]：表示以值传递的方式捕捉父类作用域的所有变量</li>
+<li>[=]：表示以值传递的方式捕捉父类作用域的所有变量</li>
 <li>[&amp;]：表示以引用传递的方式捕捉父作用域的所有变量，如果是传引用形式，不需要mutable也可以修改捕捉列表中的变量</li>
 <li>[&amp;var]：以引用传递的方式捕捉变量var</li>
 <li>[this]：以值传递方式捕捉当前的this指针</li>
@@ -343,11 +334,10 @@
 <li>父类作用域不一定是直接父类作用域，嵌套的也可以</li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="type">int</span> b = <span class="number">2</span>;</span><br><span class="line"><span class="comment">//[=]以传值的形式捕捉父类作用域的所有变量</span></span><br><span class="line">[=](<span class="type">int</span> num)<span class="keyword">mutable</span>-&gt;<span class="type">int</span> &#123;</span><br><span class="line">  a = <span class="number">5</span>;</span><br><span class="line">  b = <span class="number">10</span>;</span><br><span class="line">  <span class="keyword">return</span> a + b + num;</span><br><span class="line">  <span class="comment">//return a + b + c + num;</span></span><br><span class="line">  <span class="comment">//c还没有被定义，不能捕捉</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">auto</span> fun2 = [&amp;](<span class="type">int</span> num)-&gt;<span class="type">int</span> &#123;</span><br><span class="line">  a = <span class="number">5</span>;</span><br><span class="line">  b = <span class="number">10</span>;</span><br><span class="line">  <span class="keyword">return</span> a + b + num;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">fun2</span>(<span class="number">200</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//除了a以外其他变量都以值传递捕捉，a以引用传递捕捉</span></span><br><span class="line"><span class="comment">//错误写法[=, a]，都是值传递</span></span><br><span class="line"><span class="keyword">auto</span> fun3 = [=, &amp;a](<span class="type">int</span> num)-&gt;<span class="type">int</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> a + b + num;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">auto</span> fun4 = [&amp;, a](<span class="type">int</span> num)-&gt;<span class="type">int</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> a + b + num;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 <p>lambda表达式不能相互赋值，但可以拷贝；可以吧lambda表达式赋给一个函数指针</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> fun1 = [](<span class="type">int</span> a, <span class="type">int</span> b)-&gt;<span class="type">int</span>&#123;<span class="keyword">return</span> a + b; &#125;;</span><br><span class="line"><span class="keyword">auto</span> fun2 = [](<span class="type">int</span> a, <span class="type">int</span> b)-&gt;<span class="type">int</span>&#123;<span class="keyword">return</span> a + b; &#125;;</span><br><span class="line"></span><br><span class="line">fun1 = fun2;<span class="comment">//赋值操作，不能执行</span></span><br><span class="line"><span class="function"><span class="keyword">auto</span> <span class="title">fun3</span><span class="params">(fun2)</span></span>;<span class="comment">//拷贝操作</span></span><br><span class="line"><span class="keyword">auto</span> fun4 = fun2;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">int</span><span class="params">(*fptr)</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">void</span><span class="params">(*fptr2)</span></span>;</span><br><span class="line"></span><br><span class="line">fptr ptr;</span><br><span class="line"></span><br><span class="line">ptr = fun1;</span><br><span class="line"></span><br><span class="line"><span class="comment">//接口不一致</span></span><br><span class="line"><span class="comment">//fptr2 ptr2 = fun1;</span></span><br></pre></td></tr></table></figure>
-
 <h1 id="线程库"><a href="#线程库" class="headerlink" title="线程库"></a>线程库</h1><p>头文件thread</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -355,7 +345,8 @@
 <th>功能</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>thread</td>
 <td>构造一个线程对象，没有关联任何线程函数，即没有启动任何线程</td>
 </tr>
@@ -379,18 +370,16 @@
 <td>detach()</td>
 <td>线程分离，把被创建的线程与线程对象分离</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>RAII：资源获取立即初始化，在构造函数中初始化资源，在析构函数中销毁资源</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ThreadMange</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">ThreadMange</span>(thread&amp; t)</span><br><span class="line">		: _thread(t)</span><br><span class="line">	&#123; &#125;</span><br><span class="line"></span><br><span class="line">	~<span class="built_in">ThreadMange</span>()</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (_thread.<span class="built_in">joinable</span>())</span><br><span class="line">			_thread.<span class="built_in">join</span>();</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	thread&amp; _thread;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">testThread</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//thread t1;</span></span><br><span class="line"></span><br><span class="line">	<span class="function">thread <span class="title">t1</span><span class="params">(r1)</span></span>;</span><br><span class="line">	<span class="function">thread <span class="title">t2</span><span class="params">(r2, <span class="number">1</span>)</span></span>;</span><br><span class="line">	<span class="function">thread <span class="title">t3</span><span class="params">(r3, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span></span>;</span><br><span class="line">	</span><br><span class="line">	<span class="function">ThreadMange <span class="title">tm1</span><span class="params">(t1)</span></span>;</span><br><span class="line">	<span class="function">ThreadMange <span class="title">tm2</span><span class="params">(t2)</span></span>;</span><br><span class="line">	<span class="function">ThreadMange <span class="title">tm3</span><span class="params">(t3)</span></span>;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/*t1.join();</span></span><br><span class="line"><span class="comment">	t2.join();</span></span><br><span class="line"><span class="comment">	t3.join();*/</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>如果需要类的成员函数做线程函数，需要写完整的作用域，并且需要显示取地址，参数需要加上this所指的对象</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">B</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">bfun</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;B::bfun&quot;</span> &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">test2</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	B b;</span><br><span class="line">	<span class="function">thread <span class="title">t1</span><span class="params">(&amp;B::bfun, &amp;b)</span></span>;</span><br><span class="line">	t1.<span class="built_in">join</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>如果函数参数类型为引用，在线程中需要修改原是变量，则需要听过ref转换</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">fun</span><span class="params">(<span class="type">int</span>&amp; a)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	a += <span class="number">10</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">test3</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> a = <span class="number">0</span>;</span><br><span class="line">	cout &lt;&lt; a &lt;&lt; endl;</span><br><span class="line">	<span class="function">thread <span class="title">t1</span><span class="params">(fun, ref(a))</span></span>;</span><br><span class="line">	t1.<span class="built_in">join</span>();</span><br><span class="line">	cout &lt;&lt; a &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <h2 id="原子性操作库（atomic）"><a href="#原子性操作库（atomic）" class="headerlink" title="原子性操作库（atomic）"></a>原子性操作库（atomic）</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> <span class="type">long</span> sum = <span class="number">0L</span>;</span><br><span class="line"><span class="function">atomic&lt;<span class="type">int</span>&gt; <span class="title">sum2</span><span class="params">(<span class="number">0</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">(<span class="type">size_t</span> num)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; num; i++)</span><br><span class="line">		sum2++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> num;</span><br><span class="line">	cin &gt;&gt; num;</span><br><span class="line"></span><br><span class="line">	<span class="function">thread <span class="title">t1</span><span class="params">(func, num)</span></span>;</span><br><span class="line">	<span class="function">thread <span class="title">t2</span><span class="params">(func, num)</span></span>;</span><br><span class="line"></span><br><span class="line">	t1.<span class="built_in">join</span>();</span><br><span class="line">	t2.<span class="built_in">join</span>();</span><br><span class="line"></span><br><span class="line">	cout &lt;&lt; sum2 &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>将一个变量声明为原子类型变量之后，不需要对该变量加互斥锁，线程也能够对该变量互斥访问，可以根据<code>atomic</code>类模版，定义出需要的任意原子类型。</p>
 <p>由于原子类型通常属于资源型数据，故在C++11中，标准库将拷贝构造，移动构造以及运算符重载默认置为<code>delete</code></p>
 <h1 id="mutex"><a href="#mutex" class="headerlink" title="mutex"></a>mutex</h1><ol>
@@ -399,26 +388,26 @@
 <p>try_lock：非阻塞加锁操作，如果其他线程没有释放当前锁，则直接返回加锁失败结果</p>
 <p>lock：阻塞加锁操作，如果其他线程没有释放当前锁，阻塞等待，直到其他线程释放当前锁</p>
 <p>unlock：解锁</p>
-<ol start="2">
+<ol>
 <li>recursive_mutex：递归上锁，允许对互斥量进行多次上锁，但解锁需要调用与上锁相同的递归深度</li>
 <li>timed_mutex</li>
 </ol>
 <ul>
 <li>try_lock_for：接受一个时间范围，表示在这一段时间范围之内线程如果没有获得锁则被阻塞住（与 std::mutex 的 try_lock() 不同，try_lock 如果被调用时没有获得锁则直接返回 false），如果在此期间其他线程 释放了锁，则该线程可以获得对互斥量的锁，如果超时（即在指定时间内还是没有获得锁），则返 回 false。 </li>
-<li>try_lock_until() ：接受一个时间点作为参数，在指定时间点未到来之前线程如果没有获得锁则被阻塞住，如果在此期 间其他线程释放了锁，则该线程可以获得对互斥量的锁，如果超时（即在指定时间内还是没有获得 锁），则返回 false。</li>
+<li>try_lock_until() ：接受一个时间点作为参数，在指定时间点未到来之前线程如果没有获得锁则被阻塞住，如果在此期 间其他线程释放了锁，则该线程可以获得对互斥量的锁，如果超时（即在指定时间内还是没有获得 锁），则返回 false。 </li>
 </ul>
-<ol start="4">
+<ol>
 <li>recursive_timed_mutex</li>
 </ol>
 <h2 id="lock-guard"><a href="#lock-guard" class="headerlink" title="lock_guard"></a>lock_guard</h2><p>lock_guard类模版通过RAII的方式对其管理的互斥量进行了封装，在需要加锁的地方，使用任意一个互斥体实例化一个lock_guard，调用其构造函数即上锁，在出作用域前，lock_guard对象要被销毁，会调用其析构函数而自动解锁，可以有效避免死锁问题。</p>
 <p>缺陷：太过单一，用户无法对该锁进行控制</p>
 <h2 id="unique-lock"><a href="#unique-lock" class="headerlink" title="unique_lock"></a>unique_lock</h2><p>相较于lock_guard有了更多的接口</p>
-<p>上锁&#x2F;解锁操作：lock、try_lock、try_lock_for、try_lock_until和unlock </p>
+<p>上锁/解锁操作：lock、try_lock、try_lock_for、try_lock_until和unlock </p>
 <p>修改操作：移动赋值、交换(swap：与另一个unique_lock对象互换所管理的互斥量所有权)、释放 (release：返回它所管理的互斥量对象的指针，并释放所有权) </p>
 <p>获取属性：owns_lock(返回当前对象是否上了锁)、operator bool()(与owns_lock()的功能相同)、 mutex(返回当前unique_lock所管理的互斥量的指针)。</p>
 <h1 id="多线程安全"><a href="#多线程安全" class="headerlink" title="多线程安全"></a>多线程安全</h1><ol>
 <li><p>原子操作：指令不会被打断，线程安全操作，效率较高</p>
-<p> atomic&lt;T&gt;：把T类型数据封装成原子操作</p>
+<p> atomic\<T\>：把T类型数据封装成原子操作</T\></p>
 </li>
 <li><p>加锁：通过多线程之间的加锁阻塞保证线程安全，效率较低，加锁解锁比较耗时（相对于原子操作）</p>
 <p> mutex、recursive_mutex、timed_mutex、recursive_timed_mutex</p>
@@ -436,7 +425,6 @@
 <li>try：try代码块中的代码表示将被激活特定的异常</li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">fun2</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">throw</span> <span class="number">0</span>;<span class="comment">//抛出异常</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">test2</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">try</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//try：可能发生异常的代码放在这里</span></span><br><span class="line">		<span class="built_in">fun2</span>();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">catch</span> (<span class="type">char</span> ch)</span><br><span class="line">	&#123;<span class="comment">//捕获对应类型的异常</span></span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;catch(char)&quot;</span> &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">catch</span> (<span class="type">char</span>* str)</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;catch(char*)&quot;</span> &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">catch</span> (<span class="type">int</span> n)</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;catch(int)&quot;</span> &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <h2 id="异常的使用"><a href="#异常的使用" class="headerlink" title="异常的使用"></a>异常的使用</h2><p><strong>异常的抛出和匹配原则：</strong> </p>
 <ol>
 <li>异常是通过抛出对象而引发的，该对象的类型决定了应该激活哪个catch的处理代码。 </li>
@@ -461,9 +449,7 @@
 </ul>
 <p><strong>异常规范：</strong></p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这里表示这个函数会抛出A/B/C/D中的某种类型的异常 </span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">fun</span><span class="params">()</span> <span class="title">throw</span><span class="params">(A，B，C，D)</span></span>; </span><br><span class="line"><span class="comment">// 这里表示这个函数只会抛出bad_alloc的异常 </span></span><br><span class="line"><span class="function"><span class="type">void</span>* <span class="keyword">operator</span> <span class="title">new</span> <span class="params">(std::<span class="type">size_t</span> size)</span> <span class="title">throw</span> <span class="params">(std::bad_alloc)</span></span>; </span><br><span class="line"><span class="comment">// 这里表示这个函数不会抛出异常 </span></span><br><span class="line"><span class="function"><span class="type">void</span>* <span class="keyword">operator</span> <span class="title">new</span> <span class="params">(std::<span class="type">size_t</span> size, <span class="type">void</span>* ptr)</span> <span class="title">throw</span><span class="params">()</span></span>; </span><br></pre></td></tr></table></figure>
-
 <h2 id="标准库中的异常体系"><a href="#标准库中的异常体系" class="headerlink" title="标准库中的异常体系"></a>标准库中的异常体系</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">try</span></span><br><span class="line">  &#123;</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; arr;</span><br><span class="line">    arr.<span class="built_in">at</span>(<span class="number">10</span>) = <span class="number">2</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">catch</span>(exception&amp; e)</span><br><span class="line">  &#123;</span><br><span class="line">    cout &lt;&lt; e.<span class="built_in">what</span>() &lt;&lt; endl;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">catch</span>(...)</span><br><span class="line">  &#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;未知异常&quot;</span> &lt;&lt; endl;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p><code>std::execptiom</code>是所有标准C++异常的父类，用所有异常的根基类的引用或指针进行捕捉，可以匹配所有继承体系的所有类型，通过根基类虚函数重写，完成多态的逻辑，最终通过多态完成对异常的精准处理</p>
 <h2 id="异常的优缺点"><a href="#异常的优缺点" class="headerlink" title="异常的优缺点"></a>异常的优缺点</h2><p><strong>优点：</strong></p>
 <ol>
@@ -471,7 +457,7 @@
 <li>返回错误码的传统方式有个很大的问题是，在函数调用链中，深层的函数返回了错误，需要得层层返回错误，最外层才能拿到错误。</li>
 <li>很多的第三方库都包含异常。</li>
 <li>很多测试框架都使用异常，这样能更好的使用单元测试等进行白盒的测试。 </li>
-<li>部分函数使用异常更好处理，比如构造函数没有返回值，不方便使用错误码方式处理。比如T&amp;operator这样的函数，如果pos越界了只能使用异常或者终止程序处理，没办法通过返回值表示错误。</li>
+<li>部分函数使用异常更好处理，比如构造函数没有返回值，不方便使用错误码方式处理。比如T&amp;operator这样的函数，如果pos越界了只能使用异常或者终止程序处理，没办法通过返回值表示错误。 </li>
 </ol>
 <p><strong>缺点：</strong></p>
 <ol>
@@ -492,7 +478,7 @@
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
-    <strong>本文作者： </strong>Morgan
+    <strong>本文作者： </strong>Latsummer
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
@@ -598,9 +584,9 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Morgan"
+    <img class="site-author-image" itemprop="image" alt="Latsummer"
       src="/images/IMG_6272.JPG">
-  <p class="site-author-name" itemprop="name">Morgan</p>
+  <p class="site-author-name" itemprop="name">Latsummer</p>
   <div class="site-description" itemprop="description">八说了，我在学了！</div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -667,19 +653,13 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Morgan</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-chart-area"></i>
-    </span>
-      <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">186k</span>
+  <span class="author" itemprop="copyrightHolder">Latsummer</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:49</span>
+    <span title="站点阅读时长">3:08</span>
 </div><script color="241,124,103" opacity="1" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
 
 
@@ -757,6 +737,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

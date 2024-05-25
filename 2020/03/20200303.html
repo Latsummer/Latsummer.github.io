@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.3.0">
+<meta name="generator" content="Hexo 7.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/128x128.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png">
@@ -31,7 +31,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-03-03T07:44:30.000Z">
 <meta property="article:modified_time" content="2020-06-02T05:10:44.000Z">
-<meta property="article:author" content="Morgan">
+<meta property="article:author" content="Latsummer">
 <meta property="article:tag" content="题目总结">
 <meta name="twitter:card" content="summary">
 
@@ -205,7 +205,7 @@
 
 <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
   <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
+  <meta itemprop="name" content="Latsummer">
   <meta itemprop="description" content="八说了，我在学了！">
 </span>
 
@@ -256,14 +256,14 @@
             <i class="far fa-file-word"></i>
           </span>
             <span class="post-meta-item-text">本文字数：</span>
-          <span>3.7k</span>
+          <span>3.9k</span>
         </span>
         <span class="post-meta-item" title="阅读时长">
           <span class="post-meta-item-icon">
             <i class="far fa-clock"></i>
           </span>
             <span class="post-meta-item-text">阅读时长 &asymp;</span>
-          <span>3 分钟</span>
+          <span>4 分钟</span>
         </span>
 
     </div>
@@ -277,17 +277,12 @@
   
     <h3 id="strlen和sizeof本身的区别"><a href="#strlen和sizeof本身的区别" class="headerlink" title="strlen和sizeof本身的区别"></a>strlen和sizeof本身的区别</h3><p>szieof是一个运算操作符，在使用时无需声明头文件，它的参数可以是数据类型，数组，指针及函数等等<br>strlen是一个库函数，在使用前需要声明string.h头文件，它的参数必须是字符型指针（char* ）</p>
 <span id="more"></span>
-
 <h3 id="对于数组"><a href="#对于数组" class="headerlink" title="对于数组"></a>对于数组</h3><p>首先，数组和指针是两个不相干的概念，然而，C语言中很多情况下数组都能隐式转化为指针，指针也能当作数组一样使用（用[ ]来取下标）</p>
-<p><strong><em>32位系统下，一个指针大小为四个字节</em></strong></p>
+<p><strong>_32位系统下，一个指针大小为四个字节_</strong></p>
 <h3 id="字符数组"><a href="#字符数组" class="headerlink" title="字符数组"></a>字符数组</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> arr[] = &#123; <span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>, <span class="string">&#x27;d&#x27;</span>, <span class="string">&#x27;e&#x27;</span>, <span class="string">&#x27;f&#x27;</span> &#125;;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">strlen</span>(arr));</span><br><span class="line">	<span class="comment">//由于数组中没有‘\0’所以会产生内存非法访问		</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">strlen</span>(arr + <span class="number">0</span>));	</span><br><span class="line">	<span class="comment">//同上</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">strlen</span>(*arr)); </span><br><span class="line">	<span class="comment">//*arr得到的是字符‘a’，类型是char，而strlen函数要求的参数是</span></span><br><span class="line">	<span class="comment">//char*，但是存在隐式转换，将char转化为char*，使得编译可以</span></span><br><span class="line">	<span class="comment">//进行（会有警告），但是实际运行时程序会崩溃，</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">strlen</span>(arr[<span class="number">1</span>]));	</span><br><span class="line">	<span class="comment">//同上	</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">strlen</span>(&amp;arr));</span><br><span class="line">	<span class="comment">//&amp;arr =&gt; 类型为char(*)[6]，类型与strlen函数要求参数类型不同</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="keyword">sizeof</span>(&amp;arr));</span><br><span class="line">    <span class="comment">//发生隐式转换，指针所占字节数为4个字节</span></span><br></pre></td></tr></table></figure>
-
 <h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> arr[] = <span class="string">&quot;abcdef&quot;</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="keyword">sizeof</span>(arr));</span><br><span class="line">	<span class="comment">//值为7，求字符串所占内存大小，包含&#x27;\0&#x27;		</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="keyword">sizeof</span>(arr + <span class="number">0</span>));	</span><br><span class="line">	<span class="comment">//发生了隐式转换，(arr + 0)类型为char* 指针，大小为四个字节</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="keyword">sizeof</span>(*arr));</span><br><span class="line">	<span class="comment">//*arr即为字符&#x27;a&#x27;,它所占内存空间为一个字节		</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="keyword">sizeof</span>(arr[<span class="number">1</span>]));	</span><br><span class="line">	<span class="comment">//arr[1]即为字符&#x27;b&#x27;，占一个字节	</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="keyword">sizeof</span>(&amp;arr));</span><br><span class="line">	<span class="comment">//发生隐式转化，转换为char(*)[7],为指针，占四个字节	</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="keyword">sizeof</span>(&amp;arr + <span class="number">1</span>));	</span><br><span class="line">	<span class="comment">//同上</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="keyword">sizeof</span>(&amp;arr[<span class="number">0</span>] + <span class="number">1</span>));	</span><br><span class="line">	<span class="comment">//同上，此处类型为char*</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">strlen</span>(arr));</span><br><span class="line">	<span class="comment">//6  求字符串长度不包含&#x27;\0&#x27;	</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">strlen</span>(arr + <span class="number">0</span>));</span><br><span class="line">    <span class="comment">//同上</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">strlen</span>(*arr));</span><br><span class="line">	<span class="comment">//*arr类型为char，与strlen函数要求的参数类型不同</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">strlen</span>(arr[<span class="number">1</span>]));</span><br><span class="line">	<span class="comment">//同上</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">strlen</span>(&amp;arr));	</span><br><span class="line">	<span class="comment">//&amp;arr类型为char(*)[7]，但恰好&amp;arr和arr得到的地址是相同的</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">strlen</span>(&amp;arr + <span class="number">1</span>));	</span><br><span class="line">	<span class="comment">//&amp;arr + 1跳过了整个数组，此时运行程序会发生非法访问内存</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">strlen</span>(&amp;arr[<span class="number">0</span>] + <span class="number">1</span>));	</span><br><span class="line">	<span class="comment">//&amp;arr[0]类型为char* ，指向字符串第一个字符，加一之后跳过第一个字符，结果是5</span></span><br></pre></td></tr></table></figure>
-
 <h3 id="指针"><a href="#指针" class="headerlink" title="指针"></a>指针</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span>* p = <span class="string">&quot;abcdef&quot;</span>;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="keyword">sizeof</span>(p));	</span><br><span class="line"><span class="comment">//p是指针，32位系统下占四个字节</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="keyword">sizeof</span>(p + <span class="number">1</span>));</span><br><span class="line"><span class="comment">//(p + 1)还是指针，同上	</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="keyword">sizeof</span>(*p));	</span><br><span class="line"><span class="comment">//*p =&gt; &#x27;a&#x27;,char类型，一个字节</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="keyword">sizeof</span>(p[<span class="number">1</span>]));</span><br><span class="line"><span class="comment">//p[1] =&gt; b，char类型，一个字节</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="keyword">sizeof</span>(&amp;p));	</span><br><span class="line"><span class="comment">//&amp;p还是指针，类型为char**，四个字节</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="keyword">sizeof</span>(&amp;p + <span class="number">1</span>));</span><br><span class="line"><span class="comment">//同上</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="keyword">sizeof</span>(&amp;p[<span class="number">0</span>] + <span class="number">1</span>));</span><br><span class="line">   <span class="comment">//类型为char* ，指针，32位系统下四个字节</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">strlen</span>(p));</span><br><span class="line"><span class="comment">//6，指针p指向字符串&quot;abcdef&quot;</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">strlen</span>(p + <span class="number">1</span>));</span><br><span class="line"><span class="comment">//(p + 1),跳过一个元素求字符串字节数，5	</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">strlen</span>(*p));</span><br><span class="line"><span class="comment">//*p 类型为char，类型不匹配</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">strlen</span>(p[<span class="number">1</span>]));</span><br><span class="line"><span class="comment">//同上</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">strlen</span>(&amp;p));</span><br><span class="line"><span class="comment">//&amp;p类型为char**，类型不匹配</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">strlen</span>(&amp;p + <span class="number">1</span>));</span><br><span class="line"><span class="comment">//同上</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">strlen</span>(&amp;p[<span class="number">0</span>] + <span class="number">1</span>));	</span><br><span class="line"><span class="comment">//原理和（p + 1）一样</span></span><br></pre></td></tr></table></figure>
-
 <h3 id="二维数组"><a href="#二维数组" class="headerlink" title="二维数组"></a>二维数组</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">   <span class="type">int</span> a[<span class="number">3</span>][<span class="number">4</span>] = </span><br><span class="line">   &#123;</span><br><span class="line">	&#123; <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span> &#125;,</span><br><span class="line">	&#123; <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span> &#125;,</span><br><span class="line">	&#123; <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span> &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="keyword">sizeof</span>(a));	</span><br><span class="line"><span class="comment">//数组中有12 个int类型的元素，48个字节</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="keyword">sizeof</span>(a[<span class="number">0</span>][<span class="number">0</span>]));</span><br><span class="line"><span class="comment">//a[0][0]类型为int，四个字节</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="keyword">sizeof</span>(a[<span class="number">0</span>])); </span><br><span class="line"><span class="comment">//类型为int[4]，一个int[4]是16个字节</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="keyword">sizeof</span>(a[<span class="number">0</span>] + <span class="number">1</span>));</span><br><span class="line"><span class="comment">//a[0] + 1 类型为int* ，指针，32位系统下4个字节</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="keyword">sizeof</span>(*(a[<span class="number">0</span>] + <span class="number">1</span>)));</span><br><span class="line"><span class="comment">//a[0] + 1 类型为int* ,解引用后得到int类型，占四个字节（等价于a[0][1]）</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="keyword">sizeof</span>(&amp;a[<span class="number">0</span>] + <span class="number">1</span>)); </span><br><span class="line"><span class="comment">//&amp;a[0]类型为int(*)[4]，加一之后还是数组指针，32位系统下占四个字节</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="keyword">sizeof</span>(*(&amp;a[<span class="number">0</span>] + <span class="number">1</span>)));</span><br><span class="line"><span class="comment">//&amp;a[0]类型为int(*)[4]，加一之后还是数组指针，解引用后类型为int[4]，大小为16个字节</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="keyword">sizeof</span>(*a));</span><br><span class="line"><span class="comment">//*a类型为int[4],16个字节</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,<span class="keyword">sizeof</span>(arr[<span class="number">100</span>]));</span><br><span class="line"><span class="comment">//16，编译器编译时根据arr[100]的除了它的类型是int[4]，在运行的时候直接打印的是sizeof的计算结果，即 16</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
 <h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>对于sizeof和strlen来说，要时刻注意输入参数的类型，有时候多一个符号或少一个符号就会发生隐式转换，sizeof来者不拒，各种类型都能算，但是strlen不一样，它的输入参数只能是char* （它就是一个求字符串长度的库函数，不要太为难它了）。</p>
 
 </div>
@@ -300,7 +295,7 @@
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
-    <strong>本文作者： </strong>Morgan
+    <strong>本文作者： </strong>Latsummer
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
@@ -406,9 +401,9 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Morgan"
+    <img class="site-author-image" itemprop="image" alt="Latsummer"
       src="/images/IMG_6272.JPG">
-  <p class="site-author-name" itemprop="name">Morgan</p>
+  <p class="site-author-name" itemprop="name">Latsummer</p>
   <div class="site-description" itemprop="description">八说了，我在学了！</div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -475,19 +470,13 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Morgan</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-chart-area"></i>
-    </span>
-      <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">186k</span>
+  <span class="author" itemprop="copyrightHolder">Latsummer</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:49</span>
+    <span title="站点阅读时长">3:08</span>
 </div><script color="241,124,103" opacity="1" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
 
 
@@ -565,6 +554,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

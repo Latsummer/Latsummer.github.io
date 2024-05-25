@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.3.0">
+<meta name="generator" content="Hexo 7.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/128x128.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png">
@@ -31,7 +31,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-07-04T10:37:00.000Z">
 <meta property="article:modified_time" content="2023-05-07T11:18:08.000Z">
-<meta property="article:author" content="Morgan">
+<meta property="article:author" content="Latsummer">
 <meta property="article:tag" content="C++">
 <meta property="article:tag" content="数据结构">
 <meta name="twitter:card" content="summary">
@@ -206,7 +206,7 @@
 
 <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
   <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
+  <meta itemprop="name" content="Latsummer">
   <meta itemprop="description" content="八说了，我在学了！">
 </span>
 
@@ -257,7 +257,7 @@
             <i class="far fa-file-word"></i>
           </span>
             <span class="post-meta-item-text">本文字数：</span>
-          <span>2.9k</span>
+          <span>3.5k</span>
         </span>
         <span class="post-meta-item" title="阅读时长">
           <span class="post-meta-item-icon">
@@ -285,21 +285,17 @@
 <p>上述条件反之亦可</p>
 </blockquote>
 <span id="more"></span>
-
 <h1 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h1><p>接近二分查找，最大查找次数为树的高度，平均查找次数Log<sub>2</sub> N</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">BSTNode</span></span><br><span class="line">&#123;</span><br><span class="line">  T _val;</span><br><span class="line">  BSTNode&lt;T&gt;* _left;</span><br><span class="line">  BSTNode&lt;T&gt;* _right;</span><br><span class="line">  </span><br><span class="line">  <span class="built_in">BSTNode</span>(<span class="type">const</span> T&amp; val = <span class="built_in">T</span>())</span><br><span class="line">    :	_val(val)</span><br><span class="line">    , _left(<span class="literal">nullptr</span>)</span><br><span class="line">    , _right(<span class="literal">nullptr</span>)</span><br><span class="line">    &#123;	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">BSTree</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="keyword">typedef</span> BSTNode&lt;T&gt; Node;</span><br><span class="line">  </span><br><span class="line">  <span class="function">Node* <span class="title">find</span><span class="params">(<span class="type">const</span> T&amp; val)</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    Node* cur = _root;</span><br><span class="line">    <span class="keyword">while</span>(cur)</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">if</span>(cur-&gt;_val == val)&#123;</span><br><span class="line">        <span class="keyword">return</span> cur;        </span><br><span class="line">      &#125;<span class="keyword">else</span> <span class="keyword">if</span>(cur-&gt;_val &lt; val)&#123;</span><br><span class="line">        cur = cur-&gt;right;</span><br><span class="line">      &#125;<span class="keyword">else</span> <span class="keyword">if</span>(cur-&gt;_val &gt; val)&#123;</span><br><span class="line">        cur = cur-&gt;left;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  Node* _root = <span class="literal">nullptr</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 <h1 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h1><p>如果树中已存在需要插入的数据，则不重复插入</p>
 <p>插入位置为：叶子，子树不完全的非叶子结点，即度为0或者1的节点位置</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">insert</span><span class="params">(<span class="type">const</span> T&amp; val)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(_root == <span class="literal">nullptr</span>)</span><br><span class="line">  &#123;</span><br><span class="line">    _root = <span class="keyword">new</span> <span class="built_in">Node</span>(val);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  Node* cur = _root;</span><br><span class="line">  Node* parent = <span class="literal">nullptr</span>;</span><br><span class="line">  <span class="keyword">while</span>(cur)</span><br><span class="line">  &#123;</span><br><span class="line">    parent = ur;</span><br><span class="line">    <span class="keyword">if</span>(cur-&gt;_val == val)</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(cur-&gt;_val &lt; val)</span><br><span class="line">      cur = cur-&gt;_right;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      cur = cur-&gt;_left;</span><br><span class="line">  &#125;</span><br><span class="line">  cur = <span class="keyword">new</span> <span class="built_in">Node</span>(val);</span><br><span class="line">  <span class="keyword">if</span>(parent-&gt;_val &lt; val)</span><br><span class="line">    parent-&gt;_right = Node;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    parent-&gt;_left = cur;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <h1 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h1><p>有以下四种情况</p>
 <pre><code>a. 要删除的结点无孩子结点
 b. 要删除的结点只有左孩子结点
 c. 要删除的结点只有右孩子结点
 d. 要删除的结点有左、右孩子结点
-</code></pre>
-<ul>
+</code></pre><ul>
 <li><p>左子树：左子树的最右节点是所有左子树中最大的节点</p>
 </li>
 <li><p>右子树：右子树的最左节点是所有右子树中最小的节点</p>
@@ -323,7 +319,7 @@ d. 要删除的结点有左、右孩子结点
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
-    <strong>本文作者： </strong>Morgan
+    <strong>本文作者： </strong>Latsummer
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
@@ -430,9 +426,9 @@ d. 要删除的结点有左、右孩子结点
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Morgan"
+    <img class="site-author-image" itemprop="image" alt="Latsummer"
       src="/images/IMG_6272.JPG">
-  <p class="site-author-name" itemprop="name">Morgan</p>
+  <p class="site-author-name" itemprop="name">Latsummer</p>
   <div class="site-description" itemprop="description">八说了，我在学了！</div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -499,19 +495,13 @@ d. 要删除的结点有左、右孩子结点
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Morgan</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-chart-area"></i>
-    </span>
-      <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">186k</span>
+  <span class="author" itemprop="copyrightHolder">Latsummer</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:49</span>
+    <span title="站点阅读时长">3:08</span>
 </div><script color="241,124,103" opacity="1" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
 
 
@@ -589,6 +579,63 @@ d. 要删除的结点有左、右孩子结点
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

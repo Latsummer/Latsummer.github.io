@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.3.0">
+<meta name="generator" content="Hexo 7.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/128x128.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png">
@@ -31,7 +31,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-05-30T11:32:33.000Z">
 <meta property="article:modified_time" content="2020-06-02T05:10:44.000Z">
-<meta property="article:author" content="Morgan">
+<meta property="article:author" content="Latsummer">
 <meta property="article:tag" content="内存管理">
 <meta name="twitter:card" content="summary">
 
@@ -205,7 +205,7 @@
 
 <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
   <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
+  <meta itemprop="name" content="Latsummer">
   <meta itemprop="description" content="八说了，我在学了！">
 </span>
 
@@ -256,14 +256,14 @@
             <i class="far fa-file-word"></i>
           </span>
             <span class="post-meta-item-text">本文字数：</span>
-          <span>2.5k</span>
+          <span>2.8k</span>
         </span>
         <span class="post-meta-item" title="阅读时长">
           <span class="post-meta-item-icon">
             <i class="far fa-clock"></i>
           </span>
             <span class="post-meta-item-text">阅读时长 &asymp;</span>
-          <span>2 分钟</span>
+          <span>3 分钟</span>
         </span>
 
     </div>
@@ -275,7 +275,7 @@
 <div class="post-body" itemprop="articleBody">
 
   
-    <h1 id="C-x2F-C-内存分布"><a href="#C-x2F-C-内存分布" class="headerlink" title="C&#x2F;C++内存分布"></a>C&#x2F;C++内存分布</h1><ol>
+    <h1 id="C-C-内存分布"><a href="#C-C-内存分布" class="headerlink" title="C/C++内存分布"></a>C/C++内存分布</h1><ol>
 <li>栈：非静态局部变量，函数参数，返回值等，栈是向下增长的</li>
 <li>内存映射段：装载一个共享的动态内存库</li>
 <li>堆：用于程序运行时动态内存分配，可以向上增长</li>
@@ -283,12 +283,10 @@
 <li>代码段：可执行的代码、只读常量</li>
 </ol>
 <span id="more"></span>
-
 <h2 id="C语言中内存管理方式"><a href="#C语言中内存管理方式" class="headerlink" title="C语言中内存管理方式"></a>C语言中内存管理方式</h2><p>malloc（申请空间）、calloc（申请空间并进行零初始化）、realloc（调整空间大小，原地调整大小或重开空间，拷贝内容，释放原空间）</p>
 <p>free（释放空间）</p>
-<h1 id="C-内存管理"><a href="#C-内存管理" class="headerlink" title="C++内存管理"></a>C++内存管理</h1><h2 id="new-x2F-delete-操作内置类型"><a href="#new-x2F-delete-操作内置类型" class="headerlink" title="new &#x2F; delete 操作内置类型"></a>new &#x2F; delete 操作内置类型</h2><p>申请空间：</p>
+<h1 id="C-内存管理"><a href="#C-内存管理" class="headerlink" title="C++内存管理"></a>C++内存管理</h1><h2 id="new-delete-操作内置类型"><a href="#new-delete-操作内置类型" class="headerlink" title="new / delete 操作内置类型"></a>new / delete 操作内置类型</h2><p>申请空间：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span>* ptr1 = <span class="keyword">new</span> <span class="type">int</span>;<span class="comment">//动态申请一个int类型的空间</span></span><br><span class="line"><span class="type">int</span>* ptr2 = <span class="keyword">new</span> <span class="built_in">int</span>(<span class="number">10</span>);<span class="comment">//动态申请一个int类型的空间并初始化为10</span></span><br><span class="line"><span class="type">int</span>* ptr3 = <span class="keyword">new</span>[<span class="number">10</span>];<span class="comment">//动态申请10个int类型的空间</span></span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><p>单个类型的空间：new + 类型</p>
 </li>
@@ -299,26 +297,22 @@
 </ul>
 <p>释放空间：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> ptr1;</span><br><span class="line"><span class="keyword">delete</span> ptr2;</span><br><span class="line"><span class="keyword">delete</span>[] ptr3;</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>单个空间delete 指针</li>
 <li>连续空间：delete[ ] 指针</li>
 </ul>
-<h2 id="new-x2F-delete操作自定义类型"><a href="#new-x2F-delete操作自定义类型" class="headerlink" title="new &#x2F; delete操作自定义类型"></a>new &#x2F; delete操作自定义类型</h2><p>动态创建自定义类型的对象：</p>
+<h2 id="new-delete操作自定义类型"><a href="#new-delete操作自定义类型" class="headerlink" title="new / delete操作自定义类型"></a>new / delete操作自定义类型</h2><p>动态创建自定义类型的对象：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Date</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="built_in">Date</span>(<span class="type">int</span> year)</span><br><span class="line">  &#123;</span><br><span class="line">    _year = year;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  <span class="type">int</span> _year;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;<span class="comment">//new：动态开空间 + 调用构造函数初始化</span></span><br><span class="line">  Date* pd1 = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="number">2020</span>);</span><br><span class="line">  Date* pd2 = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="number">2019</span>);<span class="comment">//调用默认构造：无参构造，全缺省构造</span></span><br><span class="line">  Date* pd3 = <span class="keyword">new</span> Date[<span class="number">10</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>申请单个空间：new 自定义类型（参数列表），<strong>调用构造函数初始化</strong></li>
 <li>申请连续空间：new 自定义类型[个数] ， <strong>自动调用默认构造进行初始化</strong>，如果没有则编译器报错</li>
 </ul>
 <p>释放自定义类型的空间：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> pd1;<span class="comment">//调用一次析构 + 释放空间</span></span><br><span class="line"><span class="keyword">delete</span> pd2;<span class="comment">//调用一次析构 + 释放空间</span></span><br><span class="line"><span class="keyword">delete</span>[] pd3;<span class="comment">//调用十次析构，因为Date[10] + 释放空间</span></span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><strong>调用析构函数清理资源</strong> + 释放空间</li>
 </ul>
 <h1 id="operator-new-与-operator-delete函数"><a href="#operator-new-与-operator-delete函数" class="headerlink" title="operator new 与 operator delete函数"></a>operator new 与 operator delete函数</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span>* <span class="keyword">operator</span> <span class="title">new</span><span class="params">(<span class="type">size_t</span> n)</span></span></span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><p>不是运算符重载函数，而是一个全局函数</p>
 </li>
@@ -332,16 +326,14 @@
 </blockquote>
 <p>执行过程：operator new --&gt; malloc --&gt; 构造函数</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="keyword">operator</span> <span class="title">delete</span><span class="params">(<span class="type">void</span>* ptr)</span></span></span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>不是运算符重载函数</li>
 <li>使用方式和free类似</li>
 <li>封装free</li>
 </ul>
-<p><em>只有自定义类型才会调用构造函数和析构函数</em></p>
+<p>_只有自定义类型才会调用构造函数和析构函数_</p>
 <h2 id="operator-new-与-operator-delete的类专属重载"><a href="#operator-new-与-operator-delete的类专属重载" class="headerlink" title="operator new 与 operator delete的类专属重载"></a>operator new 与 operator delete的类专属重载</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Node</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="built_in">Node</span>()</span><br><span class="line">  &#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Node()&quot;</span> &lt;&lt; endl;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="keyword">operator</span> <span class="title">new</span><span class="params">(<span class="type">int</span> data)</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="type">void</span>* p = <span class="literal">nullptr</span>;</span><br><span class="line">    p = <span class="built_in">allocator</span>&lt;Node&gt;().<span class="built_in">allocate</span>(<span class="number">1</span>);</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mem pool allocate&quot;</span> &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> p;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="keyword">operator</span> <span class="title">delete</span><span class="params">(Node* ptr)</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="built_in">allocator</span>&lt;Node&gt;().<span class="built_in">deallocate</span>((Node*)ptr, <span class="number">1</span>);</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mem pool deallocate&quot;</span> &lt;&lt; endl;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  <span class="type">int</span> _data;</span><br><span class="line">  Node* _next;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  Node* np1 = <span class="keyword">new</span> Node;</span><br><span class="line">  Node* np2 = <span class="keyword">new</span> Node[<span class="number">10</span>];</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">delete</span> np1;</span><br><span class="line">  <span class="keyword">delete</span>[] np2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="new-x2F-delete-原理"><a href="#new-x2F-delete-原理" class="headerlink" title="new &#x2F; delete 原理"></a>new &#x2F; delete 原理</h1><p>内置类型：</p>
+<h1 id="new-delete-原理"><a href="#new-delete-原理" class="headerlink" title="new / delete 原理"></a>new / delete 原理</h1><p>内置类型：</p>
 <ul>
 <li><p>new ： operator new --&gt; malloc 失败抛异常</p>
 </li>
@@ -387,7 +379,7 @@
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
-    <strong>本文作者： </strong>Morgan
+    <strong>本文作者： </strong>Latsummer
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
@@ -487,15 +479,15 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#C-x2F-C-%E5%86%85%E5%AD%98%E5%88%86%E5%B8%83"><span class="nav-number">1.</span> <span class="nav-text">C&#x2F;C++内存分布</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#C%E8%AF%AD%E8%A8%80%E4%B8%AD%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E6%96%B9%E5%BC%8F"><span class="nav-number">1.1.</span> <span class="nav-text">C语言中内存管理方式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#C-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">C++内存管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#new-x2F-delete-%E6%93%8D%E4%BD%9C%E5%86%85%E7%BD%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.1.</span> <span class="nav-text">new &#x2F; delete 操作内置类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#new-x2F-delete%E6%93%8D%E4%BD%9C%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.2.</span> <span class="nav-text">new &#x2F; delete操作自定义类型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#operator-new-%E4%B8%8E-operator-delete%E5%87%BD%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">operator new 与 operator delete函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#operator-new-%E4%B8%8E-operator-delete%E7%9A%84%E7%B1%BB%E4%B8%93%E5%B1%9E%E9%87%8D%E8%BD%BD"><span class="nav-number">3.1.</span> <span class="nav-text">operator new 与 operator delete的类专属重载</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#new-x2F-delete-%E5%8E%9F%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text">new &#x2F; delete 原理</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#C-C-%E5%86%85%E5%AD%98%E5%88%86%E5%B8%83"><span class="nav-number">1.</span> <span class="nav-text">C&#x2F;C++内存分布</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#C%E8%AF%AD%E8%A8%80%E4%B8%AD%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E6%96%B9%E5%BC%8F"><span class="nav-number">1.1.</span> <span class="nav-text">C语言中内存管理方式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#C-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">C++内存管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#new-delete-%E6%93%8D%E4%BD%9C%E5%86%85%E7%BD%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.1.</span> <span class="nav-text">new &#x2F; delete 操作内置类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#new-delete%E6%93%8D%E4%BD%9C%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.2.</span> <span class="nav-text">new &#x2F; delete操作自定义类型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#operator-new-%E4%B8%8E-operator-delete%E5%87%BD%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">operator new 与 operator delete函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#operator-new-%E4%B8%8E-operator-delete%E7%9A%84%E7%B1%BB%E4%B8%93%E5%B1%9E%E9%87%8D%E8%BD%BD"><span class="nav-number">3.1.</span> <span class="nav-text">operator new 与 operator delete的类专属重载</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#new-delete-%E5%8E%9F%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text">new &#x2F; delete 原理</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Morgan"
+    <img class="site-author-image" itemprop="image" alt="Latsummer"
       src="/images/IMG_6272.JPG">
-  <p class="site-author-name" itemprop="name">Morgan</p>
+  <p class="site-author-name" itemprop="name">Latsummer</p>
   <div class="site-description" itemprop="description">八说了，我在学了！</div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -562,19 +554,13 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Morgan</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-chart-area"></i>
-    </span>
-      <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">186k</span>
+  <span class="author" itemprop="copyrightHolder">Latsummer</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:49</span>
+    <span title="站点阅读时长">3:08</span>
 </div><script color="241,124,103" opacity="1" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
 
 
@@ -652,6 +638,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

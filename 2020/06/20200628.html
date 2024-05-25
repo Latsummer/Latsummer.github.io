@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.3.0">
+<meta name="generator" content="Hexo 7.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/128x128.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png">
@@ -31,7 +31,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-06-28T09:33:20.000Z">
 <meta property="article:modified_time" content="2023-05-07T11:18:08.000Z">
-<meta property="article:author" content="Morgan">
+<meta property="article:author" content="Latsummer">
 <meta property="article:tag" content="C++">
 <meta property="article:tag" content="类与对象">
 <meta name="twitter:card" content="summary">
@@ -206,7 +206,7 @@
 
 <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
   <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
+  <meta itemprop="name" content="Latsummer">
   <meta itemprop="description" content="八说了，我在学了！">
 </span>
 
@@ -257,14 +257,14 @@
             <i class="far fa-file-word"></i>
           </span>
             <span class="post-meta-item-text">本文字数：</span>
-          <span>1.6k</span>
+          <span>1.7k</span>
         </span>
         <span class="post-meta-item" title="阅读时长">
           <span class="post-meta-item-icon">
             <i class="far fa-clock"></i>
           </span>
             <span class="post-meta-item-text">阅读时长 &asymp;</span>
-          <span>1 分钟</span>
+          <span>2 分钟</span>
         </span>
 
     </div>
@@ -280,11 +280,10 @@
 <p><strong>构成条件：</strong>在不同的继承关系的类对象，去调用同一函数，产生了不同的行为</p>
 <ol>
 <li>继承关系</li>
-<li>必须通过基类的指针或者引用调用的虚函数，一般都是用父类指针&#x2F;引用指向父类以及子类实体，即都为切片行为</li>
+<li>必须通过基类的指针或者引用调用的虚函数，一般都是用父类指针/引用指向父类以及子类实体，即都为切片行为</li>
 <li>被调用的函数必须是虚函数，且派生类必须对基类的虚函数进行重写</li>
 </ol>
 <span id="more"></span>
-
 <blockquote>
 <p>必须同时满足以上条件，缺一不可</p>
 </blockquote>
@@ -311,10 +310,8 @@
 </ol>
 <h1 id="抽象类"><a href="#抽象类" class="headerlink" title="抽象类"></a>抽象类</h1><p>抽象类：包含纯函数的类，抽象类不能实例化对象</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">A</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="comment">//纯虚函数：没有函数体的虚函数</span></span><br><span class="line">  <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">fun</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">B</span> : <span class="keyword">public</span> A</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">fun</span><span class="params">()</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;B::fun()&quot;</span> &lt;&lt; endl;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">//无法执行以下代码</span></span><br><span class="line">  <span class="comment">//A a;</span></span><br><span class="line">  <span class="comment">//a.fun();</span></span><br><span class="line">  </span><br><span class="line">  B b;</span><br><span class="line">  A* pb = &amp;b;</span><br><span class="line">  b.<span class="built_in">fun</span>();</span><br><span class="line">  pb-&gt;<span class="built_in">fun</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>抽象类存在意义，实现多态，其体现出接口继承</p>
 <h1 id="多态原理"><a href="#多态原理" class="headerlink" title="多态原理"></a>多态原理</h1><h2 id="虚函数表"><a href="#虚函数表" class="headerlink" title="虚函数表"></a>虚函数表</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">D</span></span><br><span class="line">&#123;&#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Car</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">Drive</span><span class="params">()</span></span></span><br><span class="line"><span class="function">  <span class="comment">//包含隐藏成员变量，虚函数表指针</span></span></span><br><span class="line"><span class="function">&#125;</span>;</span><br></pre></td></tr></table></figure>
-
 <p><strong>包含虚函数的类：</strong>类中包含一个隐含的成员变量，即虚表指针</p>
 <p><strong>虚表指针：</strong>指向虚表的首地址，类型为二级指针，函数指针的指针</p>
 <p><strong>虚表：</strong>存放虚函数指针的数组，类型为指针数组</p>
@@ -323,8 +320,8 @@
 <li>普通函数不会存入虚表</li>
 <li>如果子类重写了父类的虚函数，则子类虚表中对应位置使用子类虚函数指针覆盖</li>
 <li>如果子类没有重写父类的任何虚函数，则子类完全继承父类虚表，不做任何修改</li>
-<li>虚函数指针在虚表中的存放顺序和其声明&#x2F;定义的顺序一致</li>
-<li>子类新定义的虚函数，其虚函数指针按照声明&#x2F;定义的顺序依次加入虚表的末尾</li>
+<li>虚函数指针在虚表中的存放顺序和其声明/定义的顺序一致</li>
+<li>子类新定义的虚函数，其虚函数指针按照声明/定义的顺序依次加入虚表的末尾</li>
 <li>虚表一般以<code>nullptr</code>结束</li>
 </ol>
 <blockquote>
@@ -336,19 +333,19 @@
 <li>虚函数存放在代码段</li>
 </ul>
 <p><strong>多态：看实际指向的实体</strong></p>
-<p>多态原理：如果访问的为虚函数，则通过指针&#x2F;引用找到实际指向的实体，获取实体中的虚表指针，通过虚表指针访问虚表，在虚表中找到需要执行的虚函数指针，通过虚函数指针执行具体函数行为</p>
+<p>多态原理：如果访问的为虚函数，则通过指针/引用找到实际指向的实体，获取实体中的虚表指针，通过虚表指针访问虚表，在虚表中找到需要执行的虚函数指针，通过虚函数指针执行具体函数行为</p>
 <h2 id="继承下的虚表"><a href="#继承下的虚表" class="headerlink" title="继承下的虚表"></a>继承下的虚表</h2><p><strong>单继承虚表</strong>：</p>
 <ol>
 <li>子类继承父类虚表</li>
 <li>用重写的虚函数指针覆盖子类对应的虚函数指针</li>
-<li>子类新定义的虚函数，其指针按照声明&#x2F;定义顺序存入虚表的末尾</li>
+<li>子类新定义的虚函数，其指针按照声明/定义顺序存入虚表的末尾</li>
 </ol>
 <p><strong>多继承虚表：</strong></p>
 <ol>
 <li>虚表个数：等同于直接父类的个数</li>
 <li>子类继承父类所有的虚表</li>
 <li>用重写的虚函数指针覆盖对应父类的虚函数指针</li>
-<li>子类新定义的虚函数，其函数指针按照声明&#x2F;定义的顺序存入第一个直接父类虚表的末尾</li>
+<li>子类新定义的虚函数，其函数指针按照声明/定义的顺序存入第一个直接父类虚表的末尾</li>
 </ol>
 
 </div>
@@ -361,7 +358,7 @@
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
-    <strong>本文作者： </strong>Morgan
+    <strong>本文作者： </strong>Latsummer
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
@@ -468,9 +465,9 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Morgan"
+    <img class="site-author-image" itemprop="image" alt="Latsummer"
       src="/images/IMG_6272.JPG">
-  <p class="site-author-name" itemprop="name">Morgan</p>
+  <p class="site-author-name" itemprop="name">Latsummer</p>
   <div class="site-description" itemprop="description">八说了，我在学了！</div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -537,19 +534,13 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Morgan</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-chart-area"></i>
-    </span>
-      <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">186k</span>
+  <span class="author" itemprop="copyrightHolder">Latsummer</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:49</span>
+    <span title="站点阅读时长">3:08</span>
 </div><script color="241,124,103" opacity="1" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
 
 
@@ -627,6 +618,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

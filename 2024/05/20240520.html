@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.3.0">
+<meta name="generator" content="Hexo 7.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/128x128.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png">
@@ -22,20 +22,20 @@
     var CONFIG = {"hostname":"zhaozhuolin.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#A9A9A9","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="在MIPS及LoongArch的架构下编译go语言二进制首先需要找到一个已经安装go的机器, 可以是X86或ARM等任何可以执行go的环境其次准备好go源码 接着进行如下操作  解压go源码  设定环境变量 GOROOT_BOOTSTRAP&#x2F;GOOS&#x2F;GOARCH 其中 GOROOT_BOOTSTRAP 为当前可以执行 go 文件的安装目录, 例如当前环境的 go 可执行文件为">
+  <meta name="description" content="在MIPS及LoongArch的架构下编译go语言二进制首先需要找到一个已经安装go的机器, 可以是X86或ARM等任何可以执行go的环境其次准备好go源码 接着进行如下操作  解压go源码  设定环境变量 GOROOT_BOOTSTRAP&#x2F;GOOS&#x2F;GOARCH 其中 GOROOT_BOOTSTRAP 为当前可以执行 go 文件的安装目录, 例如当前环境的 go 可执行文件为&#x2F;usr&#x2F;local">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在MIPS及LoongArch的架构下编译go语言二进制">
 <meta property="og:url" content="http://zhaozhuolin.com/2024/05/20240520.html">
 <meta property="og:site_name" content="小赵的学习笔记">
-<meta property="og:description" content="在MIPS及LoongArch的架构下编译go语言二进制首先需要找到一个已经安装go的机器, 可以是X86或ARM等任何可以执行go的环境其次准备好go源码 接着进行如下操作  解压go源码  设定环境变量 GOROOT_BOOTSTRAP&#x2F;GOOS&#x2F;GOARCH 其中 GOROOT_BOOTSTRAP 为当前可以执行 go 文件的安装目录, 例如当前环境的 go 可执行文件为">
+<meta property="og:description" content="在MIPS及LoongArch的架构下编译go语言二进制首先需要找到一个已经安装go的机器, 可以是X86或ARM等任何可以执行go的环境其次准备好go源码 接着进行如下操作  解压go源码  设定环境变量 GOROOT_BOOTSTRAP&#x2F;GOOS&#x2F;GOARCH 其中 GOROOT_BOOTSTRAP 为当前可以执行 go 文件的安装目录, 例如当前环境的 go 可执行文件为&#x2F;usr&#x2F;local">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://zhaozhuolin.com/2024/05/20240520/image-20240416195706201.png">
 <meta property="og:image" content="http://zhaozhuolin.com/2024/05/20240520/image-20240416195943599.png">
 <meta property="og:image" content="http://zhaozhuolin.com/2024/05/20240520/image-20240416200939524.png">
 <meta property="og:image" content="http://zhaozhuolin.com/2024/05/20240520/image2023-2-17_11-24-37.png">
 <meta property="article:published_time" content="2024-05-20T01:47:50.000Z">
-<meta property="article:modified_time" content="2024-05-25T03:28:46.302Z">
-<meta property="article:author" content="Morgan">
+<meta property="article:modified_time" content="2024-05-25T03:47:44.550Z">
+<meta property="article:author" content="Latsummer">
 <meta property="article:tag" content="杂记">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://zhaozhuolin.com/2024/05/20240520/image-20240416195706201.png">
@@ -210,7 +210,7 @@
 
 <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
   <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
+  <meta itemprop="name" content="Latsummer">
   <meta itemprop="description" content="八说了，我在学了！">
 </span>
 
@@ -236,7 +236,7 @@
               <i class="far fa-calendar-check"></i>
             </span>
             <span class="post-meta-item-text">更新于</span>
-            <time title="修改时间：2024-05-25 11:28:46" itemprop="dateModified" datetime="2024-05-25T11:28:46+08:00">2024-05-25</time>
+            <time title="修改时间：2024-05-25 11:47:44" itemprop="dateModified" datetime="2024-05-25T11:47:44+08:00">2024-05-25</time>
           </span>
         <span class="post-meta-item">
           <span class="post-meta-item-icon">
@@ -261,7 +261,7 @@
             <i class="far fa-file-word"></i>
           </span>
             <span class="post-meta-item-text">本文字数：</span>
-          <span>986</span>
+          <span>1k</span>
         </span>
         <span class="post-meta-item" title="阅读时长">
           <span class="post-meta-item-icon">
@@ -285,7 +285,7 @@
 <ol>
 <li><p>解压go源码</p>
 </li>
-<li><p>设定环境变量 <code>GOROOT_BOOTSTRAP</code>&#x2F;<code>GOOS</code>&#x2F;<code>GOARCH</code><br> 其中 <code>GOROOT_BOOTSTRAP</code> 为当前可以执行 go 文件的安装目录, 例如当前环境的 go 可执行文件为&#96;&#96;&#x2F;usr&#x2F;local&#x2F;go&#x2F;bin&#x2F;go<code>, 则 </code>GOROOT_BOOTSTRAP<code>应设置为</code>&#x2F;usr&#x2F;local&#x2F;go<code>  </code>GOOS<code>为目标环境系统 </code>GOARCH<code>为目标架构  关于</code>GOOS<code>以及</code>GOARCH&#96;, 可以使用命令, go tool dist list 查看, 版本越高的go支持的越多</p>
+<li><p>设定环境变量 <code>GOROOT_BOOTSTRAP</code>/<code>GOOS</code>/<code>GOARCH</code><br> 其中 <code>GOROOT_BOOTSTRAP</code> 为当前可以执行 go 文件的安装目录, 例如当前环境的 go 可执行文件为<code>/usr/local/go/bin/go</code>, 则 <code>GOROOT_BOOTSTRAP</code> 应设置为 <code>/usr/local/go</code><br> <code>GOOS</code> 为目标环境系统<br> <code>GOARCH</code> 为目标架构<br> 关于 <code>GOOS</code> 以及 <code>GOARCH</code>, 可以使用命令, go tool dist list 查看, 版本越高的go支持的越多</p>
  <span id="more"></span>
 </li>
 <li><p><img src="/2024/05/20240520/image-20240416195706201.png" alt="image-20240416195706201"></p>
@@ -293,8 +293,8 @@
 <li><p>设定好环境变量后, 进入源码目录下的<code>src</code>目录, 执行脚本 <code>bootstrap.bash</code></p>
 </li>
 </ol>
-<p>​	<img src="/2024/05/20240520/image-20240416195943599.png" alt="image-20240416195943599">	</p>
-<ol start="4">
+<p>​    <img src="/2024/05/20240520/image-20240416195943599.png" alt="image-20240416195943599">    </p>
+<ol>
 <li><p>等待脚本执行完毕, 会在<code>src</code>目录的上层的上层目录 即 <code>../../</code> 目录 (脚本最后一般会输出文件路径)下生成 一个<code>tbz</code>文件, 将此文件拷贝至目标机器, 并解压</p>
 </li>
 <li><p>解压后, 进入 <code>$&#123;解压后的目录&#125;/bin</code> , 此时应该存在 <code>go</code>,  <code>gofmt</code> 两个二进制文件, 执行以下 <code>./go version</code> , 看看能否正常运行</p>
@@ -308,6 +308,8 @@
 </li>
 </ol>
 </li>
+</ol>
+<ol>
 <li><p>在目标机器设定环境变量, <code>GOROOT_BOOTSTRAP</code> , <code>GOROOT</code>, 将源码文件解压到任何你想解压到的地方, 其中</p>
 <ol>
 <li><p><code>GOROOT_BOOTSTRAP</code> 为之前编译出来的<code>tbz</code>文件的解压路径</p>
@@ -322,7 +324,7 @@
 </li>
 </ol>
 <h3 id="如果在进行测试时失败-可以看一下有没有超时-测试项完成后会显示使用时间-默认为3分钟-类似下图"><a href="#如果在进行测试时失败-可以看一下有没有超时-测试项完成后会显示使用时间-默认为3分钟-类似下图" class="headerlink" title="如果在进行测试时失败, 可以看一下有没有超时, 测试项完成后会显示使用时间, 默认为3分钟, 类似下图"></a>如果在进行测试时失败, 可以看一下有没有超时, 测试项完成后会显示使用时间, 默认为3分钟, 类似下图</h3><p><img src="/2024/05/20240520/image2023-2-17_11-24-37.png" alt="image2023-2-17_11-24-37"></p>
-<p>解决方式是设定环境变量 <code>GO_TEST_TIMEOUT_SCALE</code> &#x3D; 2, 这会将超时时间倍乘二, 变为 6 分钟</p>
+<p>解决方式是设定环境变量 <code>GO_TEST_TIMEOUT_SCALE</code> = 2, 这会将超时时间倍乘二, 变为 6 分钟</p>
 
 </div>
 
@@ -334,7 +336,7 @@
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
-    <strong>本文作者： </strong>Morgan
+    <strong>本文作者： </strong>Latsummer
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
@@ -437,9 +439,9 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Morgan"
+    <img class="site-author-image" itemprop="image" alt="Latsummer"
       src="/images/IMG_6272.JPG">
-  <p class="site-author-name" itemprop="name">Morgan</p>
+  <p class="site-author-name" itemprop="name">Latsummer</p>
   <div class="site-description" itemprop="description">八说了，我在学了！</div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -506,19 +508,13 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Morgan</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-chart-area"></i>
-    </span>
-      <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">186k</span>
+  <span class="author" itemprop="copyrightHolder">Latsummer</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:49</span>
+    <span title="站点阅读时长">3:08</span>
 </div><script color="241,124,103" opacity="1" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
 
 
@@ -596,6 +592,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

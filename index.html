@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.3.0">
+<meta name="generator" content="Hexo 7.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/128x128.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png">
@@ -29,7 +29,7 @@
 <meta property="og:site_name" content="小赵的学习笔记">
 <meta property="og:description" content="八说了，我在学了！">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:author" content="Morgan">
+<meta property="article:author" content="Latsummer">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://zhaozhuolin.com/">
@@ -76,7 +76,119 @@
   </style>
 </noscript>
 
-<link rel="alternate" href="/atom.xml" title="小赵的学习笔记" type="application/atom+xml">
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style><link rel="alternate" href="/atom.xml" title="小赵的学习笔记" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -201,7 +313,7 @@
 
 <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
   <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
+  <meta itemprop="name" content="Latsummer">
   <meta itemprop="description" content="八说了，我在学了！">
 </span>
 
@@ -228,7 +340,7 @@
               <i class="far fa-calendar-check"></i>
             </span>
             <span class="post-meta-item-text">更新于</span>
-            <time title="修改时间：2024-05-25 11:28:46" itemprop="dateModified" datetime="2024-05-25T11:28:46+08:00">2024-05-25</time>
+            <time title="修改时间：2024-05-25 11:47:44" itemprop="dateModified" datetime="2024-05-25T11:47:44+08:00">2024-05-25</time>
           </span>
         <span class="post-meta-item">
           <span class="post-meta-item-icon">
@@ -246,7 +358,7 @@
             <i class="far fa-file-word"></i>
           </span>
             <span class="post-meta-item-text">本文字数：</span>
-          <span>986</span>
+          <span>1k</span>
         </span>
         <span class="post-meta-item" title="阅读时长">
           <span class="post-meta-item-icon">
@@ -270,7 +382,7 @@
 <ol>
 <li><p>解压go源码</p>
 </li>
-<li><p>设定环境变量 <code>GOROOT_BOOTSTRAP</code>&#x2F;<code>GOOS</code>&#x2F;<code>GOARCH</code><br> 其中 <code>GOROOT_BOOTSTRAP</code> 为当前可以执行 go 文件的安装目录, 例如当前环境的 go 可执行文件为&#96;&#96;&#x2F;usr&#x2F;local&#x2F;go&#x2F;bin&#x2F;go<code>, 则 </code>GOROOT_BOOTSTRAP<code>应设置为</code>&#x2F;usr&#x2F;local&#x2F;go<code>  </code>GOOS<code>为目标环境系统 </code>GOARCH<code>为目标架构  关于</code>GOOS<code>以及</code>GOARCH&#96;, 可以使用命令, go tool dist list 查看, 版本越高的go支持的越多</p></li></ol>
+<li><p>设定环境变量 <code>GOROOT_BOOTSTRAP</code>/<code>GOOS</code>/<code>GOARCH</code><br> 其中 <code>GOROOT_BOOTSTRAP</code> 为当前可以执行 go 文件的安装目录, 例如当前环境的 go 可执行文件为<code>/usr/local/go/bin/go</code>, 则 <code>GOROOT_BOOTSTRAP</code> 应设置为 <code>/usr/local/go</code><br> <code>GOOS</code> 为目标环境系统<br> <code>GOARCH</code> 为目标架构<br> 关于 <code>GOOS</code> 以及 <code>GOARCH</code>, 可以使用命令, go tool dist list 查看, 版本越高的go支持的越多</p></li></ol>
       <!--noindex-->
         <div class="post-button">
           <a class="btn" href="/2024/05/20240520.html#more" rel="contents">
@@ -301,7 +413,7 @@
 
 <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
   <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
+  <meta itemprop="name" content="Latsummer">
   <meta itemprop="description" content="八说了，我在学了！">
 </span>
 
@@ -346,7 +458,7 @@
             <i class="far fa-file-word"></i>
           </span>
             <span class="post-meta-item-text">本文字数：</span>
-          <span>2.9k</span>
+          <span>3k</span>
         </span>
         <span class="post-meta-item" title="阅读时长">
           <span class="post-meta-item-icon">
@@ -402,7 +514,7 @@
 
 <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
   <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
+  <meta itemprop="name" content="Latsummer">
   <meta itemprop="description" content="八说了，我在学了！">
 </span>
 
@@ -447,14 +559,14 @@
             <i class="far fa-file-word"></i>
           </span>
             <span class="post-meta-item-text">本文字数：</span>
-          <span>4.6k</span>
+          <span>5.3k</span>
         </span>
         <span class="post-meta-item" title="阅读时长">
           <span class="post-meta-item-icon">
             <i class="far fa-clock"></i>
           </span>
             <span class="post-meta-item-text">阅读时长 &asymp;</span>
-          <span>4 分钟</span>
+          <span>5 分钟</span>
         </span>
 
     </div>
@@ -468,10 +580,8 @@
   
       <h1 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h1><p>结构体将字段与数据聚合，而枚举可以将同一类型的东西（同时你可以将它可能的情况列举出来）作为一个集合，使用IP地址举例如下</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="title class_">IpAddrKind</span> &#123;</span><br><span class="line">	v4,</span><br><span class="line">	v6,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <h2 id="枚举值"><a href="#枚举值" class="headerlink" title="枚举值"></a>枚举值</h2><p>可使用<code>::</code>访问枚举值</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">ipv4</span> = IpAddrKind::v4;</span><br><span class="line"><span class="keyword">let</span> <span class="variable">ipv6</span> = IpAddrKind::v6;</span><br></pre></td></tr></table></figure>
-
 <p>也可将其传入函数，如<code>func(IpAddrKind::v4)</code></p>
       <!--noindex-->
         <div class="post-button">
@@ -503,7 +613,7 @@
 
 <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
   <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
+  <meta itemprop="name" content="Latsummer">
   <meta itemprop="description" content="八说了，我在学了！">
 </span>
 
@@ -548,7 +658,7 @@
             <i class="far fa-file-word"></i>
           </span>
             <span class="post-meta-item-text">本文字数：</span>
-          <span>3.2k</span>
+          <span>3.7k</span>
         </span>
         <span class="post-meta-item" title="阅读时长">
           <span class="post-meta-item-icon">
@@ -569,7 +679,6 @@
   
       <h1 id="结构体的定义与实例化"><a href="#结构体的定义与实例化" class="headerlink" title="结构体的定义与实例化"></a>结构体的定义与实例化</h1><p>举例如下</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">User</span> &#123;</span><br><span class="line">	active: <span class="type">bool</span>,</span><br><span class="line">	username: <span class="type">String</span>,</span><br><span class="line">	email: <span class="type">String</span>,</span><br><span class="line">	sign_in_count: <span class="type">u64</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>实例化如下</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">user1</span> = User &#123;</span><br><span class="line">	active: <span class="literal">true</span>,</span><br><span class="line">	username: <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;name&quot;</span>),</span><br><span class="line">	email: <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;email@email.com&quot;</span>),</span><br><span class="line">	sign_in_count: <span class="number">1</span>,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//若要使用值，则同C/C++</span></span><br><span class="line"><span class="comment">//若要修改值，则示例需是可变的，如下</span></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">user2</span> = User &#123;</span><br><span class="line">    <span class="comment">//....</span></span><br><span class="line">&#125;</span><br><span class="line">user2.email = <span class="type">String</span>::<span class="title function_ invoke__">from</span>(<span class="string">&quot;xxx&quot;</span>);</span><br></pre></td></tr></table></figure>
       <!--noindex-->
@@ -602,7 +711,7 @@
 
 <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
   <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
+  <meta itemprop="name" content="Latsummer">
   <meta itemprop="description" content="八说了，我在学了！">
 </span>
 
@@ -647,14 +756,14 @@
             <i class="far fa-file-word"></i>
           </span>
             <span class="post-meta-item-text">本文字数：</span>
-          <span>5.9k</span>
+          <span>7k</span>
         </span>
         <span class="post-meta-item" title="阅读时长">
           <span class="post-meta-item-icon">
             <i class="far fa-clock"></i>
           </span>
             <span class="post-meta-item-text">阅读时长 &asymp;</span>
-          <span>5 分钟</span>
+          <span>6 分钟</span>
         </span>
 
     </div>
@@ -704,7 +813,7 @@
 
 <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
   <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
+  <meta itemprop="name" content="Latsummer">
   <meta itemprop="description" content="八说了，我在学了！">
 </span>
 
@@ -749,7 +858,7 @@
             <i class="far fa-file-word"></i>
           </span>
             <span class="post-meta-item-text">本文字数：</span>
-          <span>5k</span>
+          <span>5.7k</span>
         </span>
         <span class="post-meta-item" title="阅读时长">
           <span class="post-meta-item-icon">
@@ -770,12 +879,10 @@
   
       <h1 id="从-hello-world-开始"><a href="#从-hello-world-开始" class="headerlink" title="从 hello world 开始"></a>从 hello world 开始</h1><p>创建一个 <code>main.rs</code> 文件，写入以下内容</p>
 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;Hello, world!&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>使用以下命令进行编译运行</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rustc main.rs</span><br><span class="line">./main</span><br><span class="line">Hello, world!</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>也可使用<code>Cargo</code>工具进行构建</li>
 </ul>
@@ -810,7 +917,7 @@
 
 <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
   <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
+  <meta itemprop="name" content="Latsummer">
   <meta itemprop="description" content="八说了，我在学了！">
 </span>
 
@@ -855,7 +962,7 @@
             <i class="far fa-file-word"></i>
           </span>
             <span class="post-meta-item-text">本文字数：</span>
-          <span>2.5k</span>
+          <span>2.6k</span>
         </span>
         <span class="post-meta-item" title="阅读时长">
           <span class="post-meta-item-icon">
@@ -919,7 +1026,7 @@
 
 <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
   <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
+  <meta itemprop="name" content="Latsummer">
   <meta itemprop="description" content="八说了，我在学了！">
 </span>
 
@@ -946,7 +1053,7 @@
               <i class="far fa-calendar-check"></i>
             </span>
             <span class="post-meta-item-text">更新于</span>
-            <time title="修改时间：2024-05-22 10:50:24" itemprop="dateModified" datetime="2024-05-22T10:50:24+08:00">2024-05-22</time>
+            <time title="修改时间：2024-05-25 12:19:41" itemprop="dateModified" datetime="2024-05-25T12:19:41+08:00">2024-05-25</time>
           </span>
         <span class="post-meta-item">
           <span class="post-meta-item-icon">
@@ -964,14 +1071,14 @@
             <i class="far fa-file-word"></i>
           </span>
             <span class="post-meta-item-text">本文字数：</span>
-          <span>6.9k</span>
+          <span>8.3k</span>
         </span>
         <span class="post-meta-item" title="阅读时长">
           <span class="post-meta-item-icon">
             <i class="far fa-clock"></i>
           </span>
             <span class="post-meta-item-text">阅读时长 &asymp;</span>
-          <span>6 分钟</span>
+          <span>8 分钟</span>
         </span>
 
     </div>
@@ -983,9 +1090,9 @@
 <div class="post-body" itemprop="articleBody">
 
   
-      <h1 id="图的构成"><a href="#图的构成" class="headerlink" title="图的构成"></a>图的构成</h1><p><strong>顶点集合</strong>+<strong>边的集合</strong>：<code>G = (V, E)</code>，顶点集合<code>V = &#123;x | x属于某个数据对象及&#125;</code>是有穷非空集合</p>
+      <h1 id="图的构成"><a href="#图的构成" class="headerlink" title="图的构成"></a>图的构成</h1><p><strong>顶点集合</strong>+<strong>边的集合</strong>：<code>G = (V, E)</code>，顶点集合<code>V = {x | x属于某个数据对象及}</code>是有穷非空集合</p>
 <ul>
-<li><p><code>E = &#123;(x, y) | x, y属于V&#125;</code>或者<code>E = &#123;&lt;x, y&gt; | x, y属于V &amp;&amp; Path(x, y)&#125;</code>是顶点间关系的有穷集合，也叫边集合</p>
+<li><p><code>E = {(x, y) | x, y属于V}</code>或者<code>E = {&lt;x, y&gt; | x, y属于V &amp;&amp; Path(x, y)}</code>是顶点间关系的有穷集合，也叫边集合</p>
 </li>
 <li><p><code>(x, y)</code>表示x到y的一条双向通道，即<code>(x, y)</code>是无方向的，<code>Path(x, y)</code>表示从x到y的一条单向通路，即<code>Path(x, y)是有方向的</code></p>
 </li>
@@ -1026,7 +1133,7 @@
 
 <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
   <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
+  <meta itemprop="name" content="Latsummer">
   <meta itemprop="description" content="八说了，我在学了！">
 </span>
 
@@ -1071,7 +1178,7 @@
             <i class="far fa-file-word"></i>
           </span>
             <span class="post-meta-item-text">本文字数：</span>
-          <span>3k</span>
+          <span>3.4k</span>
         </span>
         <span class="post-meta-item" title="阅读时长">
           <span class="post-meta-item-icon">
@@ -1127,7 +1234,7 @@
 
 <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
   <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Morgan">
+  <meta itemprop="name" content="Latsummer">
   <meta itemprop="description" content="八说了，我在学了！">
 </span>
 
@@ -1172,14 +1279,14 @@
             <i class="far fa-file-word"></i>
           </span>
             <span class="post-meta-item-text">本文字数：</span>
-          <span>8.9k</span>
+          <span>10k</span>
         </span>
         <span class="post-meta-item" title="阅读时长">
           <span class="post-meta-item-icon">
             <i class="far fa-clock"></i>
           </span>
             <span class="post-meta-item-text">阅读时长 &asymp;</span>
-          <span>8 分钟</span>
+          <span>9 分钟</span>
         </span>
 
     </div>
@@ -1275,9 +1382,9 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Morgan"
+    <img class="site-author-image" itemprop="image" alt="Latsummer"
       src="/images/IMG_6272.JPG">
-  <p class="site-author-name" itemprop="name">Morgan</p>
+  <p class="site-author-name" itemprop="name">Latsummer</p>
   <div class="site-description" itemprop="description">八说了，我在学了！</div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -1344,19 +1451,13 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Morgan</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-chart-area"></i>
-    </span>
-      <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">186k</span>
+  <span class="author" itemprop="copyrightHolder">Latsummer</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:49</span>
+    <span title="站点阅读时长">3:08</span>
 </div><script color="241,124,103" opacity="1" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
 
 
@@ -1434,6 +1535,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 
