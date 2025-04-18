@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/128x128.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png">
+  <link rel="mask-icon" href="/images/logo2.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-big-counter.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"zhaozhuolin.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#A9A9A9","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Pulsar消费者提交与消费机制小结消费偏移量与提交偏移量Pulsar中消费者的消费偏移量（consumption offset）和提交偏移量（committed offset）并不是同一个概念。  消费偏移量（Consumption Offset） 消费偏移量指的是消费者当前正在消费的消息的偏移量。它表示消费者已经从消息流中读取到的位置。 消费偏移量是消费者在消费消息时记录的当前位置，但它并不一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pulsar消费者提交与消费机制小结">
+<meta property="og:url" content="http://zhaozhuolin.com/2025/04/20250418.html">
+<meta property="og:site_name" content="小赵的学习笔记">
+<meta property="og:description" content="Pulsar消费者提交与消费机制小结消费偏移量与提交偏移量Pulsar中消费者的消费偏移量（consumption offset）和提交偏移量（committed offset）并不是同一个概念。  消费偏移量（Consumption Offset） 消费偏移量指的是消费者当前正在消费的消息的偏移量。它表示消费者已经从消息流中读取到的位置。 消费偏移量是消费者在消费消息时记录的当前位置，但它并不一">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-04-18T13:28:05.365Z">
+<meta property="article:modified_time" content="2025-04-18T13:30:07.364Z">
+<meta property="article:author" content="Latsummer">
+<meta property="article:tag" content="pulsar">
+<meta property="article:tag" content="go">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://zhaozhuolin.com/2025/04/20250418.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Pulsar消费者提交与消费机制小结 | 小赵的学习笔记</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style><link rel="alternate" href="/atom.xml" title="小赵的学习笔记" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">小赵的学习笔记</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">29</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">8</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">48</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/Latsummer" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+<article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+<link itemprop="mainEntityOfPage" href="http://zhaozhuolin.com/2025/04/20250418.html">
+
+<span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <meta itemprop="image" content="/images/IMG_6272.JPG">
+  <meta itemprop="name" content="Latsummer">
+  <meta itemprop="description" content="八说了，我在学了！">
+</span>
+
+<span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+  <meta itemprop="name" content="小赵的学习笔记">
+</span>
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">
+      Pulsar消费者提交与消费机制小结
+    </h1>
+
+    <div class="post-meta">
+        <span class="post-meta-item">
+          <span class="post-meta-item-icon">
+            <i class="far fa-calendar"></i>
+          </span>
+          <span class="post-meta-item-text">发表于</span>
+          
+
+          <time title="创建时间：2025-04-18 21:28:05 / 修改时间：21:30:07" itemprop="dateCreated datePublished" datetime="2025-04-18T21:28:05+08:00">2025-04-18</time>
+        </span>
+        <span class="post-meta-item">
+          <span class="post-meta-item-icon">
+            <i class="far fa-folder"></i>
+          </span>
+          <span class="post-meta-item-text">分类于</span>
+            <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/pulsar/" itemprop="url" rel="index"><span itemprop="name">pulsar</span></a>
+            </span>
+        </span>
+
+      
+        <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+          <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+          </span>
+          <span class="post-meta-item-text">阅读次数：</span>
+          <span id="busuanzi_value_page_pv"></span>
+        </span><br>
+        <span class="post-meta-item" title="本文字数">
+          <span class="post-meta-item-icon">
+            <i class="far fa-file-word"></i>
+          </span>
+            <span class="post-meta-item-text">本文字数：</span>
+          <span>4.1k</span>
+        </span>
+        <span class="post-meta-item" title="阅读时长">
+          <span class="post-meta-item-icon">
+            <i class="far fa-clock"></i>
+          </span>
+            <span class="post-meta-item-text">阅读时长 &asymp;</span>
+          <span>4 分钟</span>
+        </span>
+
+    </div>
+  </header>
+
+
+
+
+<div class="post-body" itemprop="articleBody">
+
+  
+    <h1 id="Pulsar消费者提交与消费机制小结"><a href="#Pulsar消费者提交与消费机制小结" class="headerlink" title="Pulsar消费者提交与消费机制小结"></a>Pulsar消费者提交与消费机制小结</h1><h2 id="消费偏移量与提交偏移量"><a href="#消费偏移量与提交偏移量" class="headerlink" title="消费偏移量与提交偏移量"></a>消费偏移量与提交偏移量</h2><p>Pulsar中消费者的消费偏移量（consumption offset）和提交偏移量（committed offset）并不是同一个概念。</p>
+<ol>
+<li>消费偏移量（Consumption Offset）<ul>
+<li>消费偏移量指的是消费者当前正在消费的消息的偏移量。它表示消费者已经从消息流中读取到的位置。</li>
+<li>消费偏移量是消费者在消费消息时记录的当前位置，但它并不一定意味着这些消息已经被处理完毕或确认。</li>
+</ul>
+</li>
+<li>提交偏移量（Committed Offset）<ul>
+<li>提交偏移量是消费者已经成功处理并确认的消息的偏移量。它表示消费者已经处理完这些消息，并且可以安全地认为这些消息不会被再次消费。</li>
+<li>提交偏移量通常是通过消费者显式地调用提交偏移量的API来完成的，例如<code>acknowledge</code>或<code>commit</code>方法。</li>
+</ul>
+</li>
+</ol>
+<span id="more"></span>
+<p><strong>区别：</strong></p>
+<ul>
+<li><strong>消费偏移量</strong>是消费者当前正在处理的消息的位置，而<strong>提交偏移量</strong>是消费者已经处理完毕并确认的消息的位置。</li>
+<li>提交偏移量通常是消费偏移量的一个子集，表示已经处理完毕的消息。</li>
+</ul>
+<p><strong>在Pulsar默认情况下, 消费者进程不重启, 无论消费者以怎样的顺序提交消息, 都不会影响当前消费的偏移量</strong></p>
+<h2 id="ackTimeout与DLQ"><a href="#ackTimeout与DLQ" class="headerlink" title="ackTimeout与DLQ"></a>ackTimeout与DLQ</h2><h3 id="1、ackTimeout-Pulsar消费者的配置项-默认情况下是关闭状态"><a href="#1、ackTimeout-Pulsar消费者的配置项-默认情况下是关闭状态" class="headerlink" title="1、ackTimeout - Pulsar消费者的配置项, 默认情况下是关闭状态"></a>1、ackTimeout - Pulsar消费者的配置项, <strong>默认情况下是关闭状态</strong></h3><ul>
+<li><code>ackTimeout</code> 默认值为 <code>0</code><ul>
+<li>如果 <code>ackTimeout</code> 未设置或设置为 <code>0</code>，Pulsar 不会自动重新投递未确认的消息。</li>
+<li>这意味着，如果消费者消费了消息但没有提交确认（<code>ack</code>），这些消息会一直保留在消费者的未确认队列中，直到消费者显式地提交确认或重新投递。</li>
+</ul>
+</li>
+<li>未确认消息的处理<ul>
+<li>如果消费者一直不提交确认，未确认的消息会占用 Pulsar 的内存或磁盘资源（取决于 Pulsar 的存储模式）。</li>
+<li>如果未确认的消息过多，可能会导致资源耗尽，影响系统性能。</li>
+</ul>
+</li>
+</ul>
+<p><strong>go语言的Pulsar客户端不支持该选项</strong></p>
+<p>git Issues:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/streamnative/pulsar-client-go/issues/44">https://github.com/streamnative/pulsar-client-go/issues/44</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/apache/pulsar-client-go/pull/197">https://github.com/apache/pulsar-client-go/pull/197</a></li>
+</ul>
+<blockquote>
+<ol>
+<li><strong>Go客户端不支持ack timeout功能</strong>，这是有意为之的。</li>
+<li><strong>negativeAck</strong>被认为是解决问题的首选方法，而<strong>ackTimeout</strong>被视为遗留功能。</li>
+<li>未明确说明未来会支持该选项</li>
+</ol>
+</blockquote>
+<h3 id="2、DLQ-Dead-Letter-Queue-死信队列"><a href="#2、DLQ-Dead-Letter-Queue-死信队列" class="headerlink" title="2、DLQ - Dead Letter Queue 死信队列"></a>2、DLQ - <strong>Dead Letter Queue</strong> 死信队列</h3><p>死信队列用于处理那些多次重试后仍然无法成功处理的消息。当消息的重试次数超过配置的最大重试次数时，Pulsar 会将这些消息发送到死信队列，避免无限重试。</p>
+<p>go语言启用死信队列</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 配置死信队列策略</span></span><br><span class="line">deadLetterPolicy := pulsar.DeadLetterPolicy{</span><br><span class="line">    MaxRedeliverCount: <span class="number">3</span>, <span class="comment">// 最大重试次数, 如果消息的重试次数超过此值，Pulsar 会将消息发送到死信队列。</span></span><br><span class="line">    DeadLetterTopic:   <span class="string">"my-dead-letter-topic"</span>, <span class="comment">// 死信队列的 Topic, 如果未指定，Pulsar 会自动生成一个死信队列 Topic。</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建消费者</span></span><br><span class="line">consumer, err := client.Subscribe(pulsar.ConsumerOptions{</span><br><span class="line">    Topic:               <span class="string">"my-topic"</span>,</span><br><span class="line">    SubscriptionName:    <span class="string">"my-subscription"</span>,</span><br><span class="line">    Type:                pulsar.Shared,</span><br><span class="line">    DeadLetterPolicy:    &amp;deadLetterPolicy, <span class="comment">// 启用死信队列</span></span><br><span class="line">})</span><br></pre></td></tr></table></figure>
+<p><strong>死信队列的工作流程</strong></p>
+<ol>
+<li>消息重试<ul>
+<li>消费者消费消息后，如果处理失败，可以使用 <code>Nack</code> 或 <code>ackTimeout</code> 触发消息重试。</li>
+<li>消息会被重新投递给消费者，直到达到 <code>MaxRedeliverCount</code> 指定的最大重试次数。</li>
+</ul>
+</li>
+<li>发送到死信队列<ul>
+<li>如果消息的重试次数超过 <code>MaxRedeliverCount</code>，Pulsar 会将消息发送到指定的死信队列 Topic。</li>
+<li>死信队列中的消息可以被单独处理，例如记录日志、人工干预等。</li>
+</ul>
+</li>
+<li>避免无限重试<ul>
+<li>通过死信队列，可以避免消息无限重试，防止资源浪费。</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>git Issues: <a target="_blank" rel="noopener" href="https://github.com/streamnative/pulsar-client-go/issues/173">https://github.com/streamnative/pulsar-client-go/issues/173</a></p>
+<p>go客户端与Java客户端对死信队列中 MaxRedeliverCount 配置存在差异：</p>
+<p>在Pulsar的DLQPolicy中，<code>MaxDeliveries</code>属性的含义不明确，导致Java和Go客户端的实现和测试中存在差异。</p>
+<p>关键点讨论：</p>
+<ol>
+<li><strong>Java客户端定义</strong>：<code>MaxDeliveries</code>表示消息在被发送到死信队列之前将重新传递的最大次数。</li>
+<li><strong>Go客户端定义</strong>：<code>MaxDeliveries</code>表示消息在被发送到死信队列之前将传递的最大次数。</li>
+<li>测试中的差异<ul>
+<li>Java客户端测试中，<code>Nack</code>和<code>reconsumeLater</code>的预期结果不同，<code>Nack</code>测试期望得到<code>redelivery+1</code>条消息。</li>
+<li>Go客户端测试中，<code>Nack</code>测试的预期结果是总传递次数，与Java客户端的<code>reconsumeLater</code>测试预期不同。</li>
+</ul>
+</li>
+<li><strong>命名问题</strong>：Go客户端的命名可能存在问题，因为<code>MaxDeliveries</code>实际上用于提供最大重新传递次数。</li>
+</ol>
+<p>总结：<br><code>MaxDeliveries</code>属性的含义在不同客户端和测试中不一致，导致混淆。需要明确其定义并统一各客户端的实现和测试预期。</p>
+<h4 id="Java客户端的例子"><a href="#Java客户端的例子" class="headerlink" title="Java客户端的例子"></a><strong>Java客户端的例子</strong></h4><p>假设我们设置<code>MaxDeliveries = 3</code>，即消息最多重新传递3次。</p>
+<ol>
+<li><strong>第一次传递</strong>：消息被传递给消费者。</li>
+<li><strong>第一次重试</strong>：消费者<code>Nack</code>消息，消息被重新传递。</li>
+<li><strong>第二次重试</strong>：消费者再次<code>Nack</code>消息，消息再次被重新传递。</li>
+<li><strong>第三次重试</strong>：消费者再次<code>Nack</code>消息，消息再次被重新传递。</li>
+<li><strong>第四次传递</strong>：如果消费者再次<code>Nack</code>消息，消息将被发送到死信队列（DLQ）。</li>
+</ol>
+<p><strong>总结</strong>：</p>
+<ul>
+<li><code>MaxDeliveries = 3</code>表示消息最多被重新传递3次。</li>
+<li>总共传递次数为4次（1次原始传递 + 3次重试）。</li>
+</ul>
+<hr>
+<h4 id="Go客户端的例子"><a href="#Go客户端的例子" class="headerlink" title="Go客户端的例子"></a><strong>Go客户端的例子</strong></h4><p>同样设置<code>MaxDeliveries = 3</code>，即消息最多传递3次。</p>
+<ol>
+<li><strong>第一次传递</strong>：消息被传递给消费者。</li>
+<li><strong>第二次传递</strong>：消费者<code>Nack</code>消息，消息被重新传递。</li>
+<li><strong>第三次传递</strong>：消费者再次<code>Nack</code>消息，消息被重新传递。</li>
+<li><strong>第四次传递</strong>：如果消费者再次<code>Nack</code>消息，消息将被发送到死信队列（DLQ）。</li>
+</ol>
+<p><strong>总结</strong>：</p>
+<ul>
+<li><code>MaxDeliveries = 3</code>表示消息最多被传递3次。</li>
+<li>总共传递次数为3次（1次原始传递 + 2次重试）。</li>
+</ul>
+<hr>
+<h4 id="差异对比"><a href="#差异对比" class="headerlink" title="差异对比"></a><strong>差异对比</strong></h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">客户端</th>
+<th style="text-align:left"><code>MaxDeliveries</code> 含义</th>
+<th style="text-align:left">总共传递次数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Java</td>
+<td style="text-align:left">重新传递次数</td>
+<td style="text-align:left">4次</td>
+</tr>
+<tr>
+<td style="text-align:left">Go</td>
+<td style="text-align:left">总传递次数</td>
+<td style="text-align:left">3次</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h4 id="结论"><a href="#结论" class="headerlink" title="结论"></a><strong>结论</strong></h4><p>Java客户端的<code>MaxDeliveries</code>表示“重新传递的次数”，而Go客户端的<code>MaxDeliveries</code>表示“总传递的次数”。这种差异导致了在测试和实际使用中的混淆。</p>
+</blockquote>
+<h2 id="消费者的消费行为"><a href="#消费者的消费行为" class="headerlink" title="消费者的消费行为"></a>消费者的消费行为</h2><h4 id="1、消费者的消费模式"><a href="#1、消费者的消费模式" class="headerlink" title="1、消费者的消费模式"></a>1、<strong>消费者的消费模式</strong></h4><p>在默认情况下，Pulsar 消费者的工作模式是基于 <strong>消息确认（Acknowledgment, Ack）</strong> 的。消费者的消费行为可以分为以下几个阶段：</p>
+<ol>
+<li><strong>消费消息</strong>：消费者从 Pulsar 的 Topic 中拉取消息。</li>
+<li><strong>处理消息</strong>：消费者处理消息。</li>
+<li><strong>确认消息</strong>：消费者调用 <code>Ack</code> 确认消息，表示消息已被成功处理。</li>
+</ol>
+<h4 id="2、消息确认机制"><a href="#2、消息确认机制" class="headerlink" title="2、消息确认机制"></a>2、<strong>消息确认机制</strong></h4><ul>
+<li><strong>已确认的消息</strong>：消费者调用 <code>Ack</code> 的消息会被标记为已确认，Pulsar 会从消费者的未确认队列中移除这些消息。</li>
+<li><strong>未确认的消息</strong>：消费者未调用 <code>Ack</code> 的消息会保留在未确认队列中。</li>
+</ul>
+<h4 id="3、-程序崩溃后的行为"><a href="#3、-程序崩溃后的行为" class="headerlink" title="3、 程序崩溃后的行为"></a>3、 <strong>程序崩溃后的行为</strong></h4><p>当消费者程序崩溃后重新启动时，Pulsar 消费者会从 <strong>未确认的消息</strong> 开始消费。</p>
+<p>例如</p>
+<ul>
+<li>生产者生产了 <code>1, 2, 3, 4, 5</code>消费者全部消费成功, 但仅仅提交了 <code>1, 3, 4, 5</code>,</li>
+<li>没有提交<code>2</code>的时候, 程序崩溃重启, 同时假设生产者在<code>5</code>之后并未生产消息</li>
+<li>消费者重新启动之后消费的顺序将是<code>2</code>, 不会重新消费<code>3, 4, 5</code>, 因为他们是已经确认的消息</li>
+</ul>
+<p>或</p>
+<ul>
+<li>生产者生产了 <code>1, 2, 3, 4, 5</code>消费者全部消费成功, 但仅仅提交了 <code>1, 3, 4, 5</code>,</li>
+<li>没有提交<code>2</code>的时候, 程序崩溃重启, 同时假设生产者在<code>5</code>之后生产了<code>6, 7, 8</code></li>
+<li>消费者重新启动之后消费的顺序将是<code>2, 6, 7, 8</code>, 不会重新消费<code>3, 4, 5</code>, 因为他们是已经确认的消息</li>
+</ul>
+<p>可能会影响以上行为的配置项如下</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">配置项</th>
+<th style="text-align:left">作用</th>
+<th style="text-align:left">默认值</th>
+<th style="text-align:left">影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>ackTimeout</code></td>
+<td style="text-align:left">未确认消息的超时时间，触发自动重新投递。</td>
+<td style="text-align:left">0</td>
+<td style="text-align:left">如果设置为非零值，未确认的消息会在超时后自动重新投递。</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>ackTimeoutTickTime</code></td>
+<td style="text-align:left">检查未确认消息的时间间隔。</td>
+<td style="text-align:left">1 秒</td>
+<td style="text-align:left">影响 <code>ackTimeout</code> 的检查频率。</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>negativeAckRedeliveryDelay</code></td>
+<td style="text-align:left"><code>Nack</code> 触发重新投递的延迟时间。</td>
+<td style="text-align:left">1 分钟</td>
+<td style="text-align:left">影响 <code>Nack</code> 触发重新投递的时间。</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>replicateSubscriptionState</code></td>
+<td style="text-align:left">是否将订阅状态复制到其他集群。</td>
+<td style="text-align:left">false</td>
+<td style="text-align:left">影响跨集群故障切换时的未确认消息处理。如果设置为 <code>false</code>，订阅状态不会复制，重启后只会从本地未确认的消息开始消费</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>maxUnackedMessagesPerConsumer</code></td>
+<td style="text-align:left">每个消费者允许的最大未确认消息数量。</td>
+<td style="text-align:left">50000</td>
+<td style="text-align:left">影响消费者的未确认消息数量限制。</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>enableBatchIndexAcknowledgment</code></td>
+<td style="text-align:left">是否启用批量消息的索引级别确认。</td>
+<td style="text-align:left">false</td>
+<td style="text-align:left">影响批量消息的确认粒度。如果设置为 <code>true</code>，消费者可以确认批量消息中的部分消息，而不是整个批量消息</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>autoUpdatePartitions</code></td>
+<td style="text-align:left">是否自动更新分区信息。</td>
+<td style="text-align:left">true</td>
+<td style="text-align:left">影响消费者对新分区的订阅行为。如果设置为 <code>false</code>，消费者不会订阅新创建的分区，重启后可能会丢失新分区的消息。</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+</div>
+
+
+
+
+    
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Latsummer
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://zhaozhuolin.com/2025/04/20250418.html" title="Pulsar消费者提交与消费机制小结">http://zhaozhuolin.com/2025/04/20250418.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+<div>
+
+<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+
+</div>
+
+  <footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/pulsar/" rel="tag"><i class="fa fa-tag"></i>pulsar</a>
+          <a href="/tags/go/" rel="tag"><i class="fa fa-tag"></i>go</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/05/20240520.html" rel="prev" title="在MIPS及LoongArch的架构下编译go语言二进制">
+      <i class="fa fa-chevron-left"></i> 在MIPS及LoongArch的架构下编译go语言二进制
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Pulsar%E6%B6%88%E8%B4%B9%E8%80%85%E6%8F%90%E4%BA%A4%E4%B8%8E%E6%B6%88%E8%B4%B9%E6%9C%BA%E5%88%B6%E5%B0%8F%E7%BB%93"><span class="nav-number">1.</span> <span class="nav-text">Pulsar消费者提交与消费机制小结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B6%88%E8%B4%B9%E5%81%8F%E7%A7%BB%E9%87%8F%E4%B8%8E%E6%8F%90%E4%BA%A4%E5%81%8F%E7%A7%BB%E9%87%8F"><span class="nav-number">1.1.</span> <span class="nav-text">消费偏移量与提交偏移量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ackTimeout%E4%B8%8EDLQ"><span class="nav-number">1.2.</span> <span class="nav-text">ackTimeout与DLQ</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81ackTimeout-Pulsar%E6%B6%88%E8%B4%B9%E8%80%85%E7%9A%84%E9%85%8D%E7%BD%AE%E9%A1%B9-%E9%BB%98%E8%AE%A4%E6%83%85%E5%86%B5%E4%B8%8B%E6%98%AF%E5%85%B3%E9%97%AD%E7%8A%B6%E6%80%81"><span class="nav-number">1.2.1.</span> <span class="nav-text">1、ackTimeout - Pulsar消费者的配置项, 默认情况下是关闭状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81DLQ-Dead-Letter-Queue-%E6%AD%BB%E4%BF%A1%E9%98%9F%E5%88%97"><span class="nav-number">1.2.2.</span> <span class="nav-text">2、DLQ - Dead Letter Queue 死信队列</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Java%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">Java客户端的例子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Go%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">Go客户端的例子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%AE%E5%BC%82%E5%AF%B9%E6%AF%94"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">差异对比</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-number">1.2.2.4.</span> <span class="nav-text">结论</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B6%88%E8%B4%B9%E8%80%85%E7%9A%84%E6%B6%88%E8%B4%B9%E8%A1%8C%E4%B8%BA"><span class="nav-number">1.3.</span> <span class="nav-text">消费者的消费行为</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E6%B6%88%E8%B4%B9%E8%80%85%E7%9A%84%E6%B6%88%E8%B4%B9%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">1、消费者的消费模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E6%B6%88%E6%81%AF%E7%A1%AE%E8%AE%A4%E6%9C%BA%E5%88%B6"><span class="nav-number">1.3.0.2.</span> <span class="nav-text">2、消息确认机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E3%80%81-%E7%A8%8B%E5%BA%8F%E5%B4%A9%E6%BA%83%E5%90%8E%E7%9A%84%E8%A1%8C%E4%B8%BA"><span class="nav-number">1.3.0.3.</span> <span class="nav-text">3、 程序崩溃后的行为</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Latsummer"
+      src="/images/IMG_6272.JPG">
+  <p class="site-author-name" itemprop="name">Latsummer</p>
+  <div class="site-description" itemprop="description">八说了，我在学了！</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Latsummer" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Latsummer" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/weixin_43105323" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;weixin_43105323" rel="noopener" target="_blank"><i class="crosshairs fa-fw"></i>CSDN</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:morganjeans0106@gmail.com" title="E-Mail → mailto:morganjeans0106@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=863515908&auto=1&height=66"></iframe>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Latsummer</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:12</span>
+</div><script color="241,124,103" opacity="1" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>
