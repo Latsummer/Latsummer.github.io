@@ -238,17 +238,17 @@ mjx-container[display="true"] + br {
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">29</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">30</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">8</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">9</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">48</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">51</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -309,7 +309,7 @@ mjx-container[display="true"] + br {
   
   
 <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-<link itemprop="mainEntityOfPage" href="http://zhaozhuolin.com/2025/04/20250418.html">
+<link itemprop="mainEntityOfPage" href="http://zhaozhuolin.com/2025/05/20250508.html">
 
 <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
   <meta itemprop="image" content="/images/IMG_6272.JPG">
@@ -323,7 +323,7 @@ mjx-container[display="true"] + br {
   <header class="post-header">
     <h2 class="post-title" itemprop="name headline">
       
-        <a href="/2025/04/20250418.html" class="post-title-link" itemprop="url">Pulsar消费者提交与消费机制小结</a>
+        <a href="/2025/05/20250508.html" class="post-title-link" itemprop="url">Benthos 框架下的限速器降级方案探索</a>
     </h2>
 
     <div class="post-meta">
@@ -334,8 +334,314 @@ mjx-container[display="true"] + br {
           <span class="post-meta-item-text">发表于</span>
           
 
-          <time title="创建时间：2025-04-18 21:28:05 / 修改时间：21:30:07" itemprop="dateCreated datePublished" datetime="2025-04-18T21:28:05+08:00">2025-04-18</time>
+          <time title="创建时间：2025-05-08 19:20:00 / 修改时间：20:52:01" itemprop="dateCreated datePublished" datetime="2025-05-08T19:20:00+08:00">2025-05-08</time>
         </span>
+        <span class="post-meta-item">
+          <span class="post-meta-item-icon">
+            <i class="far fa-folder"></i>
+          </span>
+          <span class="post-meta-item-text">分类于</span>
+            <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/benthos/" itemprop="url" rel="index"><span itemprop="name">benthos</span></a>
+            </span>
+        </span>
+
+      <br>
+        <span class="post-meta-item" title="本文字数">
+          <span class="post-meta-item-icon">
+            <i class="far fa-file-word"></i>
+          </span>
+            <span class="post-meta-item-text">本文字数：</span>
+          <span>31k</span>
+        </span>
+        <span class="post-meta-item" title="阅读时长">
+          <span class="post-meta-item-icon">
+            <i class="far fa-clock"></i>
+          </span>
+            <span class="post-meta-item-text">阅读时长 &asymp;</span>
+          <span>28 分钟</span>
+        </span>
+
+    </div>
+  </header>
+
+
+
+
+<div class="post-body" itemprop="articleBody">
+
+  
+      <h1 id="Benthos-框架下的限速器降级方案探索"><a href="#Benthos-框架下的限速器降级方案探索" class="headerlink" title="Benthos 框架下的限速器降级方案探索"></a>Benthos 框架下的限速器降级方案探索</h1><h2 id="rate-limit限速器"><a href="#rate-limit限速器" class="headerlink" title="rate_limit限速器"></a><code>rate_limit</code>限速器</h2><p>用于限制Benthos中并行组件(或跨实例)之间的共享资源使用, 一般使用<code>resources</code>配置, 如下</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">rate_limit_resources:</span>  <span class="comment"># 固有字段, 表示限速器的资源</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">label:</span> <span class="string">my_limite</span> <span class="comment"># 限速器资源标签</span></span><br><span class="line">    <span class="attr">local:</span> <span class="comment"># 本地限速器, 只能在单个实例内部生效</span></span><br><span class="line">      <span class="attr">count:</span> <span class="number">500</span>  <span class="comment"># 表示每秒500次处理</span></span><br><span class="line">      <span class="attr">interval:</span> <span class="string">1s</span></span><br></pre></td></tr></table></figure>
+<p>一些内部组件支持直接在配置中带上<code>rate_limit</code>配置, 例如<code>http_client</code>, 其原理是在组件内部通过<code>*service.Resources</code>的<code>AccessRateLimit</code>方法直接获取对应资源</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">input:</span></span><br><span class="line">  <span class="attr">http_client:</span></span><br><span class="line">    <span class="attr">url:</span> <span class="string">TODO</span></span><br><span class="line">    <span class="attr">verb:</span> <span class="string">GET</span></span><br><span class="line">    <span class="attr">rate_limit:</span> <span class="string">my_limite</span></span><br></pre></td></tr></table></figure>
+<p>通过这种方式使用速率限制，可以保证输入仅以每秒 500 个请求的速率轮询 HTTP 源, 其内部实现大致如下</p>
+      <!--noindex-->
+        <div class="post-button">
+          <a class="btn" href="/2025/05/20250508.html#more" rel="contents">
+            阅读全文 &raquo;
+          </a>
+        </div>
+      <!--/noindex-->
+    
+  
+</div>
+
+
+
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+<article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+<link itemprop="mainEntityOfPage" href="http://zhaozhuolin.com/2025/05/20250507.html">
+
+<span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <meta itemprop="image" content="/images/IMG_6272.JPG">
+  <meta itemprop="name" content="Latsummer">
+  <meta itemprop="description" content="八说了，我在学了！">
+</span>
+
+<span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+  <meta itemprop="name" content="小赵的学习笔记">
+</span>
+  <header class="post-header">
+    <h2 class="post-title" itemprop="name headline">
+      
+        <a href="/2025/05/20250507.html" class="post-title-link" itemprop="url">benthos中SetStructured和SetBytes差异</a>
+    </h2>
+
+    <div class="post-meta">
+        <span class="post-meta-item">
+          <span class="post-meta-item-icon">
+            <i class="far fa-calendar"></i>
+          </span>
+          <span class="post-meta-item-text">发表于</span>
+
+          <time title="创建时间：2025-05-07 19:20:00" itemprop="dateCreated datePublished" datetime="2025-05-07T19:20:00+08:00">2025-05-07</time>
+        </span>
+          <span class="post-meta-item">
+            <span class="post-meta-item-icon">
+              <i class="far fa-calendar-check"></i>
+            </span>
+            <span class="post-meta-item-text">更新于</span>
+            <time title="修改时间：2025-05-08 20:12:32" itemprop="dateModified" datetime="2025-05-08T20:12:32+08:00">2025-05-08</time>
+          </span>
+        <span class="post-meta-item">
+          <span class="post-meta-item-icon">
+            <i class="far fa-folder"></i>
+          </span>
+          <span class="post-meta-item-text">分类于</span>
+            <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/benthos/" itemprop="url" rel="index"><span itemprop="name">benthos</span></a>
+            </span>
+        </span>
+
+      <br>
+        <span class="post-meta-item" title="本文字数">
+          <span class="post-meta-item-icon">
+            <i class="far fa-file-word"></i>
+          </span>
+            <span class="post-meta-item-text">本文字数：</span>
+          <span>2.8k</span>
+        </span>
+        <span class="post-meta-item" title="阅读时长">
+          <span class="post-meta-item-icon">
+            <i class="far fa-clock"></i>
+          </span>
+            <span class="post-meta-item-text">阅读时长 &asymp;</span>
+          <span>3 分钟</span>
+        </span>
+
+    </div>
+  </header>
+
+
+
+
+<div class="post-body" itemprop="articleBody">
+
+  
+      <h1 id="benthos中SetStructured和SetBytes差异"><a href="#benthos中SetStructured和SetBytes差异" class="headerlink" title="benthos中SetStructured和SetBytes差异"></a>benthos中SetStructured和SetBytes差异</h1><p>在 Benthos 中，<code>message.SetStructured()</code> 和 <code>message.SetBytes()</code> 是两种不同的消息内容设置方式，它们会影响消息的内部表示形式以及后续处理器的行为。以下是它们的区别和 Benthos 的处理方式：</p>
+<blockquote>
+<p>在 Benthos 的 <code>message</code> 实现中，<strong>不能同时有效保存 <code>SetBytes</code> 和 <code>SetStructured</code> 的内容</strong>。两种设置方式会互相覆盖，最终生效的是最后一次调用的方法。</p>
+<ul>
+<li><strong>最后调用的方法决定当前有效形式</strong><br>  无论先调用哪个方法，​<strong>​只有最后一次设置的内容会生效​</strong>​，另一种形式会被隐式转换或丢弃。</li>
+<li><strong>自动转换逻辑</strong><br>  当访问另一种形式时，Benthos 会按需触发转换</li>
+</ul>
+</blockquote>
+      <!--noindex-->
+        <div class="post-button">
+          <a class="btn" href="/2025/05/20250507.html#more" rel="contents">
+            阅读全文 &raquo;
+          </a>
+        </div>
+      <!--/noindex-->
+    
+  
+</div>
+
+
+
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+<article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+<link itemprop="mainEntityOfPage" href="http://zhaozhuolin.com/2025/05/20250506.html">
+
+<span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <meta itemprop="image" content="/images/IMG_6272.JPG">
+  <meta itemprop="name" content="Latsummer">
+  <meta itemprop="description" content="八说了，我在学了！">
+</span>
+
+<span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+  <meta itemprop="name" content="小赵的学习笔记">
+</span>
+  <header class="post-header">
+    <h2 class="post-title" itemprop="name headline">
+      
+        <a href="/2025/05/20250506.html" class="post-title-link" itemprop="url">Go语言数据转发处理框架Benthos基础结构及配置</a>
+    </h2>
+
+    <div class="post-meta">
+        <span class="post-meta-item">
+          <span class="post-meta-item-icon">
+            <i class="far fa-calendar"></i>
+          </span>
+          <span class="post-meta-item-text">发表于</span>
+
+          <time title="创建时间：2025-05-06 19:20:00" itemprop="dateCreated datePublished" datetime="2025-05-06T19:20:00+08:00">2025-05-06</time>
+        </span>
+          <span class="post-meta-item">
+            <span class="post-meta-item-icon">
+              <i class="far fa-calendar-check"></i>
+            </span>
+            <span class="post-meta-item-text">更新于</span>
+            <time title="修改时间：2025-05-08 20:12:06" itemprop="dateModified" datetime="2025-05-08T20:12:06+08:00">2025-05-08</time>
+          </span>
+        <span class="post-meta-item">
+          <span class="post-meta-item-icon">
+            <i class="far fa-folder"></i>
+          </span>
+          <span class="post-meta-item-text">分类于</span>
+            <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/benthos/" itemprop="url" rel="index"><span itemprop="name">benthos</span></a>
+            </span>
+        </span>
+
+      <br>
+        <span class="post-meta-item" title="本文字数">
+          <span class="post-meta-item-icon">
+            <i class="far fa-file-word"></i>
+          </span>
+            <span class="post-meta-item-text">本文字数：</span>
+          <span>17k</span>
+        </span>
+        <span class="post-meta-item" title="阅读时长">
+          <span class="post-meta-item-icon">
+            <i class="far fa-clock"></i>
+          </span>
+            <span class="post-meta-item-text">阅读时长 &asymp;</span>
+          <span>15 分钟</span>
+        </span>
+
+    </div>
+  </header>
+
+
+
+
+<div class="post-body" itemprop="articleBody">
+
+  
+      <h1 id="Go语言数据转发处理框架Benthos基础结构及配置"><a href="#Go语言数据转发处理框架Benthos基础结构及配置" class="headerlink" title="Go语言数据转发处理框架Benthos基础结构及配置"></a>Go语言数据转发处理框架<code>Benthos</code>基础结构及配置</h1><h2 id="benthos基本配置"><a href="#benthos基本配置" class="headerlink" title="benthos基本配置"></a>benthos基本配置</h2><p>benthos的配置文件格式为<code>yaml</code>, 按照逻辑基本可以划分为三个段落, <code>input</code>, <code>processor</code>, <code>output</code>, 数据自<code>input</code>接收, 经过 <code>processor</code>处理, 通过<code>output</code>产出, 另外还有一些<code>logger</code>等其余配置, 各个常用内容大致如下:</p>
+<ul>
+<li><code>input</code>: 数据的输入源</li>
+<li><code>processors</code>: 一系列处理器</li>
+<li><code>caches</code>: 一种键/值存储，可供某些组件用于诸如重复数据删除或数据连接等应用, 一般使用 <code>cache_resources</code> 配置</li>
+<li><code>rate limits</code>: 限速器, 一般使用 <code>rate_limit_resources</code> 配置</li>
+<li><code>buffers</code>: 缓冲区, 一般紧接着 <code>input</code>, 用于缓冲输入到下游之间的数据</li>
+<li><code>metrics</code>: 审计内容</li>
+<li><code>tracers</code>: 追踪器, 用于消息的跟踪</li>
+</ul>
+<p>一个基础的<code>benthos</code>配置文件可以参考如下</p>
+      <!--noindex-->
+        <div class="post-button">
+          <a class="btn" href="/2025/05/20250506.html#more" rel="contents">
+            阅读全文 &raquo;
+          </a>
+        </div>
+      <!--/noindex-->
+    
+  
+</div>
+
+
+
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+<article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+<link itemprop="mainEntityOfPage" href="http://zhaozhuolin.com/2025/05/20250505.html">
+
+<span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <meta itemprop="image" content="/images/IMG_6272.JPG">
+  <meta itemprop="name" content="Latsummer">
+  <meta itemprop="description" content="八说了，我在学了！">
+</span>
+
+<span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+  <meta itemprop="name" content="小赵的学习笔记">
+</span>
+  <header class="post-header">
+    <h2 class="post-title" itemprop="name headline">
+      
+        <a href="/2025/05/20250505.html" class="post-title-link" itemprop="url">Pulsar消费者提交与消费机制小结</a>
+    </h2>
+
+    <div class="post-meta">
+        <span class="post-meta-item">
+          <span class="post-meta-item-icon">
+            <i class="far fa-calendar"></i>
+          </span>
+          <span class="post-meta-item-text">发表于</span>
+
+          <time title="创建时间：2025-05-05 19:20:00" itemprop="dateCreated datePublished" datetime="2025-05-05T19:20:00+08:00">2025-05-05</time>
+        </span>
+          <span class="post-meta-item">
+            <span class="post-meta-item-icon">
+              <i class="far fa-calendar-check"></i>
+            </span>
+            <span class="post-meta-item-text">更新于</span>
+            <time title="修改时间：2025-05-08 20:11:11" itemprop="dateModified" datetime="2025-05-08T20:11:11+08:00">2025-05-08</time>
+          </span>
         <span class="post-meta-item">
           <span class="post-meta-item-icon">
             <i class="far fa-folder"></i>
@@ -386,7 +692,7 @@ mjx-container[display="true"] + br {
 </ol>
       <!--noindex-->
         <div class="post-button">
-          <a class="btn" href="/2025/04/20250418.html#more" rel="contents">
+          <a class="btn" href="/2025/05/20250505.html#more" rel="contents">
             阅读全文 &raquo;
           </a>
         </div>
@@ -1010,327 +1316,10 @@ mjx-container[display="true"] + br {
   
   
 
-      
-  
-  
-<article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-<link itemprop="mainEntityOfPage" href="http://zhaozhuolin.com/2023/03/20230318.html">
-
-<span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Latsummer">
-  <meta itemprop="description" content="八说了，我在学了！">
-</span>
-
-<span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-  <meta itemprop="name" content="小赵的学习笔记">
-</span>
-  <header class="post-header">
-    <h2 class="post-title" itemprop="name headline">
-      
-        <a href="/2023/03/20230318.html" class="post-title-link" itemprop="url">CMake语法小结</a>
-    </h2>
-
-    <div class="post-meta">
-        <span class="post-meta-item">
-          <span class="post-meta-item-icon">
-            <i class="far fa-calendar"></i>
-          </span>
-          <span class="post-meta-item-text">发表于</span>
-
-          <time title="创建时间：2023-03-18 20:55:09" itemprop="dateCreated datePublished" datetime="2023-03-18T20:55:09+08:00">2023-03-18</time>
-        </span>
-          <span class="post-meta-item">
-            <span class="post-meta-item-icon">
-              <i class="far fa-calendar-check"></i>
-            </span>
-            <span class="post-meta-item-text">更新于</span>
-            <time title="修改时间：2023-05-07 19:15:56" itemprop="dateModified" datetime="2023-05-07T19:15:56+08:00">2023-05-07</time>
-          </span>
-        <span class="post-meta-item">
-          <span class="post-meta-item-icon">
-            <i class="far fa-folder"></i>
-          </span>
-          <span class="post-meta-item-text">分类于</span>
-            <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
-            </span>
-        </span>
-
-      <br>
-        <span class="post-meta-item" title="本文字数">
-          <span class="post-meta-item-icon">
-            <i class="far fa-file-word"></i>
-          </span>
-            <span class="post-meta-item-text">本文字数：</span>
-          <span>2.6k</span>
-        </span>
-        <span class="post-meta-item" title="阅读时长">
-          <span class="post-meta-item-icon">
-            <i class="far fa-clock"></i>
-          </span>
-            <span class="post-meta-item-text">阅读时长 &asymp;</span>
-          <span>2 分钟</span>
-        </span>
-
-    </div>
-  </header>
-
-
-
-
-<div class="post-body" itemprop="articleBody">
-
-  
-      <h1 id="基础语法"><a href="#基础语法" class="headerlink" title="基础语法"></a>基础语法</h1><h2 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h2><h3 id="PROJECT关键字"><a href="#PROJECT关键字" class="headerlink" title="PROJECT关键字"></a>PROJECT关键字</h3><p><code>PROJECT(name)</code>指定工程名称， 默认支持所有语言</p>
-<p><code>PROJECT(name CXX)</code>指定工程名称， 支持C++</p>
-<p>会隐式定义两个变量</p>
-<ul>
-<li>${name}_BINARY_DIR</li>
-<li>${name}_SOURCE_DIR</li>
-</ul>
-<p>修改工程名时会将这两个变量修改，可通过预定义两个变量<code>PROJECT_BINARY_DIR</code>以及<code>PROJECT_SOURCE_DIR</code>解决该问题</p>
-<h3 id="SET关键字"><a href="#SET关键字" class="headerlink" title="SET关键字"></a>SET关键字</h3><p>设定值，<code>SET(SRC_LIST main.cpp a.cpp b.cpp)</code>，即设定了<code>SEC_LIST</code>的值</p>
-<h3 id="MESSAGE关键字"><a href="#MESSAGE关键字" class="headerlink" title="MESSAGE关键字"></a>MESSAGE关键字</h3><p>输出自定义的信息，主要有三种</p>
-<ul>
-<li>SEND_ERROR，产生错误生成过程被跳过</li>
-<li>STAUS，显示普通的消息</li>
-<li>FATAL_ERROR，终止cmake过程</li>
-</ul>
-      <!--noindex-->
-        <div class="post-button">
-          <a class="btn" href="/2023/03/20230318.html#more" rel="contents">
-            阅读全文 &raquo;
-          </a>
-        </div>
-      <!--/noindex-->
-    
-  
-</div>
-
-
-
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-<article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-<link itemprop="mainEntityOfPage" href="http://zhaozhuolin.com/2021/03/20210312.html">
-
-<span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Latsummer">
-  <meta itemprop="description" content="八说了，我在学了！">
-</span>
-
-<span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-  <meta itemprop="name" content="小赵的学习笔记">
-</span>
-  <header class="post-header">
-    <h2 class="post-title" itemprop="name headline">
-      
-        <a href="/2021/03/20210312.html" class="post-title-link" itemprop="url">图</a>
-    </h2>
-
-    <div class="post-meta">
-        <span class="post-meta-item">
-          <span class="post-meta-item-icon">
-            <i class="far fa-calendar"></i>
-          </span>
-          <span class="post-meta-item-text">发表于</span>
-
-          <time title="创建时间：2021-03-12 13:08:09" itemprop="dateCreated datePublished" datetime="2021-03-12T13:08:09+08:00">2021-03-12</time>
-        </span>
-          <span class="post-meta-item">
-            <span class="post-meta-item-icon">
-              <i class="far fa-calendar-check"></i>
-            </span>
-            <span class="post-meta-item-text">更新于</span>
-            <time title="修改时间：2024-05-26 11:48:10" itemprop="dateModified" datetime="2024-05-26T11:48:10+08:00">2024-05-26</time>
-          </span>
-        <span class="post-meta-item">
-          <span class="post-meta-item-icon">
-            <i class="far fa-folder"></i>
-          </span>
-          <span class="post-meta-item-text">分类于</span>
-            <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
-            </span>
-        </span>
-
-      <br>
-        <span class="post-meta-item" title="本文字数">
-          <span class="post-meta-item-icon">
-            <i class="far fa-file-word"></i>
-          </span>
-            <span class="post-meta-item-text">本文字数：</span>
-          <span>8.3k</span>
-        </span>
-        <span class="post-meta-item" title="阅读时长">
-          <span class="post-meta-item-icon">
-            <i class="far fa-clock"></i>
-          </span>
-            <span class="post-meta-item-text">阅读时长 &asymp;</span>
-          <span>8 分钟</span>
-        </span>
-
-    </div>
-  </header>
-
-
-
-
-<div class="post-body" itemprop="articleBody">
-
-  
-      <h1 id="图的构成"><a href="#图的构成" class="headerlink" title="图的构成"></a>图的构成</h1><p><strong>顶点集合</strong>+<strong>边的集合</strong>：<code>G = (V, E)</code>，顶点集合<code>V = {x | x属于某个数据对象及}</code>是有穷非空集合</p>
-<ul>
-<li><p><code>E = {(x, y) | x, y属于V}</code>或者<code>E = {&lt;x, y&gt; | x, y属于V &amp;&amp; Path(x, y)}</code>是顶点间关系的有穷集合，也叫边集合</p>
-</li>
-<li><p><code>(x, y)</code>表示x到y的一条双向通道，即<code>(x, y)</code>是无方向的，<code>Path(x, y)</code>表示从x到y的一条单向通路，即<code>Path(x, y)是有方向的</code></p>
-</li>
-</ul>
-<p>顶点和边：图中节点成为顶点，第i个顶点记作vi， 两个顶点vi和vj相关联称作顶点vi和顶点vj之间有一条边，图中第k条边记作ek，<code>ek = (vi, vj)</code>或<code>ek = &lt;vi, vj&gt;</code></p>
-<ul>
-<li>在有向图中，顶点对<code>&lt;x, y&gt;</code>是有序的，顶点对<code>&lt;x, y&gt;</code>称为顶点x到顶点y的一条边(弧)，<code>&lt;x, y&gt;</code>和<code>&lt;y ,x&gt;</code>是两条不同的边，如G3、G4</li>
-<li>在无向图中，顶点对(x, y)是无序的，顶点对(x,y) 称为顶点x和顶点y相关联的一条边，这条边没有特定方向，(x, y)和(y，x)是同一条边，如G1、G2</li>
-<li>注意：<strong>无向边<code>(x, y)</code>等于有向边<code>&lt;x, y&gt;</code>和<code>&lt;y, x&gt;</code></strong></li>
-</ul>
-      <!--noindex-->
-        <div class="post-button">
-          <a class="btn" href="/2021/03/20210312.html#more" rel="contents">
-            阅读全文 &raquo;
-          </a>
-        </div>
-      <!--/noindex-->
-    
-  
-</div>
-
-
-
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-<article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-<link itemprop="mainEntityOfPage" href="http://zhaozhuolin.com/2020/08/20200827.html">
-
-<span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <meta itemprop="image" content="/images/IMG_6272.JPG">
-  <meta itemprop="name" content="Latsummer">
-  <meta itemprop="description" content="八说了，我在学了！">
-</span>
-
-<span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-  <meta itemprop="name" content="小赵的学习笔记">
-</span>
-  <header class="post-header">
-    <h2 class="post-title" itemprop="name headline">
-      
-        <a href="/2020/08/20200827.html" class="post-title-link" itemprop="url">在线的面试预约系统</a>
-    </h2>
-
-    <div class="post-meta">
-        <span class="post-meta-item">
-          <span class="post-meta-item-icon">
-            <i class="far fa-calendar"></i>
-          </span>
-          <span class="post-meta-item-text">发表于</span>
-
-          <time title="创建时间：2020-08-27 00:05:00" itemprop="dateCreated datePublished" datetime="2020-08-27T00:05:00+08:00">2020-08-27</time>
-        </span>
-          <span class="post-meta-item">
-            <span class="post-meta-item-icon">
-              <i class="far fa-calendar-check"></i>
-            </span>
-            <span class="post-meta-item-text">更新于</span>
-            <time title="修改时间：2023-05-07 19:18:08" itemprop="dateModified" datetime="2023-05-07T19:18:08+08:00">2023-05-07</time>
-          </span>
-        <span class="post-meta-item">
-          <span class="post-meta-item-icon">
-            <i class="far fa-folder"></i>
-          </span>
-          <span class="post-meta-item-text">分类于</span>
-            <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-              <a href="/categories/%E5%B0%8F%E4%BD%9C%E5%93%81/" itemprop="url" rel="index"><span itemprop="name">小作品</span></a>
-            </span>
-        </span>
-
-      <br>
-        <span class="post-meta-item" title="本文字数">
-          <span class="post-meta-item-icon">
-            <i class="far fa-file-word"></i>
-          </span>
-            <span class="post-meta-item-text">本文字数：</span>
-          <span>3.4k</span>
-        </span>
-        <span class="post-meta-item" title="阅读时长">
-          <span class="post-meta-item-icon">
-            <i class="far fa-clock"></i>
-          </span>
-            <span class="post-meta-item-text">阅读时长 &asymp;</span>
-          <span>3 分钟</span>
-        </span>
-
-    </div>
-  </header>
-
-
-
-
-<div class="post-body" itemprop="articleBody">
-
-  
-      <h1 id="总体思路"><a href="#总体思路" class="headerlink" title="总体思路"></a>总体思路</h1><p>通过httplib库函数中的Post和Get方法来处理以下四种请求</p>
-<ul>
-<li><code>注册</code> ：处理浏览器传来的数据，并调用数据库函数增加列</li>
-<li><code>登录</code> ：处理浏览器传来的数据，在数据库中进行查询，登陆成功则生成sessionID用以后续使用</li>
-<li><code>数据页面</code>：处理浏览器传来的数据，使用sessionID查询当前登录的用户，在数据库中查询该用户信息并返回</li>
-<li><code>数据提交</code>：处理浏览器传来的数据，根据头部的sessionID查询登陆用户，切割正文提交的信息，插入数据库</li>
-</ul>
-      <!--noindex-->
-        <div class="post-button">
-          <a class="btn" href="/2020/08/20200827.html#more" rel="contents">
-            阅读全文 &raquo;
-          </a>
-        </div>
-      <!--/noindex-->
-    
-  
-</div>
-
-
-
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1398,20 +1387,20 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">51</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-count">30</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1434,7 +1423,7 @@ mjx-container[display="true"] + br {
 
 
       </div>
-      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=863515908&auto=1&height=66"></iframe>
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2619543025&auto=1&height=66"></iframe>
 
     </div>
   </aside>
@@ -1463,7 +1452,7 @@ mjx-container[display="true"] + br {
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">3:12</span>
+    <span title="站点阅读时长">3:58</span>
 </div><script color="241,124,103" opacity="1" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
 
 

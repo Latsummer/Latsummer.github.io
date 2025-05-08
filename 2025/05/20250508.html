@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/128x128.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png">
+  <link rel="mask-icon" href="/images/logo2.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-big-counter.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"zhaozhuolin.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#A9A9A9","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Benthos 框架下的限速器降级方案探索rate_limit限速器用于限制Benthos中并行组件(或跨实例)之间的共享资源使用, 一般使用resources配置, 如下 12345rate_limit_resources:  # 固有字段, 表示限速器的资源  - label: my_limite # 限速器资源标签    local: # 本地限速器, 只能在单个实例内部生效      co">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Benthos 框架下的限速器降级方案探索">
+<meta property="og:url" content="http://zhaozhuolin.com/2025/05/20250508.html">
+<meta property="og:site_name" content="小赵的学习笔记">
+<meta property="og:description" content="Benthos 框架下的限速器降级方案探索rate_limit限速器用于限制Benthos中并行组件(或跨实例)之间的共享资源使用, 一般使用resources配置, 如下 12345rate_limit_resources:  # 固有字段, 表示限速器的资源  - label: my_limite # 限速器资源标签    local: # 本地限速器, 只能在单个实例内部生效      co">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-05-08T11:20:00.000Z">
+<meta property="article:modified_time" content="2025-05-08T12:52:01.558Z">
+<meta property="article:author" content="Latsummer">
+<meta property="article:tag" content="benthos">
+<meta property="article:tag" content="go">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://zhaozhuolin.com/2025/05/20250508.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Benthos 框架下的限速器降级方案探索 | 小赵的学习笔记</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style><link rel="alternate" href="/atom.xml" title="小赵的学习笔记" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">小赵的学习笔记</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">30</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">9</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">51</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/Latsummer" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+<article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+<link itemprop="mainEntityOfPage" href="http://zhaozhuolin.com/2025/05/20250508.html">
+
+<span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <meta itemprop="image" content="/images/IMG_6272.JPG">
+  <meta itemprop="name" content="Latsummer">
+  <meta itemprop="description" content="八说了，我在学了！">
+</span>
+
+<span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+  <meta itemprop="name" content="小赵的学习笔记">
+</span>
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">
+      Benthos 框架下的限速器降级方案探索
+    </h1>
+
+    <div class="post-meta">
+        <span class="post-meta-item">
+          <span class="post-meta-item-icon">
+            <i class="far fa-calendar"></i>
+          </span>
+          <span class="post-meta-item-text">发表于</span>
+          
+
+          <time title="创建时间：2025-05-08 19:20:00 / 修改时间：20:52:01" itemprop="dateCreated datePublished" datetime="2025-05-08T19:20:00+08:00">2025-05-08</time>
+        </span>
+        <span class="post-meta-item">
+          <span class="post-meta-item-icon">
+            <i class="far fa-folder"></i>
+          </span>
+          <span class="post-meta-item-text">分类于</span>
+            <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+              <a href="/categories/benthos/" itemprop="url" rel="index"><span itemprop="name">benthos</span></a>
+            </span>
+        </span>
+
+      
+        <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+          <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+          </span>
+          <span class="post-meta-item-text">阅读次数：</span>
+          <span id="busuanzi_value_page_pv"></span>
+        </span><br>
+        <span class="post-meta-item" title="本文字数">
+          <span class="post-meta-item-icon">
+            <i class="far fa-file-word"></i>
+          </span>
+            <span class="post-meta-item-text">本文字数：</span>
+          <span>31k</span>
+        </span>
+        <span class="post-meta-item" title="阅读时长">
+          <span class="post-meta-item-icon">
+            <i class="far fa-clock"></i>
+          </span>
+            <span class="post-meta-item-text">阅读时长 &asymp;</span>
+          <span>28 分钟</span>
+        </span>
+
+    </div>
+  </header>
+
+
+
+
+<div class="post-body" itemprop="articleBody">
+
+  
+    <h1 id="Benthos-框架下的限速器降级方案探索"><a href="#Benthos-框架下的限速器降级方案探索" class="headerlink" title="Benthos 框架下的限速器降级方案探索"></a>Benthos 框架下的限速器降级方案探索</h1><h2 id="rate-limit限速器"><a href="#rate-limit限速器" class="headerlink" title="rate_limit限速器"></a><code>rate_limit</code>限速器</h2><p>用于限制Benthos中并行组件(或跨实例)之间的共享资源使用, 一般使用<code>resources</code>配置, 如下</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">rate_limit_resources:</span>  <span class="comment"># 固有字段, 表示限速器的资源</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">label:</span> <span class="string">my_limite</span> <span class="comment"># 限速器资源标签</span></span><br><span class="line">    <span class="attr">local:</span> <span class="comment"># 本地限速器, 只能在单个实例内部生效</span></span><br><span class="line">      <span class="attr">count:</span> <span class="number">500</span>  <span class="comment"># 表示每秒500次处理</span></span><br><span class="line">      <span class="attr">interval:</span> <span class="string">1s</span></span><br></pre></td></tr></table></figure>
+<p>一些内部组件支持直接在配置中带上<code>rate_limit</code>配置, 例如<code>http_client</code>, 其原理是在组件内部通过<code>*service.Resources</code>的<code>AccessRateLimit</code>方法直接获取对应资源</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">input:</span></span><br><span class="line">  <span class="attr">http_client:</span></span><br><span class="line">    <span class="attr">url:</span> <span class="string">TODO</span></span><br><span class="line">    <span class="attr">verb:</span> <span class="string">GET</span></span><br><span class="line">    <span class="attr">rate_limit:</span> <span class="string">my_limite</span></span><br></pre></td></tr></table></figure>
+<p>通过这种方式使用速率限制，可以保证输入仅以每秒 500 个请求的速率轮询 HTTP 源, 其内部实现大致如下</p>
+<span id="more"></span>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">init</span><span class="params">()</span></span> {</span><br><span class="line">    service.RegisterBatchInput(<span class="string">"http_client"</span>, httpClientInputSpec(), newHttpClient)</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">httpClientInputSpec</span><span class="params">()</span></span> *service.ConfigSpec {</span><br><span class="line">    <span class="comment">// 给出一个接受 rate_limit 配置的字段</span></span><br><span class="line">    <span class="keyword">return</span> service.NewConfigSpec().service.NewStringField(<span class="string">"rate_limit"</span>)</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">newHtpClient</span><span class="params">(conf *service.ParsedConfig, mgr *service.Resources)</span></span> (*httpClientInput, <span class="type">error</span>) {</span><br><span class="line">    <span class="comment">// 拿到限速器的标签</span></span><br><span class="line">    rate_limit, _ := conf.FieldString(<span class="string">"rate_time"</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 检查是否在 rate_limit_resources 中注册对应标签的限速器</span></span><br><span class="line">    <span class="keyword">if</span> rate_limit != <span class="string">""</span> {</span><br><span class="line">        <span class="keyword">if</span> !mgr.HasRateLimit(rate_limit) {</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">nil</span>, fmt.Errorf(<span class="string">"rate_limit resources %v not found"</span>, rate_limit)</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// 假设这里是发送HTTP请求的方法</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h *httpClient)</span></span> Send(ctx context.Content) ([]<span class="type">byte</span>, <span class="type">error</span>) {</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="keyword">if</span> !h.waitForAccess(ctx) {</span><br><span class="line">        <span class="keyword">if</span> ctx.Err != <span class="literal">nil</span> {</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">nil</span>, ctx.Err</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span>, errTimeout</span><br><span class="line">    }</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// 真正调用限速器</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h *httpClient)</span></span> waitForAccess(ctx) <span class="type">bool</span> {</span><br><span class="line">    <span class="keyword">if</span> h.rateLimit == <span class="string">""</span> {</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">	}</span><br><span class="line">	<span class="keyword">for</span> {</span><br><span class="line">		<span class="keyword">var</span> period time.Duration</span><br><span class="line">		<span class="keyword">var</span> err <span class="type">error</span></span><br><span class="line">        <span class="comment">// 获取限速器实例</span></span><br><span class="line">		<span class="keyword">if</span> rerr := h.mgr.AccessRateLimit(ctx, h.rateLimit, <span class="function"><span class="keyword">func</span><span class="params">(rl service.RateLimit)</span></span> {</span><br><span class="line">			period, err = rl.Access(ctx)</span><br><span class="line">		}); rerr != <span class="literal">nil</span> {</span><br><span class="line">			err = rerr</span><br><span class="line">		}</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> {</span><br><span class="line">			h.log.Errorf(<span class="string">"Rate limit error: %v\n"</span>, err)</span><br><span class="line">			period = time.Second</span><br><span class="line">		}</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> period &gt; <span class="number">0</span> { <span class="comment">// 等待一定时间</span></span><br><span class="line">			<span class="keyword">select</span> {</span><br><span class="line">			<span class="keyword">case</span> &lt;-time.After(period):</span><br><span class="line">			<span class="keyword">case</span> &lt;-ctx.Done():</span><br><span class="line">				<span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">			}</span><br><span class="line">		} <span class="keyword">else</span> {</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">		}</span><br><span class="line">	}</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>如果组件内本身不提供<code>rate_limit</code>, 或不想在组件内写上这个配置并在初始化的时候使用, 可以通过使用<code>processor</code>结合限速器, 利用背压机制, 即下游阻塞上游也阻塞, 配置如下</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">input:</span></span><br><span class="line">  <span class="attr">csv:</span></span><br><span class="line">    <span class="attr">paths:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./foo.csv</span></span><br><span class="line">  <span class="attr">processors:</span> <span class="comment"># 在Input组件csv之后紧接着一个 rate_limit 处理器, 利用背压机制间接限速 input</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">rate_limit:</span></span><br><span class="line">        <span class="attr">resource:</span> <span class="string">my_limit</span></span><br></pre></td></tr></table></figure>
+<hr>
+<p>以上所有限速器均为本地实现, 无法跨实例使用, 如果有次需求需要使用<code>Redis</code>或其他方案做限速器, 例如基于<code>Benthos</code>的<code>connect</code>的实现 <a target="_blank" rel="noopener" href="https://github.com/redpanda-data/connect/blob/main/internal/impl/redis/rate_limit.go">https://github.com/redpanda-data/connect/blob/main/internal/impl/redis/rate_limit.go</a>, 不过需要注意其限速器只是限制速率, 功能上类似漏桶, 如果需要控制QPS需要另行实现令牌桶版本的限速器</p>
+<h2 id="如何动态调整限速器的限速值"><a href="#如何动态调整限速器的限速值" class="headerlink" title="如何动态调整限速器的限速值"></a>如何动态调整限速器的限速值</h2><p>一个基本的限速器配置如下(框架原生)</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">rate_limit_resources:</span>  <span class="comment"># 固有字段, 表示限速器的资源</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">label:</span> <span class="string">my_limite</span> <span class="comment"># 限速器资源标签</span></span><br><span class="line">    <span class="attr">local:</span> <span class="comment"># 本地限速器, 只能在单个实例内部生效</span></span><br><span class="line">      <span class="attr">count:</span> <span class="number">500</span>  <span class="comment"># 一下表示每秒500次处理</span></span><br><span class="line">      <span class="attr">interval:</span> <span class="string">1s</span></span><br></pre></td></tr></table></figure>
+<p>如果想要动态的修改其中的 <code>count</code>字段, 可以考虑一下方法</p>
+<ol>
+<li><p>使用配置热重载的方式</p>
+<p> 启动<code>Benthos</code>二进制时为框架加上 <code>-w</code> 或 <code>--watcher</code>, 让其可以在配置文件发生变化的时候自动重载配置, 使用此种方式时, 将会全量读取新的配置文件, 并且等待所有未确认消息处理完毕并确认后, 重新载入配置并重载组件. <strong>但是需要注意, 如果更新配置文件后存在配置错误将会导致Benthos服务不可用, 其将会持续读取配置文件并解析配置错误, 并不会沿用原有配置文件</strong></p>
+</li>
+<li><p>使用流模式 <code>streams</code> 启动, 通过 HTTP 动态修改配置</p>
+<p> 配置中设置好api的端口, 或使用默认端口 <code>4195</code></p>
+ <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">http:</span> <span class="comment"># 为benthos开启一个HTTP服务, 包含一些基础的请求访问, 例如 /ping /ready /version三个api, 可以通过访问/endpoints获取所有api</span></span><br><span class="line">  <span class="attr">address:</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span><span class="string">:4195</span></span><br><span class="line">  <span class="attr">debug_endpoints:</span> <span class="literal">false</span> <span class="comment"># 是否开启debug模式</span></span><br></pre></td></tr></table></figure>
+<p> 使用流模式启动</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./BenthosApp streams ./streams_config/*.yaml</span><br></pre></td></tr></table></figure>
+<p> 获取所有流</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">curl http://localhost:4195/streams <span class="comment"># 获取所有流, 一个配置文件为一个流</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新指定流的配置, 需要传入完整的配置</span></span><br><span class="line">curl -X PUT http://localhost:4195/streams/one_stream --data-binary @- &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">input:</span></span><br><span class="line"><span class="string">	xxx</span></span><br><span class="line"><span class="string">output:</span></span><br><span class="line"><span class="string">	xxx</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看流的配置</span></span><br><span class="line">curl http://localhost:4195/streams/one_stream</span><br><span class="line"><span class="comment"># 修正指定流的配置</span></span><br><span class="line">curl -X PATCH http://localhost:4195/streams/one_stream \</span><br><span class="line">  --data-binary @- &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">{</span></span><br><span class="line"><span class="string">  "input": {</span></span><br><span class="line"><span class="string">    "my_input": {</span></span><br><span class="line"><span class="string">      "timeout": "92s"</span></span><br><span class="line"><span class="string">    }</span></span><br><span class="line"><span class="string">  }</span></span><br><span class="line"><span class="string">}</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<hr>
+<p> 以上方法, 均是通过修改配置的方式执行, 也就是说如果想要实现降级, <strong>需要配合外部监控平台</strong>, 通过监控pod状态或一些指标, 来<strong>从外部对Benthos的限速器进行修改</strong>, 那是否可能存在一种方法可以在运行时在程序内部自行修改呢?</p>
+<p> 通过查阅Benthos相关文档可以得知, 当组件作为资源被引用时, 具备可重用性, 每种命名资源只会创建一个实例, 可以在多个位置使用, 原文如下 <a target="_blank" rel="noopener" href="https://docs.redpanda.com/redpanda-connect/configuration/resources/">https://docs.redpanda.com/redpanda-connect/configuration/resources/</a></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Resources <span class="keyword">are</span> components <span class="keyword">within</span> Redpanda <span class="keyword">Connect</span> that <span class="keyword">are</span> declared <span class="keyword">with</span> a <span class="keyword">unique</span> label <span class="keyword">and</span> can be referenced <span class="keyword">any</span> number <span class="keyword">of</span> times <span class="keyword">within</span> a configuration. <span class="keyword">Only</span> <span class="keyword">one</span> instance <span class="keyword">of</span> <span class="keyword">each</span> named resource <span class="keyword">is</span> created, but it <span class="keyword">is</span> safe <span class="keyword">to</span> use it <span class="keyword">in</span> multiple places <span class="keyword">as</span> they can be shared <span class="keyword">without</span> consequence.</span><br><span class="line">资源是 Redpanda <span class="keyword">Connect</span> 中的组件，它们使用唯一标签声明，并且可以在配置中引用任意次数。每个命名资源只会创建一个实例，但可以安全地在多个位置使用，因为它们可以共享而不会产生任何后果。</span><br><span class="line"></span><br><span class="line"><span class="keyword">Some</span> components such <span class="keyword">as</span> caches <span class="keyword">and</span> rate limits can <span class="keyword">only</span> be created <span class="keyword">as</span> a resource. </span><br><span class="line">某些组件，如缓存和速率限制，只能作为资源创建。</span><br></pre></td></tr></table></figure>
+<p> 以上说明可以简单的通过编写一个Benthos框架的代码验证</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">input:</span></span><br><span class="line">  <span class="attr">broker:</span></span><br><span class="line">    <span class="attr">inputs:</span> <span class="comment"># 使用 broker 包裹两个完全一致的输入, 使用同一个标签的限速器 </span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">rdb_input:</span> {}</span><br><span class="line">        <span class="attr">processors:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">rate_limit:</span></span><br><span class="line">              <span class="attr">resource:</span> <span class="string">mu_local_limiter</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">bloblang:</span> <span class="string">|</span> <span class="comment"># 给每条消息加上来源和当前时间</span></span><br><span class="line">              <span class="string">root.message</span> <span class="string">=</span> <span class="string">this.string()</span></span><br><span class="line">              <span class="string">root.source</span> <span class="string">=</span> <span class="string">"input_11111"</span></span><br><span class="line">              <span class="string">root.meta.process_time</span> <span class="string">=</span> <span class="string">now()</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">rdb_input:</span> {}</span><br><span class="line">        <span class="attr">processors:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">rate_limit:</span></span><br><span class="line">              <span class="attr">resource:</span> <span class="string">mu_local_limiter</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">bloblang:</span> <span class="string">|</span></span><br><span class="line"><span class="string">              root.message = this.string()</span></span><br><span class="line"><span class="string">              root.source = "input_22222"</span></span><br><span class="line"><span class="string">              root.meta.process_time = now()</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="comment"># 自定义了一个 mu_local_limiter, 实现完全与框架原生的一致, 但是在初始化阶段打印了一个日志</span></span><br><span class="line"><span class="attr">rate_limit_resources:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">label:</span> <span class="string">mu_local_limiter</span></span><br><span class="line">    <span class="attr">mut_rate_limit_local:</span>  <span class="comment"># 限速为每秒一条</span></span><br><span class="line">      <span class="attr">maxcount:</span> <span class="number">1</span></span><br><span class="line">      <span class="attr">interval:</span> <span class="string">1s</span></span><br></pre></td></tr></table></figure>
+<p>其中 <code>input</code> 组件为简单的从Redis中<code>RPop</code>内容, 大致如下</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(r *rdbInput)</span></span> Read(ctx context.Context) (*service.Message, service.AckFunc, <span class="type">error</span>) {</span><br><span class="line">	<span class="keyword">if</span> ctx.Err() != <span class="literal">nil</span> {</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, <span class="literal">nil</span>, ctx.Err()</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 这里直接没有考虑Redis为空的情况, 在程序启动前给Redis提前填充了数据</span></span><br><span class="line">	d, err := r.l.Pop(ctx)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> {</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, <span class="literal">nil</span>, err</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	msg := service.NewMessage(d)</span><br><span class="line">	<span class="keyword">return</span> msg, <span class="function"><span class="keyword">func</span><span class="params">(ctx context.Context, err <span class="type">error</span>)</span></span> <span class="type">error</span> {</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">	}, <span class="literal">nil</span></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>限速器组件实现大致如下</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">init</span><span class="params">()</span></span> {</span><br><span class="line">	err := service.RegisterRateLimit(<span class="string">"mut_rate_limit_local"</span>,</span><br><span class="line">		limiterConfig(), newMutRateLimitLocal)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> {</span><br><span class="line">		<span class="built_in">panic</span>(err)</span><br><span class="line">	}</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">newMutRateLimitLocal</span><span class="params">(conf *service.ParsedConfig, mgr *service.Resources)</span></span> (service.RateLimit, <span class="type">error</span>) {</span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">    limiter := &amp;my_limit{</span><br><span class="line">        log: mgr.Logger(),</span><br><span class="line">    }</span><br><span class="line">    <span class="comment">// 这里输出一下日志</span></span><br><span class="line">	limiter.log.Infof(<span class="string">"I am Init !!!!!!"</span>)</span><br><span class="line">	<span class="keyword">return</span> limiter, <span class="literal">nil</span></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>主程序启动前提前填充redis</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> {</span><br><span class="line">	l := lists.GetLists()</span><br><span class="line">	<span class="comment">// 按顺序填充 1-100</span></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">100</span>; i++ {</span><br><span class="line">		_ = l.Push(context.Background(), []<span class="type">byte</span>(strconv.Itoa(i)))</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	service.RunCLI(context.Background())</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>程序启动后观察日志输出如下</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">{<span class="string">"@service"</span>:<span class="string">"benthos"</span>,<span class="string">"benthos_version"</span>:<span class="string">"v4.48.0"</span>,<span class="string">"level"</span>:<span class="string">"info"</span>,<span class="string">"msg"</span>:<span class="string">"Running main config from specified file"</span>,<span class="string">"path"</span>:<span class="string">"config.yaml"</span>}</span><br><span class="line">{<span class="string">"@service"</span>:<span class="string">"benthos"</span>,<span class="string">"label"</span>:<span class="string">"mu_local_limiter"</span>,<span class="string">"level"</span>:<span class="string">"info"</span>,<span class="string">"msg"</span>:<span class="string">"I am Init !!!!!!"</span>,<span class="string">"path"</span>:<span class="string">"root.rate_limit_resources"</span>}</span><br><span class="line">{<span class="string">"@service"</span>:<span class="string">"benthos"</span>,<span class="string">"level"</span>:<span class="string">"info"</span>,<span class="string">"msg"</span>:<span class="string">"Listening for HTTP requests at: http://0.0.0.0:4195"</span>}</span><br><span class="line">{<span class="string">"@service"</span>:<span class="string">"benthos"</span>,<span class="string">"label"</span>:<span class="string">""</span>,<span class="string">"level"</span>:<span class="string">"info"</span>,<span class="string">"msg"</span>:<span class="string">"Input type rdb_input is now active"</span>,<span class="string">"path"</span>:<span class="string">"root.input.broker.inputs.0"</span>}</span><br><span class="line">{<span class="string">"@service"</span>:<span class="string">"benthos"</span>,<span class="string">"label"</span>:<span class="string">""</span>,<span class="string">"level"</span>:<span class="string">"info"</span>,<span class="string">"msg"</span>:<span class="string">"Input type rdb_input is now active"</span>,<span class="string">"path"</span>:<span class="string">"root.input.broker.inputs.1"</span>}</span><br><span class="line">{<span class="string">"@service"</span>:<span class="string">"benthos"</span>,<span class="string">"label"</span>:<span class="string">""</span>,<span class="string">"level"</span>:<span class="string">"info"</span>,<span class="string">"msg"</span>:<span class="string">"Output type stdout is now active"</span>,<span class="string">"path"</span>:<span class="string">"root.output"</span>}</span><br><span class="line">{<span class="string">"@service"</span>:<span class="string">"benthos"</span>,<span class="string">"level"</span>:<span class="string">"info"</span>,<span class="string">"msg"</span>:<span class="string">"Launching a Benthos instance, use CTRL+C to close"</span>}</span><br><span class="line">{<span class="string">"message"</span>:<span class="string">"1"</span>,<span class="string">"meta"</span>:{<span class="string">"process_time"</span>:<span class="string">"2025-04-28T20:04:51.181221041+08:00"</span>},<span class="string">"source"</span>:<span class="string">"input_11111"</span>}</span><br><span class="line">{<span class="string">"message"</span>:<span class="string">"3"</span>,<span class="string">"meta"</span>:{<span class="string">"process_time"</span>:<span class="string">"2025-04-28T20:04:52.181650517+08:00"</span>},<span class="string">"source"</span>:<span class="string">"input_11111"</span>}</span><br><span class="line">{<span class="string">"message"</span>:<span class="string">"4"</span>,<span class="string">"meta"</span>:{<span class="string">"process_time"</span>:<span class="string">"2025-04-28T20:04:53.181898361+08:00"</span>},<span class="string">"source"</span>:<span class="string">"input_11111"</span>}</span><br><span class="line">{<span class="string">"message"</span>:<span class="string">"0"</span>,<span class="string">"meta"</span>:{<span class="string">"process_time"</span>:<span class="string">"2025-04-28T20:04:54.18314283+08:00"</span>},<span class="string">"source"</span>:<span class="string">"input_22222"</span>}</span><br><span class="line">{<span class="string">"message"</span>:<span class="string">"5"</span>,<span class="string">"meta"</span>:{<span class="string">"process_time"</span>:<span class="string">"2025-04-28T20:04:55.183107806+08:00"</span>},<span class="string">"source"</span>:<span class="string">"input_11111"</span>}</span><br><span class="line">{<span class="string">"message"</span>:<span class="string">"6"</span>,<span class="string">"meta"</span>:{<span class="string">"process_time"</span>:<span class="string">"2025-04-28T20:04:56.183515111+08:00"</span>},<span class="string">"source"</span>:<span class="string">"input_11111"</span>}</span><br><span class="line">{<span class="string">"message"</span>:<span class="string">"2"</span>,<span class="string">"meta"</span>:{<span class="string">"process_time"</span>:<span class="string">"2025-04-28T20:04:57.183863343+08:00"</span>},<span class="string">"source"</span>:<span class="string">"input_22222"</span>}</span><br><span class="line">{<span class="string">"message"</span>:<span class="string">"7"</span>,<span class="string">"meta"</span>:{<span class="string">"process_time"</span>:<span class="string">"2025-04-28T20:04:58.184574384+08:00"</span>},<span class="string">"source"</span>:<span class="string">"input_22222"</span>}</span><br><span class="line">{<span class="string">"message"</span>:<span class="string">"8"</span>,<span class="string">"meta"</span>:{<span class="string">"process_time"</span>:<span class="string">"2025-04-28T20:04:59.18518018+08:00"</span>},<span class="string">"source"</span>:<span class="string">"input_11111"</span>}</span><br></pre></td></tr></table></figure>
+<p>可以得出以下现象:</p>
+<ol>
+<li>根据消息的乱序输出, 且来源都不一致, 说明两个<code>input</code>在同时工作</li>
+<li>在乱序的情况下, 消息保持每秒一条的速率</li>
+<li><p><code>rate_limit</code>组件的<code>I am Init !!!!!!</code> 日志仅输出了一次</p>
+<p>由此说明<code>rate_limit</code>组件作为资源加载时, <strong>全局单例</strong>, 根据这个特性, 可以设计出一个速率可变的限速器, 其应该继承框架原本的<code>rate_limit</code>方法, 同时额外暴露一些修改限速值的方法, 包内直接单例模式, 例如</p>
+</li>
+</ol>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> gLimit mutRateLimitLocal</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> mutRateLimitLocal <span class="keyword">struct</span> {</span><br><span class="line">	log         *service.Logger</span><br><span class="line">	mut         sync.Mutex</span><br><span class="line">	curSize     <span class="type">int</span></span><br><span class="line">	lastRefresh time.Time</span><br><span class="line"></span><br><span class="line">	minSize   <span class="type">int</span></span><br><span class="line">	benchSize <span class="type">int</span></span><br><span class="line">	maxSize   <span class="type">int</span></span><br><span class="line">	period    time.Duration</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// 继承自 Benthos 的 RateLimit</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(m *mutRateLimitLocal)</span></span> Access(ctx context.Context) (time.Duration, <span class="type">error</span>) {</span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// 继承自 Benthos 的 RateLimit</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(m *mutRateLimitLocal)</span></span> Close(_ context.Context) <span class="type">error</span> {</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// 增加限速值</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Upgrade</span><span class="params">()</span></span> {</span><br><span class="line">	gLimit.mut.Lock()</span><br><span class="line">	<span class="keyword">defer</span> gLimit.mut.Unlock()</span><br><span class="line"></span><br><span class="line">	ori := gLimit.benchSize</span><br><span class="line">	gLimit.benchSize *= <span class="number">2</span></span><br><span class="line">	<span class="keyword">if</span> gLimit.benchSize &gt; gLimit.maxSize {</span><br><span class="line">		gLimit.benchSize = gLimit.maxSize</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	gLimit.log.Infof(<span class="string">"limiter upgrade from %d to %d"</span>, ori, gLimit.benchSize)</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// 降低限速值</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">DownGrade</span><span class="params">()</span></span> {</span><br><span class="line">	gLimit.mut.Lock()</span><br><span class="line">	<span class="keyword">defer</span> gLimit.mut.Unlock()</span><br><span class="line"></span><br><span class="line">	ori := gLimit.benchSize</span><br><span class="line">	gLimit.benchSize /= <span class="number">2</span></span><br><span class="line">	<span class="keyword">if</span> gLimit.benchSize &lt; gLimit.minSize {</span><br><span class="line">		gLimit.benchSize = gLimit.minSize</span><br><span class="line">	}</span><br><span class="line">	gLimit.log.Infof(<span class="string">"limiter downGrade from %d to %d"</span>, ori, gLimit.benchSize)</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>现在进行验证, 将<code>input</code>组件修改为单个组件, 保证数据的顺序性, 并在读取到特定内容时进行升级降级操作, 并观察输出, 代码如下</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(r *rdbInput)</span></span> Read(ctx context.Context) (*service.Message, service.AckFunc, <span class="type">error</span>) {</span><br><span class="line">	<span class="keyword">if</span> ctx.Err() != <span class="literal">nil</span> {</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, <span class="literal">nil</span>, ctx.Err()</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	d, err := r.l.Pop(ctx)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> {</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, <span class="literal">nil</span>, err</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> <span class="type">string</span>(d) == <span class="string">"5"</span> {</span><br><span class="line">		mut_rate_limit_local.Upgrade()</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> <span class="type">string</span>(d) == <span class="string">"10"</span> {</span><br><span class="line">		mut_rate_limit_local.DownGrade()</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	msg := service.NewMessage(d)</span><br><span class="line">	<span class="keyword">return</span> msg, <span class="function"><span class="keyword">func</span><span class="params">(ctx context.Context, err <span class="type">error</span>)</span></span> <span class="type">error</span> {</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">	}, <span class="literal">nil</span></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p><code>input</code>组件相关配置修改为</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">input:</span></span><br><span class="line">  <span class="attr">rdb_input:</span></span><br><span class="line">  <span class="attr">processors:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">rate_limit:</span></span><br><span class="line">        <span class="attr">resource:</span> <span class="string">mu_local_limiter</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">bloblang:</span> <span class="string">|</span></span><br><span class="line"><span class="string">        root.message = this.string()</span></span><br><span class="line"><span class="string">        root.meta.process_time = now()</span></span><br></pre></td></tr></table></figure>
+<p>由于数据是顺序输出的, 所以一定会先出现5, 后出现10, 此时启动程序观察输出为</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">{<span class="string">"message"</span>:<span class="string">"1"</span>,<span class="string">"meta"</span>:{<span class="string">"process_time"</span>:<span class="string">"2025-04-29T09:45:49.100212661+08:00"</span>}}</span><br><span class="line">{<span class="string">"message"</span>:<span class="string">"2"</span>,<span class="string">"meta"</span>:{<span class="string">"process_time"</span>:<span class="string">"2025-04-29T09:45:49.100586456+08:00"</span>}}</span><br><span class="line">{<span class="string">"message"</span>:<span class="string">"3"</span>,<span class="string">"meta"</span>:{<span class="string">"process_time"</span>:<span class="string">"2025-04-29T09:45:50.096771614+08:00"</span>}}</span><br><span class="line">{<span class="string">"message"</span>:<span class="string">"4"</span>,<span class="string">"meta"</span>:{<span class="string">"process_time"</span>:<span class="string">"2025-04-29T09:45:50.096806286+08:00"</span>}}</span><br><span class="line">{<span class="string">"@service"</span>:<span class="string">"benthos"</span>,<span class="string">"label"</span>:<span class="string">"mu_local_limiter"</span>,<span class="string">"level"</span>:<span class="string">"info"</span>,<span class="string">"msg"</span>:<span class="string">"limiter upgrade from 2 to 4"</span>,<span class="string">"path"</span>:<span class="string">"root.rate_limit_resources"</span>}</span><br><span class="line">{<span class="string">"message"</span>:<span class="string">"5"</span>,<span class="string">"meta"</span>:{<span class="string">"process_time"</span>:<span class="string">"2025-04-29T09:45:51.097508536+08:00"</span>}}</span><br><span class="line">{<span class="string">"message"</span>:<span class="string">"6"</span>,<span class="string">"meta"</span>:{<span class="string">"process_time"</span>:<span class="string">"2025-04-29T09:45:51.097554408+08:00"</span>}}</span><br><span class="line">{<span class="string">"message"</span>:<span class="string">"7"</span>,<span class="string">"meta"</span>:{<span class="string">"process_time"</span>:<span class="string">"2025-04-29T09:45:51.097980122+08:00"</span>}}</span><br><span class="line">{<span class="string">"message"</span>:<span class="string">"8"</span>,<span class="string">"meta"</span>:{<span class="string">"process_time"</span>:<span class="string">"2025-04-29T09:45:51.098075563+08:00"</span>}}</span><br><span class="line">{<span class="string">"@service"</span>:<span class="string">"benthos"</span>,<span class="string">"label"</span>:<span class="string">"mu_local_limiter"</span>,<span class="string">"level"</span>:<span class="string">"info"</span>,<span class="string">"msg"</span>:<span class="string">"limiter downGrade from 4 to 2"</span>,<span class="string">"path"</span>:<span class="string">"root.rate_limit_resources"</span>}</span><br><span class="line">{<span class="string">"message"</span>:<span class="string">"9"</span>,<span class="string">"meta"</span>:{<span class="string">"process_time"</span>:<span class="string">"2025-04-29T09:45:52.098415253+08:00"</span>}}</span><br><span class="line">{<span class="string">"message"</span>:<span class="string">"10"</span>,<span class="string">"meta"</span>:{<span class="string">"process_time"</span>:<span class="string">"2025-04-29T09:45:52.09846423+08:00"</span>}}</span><br><span class="line">{<span class="string">"message"</span>:<span class="string">"11"</span>,<span class="string">"meta"</span>:{<span class="string">"process_time"</span>:<span class="string">"2025-04-29T09:45:53.09906257+08:00"</span>}}</span><br><span class="line">{<span class="string">"message"</span>:<span class="string">"12"</span>,<span class="string">"meta"</span>:{<span class="string">"process_time"</span>:<span class="string">"2025-04-29T09:45:53.099122656+08:00"</span>}}</span><br><span class="line">{<span class="string">"message"</span>:<span class="string">"13"</span>,<span class="string">"meta"</span>:{<span class="string">"process_time"</span>:<span class="string">"2025-04-29T09:45:54.099771808+08:00"</span>}}</span><br><span class="line">{<span class="string">"message"</span>:<span class="string">"14"</span>,<span class="string">"meta"</span>:{<span class="string">"process_time"</span>:<span class="string">"2025-04-29T09:45:54.099812208+08:00"</span>}}</span><br></pre></td></tr></table></figure>
+<p>可以观察到当读取到5之后, 限速从2升级为4, 消息速率有每秒两条变为每秒四条, 读取到10的时候降级为2, 此后维持2的限速运行.</p>
+<h2 id="背压机制对消息处理速率的影响"><a href="#背压机制对消息处理速率的影响" class="headerlink" title="背压机制对消息处理速率的影响"></a>背压机制对消息处理速率的影响</h2><p>在Benthos中, 限速器组件能够限速的本质原理是, 通过一个给定的时间间隔, 以及在此时间间隔内, <code>Input</code>组件调用<code>Read</code>或<code>ReadBatch</code>(如果是<code>batchInput</code>)的次数, 来限制整体速率, 例如以下限速器配置</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">rate_limit_resources:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">label:</span> <span class="string">local_limiter</span></span><br><span class="line">    <span class="attr">local:</span></span><br><span class="line">      <span class="attr">count:</span> <span class="number">1</span></span><br><span class="line">      <span class="attr">interval:</span> <span class="string">1s</span></span><br></pre></td></tr></table></figure>
+<p>表示限制每秒调用1次<code>Input</code>组件的<code>Read</code>方法或<code>ReadBatch</code>, 其原理是当调用次数超过一次后, 下次调用将会强制等待到大于给定等待时间间隔为止., 本质上其是依赖<code>Benthos</code>的背压机制来达到对消息进行限速的目的, 那如何验证这一机制? 可以简单的写一段Benthos配置来对其进行验证</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">input:</span></span><br><span class="line">  <span class="attr">rdb_input:</span> </span><br><span class="line">  	<span class="attr">max_in_flight:</span> <span class="number">0</span> <span class="comment"># 表示不限制待确认消息的数量</span></span><br><span class="line">  <span class="attr">processors:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">bloblang:</span> <span class="string">|</span></span><br><span class="line"><span class="string">        root.message = this.string()</span></span><br><span class="line"><span class="string">        root.meta.process_time = now()</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="attr">pipeline:</span></span><br><span class="line">  <span class="attr">threads:</span> <span class="number">1</span>  <span class="comment"># 保持每次只处理一个数据</span></span><br><span class="line">  <span class="attr">processors:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">sleep:</span> <span class="comment"># 任何类型消息在这里将会 sleep 一秒钟</span></span><br><span class="line">        <span class="attr">duration:</span> <span class="string">1s</span></span><br><span class="line"></span><br><span class="line"><span class="attr">output:</span></span><br><span class="line">  <span class="attr">my_stdout:</span> {}</span><br></pre></td></tr></table></figure>
+<p>以上配置下, Benthos的输出为</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">{</span><span class="attr">"message"</span><span class="punctuation">:</span><span class="string">"1"</span><span class="punctuation">,</span><span class="attr">"meta"</span><span class="punctuation">:</span><span class="punctuation">{</span><span class="attr">"process_time"</span><span class="punctuation">:</span><span class="string">"2025-04-29T14:27:12.227711335+08:00"</span><span class="punctuation">}</span><span class="punctuation">}</span></span><br><span class="line"><span class="punctuation">{</span><span class="attr">"message"</span><span class="punctuation">:</span><span class="string">"2"</span><span class="punctuation">,</span><span class="attr">"meta"</span><span class="punctuation">:</span><span class="punctuation">{</span><span class="attr">"process_time"</span><span class="punctuation">:</span><span class="string">"2025-04-29T14:27:12.22788404+08:00"</span><span class="punctuation">}</span><span class="punctuation">}</span></span><br><span class="line"><span class="punctuation">{</span><span class="attr">"message"</span><span class="punctuation">:</span><span class="string">"3"</span><span class="punctuation">,</span><span class="attr">"meta"</span><span class="punctuation">:</span><span class="punctuation">{</span><span class="attr">"process_time"</span><span class="punctuation">:</span><span class="string">"2025-04-29T14:27:13.22813145+08:00"</span><span class="punctuation">}</span><span class="punctuation">}</span></span><br><span class="line"><span class="punctuation">{</span><span class="attr">"message"</span><span class="punctuation">:</span><span class="string">"4"</span><span class="punctuation">,</span><span class="attr">"meta"</span><span class="punctuation">:</span><span class="punctuation">{</span><span class="attr">"process_time"</span><span class="punctuation">:</span><span class="string">"2025-04-29T14:27:14.228667279+08:00"</span><span class="punctuation">}</span><span class="punctuation">}</span></span><br><span class="line"><span class="punctuation">{</span><span class="attr">"message"</span><span class="punctuation">:</span><span class="string">"5"</span><span class="punctuation">,</span><span class="attr">"meta"</span><span class="punctuation">:</span><span class="punctuation">{</span><span class="attr">"process_time"</span><span class="punctuation">:</span><span class="string">"2025-04-29T14:27:15.229376735+08:00"</span><span class="punctuation">}</span><span class="punctuation">}</span></span><br><span class="line"><span class="punctuation">{</span><span class="attr">"message"</span><span class="punctuation">:</span><span class="string">"6"</span><span class="punctuation">,</span><span class="attr">"meta"</span><span class="punctuation">:</span><span class="punctuation">{</span><span class="attr">"process_time"</span><span class="punctuation">:</span><span class="string">"2025-04-29T14:27:16.229656828+08:00"</span><span class="punctuation">}</span><span class="punctuation">}</span></span><br><span class="line"><span class="punctuation">{</span><span class="attr">"message"</span><span class="punctuation">:</span><span class="string">"7"</span><span class="punctuation">,</span><span class="attr">"meta"</span><span class="punctuation">:</span><span class="punctuation">{</span><span class="attr">"process_time"</span><span class="punctuation">:</span><span class="string">"2025-04-29T14:27:17.230157291+08:00"</span><span class="punctuation">}</span><span class="punctuation">}</span></span><br><span class="line"><span class="punctuation">{</span><span class="attr">"message"</span><span class="punctuation">:</span><span class="string">"8"</span><span class="punctuation">,</span><span class="attr">"meta"</span><span class="punctuation">:</span><span class="punctuation">{</span><span class="attr">"process_time"</span><span class="punctuation">:</span><span class="string">"2025-04-29T14:27:18.230574692+08:00"</span><span class="punctuation">}</span><span class="punctuation">}</span></span><br></pre></td></tr></table></figure>
+<p>可以观察到, 从第二条消息开始, 每条消息间隔了一秒钟才被取出来, 那如果将 <code>pipeline.threads</code> 参数变大, 则能代表每秒可以取出来更多消息, 这些消息等待一秒后, 才能取出来下一批消息</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">pipeline:</span></span><br><span class="line">  <span class="attr">threads:</span> <span class="number">5</span>  <span class="comment"># 每次同時处理5个数据</span></span><br></pre></td></tr></table></figure>
+<p>修改后输出同理论一致, 第一秒取出了六条数据, 在第六条数据进入<code>processor</code>阶段时, 前五条数据都在sleep中, 整条链路被阻塞了, 直到下一秒, 前五条消息处理完毕后, 继续处理下五条</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">{</span><span class="attr">"message"</span><span class="punctuation">:</span><span class="string">"2"</span><span class="punctuation">,</span><span class="attr">"meta"</span><span class="punctuation">:</span><span class="punctuation">{</span><span class="attr">"process_time"</span><span class="punctuation">:</span><span class="string">"2025-04-29T14:30:15.214659776+08:00"</span><span class="punctuation">}</span><span class="punctuation">}</span></span><br><span class="line"><span class="punctuation">{</span><span class="attr">"message"</span><span class="punctuation">:</span><span class="string">"1"</span><span class="punctuation">,</span><span class="attr">"meta"</span><span class="punctuation">:</span><span class="punctuation">{</span><span class="attr">"process_time"</span><span class="punctuation">:</span><span class="string">"2025-04-29T14:30:15.214329751+08:00"</span><span class="punctuation">}</span><span class="punctuation">}</span></span><br><span class="line"><span class="punctuation">{</span><span class="attr">"message"</span><span class="punctuation">:</span><span class="string">"3"</span><span class="punctuation">,</span><span class="attr">"meta"</span><span class="punctuation">:</span><span class="punctuation">{</span><span class="attr">"process_time"</span><span class="punctuation">:</span><span class="string">"2025-04-29T14:30:15.214761512+08:00"</span><span class="punctuation">}</span><span class="punctuation">}</span></span><br><span class="line"><span class="punctuation">{</span><span class="attr">"message"</span><span class="punctuation">:</span><span class="string">"4"</span><span class="punctuation">,</span><span class="attr">"meta"</span><span class="punctuation">:</span><span class="punctuation">{</span><span class="attr">"process_time"</span><span class="punctuation">:</span><span class="string">"2025-04-29T14:30:15.214990298+08:00"</span><span class="punctuation">}</span><span class="punctuation">}</span></span><br><span class="line"><span class="punctuation">{</span><span class="attr">"message"</span><span class="punctuation">:</span><span class="string">"5"</span><span class="punctuation">,</span><span class="attr">"meta"</span><span class="punctuation">:</span><span class="punctuation">{</span><span class="attr">"process_time"</span><span class="punctuation">:</span><span class="string">"2025-04-29T14:30:15.215094723+08:00"</span><span class="punctuation">}</span><span class="punctuation">}</span></span><br><span class="line"><span class="punctuation">{</span><span class="attr">"message"</span><span class="punctuation">:</span><span class="string">"6"</span><span class="punctuation">,</span><span class="attr">"meta"</span><span class="punctuation">:</span><span class="punctuation">{</span><span class="attr">"process_time"</span><span class="punctuation">:</span><span class="string">"2025-04-29T14:30:15.215260697+08:00"</span><span class="punctuation">}</span><span class="punctuation">}</span></span><br><span class="line"><span class="punctuation">{</span><span class="attr">"message"</span><span class="punctuation">:</span><span class="string">"7"</span><span class="punctuation">,</span><span class="attr">"meta"</span><span class="punctuation">:</span><span class="punctuation">{</span><span class="attr">"process_time"</span><span class="punctuation">:</span><span class="string">"2025-04-29T14:30:16.214789636+08:00"</span><span class="punctuation">}</span><span class="punctuation">}</span></span><br><span class="line"><span class="punctuation">{</span><span class="attr">"message"</span><span class="punctuation">:</span><span class="string">"8"</span><span class="punctuation">,</span><span class="attr">"meta"</span><span class="punctuation">:</span><span class="punctuation">{</span><span class="attr">"process_time"</span><span class="punctuation">:</span><span class="string">"2025-04-29T14:30:16.215151017+08:00"</span><span class="punctuation">}</span><span class="punctuation">}</span></span><br><span class="line"><span class="punctuation">{</span><span class="attr">"message"</span><span class="punctuation">:</span><span class="string">"9"</span><span class="punctuation">,</span><span class="attr">"meta"</span><span class="punctuation">:</span><span class="punctuation">{</span><span class="attr">"process_time"</span><span class="punctuation">:</span><span class="string">"2025-04-29T14:30:16.215217328+08:00"</span><span class="punctuation">}</span><span class="punctuation">}</span></span><br><span class="line"><span class="punctuation">{</span><span class="attr">"message"</span><span class="punctuation">:</span><span class="string">"10"</span><span class="punctuation">,</span><span class="attr">"meta"</span><span class="punctuation">:</span><span class="punctuation">{</span><span class="attr">"process_time"</span><span class="punctuation">:</span><span class="string">"2025-04-29T14:30:16.215294076+08:00"</span><span class="punctuation">}</span><span class="punctuation">}</span></span><br><span class="line"><span class="punctuation">{</span><span class="attr">"message"</span><span class="punctuation">:</span><span class="string">"15"</span><span class="punctuation">,</span><span class="attr">"meta"</span><span class="punctuation">:</span><span class="punctuation">{</span><span class="attr">"process_time"</span><span class="punctuation">:</span><span class="string">"2025-04-29T14:30:17.215655737+08:00"</span><span class="punctuation">}</span><span class="punctuation">}</span></span><br><span class="line"><span class="punctuation">{</span><span class="attr">"message"</span><span class="punctuation">:</span><span class="string">"11"</span><span class="punctuation">,</span><span class="attr">"meta"</span><span class="punctuation">:</span><span class="punctuation">{</span><span class="attr">"process_time"</span><span class="punctuation">:</span><span class="string">"2025-04-29T14:30:16.215366317+08:00"</span><span class="punctuation">}</span><span class="punctuation">}</span></span><br><span class="line"><span class="punctuation">{</span><span class="attr">"message"</span><span class="punctuation">:</span><span class="string">"12"</span><span class="punctuation">,</span><span class="attr">"meta"</span><span class="punctuation">:</span><span class="punctuation">{</span><span class="attr">"process_time"</span><span class="punctuation">:</span><span class="string">"2025-04-29T14:30:17.215124804+08:00"</span><span class="punctuation">}</span><span class="punctuation">}</span></span><br><span class="line"><span class="punctuation">{</span><span class="attr">"message"</span><span class="punctuation">:</span><span class="string">"13"</span><span class="punctuation">,</span><span class="attr">"meta"</span><span class="punctuation">:</span><span class="punctuation">{</span><span class="attr">"process_time"</span><span class="punctuation">:</span><span class="string">"2025-04-29T14:30:17.215432139+08:00"</span><span class="punctuation">}</span><span class="punctuation">}</span></span><br><span class="line"><span class="punctuation">{</span><span class="attr">"message"</span><span class="punctuation">:</span><span class="string">"14"</span><span class="punctuation">,</span><span class="attr">"meta"</span><span class="punctuation">:</span><span class="punctuation">{</span><span class="attr">"process_time"</span><span class="punctuation">:</span><span class="string">"2025-04-29T14:30:17.215565551+08:00"</span><span class="punctuation">}</span><span class="punctuation">}</span></span><br><span class="line"><span class="punctuation">{</span><span class="attr">"message"</span><span class="punctuation">:</span><span class="string">"20"</span><span class="punctuation">,</span><span class="attr">"meta"</span><span class="punctuation">:</span><span class="punctuation">{</span><span class="attr">"process_time"</span><span class="punctuation">:</span><span class="string">"2025-04-29T14:30:18.216655332+08:00"</span><span class="punctuation">}</span><span class="punctuation">}</span></span><br><span class="line"><span class="punctuation">{</span><span class="attr">"message"</span><span class="punctuation">:</span><span class="string">"19"</span><span class="punctuation">,</span><span class="attr">"meta"</span><span class="punctuation">:</span><span class="punctuation">{</span><span class="attr">"process_time"</span><span class="punctuation">:</span><span class="string">"2025-04-29T14:30:18.216587464+08:00"</span><span class="punctuation">}</span><span class="punctuation">}</span></span><br><span class="line"><span class="punctuation">{</span><span class="attr">"message"</span><span class="punctuation">:</span><span class="string">"18"</span><span class="punctuation">,</span><span class="attr">"meta"</span><span class="punctuation">:</span><span class="punctuation">{</span><span class="attr">"process_time"</span><span class="punctuation">:</span><span class="string">"2025-04-29T14:30:18.216449435+08:00"</span><span class="punctuation">}</span><span class="punctuation">}</span></span><br><span class="line"><span class="punctuation">{</span><span class="attr">"message"</span><span class="punctuation">:</span><span class="string">"17"</span><span class="punctuation">,</span><span class="attr">"meta"</span><span class="punctuation">:</span><span class="punctuation">{</span><span class="attr">"process_time"</span><span class="punctuation">:</span><span class="string">"2025-04-29T14:30:18.216183862+08:00"</span><span class="punctuation">}</span><span class="punctuation">}</span></span><br><span class="line"><span class="punctuation">{</span><span class="attr">"message"</span><span class="punctuation">:</span><span class="string">"16"</span><span class="punctuation">,</span><span class="attr">"meta"</span><span class="punctuation">:</span><span class="punctuation">{</span><span class="attr">"process_time"</span><span class="punctuation">:</span><span class="string">"2025-04-29T14:30:17.215772375+08:00"</span><span class="punctuation">}</span><span class="punctuation">}</span></span><br></pre></td></tr></table></figure>
+<p>那这与<code>Input</code>组件的<code>max_in_flight</code>参数有什么关系? <strong>在<code>Input</code>组件中 <code>max_in_flight</code> 参数表示系统可接受的未确认消息的数量</strong>, 可以简单比喻成一个萝卜一个坑, 每次调用<code>Read</code>或<code>ReadBatch</code>都会得到一根萝卜, <code>max_in_flight</code> 表示有多少个坑, 当坑里的萝卜没有被拔出来时(消息未被确认), 无法把新的萝卜放进去, 可以通过以下方式简单验证</p>
+<p>保持<code>pipeline.threads</code>不变, 修改<code>Input</code>组件的<code>max_in_flight</code>为1, 表示只接受一个未确认的消息, 配置如下</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">input:</span></span><br><span class="line">  <span class="attr">rdb_input:</span></span><br><span class="line">    <span class="attr">max_in_flight:</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">processors:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">bloblang:</span> <span class="string">|</span></span><br><span class="line"><span class="string">        root.message = this.string()</span></span><br><span class="line"><span class="string">        root.meta.process_time = now()</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="attr">pipeline:</span></span><br><span class="line">  <span class="attr">threads:</span> <span class="number">5</span></span><br><span class="line">  <span class="attr">processors:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">sleep:</span></span><br><span class="line">        <span class="attr">duration:</span> <span class="string">1s</span></span><br></pre></td></tr></table></figure>
+<p>此时输出将会是每秒钟一条消息, 因为只能接受一条未确认消息, 而每条消息又会等待1秒钟</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">{</span><span class="attr">"message"</span><span class="punctuation">:</span><span class="string">"1"</span><span class="punctuation">,</span><span class="attr">"meta"</span><span class="punctuation">:</span><span class="punctuation">{</span><span class="attr">"process_time"</span><span class="punctuation">:</span><span class="string">"2025-04-29T15:05:40.014691582+08:00"</span><span class="punctuation">}</span><span class="punctuation">}</span></span><br><span class="line"><span class="punctuation">{</span><span class="attr">"message"</span><span class="punctuation">:</span><span class="string">"2"</span><span class="punctuation">,</span><span class="attr">"meta"</span><span class="punctuation">:</span><span class="punctuation">{</span><span class="attr">"process_time"</span><span class="punctuation">:</span><span class="string">"2025-04-29T15:05:41.015494086+08:00"</span><span class="punctuation">}</span><span class="punctuation">}</span></span><br><span class="line"><span class="punctuation">{</span><span class="attr">"message"</span><span class="punctuation">:</span><span class="string">"3"</span><span class="punctuation">,</span><span class="attr">"meta"</span><span class="punctuation">:</span><span class="punctuation">{</span><span class="attr">"process_time"</span><span class="punctuation">:</span><span class="string">"2025-04-29T15:05:42.016571178+08:00"</span><span class="punctuation">}</span><span class="punctuation">}</span></span><br><span class="line"><span class="punctuation">{</span><span class="attr">"message"</span><span class="punctuation">:</span><span class="string">"4"</span><span class="punctuation">,</span><span class="attr">"meta"</span><span class="punctuation">:</span><span class="punctuation">{</span><span class="attr">"process_time"</span><span class="punctuation">:</span><span class="string">"2025-04-29T15:05:43.017364452+08:00"</span><span class="punctuation">}</span><span class="punctuation">}</span></span><br><span class="line"><span class="punctuation">{</span><span class="attr">"message"</span><span class="punctuation">:</span><span class="string">"5"</span><span class="punctuation">,</span><span class="attr">"meta"</span><span class="punctuation">:</span><span class="punctuation">{</span><span class="attr">"process_time"</span><span class="punctuation">:</span><span class="string">"2025-04-29T15:05:44.017900917+08:00"</span><span class="punctuation">}</span><span class="punctuation">}</span></span><br><span class="line"><span class="punctuation">{</span><span class="attr">"message"</span><span class="punctuation">:</span><span class="string">"6"</span><span class="punctuation">,</span><span class="attr">"meta"</span><span class="punctuation">:</span><span class="punctuation">{</span><span class="attr">"process_time"</span><span class="punctuation">:</span><span class="string">"2025-04-29T15:05:45.018384+08:00"</span><span class="punctuation">}</span><span class="punctuation">}</span></span><br><span class="line"><span class="punctuation">{</span><span class="attr">"message"</span><span class="punctuation">:</span><span class="string">"7"</span><span class="punctuation">,</span><span class="attr">"meta"</span><span class="punctuation">:</span><span class="punctuation">{</span><span class="attr">"process_time"</span><span class="punctuation">:</span><span class="string">"2025-04-29T15:05:46.019051633+08:00"</span><span class="punctuation">}</span><span class="punctuation">}</span></span><br></pre></td></tr></table></figure>
+<p>同样的, <code>output</code>组件如果出现阻塞, 也会由于背压机制影响到上游的处理效率, 例如以下配置</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">input:</span></span><br><span class="line">  <span class="attr">rdb_input:</span></span><br><span class="line">    <span class="attr">max_in_flight:</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">processors:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">bloblang:</span> <span class="string">|</span></span><br><span class="line"><span class="string">        root.message = this.string()</span></span><br><span class="line"><span class="string">        root.meta.process_time = now()</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="attr">pipeline:</span></span><br><span class="line">  <span class="attr">threads:</span> <span class="number">10</span></span><br><span class="line">  <span class="attr">processors:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">sleep:</span></span><br><span class="line">        <span class="attr">duration:</span> <span class="string">1s</span></span><br><span class="line"><span class="attr">output:</span></span><br><span class="line">  <span class="attr">my_stdout_batch:</span></span><br><span class="line">    <span class="attr">max_in_flight:</span> <span class="number">10</span></span><br><span class="line">    <span class="attr">batching:</span></span><br><span class="line">      <span class="attr">count:</span> <span class="number">100</span>        <span class="comment"># 当收集到100条消息时处理批次</span></span><br><span class="line">      <span class="attr">byte_size:</span> <span class="number">1048576</span> <span class="comment"># 或当批次大小达到1MB时处理</span></span><br><span class="line">      <span class="attr">period:</span> <span class="string">"1s"</span>      <span class="comment"># 或每秒至少处理一次批次</span></span><br><span class="line">      <span class="attr">check:</span> <span class="string">""</span>         <span class="comment"># 可选的条件检查</span></span><br><span class="line">      <span class="attr">processors:</span> []    <span class="comment"># 可选的批次处理器</span></span><br></pre></td></tr></table></figure>
+<p>由于<code>output</code>组件存在<code>1s</code>的超时, 所以整个链路将会变为两每秒钟一条消息</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">{</span><span class="attr">"message"</span><span class="punctuation">:</span><span class="string">"1"</span><span class="punctuation">,</span><span class="attr">"meta"</span><span class="punctuation">:</span><span class="punctuation">{</span><span class="attr">"process_time"</span><span class="punctuation">:</span><span class="string">"2025-04-29T16:04:43.781875208+08:00"</span><span class="punctuation">}</span><span class="punctuation">}</span></span><br><span class="line"><span class="punctuation">{</span><span class="attr">"message"</span><span class="punctuation">:</span><span class="string">"2"</span><span class="punctuation">,</span><span class="attr">"meta"</span><span class="punctuation">:</span><span class="punctuation">{</span><span class="attr">"process_time"</span><span class="punctuation">:</span><span class="string">"2025-04-29T16:04:45.782621816+08:00"</span><span class="punctuation">}</span><span class="punctuation">}</span></span><br><span class="line"><span class="punctuation">{</span><span class="attr">"message"</span><span class="punctuation">:</span><span class="string">"3"</span><span class="punctuation">,</span><span class="attr">"meta"</span><span class="punctuation">:</span><span class="punctuation">{</span><span class="attr">"process_time"</span><span class="punctuation">:</span><span class="string">"2025-04-29T16:04:47.783167403+08:00"</span><span class="punctuation">}</span><span class="punctuation">}</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<h4 id="max-in-flight参数在-Input组件和output组件中的差异"><a href="#max-in-flight参数在-Input组件和output组件中的差异" class="headerlink" title="max_in_flight参数在 Input组件和output组件中的差异"></a><code>max_in_flight</code>参数在 <code>Input</code>组件和<code>output</code>组件中的差异</h4><h5 id="输入-Input-组件中的max-in-flight"><a href="#输入-Input-组件中的max-in-flight" class="headerlink" title="输入(Input)组件中的max_in_flight"></a>输入(Input)组件中的<code>max_in_flight</code></h5><p>在输入组件中，<code>max_in_flight</code>参数：</p>
+<ul>
+<li>设置一个限制，控制在任何给定时间内可以在Benthos流中流动的待确认消息数量</li>
+<li>默认值为<code>0</code>，表示没有限制</li>
+<li>一旦消息被确认(acknowledged)或拒绝(nacked)，它就不再被视为待处理</li>
+<li>如果输入产生逻辑批次，则每个批次被视为对最大值的单次计数, 即限制的是<code>Read</code>和<code>ReadBatch</code>的调用次数而并非具体几条消息</li>
+<li>警告：如果此字段限制的消息数量低于输出级别的批处理阈值，则输出级别的批处理策略将会停滞</li>
+</ul>
+<h5 id="输出-Output-组件中的max-in-flight"><a href="#输出-Output-组件中的max-in-flight" class="headerlink" title="输出(Output)组件中的max_in_flight"></a>输出(Output)组件中的<code>max_in_flight</code></h5><p>在输出组件中，<code>max_in_flight</code>参数：</p>
+<ul>
+<li>控制在给定时间内可以有多少消息或消息批次同时处理</li>
+<li>增加此值可以提高吞吐量</li>
+</ul>
+</blockquote>
+<h2 id="利用背压机制制作限速器"><a href="#利用背压机制制作限速器" class="headerlink" title="利用背压机制制作限速器"></a>利用背压机制制作限速器</h2><p>在上面的探索中, 已经大致搞清了Benthos框架原生的限速器的工作原理, 即利用框架的背压机制, 在下游制造压力, 传导到上游进而限制上游消息的读取速率, 根据这一原理, 可以实现这样一个<code>processor</code>组件:</p>
+<ol>
+<li>不处理消息, 将消息原样返回</li>
+<li>记录消息个数或<code>Input</code>组件调用次数</li>
+<li>如果大于指定速率, 就<code>sleep</code>, 将压力传导至上游<code>Input</code>组件</li>
+<li>监测一些指标, 当达到某些条件时降低限速, 反之提高限速</li>
+</ol>
+<p>而这个组件可以放在</p>
+<ol>
+<li>紧跟着<code>Input</code>组件之后, 可以通过消息数, <code>Read</code>或<code>ReadBatch</code>的调用数, 系统的CPU占用/内存占用等不依赖具体消息内容的指标来进行降级升级</li>
+<li>放在<code>Processor</code>组件的末端或中端, 可以通过消息设置的<code>meta</code>信息中处理耗时, 失败次数等与消息内容相关的指标进行升降级</li>
+<li>同时放在<code>Input</code>和<code>Processor</code>中, 对多个指标进行监测</li>
+</ol>
+<p>而为了保证限速器的可重用性, 最好是将其放在<code>resources</code>中, 通过 <code>label</code>在需要使用的地方引用, 同时通过这种方式也可以保证限速器全局唯一, 如果需要多个限速器, 则创建多个<code>label</code>即可, 限速器应该使用<code>Processor</code>实现而非<code>batchProcessor</code>来确保其对消息限速的粒度为单条消息</p>
+<blockquote>
+<p>Benthos框架在batch组件和非batch组件会自动转换, 例如当<code>Input</code>是batch, <code>Processor</code>为非batch的时候, 此时<code>Input</code>每次都会读取一批消息, 一条一条的交给<code>Processor</code>, 直到所有消息都处理完毕, <code>Input</code>才会读取下一批消息, 所以使用非batch的<code>Processor</code>可以更好的控制单条消息速率</p>
+</blockquote>
+<h3 id="Example-利用背压机制结合对消息或CPU的监控制作的动态限速器"><a href="#Example-利用背压机制结合对消息或CPU的监控制作的动态限速器" class="headerlink" title="Example: 利用背压机制结合对消息或CPU的监控制作的动态限速器"></a>Example: 利用背压机制结合对消息或CPU的监控制作的动态限速器</h3><p>利用背压机制, 结合 <code>golang.org/x/time/rate</code> 制作一个基于令牌桶的限速器, 通过监测过去一段时间内的消息中特定错误出现频率或CPU使用率动态调节限速值</p>
+<blockquote>
+<p>选择<code>golang.org/x/time/rate</code>有一个比较重要的原因是其支持运行中修改限速值</p>
+</blockquote>
+<p>结构定义如下</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"benthos_test/lib/consts/errorx"</span></span><br><span class="line">	<span class="string">"context"</span></span><br><span class="line">	<span class="string">"github.com/pkg/errors"</span></span><br><span class="line">	<span class="string">"github.com/redpanda-data/benthos/v4/public/service"</span></span><br><span class="line">	<span class="string">"golang.org/x/time/rate"</span></span><br><span class="line">	<span class="string">"math"</span></span><br><span class="line">	<span class="string">"sync"</span></span><br><span class="line">	<span class="string">"sync/atomic"</span></span><br><span class="line">	<span class="string">"time"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> (</span><br><span class="line">	limitProcess <span class="keyword">struct</span> {</span><br><span class="line">		log     *service.Logger</span><br><span class="line">		limit   *rate.Limiter</span><br><span class="line">		minEach rate.Limit</span><br><span class="line">		maxEach rate.Limit</span><br><span class="line"></span><br><span class="line">		wg           sync.WaitGroup</span><br><span class="line">		shutdownChan <span class="keyword">chan</span> <span class="keyword">struct</span>{}</span><br><span class="line">		cpuC         *cpuChecker</span><br><span class="line">		msgC         *msgChecker</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	cpuChecker <span class="keyword">struct</span> {</span><br><span class="line">		checkInterval time.Duration</span><br><span class="line">		cpuMax        <span class="type">float64</span></span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	msgChecker <span class="keyword">struct</span> {</span><br><span class="line">		checkInterval time.Duration</span><br><span class="line">		failureMax    <span class="type">float64</span></span><br><span class="line">		sucCnt        atomic.Int32</span><br><span class="line">		falCnt        atomic.Int32</span><br><span class="line">	}</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>在Benthos中注册时使用如下配置配置</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">limit_process:</span></span><br><span class="line">  <span class="attr">minEach:</span> <span class="number">1</span> <span class="comment"># 最低速率, 每秒钟 1 调小</span></span><br><span class="line">  <span class="attr">each:</span> <span class="number">2</span> <span class="comment"># 初始速率</span></span><br><span class="line">  <span class="attr">maxEach:</span> <span class="number">10</span> <span class="comment"># 最大速率</span></span><br><span class="line">  <span class="attr">capacity:</span> <span class="number">1</span> <span class="comment"># 令牌桶容量, 默认为 1 即可</span></span><br><span class="line">  <span class="attr">msgChecker:</span> <span class="comment"># 启用消息检查</span></span><br><span class="line">    <span class="attr">checkInterval:</span> <span class="string">5s</span> <span class="comment"># 每5s检查一次</span></span><br><span class="line">    <span class="attr">failureMax:</span> <span class="number">0.1</span> <span class="comment"># 允许的消息出现特定错误频率为10%, 超过则需要降级, 反之升级</span></span><br><span class="line">    <span class="attr">specialErr:</span> <span class="string">"xxx"</span> <span class="comment"># 这里可以在加个这个配置, 可以识别指定错误</span></span><br><span class="line"><span class="string">func</span> <span class="string">limitProcessConf()</span> <span class="string">*service.ConfigSpec</span> {</span><br><span class="line">	<span class="string">res</span> <span class="string">:=</span> <span class="string">service.NewConfigSpec()</span></span><br><span class="line">	<span class="string">res.Stable().Summary("limit</span> <span class="string">processor")</span></span><br><span class="line">	<span class="string">res.Fields(</span></span><br><span class="line">		<span class="string">service.NewFloatField("each")</span>,</span><br><span class="line">		<span class="string">service.NewFloatField("minEach").Optional()</span>,</span><br><span class="line">		<span class="string">service.NewFloatField("maxEach").Optional()</span>,</span><br><span class="line">		<span class="string">service.NewIntField("capacity")</span>,</span><br><span class="line">		<span class="string">service.NewObjectField("cpuChecker"</span>,</span><br><span class="line">			<span class="string">service.NewDurationField("checkInterval")</span>,</span><br><span class="line">			<span class="string">service.NewFloatField("cpuMax")</span>,</span><br><span class="line">		<span class="string">).Optional()</span>,</span><br><span class="line">		<span class="string">service.NewObjectField("msgChecker"</span>,</span><br><span class="line">			<span class="string">service.NewDurationField("checkInterval")</span>,</span><br><span class="line">			<span class="string">service.NewFloatField("failureMax")</span>,</span><br><span class="line">		<span class="string">).Optional()</span>,</span><br><span class="line">	<span class="string">)</span></span><br><span class="line">	<span class="string">return</span> <span class="string">res</span></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>构造Processor</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">newLimitProcess</span><span class="params">(conf *service.ParsedConfig, mgr *service.Resources)</span></span> (service.Processor, <span class="type">error</span>) {</span><br><span class="line"> 	<span class="comment">// ... 读取配置</span></span><br><span class="line">	res := &amp;limitProcess{</span><br><span class="line">		<span class="comment">// ... 初始化</span></span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 核心机制: 启动监测器</span></span><br><span class="line">	res.checkerStart()</span><br><span class="line">	<span class="keyword">return</span> res, <span class="literal">nil</span></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>在处理消息时, 记录消息错误, 并从令牌桶中请求令牌</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(l *limitProcess)</span></span> Process(ctx context.Context, message *service.Message) (service.MessageBatch, <span class="type">error</span>) {</span><br><span class="line">    <span class="comment">// 记录消息中的错误</span></span><br><span class="line">	l.recordMsg(message.GetError())</span><br><span class="line">	err := l.limit.Wait(ctx)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> {</span><br><span class="line">		l.log.Errorf(<span class="string">"limit process wait error, msg %v"</span>, err)</span><br><span class="line">	}</span><br><span class="line">	<span class="keyword">return</span> service.MessageBatch{message}, <span class="literal">nil</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(l *limitProcess)</span></span> recordMsg(err <span class="type">error</span>) {</span><br><span class="line">	<span class="keyword">if</span> l.msgC == <span class="literal">nil</span> {</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 这里使用了一个特定的错误, 例如 ErrGptLimit, 也可以添加配置在配置中设置, 再通过检查错误来记录</span></span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &amp;&amp; errors.Is(err, errorx.ErrGptLimit) {</span><br><span class="line">		l.msgC.falCnt.Add(<span class="number">1</span>)</span><br><span class="line">	} <span class="keyword">else</span> {</span><br><span class="line">		l.msgC.sucCnt.Add(<span class="number">1</span>)</span><br><span class="line">	}</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>在启动的监测器中, 定时监测状态</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(l *limitProcess)</span></span> cpuCheckerLoop() {</span><br><span class="line">	<span class="keyword">defer</span> l.wg.Done()</span><br><span class="line">	<span class="comment">// 检查CPU使用率的代码...</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(l *limitProcess)</span></span> msgCheckerLoop() {</span><br><span class="line">	<span class="keyword">defer</span> l.wg.Done()</span><br><span class="line">	tc := time.NewTicker(l.msgC.checkInterval)</span><br><span class="line">	<span class="keyword">defer</span> tc.Stop()</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> {</span><br><span class="line">		<span class="keyword">select</span> {</span><br><span class="line">		<span class="keyword">case</span> &lt;-l.shutdownChan:</span><br><span class="line">			<span class="keyword">return</span></span><br><span class="line">		<span class="keyword">case</span> &lt;-tc.C:</span><br><span class="line">			sucCnt := l.msgC.sucCnt.Swap(<span class="number">0</span>)</span><br><span class="line">			falCnt := l.msgC.falCnt.Swap(<span class="number">0</span>)</span><br><span class="line">			allCnt := sucCnt + falCnt</span><br><span class="line">			<span class="keyword">if</span> allCnt == <span class="number">0</span> {</span><br><span class="line">				<span class="keyword">continue</span></span><br><span class="line">			}</span><br><span class="line"></span><br><span class="line">			failRate := <span class="type">float64</span>(falCnt) / <span class="type">float64</span>(allCnt)</span><br><span class="line">			<span class="keyword">if</span> failRate &gt; l.msgC.failureMax { <span class="comment">// 超过给定频率就降级</span></span><br><span class="line">				l.downgrade()</span><br><span class="line">			} <span class="keyword">else</span> {</span><br><span class="line">				l.upgrade() <span class="comment">// 反之升级</span></span><br><span class="line">			}</span><br><span class="line">		}</span><br><span class="line">	}</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>最后在Benthos中使用</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">input:</span></span><br><span class="line">  <span class="attr">rdb_input:</span></span><br><span class="line">    <span class="attr">max_in_flight:</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">processors:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">bloblang:</span> <span class="string">|</span></span><br><span class="line"><span class="string">        root.message = this.string()</span></span><br><span class="line"><span class="string">        root.meta.get_time = now()</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="attr">pipeline:</span></span><br><span class="line">  <span class="attr">threads:</span> <span class="number">2</span></span><br><span class="line">  <span class="attr">processors:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">resource:</span> <span class="string">error_process_re</span> <span class="comment"># 这个插件经过调整, 会对前20条消息抛出错误 ErrGPTLimit</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">resource:</span> <span class="string">limit_process_re</span> <span class="comment"># 接近着会产生特定错误的组件</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">bloblang:</span> <span class="string">|</span></span><br><span class="line"><span class="string">        root = this</span></span><br><span class="line"><span class="string">        root.meta.processed = now()</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="attr">output:</span></span><br><span class="line">  <span class="attr">my_stdout:</span></span><br><span class="line">    <span class="attr">max_in_flight:</span> <span class="number">100</span></span><br><span class="line">    </span><br><span class="line"><span class="attr">processor_resources:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">label:</span> <span class="string">limit_process_re</span></span><br><span class="line">    <span class="attr">limit_process:</span></span><br><span class="line">      <span class="attr">minEach:</span> <span class="number">1</span></span><br><span class="line">      <span class="attr">each:</span> <span class="number">2</span></span><br><span class="line">      <span class="attr">maxEach:</span> <span class="number">10</span></span><br><span class="line">      <span class="attr">capacity:</span> <span class="number">1</span></span><br><span class="line">      <span class="attr">msgChecker:</span></span><br><span class="line">        <span class="attr">checkInterval:</span> <span class="string">5s</span></span><br><span class="line">        <span class="attr">failureMax:</span> <span class="number">0.1</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">label:</span> <span class="string">error_process_re</span></span><br><span class="line">    <span class="attr">error_process:</span> {}</span><br></pre></td></tr></table></figure>
+<p>最终达成的效果是, 在前期会进行降级, 后期升级, 直到到达最大限制</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">{<span class="string">"@service"</span>:<span class="string">"benthos"</span>,<span class="string">"label"</span>:<span class="string">""</span>,<span class="string">"level"</span>:<span class="string">"error"</span>,<span class="string">"msg"</span>:<span class="string">"Failed to send message to my_stdout: gpt returns code 429"</span>,<span class="string">"path"</span>:<span class="string">"root.output"</span>}</span><br><span class="line">{<span class="string">"@service"</span>:<span class="string">"benthos"</span>,<span class="string">"label"</span>:<span class="string">"limit_process_re"</span>,<span class="string">"level"</span>:<span class="string">"info"</span>,<span class="string">"msg"</span>:<span class="string">"limit processor downgrade, each from 2.000 to 1.000, minEach 1.000"</span>,<span class="string">"path"</span>:<span class="string">"root.processor_resources"</span>}</span><br><span class="line">...</span><br><span class="line">{<span class="string">"@service"</span>:<span class="string">"benthos"</span>,<span class="string">"label"</span>:<span class="string">""</span>,<span class="string">"level"</span>:<span class="string">"error"</span>,<span class="string">"msg"</span>:<span class="string">"Failed to send message to my_stdout: gpt returns code 429"</span>,<span class="string">"path"</span>:<span class="string">"root.output"</span>}</span><br><span class="line">...</span><br><span class="line">{<span class="string">"message"</span>:<span class="string">"24"</span>,<span class="string">"meta"</span>:{<span class="string">"get_time"</span>:<span class="string">"2025-04-30T15:28:21.266977435+08:00"</span>,<span class="string">"processed"</span>:<span class="string">"2025-04-30T15:28:21.267019259+08:00"</span>}}</span><br><span class="line">{<span class="string">"message"</span>:<span class="string">"25"</span>,<span class="string">"meta"</span>:{<span class="string">"get_time"</span>:<span class="string">"2025-04-30T15:28:22.266920475+08:00"</span>,<span class="string">"processed"</span>:<span class="string">"2025-04-30T15:28:22.266979673+08:00"</span>}}</span><br><span class="line">{<span class="string">"@service"</span>:<span class="string">"benthos"</span>,<span class="string">"label"</span>:<span class="string">"limit_process_re"</span>,<span class="string">"level"</span>:<span class="string">"info"</span>,<span class="string">"msg"</span>:<span class="string">"limit processor upgrade, each from 1.000 to 2.000, maxEach 10.000"</span>,<span class="string">"path"</span>:<span class="string">"root.processor_resources"</span>}</span><br><span class="line">...</span><br><span class="line">{<span class="string">"message"</span>:<span class="string">"55"</span>,<span class="string">"meta"</span>:{<span class="string">"get_time"</span>:<span class="string">"2025-04-30T15:28:33.766272232+08:00"</span>,<span class="string">"processed"</span>:<span class="string">"2025-04-30T15:28:33.766325021+08:00"</span>}}</span><br><span class="line">{<span class="string">"@service"</span>:<span class="string">"benthos"</span>,<span class="string">"label"</span>:<span class="string">"limit_process_re"</span>,<span class="string">"level"</span>:<span class="string">"info"</span>,<span class="string">"msg"</span>:<span class="string">"limit processor upgrade, each from 4.000 to 8.000, maxEach 10.000"</span>,<span class="string">"path"</span>:<span class="string">"root.processor_resources"</span>}</span><br><span class="line">{<span class="string">"message"</span>:<span class="string">"56"</span>,<span class="string">"meta"</span>:{<span class="string">"get_time"</span>:<span class="string">"2025-04-30T15:28:34.016153723+08:00"</span>,<span class="string">"processed"</span>:<span class="string">"2025-04-30T15:28:34.016195951+08:00"</span>}}</span><br><span class="line">{<span class="string">"message"</span>:<span class="string">"57"</span>,<span class="string">"meta"</span>:{<span class="string">"get_time"</span>:<span class="string">"2025-04-30T15:28:34.265191395+08:00"</span>,<span class="string">"processed"</span>:<span class="string">"2025-04-30T15:28:34.265236555+08:00"</span>}}</span><br><span class="line">...</span><br><span class="line">{<span class="string">"message"</span>:<span class="string">"95"</span>,<span class="string">"meta"</span>:{<span class="string">"get_time"</span>:<span class="string">"2025-04-30T15:28:39.015952884+08:00"</span>,<span class="string">"processed"</span>:<span class="string">"2025-04-30T15:28:39.016003045+08:00"</span>}}</span><br><span class="line">{<span class="string">"@service"</span>:<span class="string">"benthos"</span>,<span class="string">"label"</span>:<span class="string">"limit_process_re"</span>,<span class="string">"level"</span>:<span class="string">"info"</span>,<span class="string">"msg"</span>:<span class="string">"limit processor upgrade, each from 8.000 to 10.000, maxEach 10.000"</span>,<span class="string">"path"</span>:<span class="string">"root.processor_resources"</span>}</span><br><span class="line">{<span class="string">"message"</span>:<span class="string">"96"</span>,<span class="string">"meta"</span>:{<span class="string">"get_time"</span>:<span class="string">"2025-04-30T15:28:39.141389556+08:00"</span>,<span class="string">"processed"</span>:<span class="string">"2025-04-30T15:28:39.141453408+08:00"</span>}}</span><br></pre></td></tr></table></figure>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>利用Benthos本身背压机制所制作的限速器, 较为灵活, 适用性强, 可以放在处理链路中的任意环节, 通过对其上游施加压力达到限速效果, 但是需要注意以下几点</p>
+<ol>
+<li>限速逻辑需要可以支持运行时调整限速值</li>
+<li>明确模块的升级/降级触发条件, 可以使资源的占用, 特定的错误, 处理的耗时等</li>
+<li>如果需要分布式下的多副本共同限速, 需要使用支持分布式的限速器库或代码</li>
+</ol>
+<p>过程中的一些代码： <a href="/download/Benthos 框架下的限速器降级方案探索/benthos_test.zip" download>benthos_test.zip</a></p>
+
+</div>
+
+
+
+
+    
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Latsummer
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://zhaozhuolin.com/2025/05/20250508.html" title="Benthos 框架下的限速器降级方案探索">http://zhaozhuolin.com/2025/05/20250508.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+<div>
+
+<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+
+</div>
+
+  <footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/benthos/" rel="tag"><i class="fa fa-tag"></i>benthos</a>
+          <a href="/tags/go/" rel="tag"><i class="fa fa-tag"></i>go</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/05/20250507.html" rel="prev" title="benthos中SetStructured和SetBytes差异">
+      <i class="fa fa-chevron-left"></i> benthos中SetStructured和SetBytes差异
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Benthos-%E6%A1%86%E6%9E%B6%E4%B8%8B%E7%9A%84%E9%99%90%E9%80%9F%E5%99%A8%E9%99%8D%E7%BA%A7%E6%96%B9%E6%A1%88%E6%8E%A2%E7%B4%A2"><span class="nav-number">1.</span> <span class="nav-text">Benthos 框架下的限速器降级方案探索</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#rate-limit%E9%99%90%E9%80%9F%E5%99%A8"><span class="nav-number">1.1.</span> <span class="nav-text">rate_limit限速器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%8A%A8%E6%80%81%E8%B0%83%E6%95%B4%E9%99%90%E9%80%9F%E5%99%A8%E7%9A%84%E9%99%90%E9%80%9F%E5%80%BC"><span class="nav-number">1.2.</span> <span class="nav-text">如何动态调整限速器的限速值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E5%8E%8B%E6%9C%BA%E5%88%B6%E5%AF%B9%E6%B6%88%E6%81%AF%E5%A4%84%E7%90%86%E9%80%9F%E7%8E%87%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="nav-number">1.3.</span> <span class="nav-text">背压机制对消息处理速率的影响</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#max-in-flight%E5%8F%82%E6%95%B0%E5%9C%A8-Input%E7%BB%84%E4%BB%B6%E5%92%8Coutput%E7%BB%84%E4%BB%B6%E4%B8%AD%E7%9A%84%E5%B7%AE%E5%BC%82"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">max_in_flight参数在 Input组件和output组件中的差异</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%BE%93%E5%85%A5-Input-%E7%BB%84%E4%BB%B6%E4%B8%AD%E7%9A%84max-in-flight"><span class="nav-number">1.3.0.1.1.</span> <span class="nav-text">输入(Input)组件中的max_in_flight</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%BE%93%E5%87%BA-Output-%E7%BB%84%E4%BB%B6%E4%B8%AD%E7%9A%84max-in-flight"><span class="nav-number">1.3.0.1.2.</span> <span class="nav-text">输出(Output)组件中的max_in_flight</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A9%E7%94%A8%E8%83%8C%E5%8E%8B%E6%9C%BA%E5%88%B6%E5%88%B6%E4%BD%9C%E9%99%90%E9%80%9F%E5%99%A8"><span class="nav-number">1.4.</span> <span class="nav-text">利用背压机制制作限速器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Example-%E5%88%A9%E7%94%A8%E8%83%8C%E5%8E%8B%E6%9C%BA%E5%88%B6%E7%BB%93%E5%90%88%E5%AF%B9%E6%B6%88%E6%81%AF%E6%88%96CPU%E7%9A%84%E7%9B%91%E6%8E%A7%E5%88%B6%E4%BD%9C%E7%9A%84%E5%8A%A8%E6%80%81%E9%99%90%E9%80%9F%E5%99%A8"><span class="nav-number">1.4.1.</span> <span class="nav-text">Example: 利用背压机制结合对消息或CPU的监控制作的动态限速器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">1.5.</span> <span class="nav-text">小结</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Latsummer"
+      src="/images/IMG_6272.JPG">
+  <p class="site-author-name" itemprop="name">Latsummer</p>
+  <div class="site-description" itemprop="description">八说了，我在学了！</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Latsummer" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Latsummer" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/weixin_43105323" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;weixin_43105323" rel="noopener" target="_blank"><i class="crosshairs fa-fw"></i>CSDN</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:morganjeans0106@gmail.com" title="E-Mail → mailto:morganjeans0106@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2619543025&auto=1&height=66"></iframe>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Latsummer</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:58</span>
+</div><script color="241,124,103" opacity="1" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>
